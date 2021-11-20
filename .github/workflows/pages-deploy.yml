@@ -8,9 +8,9 @@ on:
       - README.md
       - LICENSE
     
-    pull_request:
-      branches:
-        - '**'
+  pull_request:
+    branches:
+      - '**'
 
 jobs:
   continuous-delivery:
@@ -30,4 +30,5 @@ jobs:
           bundler-cache: true
 
       - name: Deploy
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master'}}
         run: bash tools/deploy.sh
