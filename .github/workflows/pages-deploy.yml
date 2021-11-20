@@ -7,6 +7,10 @@ on:
       - .gitignore
       - README.md
       - LICENSE
+    
+    pull_request:
+      branches:
+        - '**'
 
 jobs:
   continuous-delivery:
