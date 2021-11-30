@@ -5,7 +5,7 @@ order: 4
 toc: true
 ---
 
-> Don't go ahead with the mindset of "code it", instead have "solve it" attitude. 
+> Have "solve it" attitude not "code it".
 
 Hi 👋,
 # Who am I?
