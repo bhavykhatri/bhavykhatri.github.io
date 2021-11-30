@@ -1,5 +1,5 @@
 
-This website uses github pages.
+This [website](https://www.bhavykhatri.com/) uses github pages.
 
 #### Setting up
 
@@ -12,3 +12,4 @@ To build with drafts blog as well locally run `bundle exec jekyll serve --drafts
 - This website was build on the [Chirpy Jekyll Theme (v4.3.0)](https://github.com/cotes2020/jekyll-theme-chirpy/releases/tag/v4.3.0). Some customizations were added to the code
 - [Jekyll Tutorial Playlist](https://www.youtube.com/watch?v=T1itpPvFWHI&list=PLLAZ4kZ9dFpOPV5C5Ay0pHaa0RJFhcmcB)
 - [Jekyll Documentation](https://jekyllrb.com/docs/)
+- [Liquid Shopify Documentation](https://shopify.github.io/liquid/)
