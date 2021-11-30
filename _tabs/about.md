@@ -5,6 +5,8 @@ order: 4
 toc: true
 ---
 
+> Don't go ahead with the mindset of "code it", instead have "solve it" attitude. 
+
 Hi 👋,
 # Who am I?
 
@@ -15,7 +17,7 @@ I am a full stack software developer at Microsoft, specifically working in devel
 - Writing unit and functional test
 - Resolving issues in case of Live site
 - Maintaining and developing content management portal
-- Writing and maintaining documentation 
+- Writing and updating documentation 
 
 # Tools and Programming Languages I Know
 
