@@ -5,7 +5,7 @@ order: 4
 toc: true
 ---
 
-> Have "solve it" attitude not "code it".
+> Have "solve it" not "code it" attitude.
 
 Hi 👋,
 # Who am I?
