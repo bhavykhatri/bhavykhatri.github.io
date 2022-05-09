@@ -14,3 +14,5 @@ Well to be more honest and precise only I was sitting, and rest were standing, a
 
 ![Ankle Sprain in Hospital](/assets/img/ankle-sprain.jpeg)
 _Me pretending to sleep to show as a proof to other people that I got seriously injured(Caputred by Friend N)_
+
+After the injury I was sweating a lot and drank two lemon mint mocktails back to back. Friend N booked the cab and when it came, friend H was holding my shoes in hand to the cab gate as I couldn't wear them due to swelling and pain. Unsurprisingly, Cab didn't have AC working during moderately hot weather of Hyderabad which is nothing but one more addition in a series of unpleasant events happening throughout the day.  Friend N continuously hold the icepack near my ankle throughout the journey as I was holding and drinking mocktail that we purchased earlier. I didn't like him holding ice pack for me but it was providing a temporary relief. 
