@@ -1,5 +1,5 @@
 ---
-title: "What I Learnt after Badly Spraining my Ankle?"
+title: "United We Stand, Even though Only I Fell"
 author: Bhavy Khatri
 date: 2022-05-09 19:40:00 +0800
 categories: [Life]
