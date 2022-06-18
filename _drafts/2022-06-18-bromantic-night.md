@@ -1,5 +1,5 @@
 ---
-title: "True Friend do exist"
+title: "A Bromantic Night"
 author: Bhavy Khatri
 date: 2022-06-18 11:33:00 +0800
 categories: [Blogging]
