@@ -17,6 +17,9 @@ _My first Ghazal_
 
 
 On a personal level when I ask question that why haven't I felt the same excitement before for other achievements as well? Its because it brings me emotionally closer to the people I love and care about. Completing 10 KM run, learning to swim for the first time, doing 20 push ups for first time were all the "firsts" in my life which bought elation but not as the same level as when I completed my first Ghazal. One of my close friend, when I shared the same recitation with him that I shared here, he started crying he said reading it make him remember how valuable people around him are. And once they are not here it is difficult to imagine life without them. Well I got my answer there right away, it is this precise humane touch which makes the moment very special. Other achievements were kind of selfish, with focus being just me and me alone. On the other hand, if I have written something which people can relate to and feel the love, sadness and emotions that I am trying to convey then it is different and worth more than anything.
+> मैं तो ग़ज़ल सुना के अकेला खड़ा रहा <br>
+सब अपने अपने चाहने वालों में खो गए <br>
+कृष्ण बिहारी नूर
 
 Also, reading poetry especially Ghazals has made me more empathetic towards not just other people but myself as well. Understanding them more, if they are not happy then what might have been they going through in life. And beyond that the language of subtext that people speak, the unspoken language the one you to guess through their behavior or expressions. One of the best sher on sub text I like is by Habib Jalib:
 
