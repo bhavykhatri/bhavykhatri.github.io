@@ -1,11 +1,10 @@
 ---
-title: "Expert Prompt Tricks for Creating Stunning AI Images"
+title: "Secrets to Creating Stunning AI Images: Expert Prompts"
 author: Bhavy Khatri
 date: 2023-07-09 19:40:00 +0800
 categories: [AI]
 tags: [personal]
 ---
-# Secrets to Creating Stunning AI Images: Expert Prompts
 
 Are you tired of using the same old prompts for your AI images? Are you looking for ways to make your AI images stand out? In this blog post, we will explore 12 expert prompt tricks that will blow your mind and help you create one-of-a-kind jaw-dropping AI images. These tricks are known only by the experts and will unlock the full potential of AI image generation. Let's dive in and unleash your creativity!
 
