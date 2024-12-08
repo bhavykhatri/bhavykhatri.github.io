@@ -1,10 +1,13 @@
 ---
-title: "तो एक बवंडर बन जाना "
+title: "तो एक बवंडर बन जाना"
 author: Bhavy Khatri
 date: 2023-09-04 11:33:00 +0800
 categories: [Blogging, Sher, Poetry]
-tags: [ghazal, kavita,emotional]
+tags: [ghazal, kavita, emotional]
 ---
+<p style="text-align: center;">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/2xHnyYPbhkI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</p>
 
 <p style="text-align: center;">
 गर तूफ़ानों से लड़ना हो <br>
@@ -30,8 +33,8 @@ tags: [ghazal, kavita,emotional]
 गर तूफ़ानों से लड़ना हो  <br>
 तो एक बवंडर बन जाना <br><br>
 
-पत्थर भी तैरने लगते हैं <br>
-गर नाम हो उनपे मेहनत का <br>
+पत्थर भी तैरा करते हैं <br>
+जब नाम हो उनपे मेहनत का <br>
 दरिया भी शीश झुकाता है <br>
 फिर देख के पौरुष मानव का <br><br>
 
@@ -46,10 +49,28 @@ tags: [ghazal, kavita,emotional]
 अपने संयम से तोड़ भी दे <br><br>
 
 गर तुझे सिकंदर बनना हो <br>
-तू एक कलंदर बन जाना <br>
+तो एक कलंदर बन जाना <br>
 गर तूफ़ानों से लड़ना हो  <br>
 तो एक बवंडर बन जाना <br><br>
 
+रातों को भी जगना होगा <br>
+खुशियों को भी तजना होगा <br>
+अमृत को चखने से पहले <br>
+विष पान तुझे करना होगा <br><br>
 
+कष्टों की ज्वाला में जलकर <br>
+तू सच्चा सोना बन जाना <br>
+गर तूफ़ानों से लड़ना हो  <br>
+तो एक बवंडर बन जाना <br><br>
+
+काँटों में हाथ बढ़ाकर ही <br>
+खुशबू फूलों की मिलती है <br>
+तब जन्म शिशु भी लेता है <br>
+जब माँ पीड़ा को सहती है <br><br>
+
+इस जीवन की रणभूमि में <br>
+संघर्षों से मत घबराना <br>
+गर तूफ़ानों से लड़ना हो  <br>
+तो एक बवंडर बन जाना <br>
 </p>
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2xHnyYPbhkI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
