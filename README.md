@@ -44,6 +44,11 @@ draft: false
 ## Deploy
 
 Pushing to `master` triggers `.github/workflows/deploy.yml`, which builds with
-`withastro/action` and publishes to GitHub Pages. In the repo **Settings → Pages**,
-the source must be set to **GitHub Actions**. The custom domain is configured via
-`public/CNAME` (`www.bhavykhatri.com`).
+`withastro/action` and publishes to GitHub Pages. The Pages source is set to
+**GitHub Actions** (`build_type: workflow`).
+
+The custom domain (`www.bhavykhatri.com`) is configured in the repo
+**Settings → Pages → Custom domain**, not via a `CNAME` file in the build. Keeping
+the domain out of the deployed artifact avoids a publish-time domain-validation
+failure that otherwise breaks the Actions deployment; the domain set in settings
+persists across deploys.
