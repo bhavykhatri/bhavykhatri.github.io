@@ -40,7 +40,6 @@ const essayCount = posts.filter((p) => p.data.kind === 'essay').length;
 
       <div class="portrait reveal">
         <img src="/photo.jpg" alt="Bhavy Khatri" width="360" height="360" loading="eager" />
-        <span class="stamp deva">ब</span>
       </div>
     </div>
   </section>
@@ -110,21 +109,6 @@ const essayCount = posts.filter((p) => p.data.kind === 'essay').length;
     box-shadow: var(--shadow-lg);
     filter: saturate(1.02);
   }
-  .stamp {
-    position: absolute;
-    right: -14px;
-    bottom: -14px;
-    display: grid;
-    place-items: center;
-    width: 62px;
-    height: 62px;
-    border-radius: 18px;
-    background: var(--accent);
-    color: #fff;
-    font-size: 1.8rem;
-    box-shadow: var(--shadow-lg);
-  }
-  [data-theme='dark'] .stamp { color: #1a120f; }
 
   .head {
     display: flex;
