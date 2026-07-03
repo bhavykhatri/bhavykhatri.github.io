@@ -11,7 +11,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 <header class="site-header">
   <div class="wrap bar">
     <a class="brand" href="/">
-      <span class="mark">ब</span>
+      <img class="mark" src="/photo.jpg" width="34" height="34" alt="Bhavy Khatri" loading="eager" decoding="async" />
       <span class="name">Bhavy Khatri</span>
     </a>
 
@@ -61,18 +61,14 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
     font-weight: 600;
   }
   .mark {
-    display: grid;
-    place-items: center;
+    display: block;
     width: 34px;
     height: 34px;
-    border-radius: 10px;
-    background: var(--accent);
-    color: #fff;
-    font-family: var(--font-deva);
-    font-size: 1.05rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border);
     box-shadow: var(--shadow);
   }
-  [data-theme='dark'] .mark { color: #1a120f; }
   .name {
     font-family: var(--font-display);
     font-size: 1.05rem;
