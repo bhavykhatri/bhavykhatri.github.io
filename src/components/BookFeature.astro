@@ -1,0 +1,131 @@
+---
+export interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+const bookUrl = 'https://www.bhavykhatri.com/Agentic-AI-Book/';
+const parts = [
+  'Foundations of Agency',
+  'The LLM as an Agent',
+  'Building Agents',
+];
+---
+
+<div class={`book ${compact ? 'compact' : ''} reveal`}>
+  <div class="cover" aria-hidden="true">
+    <div class="spine"></div>
+    <div class="face">
+      <span class="kicker">A Book</span>
+      <span class="btitle">Agents</span>
+      <span class="bsub">From Theory to Production</span>
+      <span class="byline">Bhavy Khatri</span>
+    </div>
+  </div>
+
+  <div class="copy">
+    <span class="eyebrow">Currently writing</span>
+    <h2>Agents: From Theory to Production</h2>
+    <p class="lede">
+      A practical, research-grounded guide that connects the classical theory of intelligent
+      agents to the modern craft of building autonomous LLM agents with tools, memory, planning,
+      and multi-agent orchestration.
+    </p>
+    {
+      !compact && (
+        <ul class="parts">
+          {parts.map((p, i) => (
+            <li>
+              <span class="num">{i + 1}</span>
+              {p}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    <div class="cta">
+      <a class="btn btn-primary" href={bookUrl} target="_blank" rel="noopener">
+        Read the book <span aria-hidden="true">→</span>
+      </a>
+      <a class="btn btn-ghost" href="https://github.com/bhavykhatri/Agentic-AI-Book" target="_blank" rel="noopener">
+        View on GitHub
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .book {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 3rem;
+    align-items: center;
+    padding: 2.75rem;
+    border-radius: 22px;
+    background:
+      linear-gradient(160deg, color-mix(in srgb, var(--accent) 8%, var(--surface)), var(--surface));
+    border: 1px solid var(--border-solid);
+    box-shadow: var(--shadow-lg);
+  }
+  .book.compact { grid-template-columns: 200px 1fr; gap: 2.25rem; padding: 2rem; }
+
+  /* Faux book cover */
+  .cover {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    border-radius: 6px 12px 12px 6px;
+    background: linear-gradient(135deg, #7f2d20, #9c3b2c 45%, #b0863f);
+    box-shadow: var(--shadow-lg), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    transform: perspective(1200px) rotateY(-16deg);
+    transition: transform 0.5s ease;
+    color: #f6ead9;
+    overflow: hidden;
+  }
+  .book:hover .cover { transform: perspective(1200px) rotateY(-8deg) translateY(-4px); }
+  .spine {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 16px;
+    background: rgba(0, 0, 0, 0.22);
+  }
+  .face {
+    position: absolute;
+    inset: 0;
+    padding: 1.6rem 1.3rem 1.3rem 1.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .face::after {
+    content: '';
+    position: absolute;
+    left: 1.9rem; right: 1.3rem;
+    top: 3.4rem;
+    height: 1px;
+    background: rgba(246, 234, 217, 0.4);
+  }
+  .kicker { font-size: 0.66rem; letter-spacing: 0.24em; text-transform: uppercase; opacity: 0.8; }
+  .btitle { font-family: var(--font-display); font-size: 2.4rem; line-height: 1; margin-top: 0.4rem; }
+  .bsub { font-family: var(--font-serif); font-style: italic; font-size: 1rem; margin-top: auto; opacity: 0.95; }
+  .byline { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.85; }
+
+  .copy h2 { font-size: 2rem; margin: 0.5rem 0 0.75rem; }
+  .lede { color: var(--muted); margin: 0 0 1.4rem; max-width: 42ch; }
+  .parts { list-style: none; padding: 0; margin: 0 0 1.6rem; display: grid; gap: 0.6rem; }
+  .parts li { display: flex; align-items: center; gap: 0.7rem; font-size: 0.95rem; }
+  .num {
+    display: grid; place-items: center;
+    width: 24px; height: 24px;
+    border-radius: 7px;
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    color: var(--accent);
+    font-size: 0.78rem; font-weight: 600;
+  }
+  .cta { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+  @media (max-width: 720px) {
+    .book, .book.compact { grid-template-columns: 1fr; gap: 2rem; padding: 1.75rem; text-align: left; }
+    .cover { width: 170px; transform: none; }
+    .book:hover .cover { transform: translateY(-4px); }
+    .copy h2 { font-size: 1.6rem; }
+  }
+</style>

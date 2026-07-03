@@ -1,0 +1,87 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('writing', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Base title="Writing" description="Essays and Hindi-Urdu poetry by Bhavy Khatri.">
+  <section class="head-band">
+    <div class="wrap">
+      <span class="eyebrow">The notebook</span>
+      <h1>Writing</h1>
+      <p class="muted lede">
+        Essays on technology and language, and ghazals in Hindi and Urdu. Two ways of paying
+        attention to the world.
+      </p>
+      <div class="filters" role="tablist">
+        <button class="chip active" data-filter="all">All</button>
+        <button class="chip" data-filter="poetry">Poetry</button>
+        <button class="chip" data-filter="essay">Essays</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="list-wrap">
+    <div class="wrap">
+      <div class="grid-posts" id="post-grid">
+        {posts.map((post) => (
+          <div class="item" data-kind={post.data.kind}>
+            <PostCard post={post} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head-band { padding: 3.5rem 0 1.5rem; }
+  .head-band h1 { font-size: clamp(2.4rem, 6vw, 3.4rem); margin: 0.4rem 0 0.8rem; }
+  .lede { max-width: 46ch; font-size: 1.08rem; }
+  .filters { display: flex; gap: 0.5rem; margin-top: 1.8rem; }
+  .chip {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-solid);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .chip:hover { color: var(--text); }
+  .chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  [data-theme='dark'] .chip.active { color: #1a120f; }
+
+  .list-wrap { padding: 1.5rem 0 2rem; }
+  .grid-posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .item.hide { display: none; }
+</style>
+
+<script is:inline>
+  (function () {
+    const chips = document.querySelectorAll('.chip');
+    const items = document.querySelectorAll('#post-grid .item');
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        chips.forEach((c) => c.classList.remove('active'));
+        chip.classList.add('active');
+        const f = chip.getAttribute('data-filter');
+        items.forEach((it) => {
+          const show = f === 'all' || it.getAttribute('data-kind') === f;
+          it.classList.toggle('hide', !show);
+        });
+      });
+    });
+  })();
+</script>

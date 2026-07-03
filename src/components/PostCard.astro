@@ -1,0 +1,72 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  post: CollectionEntry<'writing'>;
+}
+const { post } = Astro.props;
+const { title, date, kind, lang, excerpt } = post.data;
+const fmtDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<a class="card post" href={`/writing/${post.slug}`}>
+  <div class="meta">
+    <span class={`kind ${kind}`}>{kind === 'poetry' ? 'Poetry' : 'Essay'}</span>
+    <time datetime={date.toISOString()}>{fmtDate}</time>
+  </div>
+  <h3 class={lang === 'hi' ? 'deva title' : 'title'}>{title}</h3>
+  {excerpt && <p class={lang === 'hi' ? 'deva excerpt' : 'excerpt'}>{excerpt}</p>}
+  <span class="read">Read <span class="arrow">→</span></span>
+</a>
+
+<style>
+  .post {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1.6rem;
+    height: 100%;
+  }
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
+    font-size: 0.78rem;
+    color: var(--faint);
+  }
+  .kind {
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 0.68rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+  }
+  .kind.poetry { color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
+  .kind.essay { color: var(--gold); background: color-mix(in srgb, var(--gold) 14%, transparent); }
+  time { margin-left: auto; }
+  .title {
+    font-size: 1.28rem;
+    margin: 0 0 0.5rem;
+    line-height: 1.25;
+  }
+  .title.deva { font-size: 1.34rem; line-height: 1.5; }
+  .excerpt {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin: 0 0 1.1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .excerpt.deva { font-size: 1rem; line-height: 1.7; }
+  .read {
+    margin-top: auto;
+    font-size: 0.88rem;
+    font-weight: 550;
+    color: var(--accent);
+  }
+  .arrow { transition: transform 0.2s ease; display: inline-block; }
+  .post:hover .arrow { transform: translateX(4px); }
+</style>

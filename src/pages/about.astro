@@ -1,0 +1,135 @@
+---
+import Base from '../layouts/Base.astro';
+
+const skills = [
+  '.NET', 'C#', 'TypeScript', 'JavaScript', 'React', 'C++', 'Python', 'SQL', 'HTML', 'CSS', 'Git',
+];
+const doing = [
+  'Building websites end to end (frontend + backend)',
+  'Shipping accessible, responsive experiences',
+  'Running A/B experiments and making ship decisions',
+  'Writing unit and functional tests',
+  'Debugging and resolving live-site issues',
+  'Maintaining a content-management portal',
+];
+const journey = [
+  { when: 'Now', what: 'Full-stack developer at Microsoft', where: 'Trivia experiences for Bing' },
+  { when: 'Grad', what: 'B.Tech, Computer Science', where: 'IIT Kanpur · Award for Academic Excellence' },
+  { when: 'Intern', what: 'Research Intern', where: 'Adobe' },
+  { when: 'Intern', what: 'Machine Learning Intern', where: 'Xenonstack' },
+];
+---
+
+<Base title="About" description="About Bhavy Khatri — developer, writer, and poet.">
+  <section class="head-band">
+    <div class="wrap">
+      <span class="eyebrow">About</span>
+      <h1>Solve it, don't just code it.</h1>
+      <p class="lede muted">
+        I am a full-stack software developer at Microsoft, working on the Trivia experiences for
+        Bing. I care about products that are genuinely useful, interfaces that feel effortless,
+        and language, whether it compiles or rhymes.
+      </p>
+    </div>
+  </section>
+
+  <section class="body">
+    <div class="wrap cols">
+      <div class="main">
+        <h2>What I do</h2>
+        <ul class="doing">
+          {doing.map((d) => <li>{d}</li>)}
+        </ul>
+
+        <h2>The journey</h2>
+        <ol class="timeline">
+          {journey.map((j) => (
+            <li>
+              <span class="when">{j.when}</span>
+              <div>
+                <strong>{j.what}</strong>
+                <span class="where">{j.where}</span>
+              </div>
+            </li>
+          ))}
+        </ol>
+
+        <h2>Beyond code</h2>
+        <p>
+          Outside of engineering, I write essays about technology and language and compose ghazals
+          in Hindi and Urdu. I am also writing a book, <a href="/book">Agents: From Theory to
+          Production</a>, on building modern LLM agents. You can find all of it in
+          <a href="/writing">my writing</a>.
+        </p>
+      </div>
+
+      <aside class="side">
+        <div class="card panel">
+          <h3>Tools &amp; languages</h3>
+          <div class="chips">
+            {skills.map((s) => <span class="tag">{s}</span>)}
+          </div>
+        </div>
+        <div class="card panel">
+          <h3>Elsewhere</h3>
+          <ul class="links">
+            <li><a href="https://github.com/bhavykhatri" target="_blank" rel="noopener">GitHub ↗</a></li>
+            <li><a href="https://www.linkedin.com/in/bhavy-khatri-b68a0720b/" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+            <li><a href="https://twitter.com/bhavykhatri_" target="_blank" rel="noopener">Twitter ↗</a></li>
+            <li><a href="mailto:bhavykhatri@gmail.com">Email ↗</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head-band { padding: 3.5rem 0 1rem; }
+  .head-band h1 { font-size: clamp(2.2rem, 5.5vw, 3.2rem); margin: 0.4rem 0 1rem; }
+  .lede { max-width: 52ch; font-size: 1.12rem; }
+
+  .body { padding: 2.5rem 0; }
+  .cols { display: grid; grid-template-columns: 1fr 300px; gap: 3rem; align-items: start; }
+  .main h2 { font-size: 1.6rem; margin: 2.2rem 0 1rem; }
+  .main h2:first-child { margin-top: 0; }
+  .main p { color: var(--text); font-size: 1.05rem; }
+  .main a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+  .doing { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.65rem; }
+  .doing li { position: relative; padding-left: 1.6rem; color: var(--muted); }
+  .doing li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0.62em;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .timeline { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.1rem; }
+  .timeline li { display: grid; grid-template-columns: 70px 1fr; gap: 1rem; align-items: start; }
+  .when {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-top: 0.2rem;
+  }
+  .timeline strong { display: block; }
+  .where { color: var(--muted); font-size: 0.92rem; }
+
+  .side { display: grid; gap: 1.25rem; position: sticky; top: 88px; }
+  .panel { padding: 1.4rem 1.5rem; }
+  .panel h3 { font-size: 1rem; margin: 0 0 0.9rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .links { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem; }
+  .links a { color: var(--muted); font-size: 0.95rem; }
+  .links a:hover { color: var(--accent); }
+
+  @media (max-width: 820px) {
+    .cols { grid-template-columns: 1fr; gap: 2.5rem; }
+    .side { position: static; }
+  }
+</style>

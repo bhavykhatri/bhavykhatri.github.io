@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import BookFeature from '../components/BookFeature.astro';
+
+const bookUrl = 'https://www.bhavykhatri.com/Agentic-AI-Book/';
+
+const topics = [
+  { t: 'Foundations of agency', d: 'What an agent really is, its history and theory, architectures, environments, and rationality.' },
+  { t: 'The LLM as an agent', d: 'LLMs as reasoners, the augmented LLM with tools and memory, and reasoning and planning.' },
+  { t: 'Building agents', d: 'Workflows vs. agents, agentic patterns, tools and the Model Context Protocol, and beyond.' },
+  { t: 'Concept-first', d: 'Every hard idea leads with an everyday analogy and a diagram before any formalism.' },
+  { t: 'Research-grounded', d: 'Non-obvious claims are cited to primary sources; nothing is hand-waved.' },
+  { t: 'Production-minded', d: 'Evaluation, safety, guardrails, and the craft of shipping agents that hold up.' },
+];
+---
+
+<Base
+  title="The Agents Book"
+  description="Agents: From Theory to Production — a practical, research-grounded guide to building modern LLM agents."
+>
+  <section class="hero">
+    <div class="wrap">
+      <BookFeature />
+    </div>
+  </section>
+
+  <section class="section-pad">
+    <div class="wrap">
+      <div class="intro reveal">
+        <span class="eyebrow">What it covers</span>
+        <h2>From classical theory to shipping real systems</h2>
+        <p class="muted lede">
+          The book connects the classical theory of intelligent agents to the modern practice of
+          building autonomous LLM agents with tools, memory, planning, and multi-agent
+          orchestration. It is written to make hard ideas click.
+        </p>
+      </div>
+
+      <div class="topics">
+        {topics.map((x) => (
+          <div class="card topic reveal">
+            <h3>{x.t}</h3>
+            <p>{x.d}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="closing reveal">
+        <p>The book is a living project, updated as the field moves.</p>
+        <a class="btn btn-primary" href={bookUrl} target="_blank" rel="noopener">
+          Start reading <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding: 3.5rem 0 0; }
+  .intro { max-width: 52ch; margin-bottom: 2.5rem; }
+  .intro h2 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin: 0.5rem 0 0.9rem; }
+  .lede { font-size: 1.1rem; }
+  .topics {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .topic { padding: 1.5rem 1.6rem; }
+  .topic h3 { font-size: 1.16rem; margin: 0 0 0.5rem; }
+  .topic p { color: var(--muted); font-size: 0.96rem; margin: 0; }
+  .closing {
+    margin-top: 3rem;
+    text-align: center;
+    display: grid;
+    gap: 1rem;
+    justify-items: center;
+  }
+  .closing p { font-family: var(--font-serif); font-style: italic; font-size: 1.2rem; color: var(--muted); margin: 0; }
+</style>

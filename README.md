@@ -1,15 +1,49 @@
+# bhavykhatri.com
 
-This [website](https://www.bhavykhatri.com/) uses github pages.
+Personal website of Bhavy Khatri — writing (poetry & essays) and the book
+*Agents: From Theory to Production*. Built with [Astro](https://astro.build).
 
-#### Setting up
+Live at **[www.bhavykhatri.com](https://www.bhavykhatri.com/)**.
 
-If using for the first time, run `bundle` to install all the dependencies. Use `bundle exec jekyll serve` to locally build the website.
+## Develop
 
-To build with drafts blog as well locally run `bundle exec jekyll serve --drafts`. 
+```bash
+npm install      # install dependencies
+npm run dev      # start the dev server at http://localhost:4321
+npm run build    # build the production site to ./dist
+npm run preview  # preview the production build locally
+```
 
-#### Resources
+Requires Node 18+ (no Ruby needed).
 
-- This website was build on the [Chirpy Jekyll Theme (v4.3.0)](https://github.com/cotes2020/jekyll-theme-chirpy/releases/tag/v4.3.0). Some customizations were added to the code
-- [Jekyll Tutorial Playlist](https://www.youtube.com/watch?v=T1itpPvFWHI&list=PLLAZ4kZ9dFpOPV5C5Ay0pHaa0RJFhcmcB)
-- [Jekyll Documentation](https://jekyllrb.com/docs/)
-- [Liquid Shopify Documentation](https://shopify.github.io/liquid/)
+## Structure
+
+- `src/pages/` — routes (home, writing, book, about, 404, rss).
+- `src/content/writing/` — poetry & essays as Markdown (a typed content collection).
+- `src/components/` — Header, Footer, PostCard, BookFeature.
+- `src/layouts/Base.astro` — shared shell (SEO, fonts, theme, footer).
+- `src/styles/global.css` — design system (palette, typography, light/dark).
+- `public/` — static assets, `CNAME`, favicon.
+
+## Writing a post
+
+Add a Markdown file to `src/content/writing/`:
+
+```yaml
+---
+title: "Your title"
+date: 2026-01-01
+kind: poetry   # or "essay"
+lang: en       # or "hi" for Devanagari
+tags: [ghazal]
+excerpt: "Optional one-line teaser."
+draft: false
+---
+```
+
+## Deploy
+
+Pushing to `master` triggers `.github/workflows/deploy.yml`, which builds with
+`withastro/action` and publishes to GitHub Pages. In the repo **Settings → Pages**,
+the source must be set to **GitHub Actions**. The custom domain is configured via
+`public/CNAME` (`www.bhavykhatri.com`).

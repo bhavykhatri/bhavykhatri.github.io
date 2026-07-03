@@ -1,0 +1,53 @@
+---
+const year = new Date().getFullYear();
+const socials = [
+  { href: 'https://github.com/bhavykhatri', label: 'GitHub' },
+  { href: 'https://www.linkedin.com/in/bhavy-khatri-b68a0720b/', label: 'LinkedIn' },
+  { href: 'https://twitter.com/bhavykhatri_', label: 'Twitter' },
+  { href: 'mailto:bhavykhatri@gmail.com', label: 'Email' },
+];
+---
+
+<footer class="site-footer">
+  <div class="wrap inner">
+    <div class="left">
+      <p class="quote">“Have a <em>solve it</em>, not <em>code it</em>, attitude.”</p>
+      <p class="copy muted">© {year} Bhavy Khatri · Built with Astro</p>
+    </div>
+    <nav class="social" aria-label="Social links">
+      {socials.map((s) => <a href={s.href} target="_blank" rel="noopener">{s.label}</a>)}
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: 4rem;
+    border-top: 1px solid var(--border);
+    background: var(--bg-soft);
+  }
+  .inner {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .quote {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    margin: 0 0 0.4rem;
+  }
+  .quote em { color: var(--accent); font-style: italic; }
+  .copy { font-size: 0.85rem; margin: 0; }
+  .social { display: flex; gap: 1.25rem; }
+  .social a {
+    font-size: 0.9rem;
+    color: var(--muted);
+    position: relative;
+    transition: color 0.2s ease;
+  }
+  .social a:hover { color: var(--accent); }
+</style>
