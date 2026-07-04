@@ -23,27 +23,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -53,7 +33,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./chapters/part1-foundations/01-what-is-an-agent.html" rel="next">
+<link href="./preface.html" rel="next">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -105,7 +85,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Cover</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -137,6 +117,12 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Cover</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -366,15 +352,7 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
-  <ul class="collapse">
-  <li><a href="#why-this-book" id="toc-why-this-book" class="nav-link" data-scroll-target="#why-this-book">Why this book</a></li>
-  <li><a href="#what-youll-learn" id="toc-what-youll-learn" class="nav-link" data-scroll-target="#what-youll-learn">What you’ll learn</a></li>
-  <li><a href="#who-this-book-is-for" id="toc-who-this-book-is-for" class="nav-link" data-scroll-target="#who-this-book-is-for">Who this book is for</a></li>
-  <li><a href="#how-to-read-it" id="toc-how-to-read-it" class="nav-link" data-scroll-target="#how-to-read-it">How to read it</a></li>
-  <li><a href="#conventions" id="toc-conventions" class="nav-link" data-scroll-target="#conventions">Conventions</a></li>
-  <li><a href="#a-note-on-a-fast-moving-field" id="toc-a-note-on-a-fast-moving-field" class="nav-link" data-scroll-target="#a-note-on-a-fast-moving-field">A note on a fast-moving field</a></li>
-  </ul></li>
+  <li><a href="#cover" id="toc-cover" class="nav-link active" data-scroll-target="#cover">Cover</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/bhavykhatri/bhavykhatri.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -419,70 +397,35 @@ div.csl-indent {
 </header>
 
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<section id="why-this-book" class="level2">
-<h2 class="anchored" data-anchor-id="why-this-book">Why this book</h2>
-<p>The word <em>agent</em> is doing a lot of work these days. To a researcher trained in classical AI, an agent is anything that perceives its environment through sensors and acts upon it through actuators to pursue a goal <span class="citation" data-cites="russell2021aima"><a href="references.html#ref-russell2021aima" role="doc-biblioref">[1]</a></span>. To a developer in 2026, an “agent” is more likely a large language model wired to a set of tools, running in a loop until a task is done. Both are right. This book argues that you cannot build the second well without understanding the first.</p>
-<p>Most material on AI agents falls into one of two camps. Academic texts give you the theory of rational agents, environments, and architectures but stop short of today’s LLM-driven systems. Industry blog posts and framework tutorials show you how to call an API but rarely explain <em>why</em> a design succeeds or fails. This book deliberately bridges the gap: it treats modern LLM agents as the latest chapter in a long story about building systems that sense, reason, and act.</p>
-</section>
-<section id="what-youll-learn" class="level2">
-<h2 class="anchored" data-anchor-id="what-youll-learn">What you’ll learn</h2>
-<p>By the end, you will be able to:</p>
-<ul>
-<li>Explain what an agent is, how it differs from a fixed workflow, and where each belongs <span class="citation" data-cites="anthropic2024effective"><a href="references.html#ref-anthropic2024effective" role="doc-biblioref">[2]</a></span>.</li>
-<li>Reason about environments, rationality, and architectures using the classical vocabulary, and see how LLMs fit that frame.</li>
-<li>Build agents that use tools, retrieve knowledge, remember, plan, and self-correct.</li>
-<li>Orchestrate single- and multi-agent systems with LangGraph and the OpenAI Agents SDK <span class="citation" data-cites="langgraph2024 openai2025tools"><a href="references.html#ref-langgraph2024" role="doc-biblioref">[3]</a>, <a href="references.html#ref-openai2025tools" role="doc-biblioref">[4]</a></span>.</li>
-<li>Evaluate, observe, secure, and deploy agents responsibly in production <span class="citation" data-cites="owasp2025llm"><a href="references.html#ref-owasp2025llm" role="doc-biblioref">[5]</a></span>.</li>
-</ul>
-</section>
-<section id="who-this-book-is-for" class="level2">
-<h2 class="anchored" data-anchor-id="who-this-book-is-for">Who this book is for</h2>
-<p>The book serves a mixed audience. <strong>Developers</strong> get runnable Python examples and production patterns. <strong>Technical leaders and product managers</strong> get mental models and honest trade-offs. <strong>Students and the curious</strong> get the foundational theory explained from first principles. Chapters open with intuition, add just enough formalism, then show working code, so you can read at the depth you need.</p>
-</section>
-<section id="how-to-read-it" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-read-it">How to read it</h2>
-<ul>
-<li><strong>Part I</strong> builds the theoretical foundation of agency.</li>
-<li><strong>Part II</strong> reframes the LLM as an agent and introduces the core building blocks and reasoning strategies.</li>
-<li><strong>Part III</strong> is hands-on: choosing between workflows and agents, agentic patterns, tools, memory, orchestration, and multi-agent systems.</li>
-<li><strong>Part IV</strong> covers what it takes to run agents in production: evaluation, observability, safety, and cost.</li>
-<li><strong>Part V</strong> looks at the frontier and the open problems.</li>
-</ul>
-<p>If you are impatient to build, skim Part I, then start at Part II. If you want the “why” before the “how,” read straight through.</p>
-</section>
-<section id="conventions" class="level2">
-<h2 class="anchored" data-anchor-id="conventions">Conventions</h2>
-<ul>
-<li>🧠 <strong>Deep dive</strong> boxes add optional theory.</li>
-<li>🛠️ <strong>In practice</strong> boxes add production tips and gotchas.</li>
-<li>Code is Python, uses the OpenAI, LangChain/LangGraph, and Agents SDK libraries, and is runnable after following <a href="./chapters/appendices/a-environment-setup.html">Appendix A</a>.</li>
-</ul>
-</section>
-<section id="a-note-on-a-fast-moving-field" class="level2">
-<h2 class="anchored" data-anchor-id="a-note-on-a-fast-moving-field">A note on a fast-moving field</h2>
-<p>Agent tooling changes monthly. Where possible the book teaches durable principles and marks provider-specific guidance clearly, so what you learn here outlasts any single framework release.</p>
+<section id="cover" class="level1 unnumbered">
+<h1 class="unnumbered">Cover</h1>
+<div class="book-cover">
+<p><img src="images/cover.png" class="img-fluid" alt="Book cover for Agents: From Theory to Production by Bhavy Khatri and Jitendra Patil. Building Intelligent AI Agents that Reason, Act, and Deliver Real-World Impact."></p>
+</div>
+<div class="cover-next">
+<p><a href="./preface.html">Start reading: Preface →</a></p>
+</div>
+<style>
+.book-cover {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0 1.5rem;
+}
+.book-cover img {
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.22);
+}
+.cover-next {
+  text-align: center;
+  margin: 1.5rem 0 2rem;
+  font-size: 1.05rem;
+}
+</style>
 
 
-<div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list" style="display: none">
-<div id="ref-russell2021aima" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[1] </div><div class="csl-right-inline">S. Russell and P. Norvig, <em>Artificial intelligence: A modern approach</em>, 4th ed. Pearson, 2021.</div>
-</div>
-<div id="ref-anthropic2024effective" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Anthropic, E. Schluntz, and B. Zhang, <span>“Building effective agents.”</span> <a href="https://www.anthropic.com/engineering/building-effective-agents" class="uri">https://www.anthropic.com/engineering/building-effective-agents</a>, Dec. 2024.</div>
-</div>
-<div id="ref-langgraph2024" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[3] </div><div class="csl-right-inline">LangChain, <span>“LangGraph documentation.”</span> <a href="https://langchain-ai.github.io/langgraph/" class="uri">https://langchain-ai.github.io/langgraph/</a>, 2024.</div>
-</div>
-<div id="ref-openai2025tools" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[4] </div><div class="csl-right-inline">OpenAI, <span>“New tools for building agents.”</span> <a href="https://openai.com/index/new-tools-for-building-agents/" class="uri">https://openai.com/index/new-tools-for-building-agents/</a>, Mar. 2025.</div>
-</div>
-<div id="ref-owasp2025llm" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[5] </div><div class="csl-right-inline">OWASP, <span>“OWASP top 10 for large language model applications.”</span> <a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" class="uri">https://owasp.org/www-project-top-10-for-large-language-model-applications/</a>, 2025.</div>
-</div>
-</div>
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1051,8 +994,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chapters/part1-foundations/01-what-is-an-agent.html" class="pagination-link" aria-label="What Is an Agent?">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What Is an Agent?</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./preface.html" class="pagination-link" aria-label="Preface">
+        <span class="nav-page-text">Preface</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

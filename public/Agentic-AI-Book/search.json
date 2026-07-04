@@ -4,25 +4,25 @@
     "href": "index.html",
     "title": "Agents: From Theory to Production",
     "section": "",
-    "text": "Preface",
+    "text": "Cover\n\n\n\n\nStart reading: Preface →",
     "crumbs": [
-      "Preface"
+      "Cover"
     ]
   },
   {
-    "objectID": "index.html#why-this-book",
-    "href": "index.html#why-this-book",
-    "title": "Agents: From Theory to Production",
-    "section": "Why this book",
+    "objectID": "preface.html",
+    "href": "preface.html",
+    "title": "Preface",
+    "section": "",
     "text": "Why this book\nThe word agent is doing a lot of work these days. To a researcher trained in classical AI, an agent is anything that perceives its environment through sensors and acts upon it through actuators to pursue a goal [1]. To a developer in 2026, an “agent” is more likely a large language model wired to a set of tools, running in a loop until a task is done. Both are right. This book argues that you cannot build the second well without understanding the first.\nMost material on AI agents falls into one of two camps. Academic texts give you the theory of rational agents, environments, and architectures but stop short of today’s LLM-driven systems. Industry blog posts and framework tutorials show you how to call an API but rarely explain why a design succeeds or fails. This book deliberately bridges the gap: it treats modern LLM agents as the latest chapter in a long story about building systems that sense, reason, and act.",
     "crumbs": [
       "Preface"
     ]
   },
   {
-    "objectID": "index.html#what-youll-learn",
-    "href": "index.html#what-youll-learn",
-    "title": "Agents: From Theory to Production",
+    "objectID": "preface.html#what-youll-learn",
+    "href": "preface.html#what-youll-learn",
+    "title": "Preface",
     "section": "What you’ll learn",
     "text": "What you’ll learn\nBy the end, you will be able to:\n\nExplain what an agent is, how it differs from a fixed workflow, and where each belongs [2].\nReason about environments, rationality, and architectures using the classical vocabulary, and see how LLMs fit that frame.\nBuild agents that use tools, retrieve knowledge, remember, plan, and self-correct.\nOrchestrate single- and multi-agent systems with LangGraph and the OpenAI Agents SDK [3], [4].\nEvaluate, observe, secure, and deploy agents responsibly in production [5].",
     "crumbs": [
@@ -30,9 +30,9 @@
     ]
   },
   {
-    "objectID": "index.html#who-this-book-is-for",
-    "href": "index.html#who-this-book-is-for",
-    "title": "Agents: From Theory to Production",
+    "objectID": "preface.html#who-this-book-is-for",
+    "href": "preface.html#who-this-book-is-for",
+    "title": "Preface",
     "section": "Who this book is for",
     "text": "Who this book is for\nThe book serves a mixed audience. Developers get runnable Python examples and production patterns. Technical leaders and product managers get mental models and honest trade-offs. Students and the curious get the foundational theory explained from first principles. Chapters open with intuition, add just enough formalism, then show working code, so you can read at the depth you need.",
     "crumbs": [
@@ -40,9 +40,9 @@
     ]
   },
   {
-    "objectID": "index.html#how-to-read-it",
-    "href": "index.html#how-to-read-it",
-    "title": "Agents: From Theory to Production",
+    "objectID": "preface.html#how-to-read-it",
+    "href": "preface.html#how-to-read-it",
+    "title": "Preface",
     "section": "How to read it",
     "text": "How to read it\n\nPart I builds the theoretical foundation of agency.\nPart II reframes the LLM as an agent and introduces the core building blocks and reasoning strategies.\nPart III is hands-on: choosing between workflows and agents, agentic patterns, tools, memory, orchestration, and multi-agent systems.\nPart IV covers what it takes to run agents in production: evaluation, observability, safety, and cost.\nPart V looks at the frontier and the open problems.\n\nIf you are impatient to build, skim Part I, then start at Part II. If you want the “why” before the “how,” read straight through.",
     "crumbs": [
@@ -50,9 +50,9 @@
     ]
   },
   {
-    "objectID": "index.html#conventions",
-    "href": "index.html#conventions",
-    "title": "Agents: From Theory to Production",
+    "objectID": "preface.html#conventions",
+    "href": "preface.html#conventions",
+    "title": "Preface",
     "section": "Conventions",
     "text": "Conventions\n\n🧠 Deep dive boxes add optional theory.\n🛠️ In practice boxes add production tips and gotchas.\nCode is Python, uses the OpenAI, LangChain/LangGraph, and Agents SDK libraries, and is runnable after following Appendix A.",
     "crumbs": [
@@ -60,9 +60,9 @@
     ]
   },
   {
-    "objectID": "index.html#a-note-on-a-fast-moving-field",
-    "href": "index.html#a-note-on-a-fast-moving-field",
-    "title": "Agents: From Theory to Production",
+    "objectID": "preface.html#a-note-on-a-fast-moving-field",
+    "href": "preface.html#a-note-on-a-fast-moving-field",
+    "title": "Preface",
     "section": "A note on a fast-moving field",
     "text": "A note on a fast-moving field\nAgent tooling changes monthly. Where possible the book teaches durable principles and marks provider-specific guidance clearly, so what you learn here outlasts any single framework release.\n\n\n\n\n[1] S. Russell and P. Norvig, Artificial intelligence: A modern approach, 4th ed. Pearson, 2021.\n\n\n[2] Anthropic, E. Schluntz, and B. Zhang, “Building effective agents.” https://www.anthropic.com/engineering/building-effective-agents, Dec. 2024.\n\n\n[3] LangChain, “LangGraph documentation.” https://langchain-ai.github.io/langgraph/, 2024.\n\n\n[4] OpenAI, “New tools for building agents.” https://openai.com/index/new-tools-for-building-agents/, Mar. 2025.\n\n\n[5] OWASP, “OWASP top 10 for large language model applications.” https://owasp.org/www-project-top-10-for-large-language-model-applications/, 2025.",
     "crumbs": [
