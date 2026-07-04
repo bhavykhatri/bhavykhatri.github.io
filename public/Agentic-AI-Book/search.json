@@ -2333,5 +2333,15 @@
     "crumbs": [
       "References"
     ]
+  },
+  {
+    "objectID": "about-the-author.html",
+    "href": "about-the-author.html",
+    "title": "About the Author",
+    "section": "",
+    "text": "Figure 1: Bhavy Khatri\n\n\n\nBhavy Khatri is a Data & Applied Scientist at Microsoft who enjoys exploring a simple but fascinating question: how can we build software that does more than respond, and can actually reason, make decisions, use tools, and solve problems? Over the years, his work has taken him from data science and analytics into the world of AI agents, where he has worked on large scale analytics systems, Copilot experiences, agentic workflows, and tool enabled AI systems.\nThrough this book, Bhavy shares what he has learned while building and studying agentic systems. His goal is not just to explain the latest frameworks or trends, but to help readers understand the core ideas that make agents work: reasoning, memory, tools, planning, evaluation, and reliable system design. He believes the future of software will be shaped by agents, and that building them requires both strong engineering principles and a healthy dose of curiosity.",
+    "crumbs": [
+      "About the Author"
+    ]
   }
 ]
