@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import BookFeature from '../components/BookFeature.astro';
 
 const bookUrl = '/Agentic-AI-Book/';
+const issuesUrl = 'https://github.com/bhavykhatri/bhavykhatri.github.io/issues/new?title=%5BBook%5D%20&labels=book';
 
 const topics = [
   { t: 'Foundations of agency', d: 'What an agent really is, its history and theory, architectures, environments, and rationality.' },
@@ -47,9 +48,17 @@ const topics = [
 
       <div class="closing reveal">
         <p>The book is a living project, updated as the field moves.</p>
-        <a class="btn btn-primary" href={bookUrl}>
-          Start reading <span aria-hidden="true">→</span>
-        </a>
+        <div class="closing-actions">
+          <a class="btn btn-primary" href={bookUrl}>
+            Start reading <span aria-hidden="true">→</span>
+          </a>
+          <a class="btn btn-ghost" href={issuesUrl} target="_blank" rel="noopener">
+            Found an issue? Let me know
+          </a>
+        </div>
+        <p class="note">
+          Spotted a typo, a broken link, or something that could be clearer? Open an issue and I'll take a look.
+        </p>
       </div>
     </div>
   </section>
@@ -76,4 +85,6 @@ const topics = [
     justify-items: center;
   }
   .closing p { font-family: var(--font-serif); font-style: italic; font-size: 1.2rem; color: var(--muted); margin: 0; }
+  .closing-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+  .closing .note { font-family: var(--font-sans); font-style: normal; font-size: 0.92rem; max-width: 46ch; }
 </style>

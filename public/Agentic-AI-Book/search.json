@@ -24,7 +24,7 @@
     "href": "index.html#what-youll-learn",
     "title": "Agents: From Theory to Production",
     "section": "What you’ll learn",
-    "text": "What you’ll learn\nBy the end, you will be able to:\n\nExplain what an agent is, how it differs from a fixed workflow, and where each belongs [2].\nReason about environments, rationality, and architectures using the classical vocabulary — and see how LLMs fit that frame.\nBuild agents that use tools, retrieve knowledge, remember, plan, and self-correct.\nOrchestrate single- and multi-agent systems with LangGraph and the OpenAI Agents SDK [3], [4].\nEvaluate, observe, secure, and deploy agents responsibly in production [5].",
+    "text": "What you’ll learn\nBy the end, you will be able to:\n\nExplain what an agent is, how it differs from a fixed workflow, and where each belongs [2].\nReason about environments, rationality, and architectures using the classical vocabulary, and see how LLMs fit that frame.\nBuild agents that use tools, retrieve knowledge, remember, plan, and self-correct.\nOrchestrate single- and multi-agent systems with LangGraph and the OpenAI Agents SDK [3], [4].\nEvaluate, observe, secure, and deploy agents responsibly in production [5].",
     "crumbs": [
       "Preface"
     ]
@@ -34,7 +34,7 @@
     "href": "index.html#who-this-book-is-for",
     "title": "Agents: From Theory to Production",
     "section": "Who this book is for",
-    "text": "Who this book is for\nThe book serves a mixed audience. Developers get runnable Python examples and production patterns. Technical leaders and product managers get mental models and honest trade-offs. Students and the curious get the foundational theory explained from first principles. Chapters open with intuition, add just enough formalism, then show working code — so you can read at the depth you need.",
+    "text": "Who this book is for\nThe book serves a mixed audience. Developers get runnable Python examples and production patterns. Technical leaders and product managers get mental models and honest trade-offs. Students and the curious get the foundational theory explained from first principles. Chapters open with intuition, add just enough formalism, then show working code, so you can read at the depth you need.",
     "crumbs": [
       "Preface"
     ]
@@ -44,7 +44,7 @@
     "href": "index.html#how-to-read-it",
     "title": "Agents: From Theory to Production",
     "section": "How to read it",
-    "text": "How to read it\n\nPart I builds the theoretical foundation of agency.\nPart II reframes the LLM as an agent and introduces the core building blocks and reasoning strategies.\nPart III is hands-on: choosing between workflows and agents, agentic patterns, tools, memory, orchestration, and multi-agent systems.\nPart IV covers what it takes to run agents in production — evaluation, observability, safety, and cost.\nPart V looks at the frontier and the open problems.\n\nIf you are impatient to build, skim Part I, then start at Part II. If you want the “why” before the “how,” read straight through.",
+    "text": "How to read it\n\nPart I builds the theoretical foundation of agency.\nPart II reframes the LLM as an agent and introduces the core building blocks and reasoning strategies.\nPart III is hands-on: choosing between workflows and agents, agentic patterns, tools, memory, orchestration, and multi-agent systems.\nPart IV covers what it takes to run agents in production: evaluation, observability, safety, and cost.\nPart V looks at the frontier and the open problems.\n\nIf you are impatient to build, skim Part I, then start at Part II. If you want the “why” before the “how,” read straight through.",
     "crumbs": [
       "Preface"
     ]
@@ -64,7 +64,7 @@
     "href": "index.html#a-note-on-a-fast-moving-field",
     "title": "Agents: From Theory to Production",
     "section": "A note on a fast-moving field",
-    "text": "A note on a fast-moving field\nAgent tooling changes monthly. Where possible the book teaches durable principles and marks provider-specific guidance clearly. See PLAN.md in the source repository for the living roadmap and the last-reviewed date of each chapter.\n\n\n\n\n[1] S. Russell and P. Norvig, Artificial intelligence: A modern approach, 4th ed. Pearson, 2021.\n\n\n[2] Anthropic, E. Schluntz, and B. Zhang, “Building effective agents.” https://www.anthropic.com/engineering/building-effective-agents, Dec. 2024.\n\n\n[3] LangChain, “LangGraph documentation.” https://langchain-ai.github.io/langgraph/, 2024.\n\n\n[4] OpenAI, “New tools for building agents.” https://openai.com/index/new-tools-for-building-agents/, Mar. 2025.\n\n\n[5] OWASP, “OWASP top 10 for large language model applications.” https://owasp.org/www-project-top-10-for-large-language-model-applications/, 2025.",
+    "text": "A note on a fast-moving field\nAgent tooling changes monthly. Where possible the book teaches durable principles and marks provider-specific guidance clearly, so what you learn here outlasts any single framework release.\n\n\n\n\n[1] S. Russell and P. Norvig, Artificial intelligence: A modern approach, 4th ed. Pearson, 2021.\n\n\n[2] Anthropic, E. Schluntz, and B. Zhang, “Building effective agents.” https://www.anthropic.com/engineering/building-effective-agents, Dec. 2024.\n\n\n[3] LangChain, “LangGraph documentation.” https://langchain-ai.github.io/langgraph/, 2024.\n\n\n[4] OpenAI, “New tools for building agents.” https://openai.com/index/new-tools-for-building-agents/, Mar. 2025.\n\n\n[5] OWASP, “OWASP top 10 for large language model applications.” https://owasp.org/www-project-top-10-for-large-language-model-applications/, 2025.",
     "crumbs": [
       "Preface"
     ]
