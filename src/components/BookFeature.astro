@@ -3,7 +3,7 @@ export interface Props {
   compact?: boolean;
 }
 const { compact = false } = Astro.props;
-const bookUrl = 'https://www.bhavykhatri.com/Agentic-AI-Book/';
+const bookUrl = '/Agentic-AI-Book/';
 const parts = [
   'Foundations of Agency',
   'The LLM as an Agent',
@@ -43,11 +43,8 @@ const parts = [
       )
     }
     <div class="cta">
-      <a class="btn btn-primary" href={bookUrl} target="_blank" rel="noopener">
+      <a class="btn btn-primary" href={bookUrl}>
         Read the book <span aria-hidden="true">→</span>
-      </a>
-      <a class="btn btn-ghost" href="https://github.com/bhavykhatri/Agentic-AI-Book" target="_blank" rel="noopener">
-        View on GitHub
       </a>
     </div>
   </div>

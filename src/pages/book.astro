@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import BookFeature from '../components/BookFeature.astro';
 
-const bookUrl = 'https://www.bhavykhatri.com/Agentic-AI-Book/';
+const bookUrl = '/Agentic-AI-Book/';
 
 const topics = [
   { t: 'Foundations of agency', d: 'What an agent really is, its history and theory, architectures, environments, and rationality.' },
@@ -47,7 +47,7 @@ const topics = [
 
       <div class="closing reveal">
         <p>The book is a living project, updated as the field moves.</p>
-        <a class="btn btn-primary" href={bookUrl} target="_blank" rel="noopener">
+        <a class="btn btn-primary" href={bookUrl}>
           Start reading <span aria-hidden="true">→</span>
         </a>
       </div>
