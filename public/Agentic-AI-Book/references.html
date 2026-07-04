@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical, research-grounded guide that connects the classical theory of intelligent agents to the modern practice of building autonomous LLM agents with tools, memory, planning, and multi-agent orchestration.">
+
+<title>References – Agents: From Theory to Production</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./chapters/appendices/c-further-reading.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-d166b450ba5a8e9f7a0ab969bf6592c1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-9323ee001d31a54ee2476120b8c8bf56.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-20d87d490373df57c880857ccdca8cc5.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">References</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Agents: From Theory to Production</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part I — Foundations of Agency</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/part1-foundations/01-what-is-an-agent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What Is an Agent?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/part1-foundations/02-history-and-theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A Short History &amp; the Theory of Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/part1-foundations/03-agent-architectures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Agent Architectures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/part1-foundations/04-environments-and-rationality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Environments &amp; Rationality</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part II — The LLM as an Agent</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/part2-llm-agents/05-llms-as-reasoners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/part2-llm-agents/06-the-augmented-llm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/part2-llm-agents/07-reasoning-and-planning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part III — Building Agents</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/part3-building/08-workflows-vs-agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/part3-building/09-agentic-patterns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/part3-building/10-tools-and-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/part3-building/11-memory-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/part3-building/12-orchestration-langgraph.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/part3-building/13-openai-agents-sdk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/part3-building/14-multi-agent-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part IV — Production &amp; Trust</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/part4-production/15-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/part4-production/16-observability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Observability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/part4-production/17-safety-and-guardrails.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Safety &amp; Guardrails</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/part4-production/18-deployment-and-cost.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part V — Frontiers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/part5-frontiers/19-computer-use-and-embodiment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Computer Use &amp; Embodiment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/part5-frontiers/20-frontiers-and-open-problems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Frontiers &amp; Open Problems</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/appendices/a-environment-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Appendix A — Environment Setup</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/appendices/b-glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Appendix B — Glossary</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapters/appendices/c-further-reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Appendix C — Further Reading</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">References</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list">
+<div id="ref-russell2021aima" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">S.
+Russell and P. Norvig, <em>Artificial intelligence: A modern
+approach</em>, 4th ed. Pearson, 2021.</div>
+</div>
+<div id="ref-wooldridge1995intelligent" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">M.
+Wooldridge and N. R. Jennings, <span>“Intelligent agents: Theory and
+practice,”</span> <em>The Knowledge Engineering Review</em>, vol. 10,
+no. 2, pp. 115–152, 1995.</div>
+</div>
+<div id="ref-rao1995bdi" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">A.
+S. Rao and M. P. Georgeff, <span>“BDI agents: From theory to
+practice,”</span> in <em>Proceedings of the first international
+conference on multi-agent systems (ICMAS)</em>, 1995.</div>
+</div>
+<div id="ref-sutton2018reinforcement" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">R.
+S. Sutton and A. G. Barto, <em>Reinforcement learning: An
+introduction</em>, 2nd ed. MIT Press, 2018.</div>
+</div>
+<div id="ref-brooks1991intelligence" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">R.
+A. Brooks, <span>“Intelligence without representation,”</span>
+<em>Artificial Intelligence</em>, vol. 47, no. 1–3, pp. 139–159,
+1991.</div>
+</div>
+<div id="ref-newell1976symbols" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">A.
+Newell and H. A. Simon, <span>“Computer science as empirical inquiry:
+Symbols and search,”</span> <em>Communications of the ACM</em>, vol. 19,
+no. 3, pp. 113–126, 1976.</div>
+</div>
+<div id="ref-wei2022cot" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">J.
+Wei <em>et al.</em>, <span>“Chain-of-thought prompting elicits reasoning
+in large language models,”</span> in <em>Advances in neural information
+processing systems (NeurIPS)</em>, 2022.</div>
+</div>
+<div id="ref-yao2023react" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">S.
+Yao <em>et al.</em>, <span>“<span>ReAct</span>: Synergizing reasoning
+and acting in language models,”</span> in <em>International conference
+on learning representations (ICLR)</em>, 2023.</div>
+</div>
+<div id="ref-yao2023tot" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">S.
+Yao <em>et al.</em>, <span>“Tree of thoughts: Deliberate problem solving
+with large language models,”</span> in <em>Advances in neural
+information processing systems (NeurIPS)</em>, 2023.</div>
+</div>
+<div id="ref-shinn2023reflexion" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[10] </div><div class="csl-right-inline">N.
+Shinn, F. Cassano, E. Berman, A. Gopinath, K. Narasimhan, and S. Yao,
+<span>“Reflexion: Language agents with verbal reinforcement
+learning,”</span> in <em>Advances in neural information processing
+systems (NeurIPS)</em>, 2023.</div>
+</div>
+<div id="ref-kojima2022zeroshot" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[11] </div><div class="csl-right-inline">T.
+Kojima, S. S. Gu, M. Reid, Y. Matsuo, and Y. Iwasawa, <span>“Large
+language models are zero-shot reasoners,”</span> in <em>Advances in
+neural information processing systems (NeurIPS)</em>, 2022.</div>
+</div>
+<div id="ref-wang2023selfconsistency" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[12] </div><div class="csl-right-inline">X.
+Wang <em>et al.</em>, <span>“Self-consistency improves chain of thought
+reasoning in language models,”</span> in <em>International conference on
+learning representations (ICLR)</em>, 2023.</div>
+</div>
+<div id="ref-wang2023planandsolve" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[13] </div><div class="csl-right-inline">L.
+Wang <em>et al.</em>, <span>“Plan-and-solve prompting: Improving
+zero-shot chain-of-thought reasoning by large language models,”</span>
+in <em>Proceedings of the 61st annual meeting of the association for
+computational linguistics (ACL)</em>, 2023.</div>
+</div>
+<div id="ref-kim2023llmcompiler" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[14] </div><div class="csl-right-inline">S.
+Kim <em>et al.</em>, <span>“An <span>LLM</span> compiler for parallel
+function calling,”</span> in <em>International conference on machine
+learning (ICML)</em>, 2024.</div>
+</div>
+<div id="ref-lightman2023verify" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[15] </div><div class="csl-right-inline">H.
+Lightman <em>et al.</em>, <span>“Let’s verify step by step,”</span>
+<em>arXiv preprint arXiv:2305.20050</em>, 2023.</div>
+</div>
+<div id="ref-besta2024topologies" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[16] </div><div class="csl-right-inline">M.
+Besta <em>et al.</em>, <span>“Demystifying chains, trees, and graphs of
+thoughts,”</span> <em>arXiv preprint arXiv:2401.14295</em>, 2024.</div>
+</div>
+<div id="ref-arcuschin2025unfaithful" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[17] </div><div class="csl-right-inline">I.
+Arcuschin, J. Janiak, R. Krzyzanowski, S. Rajamanoharan, N. Nanda, and
+A. Conmy, <span>“Chain-of-thought reasoning in the wild is not always
+faithful,”</span> in <em>International conference on machine learning
+(ICML)</em>, 2025.</div>
+</div>
+<div id="ref-chen2025cotfaith" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[18] </div><div class="csl-right-inline">Y.
+Chen <em>et al.</em>, <span>“Reasoning models don’t always say what they
+think,”</span> <em>arXiv preprint arXiv:2505.05410</em>, 2025.</div>
+</div>
+<div id="ref-haji2024validator" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[19] </div><div class="csl-right-inline">F.
+Haji, M. Bethany, M. Tabar, J. Chiang, A. Rios, and P. Najafirad,
+<span>“Improving LLM reasoning with multi-agent tree-of-thought
+validator agent,”</span> <em>arXiv preprint arXiv:2409.11527</em>,
+2024.</div>
+</div>
+<div id="ref-brown2020fewshot" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[20] </div><div class="csl-right-inline">T.
+B. Brown <em>et al.</em>, <span>“Language models are few-shot
+learners,”</span> in <em>Advances in neural information processing
+systems (NeurIPS)</em>, 2020.</div>
+</div>
+<div id="ref-ouyang2022instructgpt" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[21] </div><div class="csl-right-inline">L.
+Ouyang <em>et al.</em>, <span>“Training language models to follow
+instructions with human feedback,”</span> in <em>Advances in neural
+information processing systems (NeurIPS)</em>, 2022.</div>
+</div>
+<div id="ref-wei2022emergent" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[22] </div><div class="csl-right-inline">J.
+Wei <em>et al.</em>, <span>“Emergent abilities of large language
+models,”</span> <em>Transactions on Machine Learning Research
+(TMLR)</em>, 2022.</div>
+</div>
+<div id="ref-ji2023hallucination" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[23] </div><div class="csl-right-inline">Z.
+Ji <em>et al.</em>, <span>“Survey of hallucination in natural language
+generation,”</span> <em>ACM Computing Surveys</em>, vol. 55, no. 12, pp.
+1–38, 2023.</div>
+</div>
+<div id="ref-liu2024lostmiddle" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[24] </div><div class="csl-right-inline">N.
+F. Liu <em>et al.</em>, <span>“Lost in the middle: How language models
+use long contexts,”</span> <em>Transactions of the Association for
+Computational Linguistics (TACL)</em>, vol. 12, 2024.</div>
+</div>
+<div id="ref-berglund2024reversal" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[25] </div><div class="csl-right-inline">L.
+Berglund <em>et al.</em>, <span>“The reversal curse: Language models
+trained on <span>‘a is b’</span> fail to learn <span>‘b is
+a’</span>,”</span> <em>arXiv preprint arXiv:2309.12288</em>, 2024.</div>
+</div>
+<div id="ref-mirzadeh2024gsmsymbolic" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[26] </div><div class="csl-right-inline">I.
+Mirzadeh, K. Alizadeh, H. Shahrokhi, O. Tuzel, S. Bengio, and M.
+Farajtabar, <span>“<span>GSM-Symbolic</span>: Understanding the
+limitations of mathematical reasoning in large language models,”</span>
+<em>arXiv preprint arXiv:2410.05229</em>, 2024.</div>
+</div>
+<div id="ref-schick2023toolformer" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[27] </div><div class="csl-right-inline">T.
+Schick <em>et al.</em>, <span>“Toolformer: Language models can teach
+themselves to use tools,”</span> in <em>Advances in neural information
+processing systems (NeurIPS)</em>, 2023.</div>
+</div>
+<div id="ref-li2023apibank" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[28] </div><div class="csl-right-inline">M.
+Li <em>et al.</em>, <span>“<span>API-Bank</span>: A comprehensive
+benchmark for tool-augmented <span>LLMs</span>,”</span> in
+<em>Proceedings of the 2023 conference on empirical methods in natural
+language processing (EMNLP)</em>, 2023.</div>
+</div>
+<div id="ref-patil2023gorilla" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[29] </div><div class="csl-right-inline">S.
+G. Patil, T. Zhang, X. Wang, and J. E. Gonzalez, <span>“Gorilla: Large
+language model connected with massive <span>APIs</span>,”</span>
+<em>arXiv preprint arXiv:2305.15334</em>, 2023.</div>
+</div>
+<div id="ref-qin2023toolllm" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[30] </div><div class="csl-right-inline">Y.
+Qin <em>et al.</em>, <span>“<span>ToolLLM</span>: Facilitating large
+language models to master 16000+ real-world <span>APIs</span>,”</span>
+<em>arXiv preprint arXiv:2307.16789</em>, 2023.</div>
+</div>
+<div id="ref-bfcl2024" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[31] </div><div class="csl-right-inline">F.
+Yan <em>et al.</em>, <span>“Berkeley function-calling leaderboard
+(BFCL).”</span> <a href="https://gorilla.cs.berkeley.edu/blogs/8_berkeley_function_calling_leaderboard.html" class="uri">https://gorilla.cs.berkeley.edu/blogs/8_berkeley_function_calling_leaderboard.html</a>,
+2024.</div>
+</div>
+<div id="ref-ruan2024toolemu" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[32] </div><div class="csl-right-inline">Y.
+Ruan <em>et al.</em>, <span>“Identifying the risks of <span>LM</span>
+agents with an <span>LM</span>-emulated sandbox,”</span>
+<em>International Conference on Learning Representations (ICLR)</em>,
+2024.</div>
+</div>
+<div id="ref-lewis2020rag" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[33] </div><div class="csl-right-inline">P.
+Lewis <em>et al.</em>, <span>“Retrieval-augmented generation for
+knowledge-intensive NLP tasks,”</span> in <em>Advances in neural
+information processing systems (NeurIPS)</em>, 2020.</div>
+</div>
+<div id="ref-mialon2023augmented" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[34] </div><div class="csl-right-inline">G.
+Mialon <em>et al.</em>, <span>“Augmented language models: A
+survey,”</span> <em>arXiv preprint arXiv:2302.07842</em>, 2023,
+Available: <a href="https://arxiv.org/abs/2302.07842">https://arxiv.org/abs/2302.07842</a></div>
+</div>
+<div id="ref-asai2023selfrag" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[35] </div><div class="csl-right-inline">A.
+Asai, Z. Wu, Y. Wang, A. Sil, and H. Hajishirzi,
+<span>“<span>Self-RAG</span>: Learning to retrieve, generate, and
+critique through self-reflection,”</span> in <em>International
+conference on learning representations (ICLR)</em>, 2024. Available: <a href="https://arxiv.org/abs/2310.11511">https://arxiv.org/abs/2310.11511</a></div>
+</div>
+<div id="ref-borgeaud2022retro" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[36] </div><div class="csl-right-inline">S.
+Borgeaud <em>et al.</em>, <span>“Improving language models by retrieving
+from trillions of tokens,”</span> in <em>International conference on
+machine learning (ICML)</em>, 2022. Available: <a href="https://arxiv.org/abs/2112.04426">https://arxiv.org/abs/2112.04426</a></div>
+</div>
+<div id="ref-park2023generative" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[37] </div><div class="csl-right-inline">J.
+S. Park, J. C. O’Brien, C. J. Cai, M. R. Morris, P. Liang, and M. S.
+Bernstein, <span>“Generative agents: Interactive simulacra of human
+behavior,”</span> in <em>ACM symposium on user interface software and
+technology (UIST)</em>, 2023.</div>
+</div>
+<div id="ref-wang2023voyager" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[38] </div><div class="csl-right-inline">G.
+Wang <em>et al.</em>, <span>“Voyager: An open-ended embodied agent with
+large language models,”</span> <em>arXiv preprint arXiv:2305.16291</em>,
+2023.</div>
+</div>
+<div id="ref-xi2023rise" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[39] </div><div class="csl-right-inline">Z.
+Xi <em>et al.</em>, <span>“The rise and potential of large language
+model based agents: A survey,”</span> <em>arXiv preprint
+arXiv:2309.07864</em>, 2023.</div>
+</div>
+<div id="ref-kwa2025metr" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[40] </div><div class="csl-right-inline">T.
+Kwa, B. West, J. Becker, <em>et al.</em>, <span>“Measuring AI ability to
+complete long tasks,”</span> <em>arXiv preprint arXiv:2503.14499</em>,
+Mar. 2025, Available: <a href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/">https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/</a></div>
+</div>
+<div id="ref-du2023debate" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[41] </div><div class="csl-right-inline">Y.
+Du, S. Li, A. Torralba, J. B. Tenenbaum, and I. Mordatch,
+<span>“Improving factuality and reasoning in language models through
+multiagent debate,”</span> <em>arXiv preprint arXiv:2305.14325</em>,
+2023.</div>
+</div>
+<div id="ref-cemri2025why" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[42] </div><div class="csl-right-inline">M.
+Cemri <em>et al.</em>, <span>“Why do multi-agent LLM systems
+fail?”</span> <em>arXiv preprint arXiv:2503.13657</em>, 2025.</div>
+</div>
+<div id="ref-tran2025collaboration" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[43] </div><div class="csl-right-inline">K.-T. Tran, D. Dao, M.-D. Nguyen, Q.-V. Pham,
+B. O’Sullivan, and H. D. Nguyen, <span>“Multi-agent collaboration
+mechanisms: A survey of LLMs,”</span> <em>arXiv preprint
+arXiv:2501.06322</em>, 2025.</div>
+</div>
+<div id="ref-wu2023autogen" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[44] </div><div class="csl-right-inline">Q.
+Wu <em>et al.</em>, <span>“<span>AutoGen</span>: Enabling next-gen
+<span>LLM</span> applications via multi-agent conversation,”</span>
+<em>arXiv preprint arXiv:2308.08155</em>, 2023.</div>
+</div>
+<div id="ref-hong2023metagpt" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[45] </div><div class="csl-right-inline">S.
+Hong <em>et al.</em>, <span>“<span>MetaGPT</span>: Meta programming for
+a multi-agent collaborative framework,”</span> <em>arXiv preprint
+arXiv:2308.00352</em>, 2023.</div>
+</div>
+<div id="ref-li2023camel" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[46] </div><div class="csl-right-inline">G.
+Li, H. A. A. K. Hammoud, H. Itani, D. Khizbullin, and B. Ghanem,
+<span>“<span>CAMEL</span>: Communicative agents for <span>‘mind’</span>
+exploration of large language model society,”</span> in <em>Advances in
+neural information processing systems (NeurIPS)</em>, 2023.</div>
+</div>
+<div id="ref-smit2024mad" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[47] </div><div class="csl-right-inline">A.
+Smit, P. Duckworth, N. Grinsztajn, T. D. Barrett, and A. Pretorius,
+<span>“Should we be going <span>MAD</span>? A look at multi-agent debate
+strategies for <span>LLMs</span>,”</span> <em>arXiv preprint
+arXiv:2311.17371</em>, 2024.</div>
+</div>
+<div id="ref-liu2023agentbench" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[48] </div><div class="csl-right-inline">X.
+Liu, H. Yu, H. Zhang, <em>et al.</em>, <span>“AgentBench: Evaluating
+LLMs as agents,”</span> in <em>International conference on learning
+representations (ICLR)</em>, 2024.</div>
+</div>
+<div id="ref-jimenez2024swebench" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[49] </div><div class="csl-right-inline">C.
+E. Jimenez <em>et al.</em>, <span>“<span class="nocase">SWE-bench</span>: Can language models resolve real-world
+GitHub issues?”</span> <em>International Conference on Learning
+Representations (ICLR)</em>, 2024.</div>
+</div>
+<div id="ref-xie2024osworld" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[50] </div><div class="csl-right-inline">T.
+Xie <em>et al.</em>, <span>“<span>OSWorld</span>: Benchmarking
+multimodal agents for open-ended tasks in real computer
+environments,”</span> in <em>Advances in neural information processing
+systems (NeurIPS), datasets and benchmarks track</em>, 2024.</div>
+</div>
+<div id="ref-zhou2023webarena" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[51] </div><div class="csl-right-inline">S.
+Zhou <em>et al.</em>, <span>“WebArena: A realistic web environment for
+building autonomous agents,”</span> <em>arXiv preprint
+arXiv:2307.13854</em>, 2023.</div>
+</div>
+<div id="ref-deng2023mind2web" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[52] </div><div class="csl-right-inline">X.
+Deng <em>et al.</em>, <span>“Mind2Web: Towards a generalist agent for
+the web,”</span> in <em>Advances in neural information processing
+systems (NeurIPS)</em>, 2023.</div>
+</div>
+<div id="ref-zheng2024seeact" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[53] </div><div class="csl-right-inline">B.
+Zheng, B. Gou, J. Kil, H. Sun, and Y. Su, <span>“<span class="nocase">GPT-4V(ision)</span> is a generalist web agent, if
+grounded,”</span> in <em>International conference on machine learning
+(ICML)</em>, 2024.</div>
+</div>
+<div id="ref-brohan2023rt2" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[54] </div><div class="csl-right-inline">A.
+Brohan <em>et al.</em>, <span>“<span>RT-2</span>: Vision-language-action
+models transfer web knowledge to robotic control,”</span> in
+<em>Conference on robot learning (CoRL)</em>, 2023.</div>
+</div>
+<div id="ref-xu2024agentcompany" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[55] </div><div class="csl-right-inline">F.
+F. Xu <em>et al.</em>, <span>“<span>TheAgentCompany</span>: Benchmarking
+<span>LLM</span> agents on consequential real world tasks.”</span> 2024.
+Available: <a href="https://arxiv.org/abs/2412.14161">https://arxiv.org/abs/2412.14161</a></div>
+</div>
+<div id="ref-deng2025swebenchpro" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[56] </div><div class="csl-right-inline">X.
+Deng <em>et al.</em>, <span>“<span>SWE-Bench Pro</span>: Can
+<span>AI</span> agents solve long-horizon software engineering
+tasks?”</span> 2025. Available: <a href="https://arxiv.org/abs/2509.16941">https://arxiv.org/abs/2509.16941</a></div>
+</div>
+<div id="ref-anthropic2024computeruse" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[57] </div><div class="csl-right-inline">Anthropic, <span>“Introducing computer use, a
+new claude 3.5 sonnet, and claude 3.5 haiku.”</span> <a href="https://www.anthropic.com/news/3-5-models-and-computer-use" class="uri">https://www.anthropic.com/news/3-5-models-and-computer-use</a>,
+Oct. 2024.</div>
+</div>
+<div id="ref-openai2025operator" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[58] </div><div class="csl-right-inline">OpenAI, <span>“Introducing operator.”</span> <a href="https://openai.com/index/introducing-operator/" class="uri">https://openai.com/index/introducing-operator/</a>, Jan.
+2025.</div>
+</div>
+<div id="ref-yao2024taubench" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[59] </div><div class="csl-right-inline">S.
+Yao, N. Shinn, P. Razavi, and K. Narasimhan, <span>“<span class="nocase"><span class="math inline"><em>τ</em></span>-bench</span>:
+A benchmark for tool-agent-user interaction in real-world
+domains,”</span> <em>arXiv preprint arXiv:2406.12045</em>, 2024,
+Available: <a href="https://arxiv.org/abs/2406.12045">https://arxiv.org/abs/2406.12045</a></div>
+</div>
+<div id="ref-zheng2023judge" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[60] </div><div class="csl-right-inline">L.
+Zheng <em>et al.</em>, <span>“Judging <span>LLM</span>-as-a-judge with
+<span>MT-Bench</span> and chatbot arena,”</span> in <em>Advances in
+neural information processing systems (NeurIPS), datasets and benchmarks
+track</em>, 2023. Available: <a href="https://arxiv.org/abs/2306.05685">https://arxiv.org/abs/2306.05685</a></div>
+</div>
+<div id="ref-es2023ragas" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[61] </div><div class="csl-right-inline">S.
+Es, J. James, L. Espinosa-Anke, and S. Schockaert,
+<span>“<span>RAGAS</span>: Automated evaluation of retrieval augmented
+generation,”</span> <em>arXiv preprint arXiv:2309.15217</em>, 2023,
+Available: <a href="https://arxiv.org/abs/2309.15217">https://arxiv.org/abs/2309.15217</a></div>
+</div>
+<div id="ref-openai2024swebenchverified" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[62] </div><div class="csl-right-inline">OpenAI, <span>“Introducing <span class="nocase">SWE-bench</span> verified.”</span> <a href="https://openai.com/index/introducing-swe-bench-verified/" class="uri">https://openai.com/index/introducing-swe-bench-verified/</a>,
+Aug. 2024.</div>
+</div>
+<div id="ref-anthropic2026evals" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[63] </div><div class="csl-right-inline">Anthropic, M. Grace, J. Hadfield, R. Olivares,
+and J. De Jonghe, <span>“Demystifying evals for AI agents.”</span> <a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents" class="uri">https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents</a>,
+Jan. 2026.</div>
+</div>
+<div id="ref-anthropic2024effective" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[64] </div><div class="csl-right-inline">Anthropic, E. Schluntz, and B. Zhang,
+<span>“Building effective agents.”</span> <a href="https://www.anthropic.com/engineering/building-effective-agents" class="uri">https://www.anthropic.com/engineering/building-effective-agents</a>,
+Dec. 2024.</div>
+</div>
+<div id="ref-anthropic2024promptcaching" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[65] </div><div class="csl-right-inline">Anthropic, <span>“Prompt caching with
+claude.”</span> <a href="https://www.anthropic.com/news/prompt-caching" class="uri">https://www.anthropic.com/news/prompt-caching</a>, Aug.
+2024.</div>
+</div>
+<div id="ref-openai2024batch" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[66] </div><div class="csl-right-inline">OpenAI, <span>“Batch API.”</span> <a href="https://platform.openai.com/docs/guides/batch" class="uri">https://platform.openai.com/docs/guides/batch</a>,
+2024.</div>
+</div>
+<div id="ref-stripe2024idempotency" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[67] </div><div class="csl-right-inline">Stripe, <span>“Idempotent requests.”</span> <a href="https://docs.stripe.com/api/idempotent_requests" class="uri">https://docs.stripe.com/api/idempotent_requests</a>,
+2024.</div>
+</div>
+<div id="ref-chen2023frugalgpt" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[68] </div><div class="csl-right-inline">L.
+Chen, M. Zaharia, and J. Zou, <span>“FrugalGPT: How to use large
+language models while reducing cost and improving performance,”</span>
+<em>arXiv preprint arXiv:2305.05176</em>, 2023.</div>
+</div>
+<div id="ref-ong2024routellm" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[69] </div><div class="csl-right-inline">I.
+Ong <em>et al.</em>, <span>“RouteLLM: Learning to route LLMs with
+preference data,”</span> <em>arXiv preprint arXiv:2406.18665</em>,
+2024.</div>
+</div>
+<div id="ref-zhang2025plancaching" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[70] </div><div class="csl-right-inline">Q.
+Zhang, M. Wornow, G. Wan, and K. Olukotun, <span>“Agentic plan caching:
+Test-time memory for fast and cost-efficient LLM agents,”</span>
+<em>arXiv preprint arXiv:2506.14852</em>, 2025.</div>
+</div>
+<div id="ref-xia2024speculative" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[71] </div><div class="csl-right-inline">H.
+Xia <em>et al.</em>, <span>“Unlocking efficiency in large language model
+inference: A comprehensive survey of speculative decoding,”</span> in
+<em>Findings of the association for computational linguistics: ACL
+2024</em>, Bangkok, Thailand: Association for Computational Linguistics,
+2024, pp. 7655–7671.</div>
+</div>
+<div id="ref-anthropic2025multiagent" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[72] </div><div class="csl-right-inline">Anthropic <em>et al.</em>, <span>“How we built
+our multi-agent research system.”</span> <a href="https://www.anthropic.com/engineering/multi-agent-research-system" class="uri">https://www.anthropic.com/engineering/multi-agent-research-system</a>,
+Jun. 2025.</div>
+</div>
+<div id="ref-cognition2025multiagent" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[73] </div><div class="csl-right-inline">W.
+Yan and Cognition, <span>“Don’t build multi-agents.”</span> <a href="https://cognition.ai/blog/dont-build-multi-agents" class="uri">https://cognition.ai/blog/dont-build-multi-agents</a>, Jun.
+2025.</div>
+</div>
+<div id="ref-mslearn2026agentic" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[74] </div><div class="csl-right-inline">Microsoft, <span>“Agentic application
+patterns.”</span> <a href="https://learn.microsoft.com/en-us/azure/durable-task/sdks/durable-agents-patterns" class="uri">https://learn.microsoft.com/en-us/azure/durable-task/sdks/durable-agents-patterns</a>,
+2026.</div>
+</div>
+<div id="ref-openai2025tools" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[75] </div><div class="csl-right-inline">OpenAI, <span>“New tools for building
+agents.”</span> <a href="https://openai.com/index/new-tools-for-building-agents/" class="uri">https://openai.com/index/new-tools-for-building-agents/</a>,
+Mar. 2025.</div>
+</div>
+<div id="ref-openai2025agentssdk" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[76] </div><div class="csl-right-inline">OpenAI, <span>“OpenAI agents SDK
+documentation.”</span> <a href="https://openai.github.io/openai-agents-python/" class="uri">https://openai.github.io/openai-agents-python/</a>,
+2025.</div>
+</div>
+<div id="ref-mcp2024" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[77] </div><div class="csl-right-inline">Anthropic, <span>“Model context
+protocol.”</span> <a href="https://modelcontextprotocol.io" class="uri">https://modelcontextprotocol.io</a>, 2024.</div>
+</div>
+<div id="ref-mcpspec2025" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[78] </div><div class="csl-right-inline">Model Context Protocol, <span>“Model context
+protocol specification (2025-06-18).”</span> <a href="https://modelcontextprotocol.io/specification/2025-06-18" class="uri">https://modelcontextprotocol.io/specification/2025-06-18</a>,
+2025.</div>
+</div>
+<div id="ref-hou2025mcpsecurity" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[79] </div><div class="csl-right-inline">X.
+Hou, Y. Zhao, S. Wang, and H. Wang, <span>“Model context protocol
+(<span>MCP</span>): Landscape, security threats, and future research
+directions,”</span> <em>arXiv preprint arXiv:2503.23278</em>,
+2025.</div>
+</div>
+<div id="ref-mcptox2025" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[80] </div><div class="csl-right-inline">Z.
+Wang <em>et al.</em>, <span>“<span>MCPTox</span>: A benchmark for tool
+poisoning attack on real-world <span>MCP</span> servers,”</span>
+<em>arXiv preprint arXiv:2508.14925</em>, 2025.</div>
+</div>
+<div id="ref-confusedpilot2024" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[81] </div><div class="csl-right-inline">A.
+RoyChowdhury, M. Luo, P. Sahu, S. Banerjee, and M. Tiwari,
+<span>“<span>ConfusedPilot</span>: Confused deputy risks in
+<span>RAG</span>-based <span>LLMs</span>,”</span> <em>arXiv preprint
+arXiv:2408.04870</em>, 2024.</div>
+</div>
+<div id="ref-langgraph2024" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[82] </div><div class="csl-right-inline">LangChain, <span>“LangGraph
+documentation.”</span> <a href="https://langchain-ai.github.io/langgraph/" class="uri">https://langchain-ai.github.io/langgraph/</a>, 2024.</div>
+</div>
+<div id="ref-langchain2025persistence" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[83] </div><div class="csl-right-inline">LangChain, <span>“<span>LangGraph</span>
+persistence.”</span> <a href="https://docs.langchain.com/oss/python/langgraph/persistence" class="uri">https://docs.langchain.com/oss/python/langgraph/persistence</a>,
+2025.</div>
+</div>
+<div id="ref-langchain2025hitl" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[84] </div><div class="csl-right-inline">LangChain, <span>“Human-in-the-loop.”</span> <a href="https://docs.langchain.com/oss/python/langchain/human-in-the-loop" class="uri">https://docs.langchain.com/oss/python/langchain/human-in-the-loop</a>,
+2025.</div>
+</div>
+<div id="ref-otel2026genai" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[85] </div><div class="csl-right-inline">OpenTelemetry Authors, <span>“Semantic
+conventions for generative <span>AI</span> systems.”</span> <a href="https://opentelemetry.io/blog/2026/genai-observability/" class="uri">https://opentelemetry.io/blog/2026/genai-observability/</a>,
+2026.</div>
+</div>
+<div id="ref-owasp2025llm" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[86] </div><div class="csl-right-inline">OWASP, <span>“OWASP top 10 for large language
+model applications.”</span> <a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" class="uri">https://owasp.org/www-project-top-10-for-large-language-model-applications/</a>,
+2025.</div>
+</div>
+<div id="ref-greshake2023injection" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[87] </div><div class="csl-right-inline">K.
+Greshake, S. Abdelnabi, S. Mishra, C. Endres, T. Holz, and M. Fritz,
+<span>“Not what you’ve signed up for: Compromising real-world
+<span>LLM</span>-integrated applications with indirect prompt
+injection,”</span> in <em>Proceedings of the 16th ACM workshop on
+artificial intelligence and security (AISec)</em>, 2023. Available: <a href="https://arxiv.org/abs/2302.12173">https://arxiv.org/abs/2302.12173</a></div>
+</div>
+<div id="ref-willison2022injection" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[88] </div><div class="csl-right-inline">S.
+Willison, <span>“Prompt injection attacks against
+<span>GPT-3</span>.”</span> <a href="https://simonwillison.net/2022/Sep/12/prompt-injection/" class="uri">https://simonwillison.net/2022/Sep/12/prompt-injection/</a>,
+Sep. 2022.</div>
+</div>
+<div id="ref-willison2025trifecta" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[89] </div><div class="csl-right-inline">S.
+Willison, <span>“The lethal trifecta for <span>AI</span> agents: Private
+data, untrusted content, and external communication.”</span> <a href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/" class="uri">https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/</a>,
+Jun. 2025.</div>
+</div>
+<div id="ref-sigelman2010dapper" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[90] </div><div class="csl-right-inline">B.
+H. Sigelman <em>et al.</em>, <span>“Dapper, a large-scale distributed
+systems tracing infrastructure,”</span> Google, Inc., 2010. Available:
+<a href="https://research.google/pubs/dapper-a-large-scale-distributed-systems-tracing-infrastructure/">https://research.google/pubs/dapper-a-large-scale-distributed-systems-tracing-infrastructure/</a></div>
+</div>
+<div id="ref-w3c2021tracecontext" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[91] </div><div class="csl-right-inline">S.
+Kanzhelev, M. McLean, A. Reitbauer, B. Drutu, N. Molnar, and Y. Shkuro,
+<span>“Trace context.”</span> <a href="https://www.w3.org/TR/trace-context/" class="uri">https://www.w3.org/TR/trace-context/</a>, Nov. 2021.</div>
+</div>
+<div id="ref-arize2024openinference" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[92] </div><div class="csl-right-inline">Arize AI, <span>“<span>OpenInference</span>
+semantic conventions.”</span> <a href="https://github.com/Arize-ai/openinference/blob/main/spec/semantic_conventions.md" class="uri">https://github.com/Arize-ai/openinference/blob/main/spec/semantic_conventions.md</a>,
+2024.</div>
+</div>
+<div id="ref-packer2023memgpt" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[93] </div><div class="csl-right-inline">C.
+Packer <em>et al.</em>, <span>“<span>MemGPT</span>: Towards
+<span>LLMs</span> as operating systems,”</span> <em>arXiv preprint
+arXiv:2310.08560</em>, 2023, Available: <a href="https://arxiv.org/abs/2310.08560">https://arxiv.org/abs/2310.08560</a></div>
+</div>
+<div id="ref-zhong2024memorybank" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[94] </div><div class="csl-right-inline">W.
+Zhong, L. Guo, Q. Gao, H. Ye, and Y. Wang,
+<span>“<span>MemoryBank</span>: Enhancing large language models with
+long-term memory,”</span> <em>arXiv preprint arXiv:2305.10250</em>,
+2023, Available: <a href="https://arxiv.org/abs/2305.10250">https://arxiv.org/abs/2305.10250</a></div>
+</div>
+<div id="ref-mem0_2025" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[95] </div><div class="csl-right-inline">P.
+Chhikara, D. Khant, S. Aryan, T. Singh, and D. Yadav,
+<span>“<span>Mem0</span>: Building production-ready <span>AI</span>
+agents with scalable long-term memory,”</span> <em>arXiv preprint
+arXiv:2504.19413</em>, 2025, Available: <a href="https://arxiv.org/abs/2504.19413">https://arxiv.org/abs/2504.19413</a></div>
+</div>
+<div id="ref-longmemeval2024" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[96] </div><div class="csl-right-inline">D.
+Wu, H. Wang, W. Yu, Y. Zhang, K.-W. Chang, and D. Yu,
+<span>“<span>LongMemEval</span>: Benchmarking chat assistants on
+long-term interactive memory,”</span> in <em>International conference on
+learning representations (ICLR)</em>, 2025. Available: <a href="https://arxiv.org/abs/2410.10813">https://arxiv.org/abs/2410.10813</a></div>
+</div>
+<div id="ref-maharana2024locomo" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[97] </div><div class="csl-right-inline">A.
+Maharana, D.-H. Lee, S. Tulyakov, M. Bansal, F. Barbieri, and Y. Fang,
+<span>“Evaluating very long-term conversational memory of
+<span>LLM</span> agents,”</span> <em>arXiv preprint
+arXiv:2402.17753</em>, 2024, Available: <a href="https://arxiv.org/abs/2402.17753">https://arxiv.org/abs/2402.17753</a></div>
+</div>
+<div id="ref-membench2025" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[98] </div><div class="csl-right-inline">H.
+Tan, Z. Zhang, C. Ma, X. Chen, Q. Dai, and Z. Dong,
+<span>“<span>MemBench</span>: Towards more comprehensive evaluation on
+the memory of <span>LLM</span>-based agents,”</span> in <em>Findings of
+the association for computational linguistics: ACL 2025</em>, 2025, pp.
+19336–19352. Available: <a href="https://aclanthology.org/2025.findings-acl.989/">https://aclanthology.org/2025.findings-acl.989/</a></div>
+</div>
+<div id="ref-xu2025amem" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[99] </div><div class="csl-right-inline">W.
+Xu, Z. Liang, K. Mei, H. Gao, J. Tan, and Y. Zhang,
+<span>“<span>A-MEM</span>: Agentic memory for <span>LLM</span>
+agents,”</span> in <em>Advances in neural information processing systems
+(NeurIPS)</em>, 2025. Available: <a href="https://arxiv.org/abs/2502.12110">https://arxiv.org/abs/2502.12110</a></div>
+</div>
+<div id="ref-memorysurvey2025" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[100] </div><div class="csl-right-inline">Y. Hu <em>et al.</em>, <span>“Memory in the age
+of <span>AI</span> agents,”</span> <em>arXiv preprint
+arXiv:2512.13564</em>, 2025, Available: <a href="https://arxiv.org/abs/2512.13564">https://arxiv.org/abs/2512.13564</a></div>
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.bhavykhatri\.com\/Agentic-AI-Book\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./chapters/appendices/c-further-reading.html" class="pagination-link" aria-label="Appendix C — Further Reading">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Appendix C — Further Reading</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

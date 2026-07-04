@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical, research-grounded guide that connects the classical theory of intelligent agents to the modern practice of building autonomous LLM agents with tools, memory, planning, and multi-agent orchestration.">
+
+<title>9&nbsp; Agentic Patterns – Agents: From Theory to Production</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../chapters/part3-building/10-tools-and-mcp.html" rel="next">
+<link href="../../chapters/part3-building/08-workflows-vs-agents.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d166b450ba5a8e9f7a0ab969bf6592c1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9323ee001d31a54ee2476120b8c8bf56.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-20d87d490373df57c880857ccdca8cc5.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part3-building/08-workflows-vs-agents.html">Part III — Building Agents</a></li><li class="breadcrumb-item"><a href="../../chapters/part3-building/09-agentic-patterns.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Agents: From Theory to Production</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part I — Foundations of Agency</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/01-what-is-an-agent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What Is an Agent?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/02-history-and-theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A Short History &amp; the Theory of Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/03-agent-architectures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Agent Architectures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/04-environments-and-rationality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Environments &amp; Rationality</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part II — The LLM as an Agent</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/05-llms-as-reasoners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/06-the-augmented-llm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/07-reasoning-and-planning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part III — Building Agents</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/08-workflows-vs-agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/09-agentic-patterns.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/10-tools-and-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/11-memory-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/12-orchestration-langgraph.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/13-openai-agents-sdk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/14-multi-agent-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part IV — Production &amp; Trust</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/15-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/16-observability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Observability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/17-safety-and-guardrails.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Safety &amp; Guardrails</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/18-deployment-and-cost.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part V — Frontiers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part5-frontiers/19-computer-use-and-embodiment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Computer Use &amp; Embodiment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part5-frontiers/20-frontiers-and-open-problems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Frontiers &amp; Open Problems</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendices/a-environment-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Appendix A — Environment Setup</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendices/b-glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Appendix B — Glossary</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendices/c-further-reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Appendix C — Further Reading</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-ch9-intuition" id="toc-sec-ch9-intuition" class="nav-link active" data-scroll-target="#sec-ch9-intuition"><span class="header-section-number">9.1</span> Opening intuition</a></li>
+  <li><a href="#sec-ch9-chaining" id="toc-sec-ch9-chaining" class="nav-link" data-scroll-target="#sec-ch9-chaining"><span class="header-section-number">9.2</span> Prompt chaining</a></li>
+  <li><a href="#sec-ch9-routing" id="toc-sec-ch9-routing" class="nav-link" data-scroll-target="#sec-ch9-routing"><span class="header-section-number">9.3</span> Routing</a></li>
+  <li><a href="#sec-ch9-parallel" id="toc-sec-ch9-parallel" class="nav-link" data-scroll-target="#sec-ch9-parallel"><span class="header-section-number">9.4</span> Parallelization</a></li>
+  <li><a href="#sec-ch9-orchestrator" id="toc-sec-ch9-orchestrator" class="nav-link" data-scroll-target="#sec-ch9-orchestrator"><span class="header-section-number">9.5</span> Orchestrator–workers</a></li>
+  <li><a href="#sec-ch9-evaluator" id="toc-sec-ch9-evaluator" class="nav-link" data-scroll-target="#sec-ch9-evaluator"><span class="header-section-number">9.6</span> Evaluator–optimizer</a></li>
+  <li><a href="#sec-ch9-assumptions" id="toc-sec-ch9-assumptions" class="nav-link" data-scroll-target="#sec-ch9-assumptions"><span class="header-section-number">9.7</span> Patterns are assumptions, not recipes</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch9-control-lives" id="toc-sec-ch9-control-lives" class="nav-link" data-scroll-target="#sec-ch9-control-lives"><span class="header-section-number">9.7.1</span> Where control lives</a></li>
+  <li><a href="#sec-ch9-gates" id="toc-sec-ch9-gates" class="nav-link" data-scroll-target="#sec-ch9-gates"><span class="header-section-number">9.7.2</span> Every pattern needs a gate</a></li>
+  <li><a href="#sec-ch9-selection" id="toc-sec-ch9-selection" class="nav-link" data-scroll-target="#sec-ch9-selection"><span class="header-section-number">9.7.3</span> Choose the pattern whose assumptions your cases support</a></li>
+  </ul></li>
+  <li><a href="#sec-ch9-combining" id="toc-sec-ch9-combining" class="nav-link" data-scroll-target="#sec-ch9-combining"><span class="header-section-number">9.8</span> Combining patterns</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch9-observability" id="toc-sec-ch9-observability" class="nav-link" data-scroll-target="#sec-ch9-observability"><span class="header-section-number">9.8.1</span> If patterns compose, traces must compose</a></li>
+  </ul></li>
+  <li><a href="#sec-ch9-worked" id="toc-sec-ch9-worked" class="nav-link" data-scroll-target="#sec-ch9-worked"><span class="header-section-number">9.9</span> A worked example: a support desk, assembled</a></li>
+  <li><a href="#sec-ch09-case" id="toc-sec-ch09-case" class="nav-link" data-scroll-target="#sec-ch09-case"><span class="header-section-number">9.10</span> Case study: the Ledgerly support agent</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch9-complex-lane" id="toc-sec-ch9-complex-lane" class="nav-link" data-scroll-target="#sec-ch9-complex-lane"><span class="header-section-number">9.10.1</span> Inside the complex lane</a></li>
+  </ul></li>
+  <li><a href="#sec-ch9-summary" id="toc-sec-ch9-summary" class="nav-link" data-scroll-target="#sec-ch9-summary"><span class="header-section-number">9.11</span> Summary</a></li>
+  <li><a href="#sec-ch9-exercises" id="toc-sec-ch9-exercises" class="nav-link" data-scroll-target="#sec-ch9-exercises"><span class="header-section-number">9.12</span> Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part3-building/08-workflows-vs-agents.html">Part III — Building Agents</a></li><li class="breadcrumb-item"><a href="../../chapters/part3-building/09-agentic-patterns.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-agentic-patterns" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p><em>“We are what we repeatedly do. Excellence, then, is not an act, but a habit.”</em></p>
+<p>— Will Durant, <em>The Story of Philosophy</em></p>
+</blockquote>
+<blockquote class="blockquote">
+<p>After this chapter you will have a toolbox of reusable agentic patterns and know when each applies.</p>
+</blockquote>
+<section id="sec-ch9-intuition" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="sec-ch9-intuition"><span class="header-section-number">9.1</span> Opening intuition</h2>
+<p>The previous chapter left us at a satisfying but incomplete place. We decided <em>that</em> a given task wants a workflow, an agent, or a hybrid, but “build a workflow” is not yet a design. It is like deciding to build a house out of brick rather than timber: a real and important choice, but it does not tell you where the walls go. This chapter hands you the floor plans. It turns out that the vast majority of production LLM systems, however elaborate they look from the outside, are built from a small handful of recurring shapes, combined and nested like rooms in a house. Learn the handful, and you can read almost any system, and design your own.</p>
+<p>Here is the reassuring part, and the reason this chapter is shorter on new theory than you might expect: there are only about five of these shapes, and you have already met the ideas behind several of them. When Anthropic studied dozens of teams building LLM systems in production, the lesson that came back again and again was that the most successful ones did not reach for complex frameworks; they composed <em>simple, reusable patterns</em> <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. Think of them as the standard joints a carpenter knows: the dovetail, the mortise and tenon. None is complicated on its own. The craft is in knowing which joint a given problem calls for, and how to combine a few of them into something sturdy.</p>
+<p>We will walk through the five workflow patterns in order of increasing flexibility, exactly the way complexity tends to grow in a real project. <strong>Prompt chaining</strong> runs steps in a fixed line. <strong>Routing</strong> picks which line to run. <strong>Parallelization</strong> runs several lines at once and combines the results. <strong>Orchestrator–workers</strong> lets a lead model <em>invent</em> the lines on the fly. And <strong>evaluator–optimizer</strong> loops a maker against a critic until the work is good, a shape you will recognize from the reflection idea in <a href="../part2-llm-agents/07-reasoning-and-planning.html#sec-ch7-reflection" class="quarto-xref"><span>Section 7.6</span></a>. <a href="#fig-patterns-overview" class="quarto-xref">Figure&nbsp;<span>9.1</span></a> lays the five out side by side so you can see the progression before we take them one at a time. Each is a way of arranging augmented-LLM calls, from the most rigid to the most adaptive; where the arranging finally passes entirely to the model, the workflow has become an agent.</p>
+<div id="fig-patterns-overview" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-patterns-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch09/fig-patterns-overview.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-patterns-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.1: The five workflow patterns, arranged from most rigid (left) to most flexible (right). Each arranges augmented-LLM calls differently; the further right you go, the more the model, rather than your code, decides what happens next.
+</figcaption>
+</figure>
+</div>
+<p>With the map in hand, let’s walk it. We start with the simplest shape of all: steps in a straight line.</p>
+</section>
+<section id="sec-ch9-chaining" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="sec-ch9-chaining"><span class="header-section-number">9.2</span> Prompt chaining</h2>
+<p>The simplest pattern is the one you would invent yourself if you sat down with a hard task and a single instinct: break it into steps and do them one at a time. <strong>Prompt chaining</strong> decomposes a task into a fixed sequence of LLM calls, where each call works on the output of the one before it <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. It is an assembly line. Think of writing a report the way a careful person actually does it: first draft an outline, then flesh the outline into prose, then polish the prose. Each station does one job and hands its work to the next. You would never try to do all three in your head at once, and neither should the model.</p>
+<p>Why bother splitting a task this way when a single powerful call might, in principle, do the whole thing? Because each smaller call is an <em>easier</em> call, and easier calls are more accurate. By trading a little extra latency (you are now making three requests instead of one), you buy higher quality, because the model never has to juggle outlining and drafting and polishing simultaneously <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. The pattern also gives you somewhere to stand between steps. You can insert a programmatic <strong>gate</strong>, a plain code check, that inspects the intermediate output and only lets the chain proceed if it looks right. <a href="#fig-chaining" class="quarto-xref">Figure&nbsp;<span>9.2</span></a> shows the shape, gate and all.</p>
+<div id="fig-chaining" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chaining-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch09/fig-chaining.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chaining-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.2: Prompt chaining. The task runs as a fixed line of LLM calls, each processing the previous one’s output. A programmatic gate can check an intermediate result and stop the chain if something has gone wrong.
+</figcaption>
+</figure>
+</div>
+<p>The gate is what makes chaining more than a fancy way of calling the model three times. Suppose the first call is meant to produce an outline that meets certain criteria; a small code check can confirm the outline actually has, say, the required sections before you spend money drafting from a bad plan. This is the pattern to reach for whenever a task cleanly decomposes into fixed subtasks whose order you already know, writing marketing copy and then translating it into another language, or drafting a document outline, verifying it, and only then writing the full document <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. Notice the boundary condition, because it matters for the whole chapter: chaining assumes the steps are <em>fixed and known in advance</em>. The moment the right sequence depends on the input, when some requests should be handled one way and others another, a straight line is the wrong shape, and you need something that can branch. That is routing, and it is where we turn next.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Prompt chaining, as a contract">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Prompt chaining, as a contract
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Every pattern is a quiet bet on the shape of the task, so it pays to name the bet out loud. Prompt chaining <strong>assumes</strong> the sequence of steps is fixed and known before the first call runs. Its <strong>gate</strong> is a check on each intermediate output before you spend the next call. Its <strong>failure mode</strong> is silent contamination: a bad intermediate slips through, and every downstream step inherits the mistake without complaint. The <strong>signal</strong> that it is working is a healthy intermediate-gate pass rate alongside final-output quality; when the gate starts failing often, the task has drifted out of the fixed shape chaining depends on.</p>
+</div>
+</div>
+</section>
+<section id="sec-ch9-routing" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="sec-ch9-routing"><span class="header-section-number">9.3</span> Routing</h2>
+<p>Chaining assumes every input travels the same line. But real inputs are rarely so uniform. The emails arriving at a support desk are not all the same kind of email: some are simple password resets, some are refund demands, some are gnarly technical failures. Trying to handle all of them with one all-purpose prompt is like asking a single employee to be your receptionist, your accountant, and your engineer at once, they will be mediocre at all three, because the instructions that make them good at one job pull against the instructions for another. <strong>Routing</strong> fixes this by adding a step at the front that <em>classifies</em> the input and sends it to a handler built specially for that kind of input <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>.</p>
+<p>The value of routing is <strong>separation of concerns</strong>. Once you split the traffic, each downstream path can have a prompt tuned narrowly for its job, without the compromises that come from trying to serve every case at once. <a href="#fig-routing" class="quarto-xref">Figure&nbsp;<span>9.3</span></a> shows the shape: a classifier at the door, and behind it a set of specialized handlers, each its own prompt (or even its own small workflow).</p>
+<div id="fig-routing" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-routing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch09/fig-routing.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-routing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.3: Routing. A classifier inspects each input and dispatches it to a specialized handler. Each path can be tuned narrowly for its category, avoiding the compromises of a single all-purpose prompt.
+</figcaption>
+</figure>
+</div>
+<p>There is a second, quietly economical use of routing that is worth calling out. The categories you route on need not be topics at all; they can be <em>difficulty</em>. You can send easy, common questions to a small, cheap, fast model and reserve a larger, more capable, more expensive model for the hard and unusual ones <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. Most traffic then runs on the cheap path, and you pay for the powerful model only when a question truly needs it, the same “spend the expensive resource only where it earns its place” instinct we met with hybrids in <a href="08-workflows-vs-agents.html#sec-ch8-hybrids" class="quarto-xref"><span>Section 8.6</span></a>, now applied to model choice.</p>
+<p>Push that idea one step further and it becomes a ladder, because difficulty and <em>risk</em> usually travel together. An easy, common FAQ can go to a small, cheap model. A medium policy question can go to retrieval plus a standard model, so the answer is grounded in the actual document rather than the model’s memory. A genuinely ambiguous case can be escalated to a stronger model that can reason through the tangle. And a high-risk or irreversible action, issuing a refund, changing an account, deleting data, does not climb to a bigger model at all; it steps sideways into an approval workflow with a human in the loop. Read the rungs top to bottom and you are routing by difficulty <em>and</em> risk, not merely by topic, spending the expensive resource (a bigger model, or a person’s attention) only on the rungs that earn it.</p>
+<p>Routing works well whenever a task splits into distinct categories that are genuinely better handled separately, <em>and</em> the classification itself can be done accurately, by an LLM or by a plain old classifier <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. So far, though, every pattern has done one thing at a time. Sometimes the fastest, most reliable answer comes from doing several things at once, which brings us to parallelization.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Routing, as a contract">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Routing, as a contract
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Routing <strong>assumes</strong> inputs fall into classes separable enough to tell apart early, before much work is done. Its <strong>gate</strong> is a confidence check on the classifier, with a fallback route for the low-confidence and ambiguous cases, so a shaky guess never commits a case to the wrong lane. Its <strong>failure mode</strong> is the misroute: a case sent down the wrong handler comes back with a confident, well-crafted, wrong answer. The <strong>signals</strong> to watch are routing accuracy (are cases landing in the right lane?) and per-lane quality (is each specialized handler actually better on its own traffic than one all-purpose prompt would be?).</p>
+</div>
+</div>
+</section>
+<section id="sec-ch9-parallel" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="sec-ch9-parallel"><span class="header-section-number">9.4</span> Parallelization</h2>
+<p>The patterns so far move through their work one step at a time. <strong>Parallelization</strong> breaks that habit: it runs several LLM calls at the same time and then combines their outputs with a bit of code <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. Think of a newspaper editor who, facing a deadline, hands the sports section, the weather, and the front-page story to three different reporters at once rather than writing them one after another. The work finishes sooner, and, just as importantly, each reporter gets to concentrate on a single beat. Parallelization comes in two flavors that look similar on a diagram but solve genuinely different problems, so it is worth keeping them straight.</p>
+<p>The first flavor is <strong>sectioning</strong>: you split a task into independent subtasks and run them side by side. The subtasks are <em>different</em> from one another, and each result is a distinct piece of the final whole. A classic use is guardrails: one model instance answers the user’s question while a second, running in parallel, screens the same input for anything inappropriate. Splitting the two jobs works better than asking one call to both answer <em>and</em> police itself, because each call keeps its full attention on one concern <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. The second flavor is <strong>voting</strong>: you run the <em>same</em> task several times and aggregate the answers, exactly the self-consistency idea we met in <a href="../part2-llm-agents/07-reasoning-and-planning.html#sec-ch7-search" class="quarto-xref"><span>Section 7.7</span></a>. Here the calls are identical in intent but may disagree, and you use their agreement as a confidence signal, for instance, having several prompts each review a piece of code for security flaws and flagging it if <em>any</em> of them raises a concern <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. <a href="#fig-parallel" class="quarto-xref">Figure&nbsp;<span>9.4</span></a> shows both.</p>
+<div id="fig-parallel" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-parallel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch09/fig-parallel.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-parallel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.4: Two flavors of parallelization. Sectioning splits a task into different subtasks run at once and stitches the pieces together. Voting runs the same task several times and aggregates the answers, by majority, or by flagging on any single hit.
+</figcaption>
+</figure>
+</div>
+<p>To make the split concrete, picture two very different jobs. To build a product brief, you might <em>section</em> the work: one call analyzes the market, another the pricing, another the risks, and a bit of code stitches the three into a single document. The pieces are different by design, and running them together simply gets you there faster. To classify a borderline support ticket, you might <em>vote</em>: three independent calls each label the ticket, and their agreement becomes your confidence. If all three agree, you trust the label; if they split, you send the ticket to a human. Same diagram shape, opposite purpose: sectioning divides <em>different</em> work, while voting repeats the <em>same</em> judgment.</p>
+<p>The two flavors point at the two reasons you would ever parallelize. Sectioning is about <strong>focus and speed</strong>: independent concerns run faster together and each is handled better in isolation. Voting is about <strong>confidence</strong>: several attempts at the same judgment, aggregated, are more trustworthy than one, and you can tune the threshold, demanding unanimity when a false negative is dangerous or a simple majority when it is not <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. Both, though, share a limit that sets up the next pattern: <em>you</em> decide in advance how the work is divided. In sectioning you choose the sections; in voting you choose how many votes. What if the task is one where you genuinely cannot know the subtasks ahead of time, where the way the work should be split depends on the specific input? For that, you need to promote one of the models from worker to manager. That is the orchestrator–workers pattern.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Parallelization, as a contract">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Parallelization, as a contract
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Parallelization <strong>assumes</strong> the subtasks are independent enough to run without waiting on one another. Its <strong>gate</strong> is the aggregation step, which checks that every branch returned usable output and reconciles any disagreement before combining. Its <strong>failure mode</strong> appears when subtasks that were secretly dependent run in isolation and produce pieces that do not fit together. The <strong>signal</strong> depends on the flavor: for sectioning, watch the latency you save; for voting, watch the agreement rate, since that agreement is exactly the confidence you are buying.</p>
+</div>
+</div>
+</section>
+<section id="sec-ch9-orchestrator" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="sec-ch9-orchestrator"><span class="header-section-number">9.5</span> Orchestrator–workers</h2>
+<p>Everything up to now has had one thing in common: <em>you</em> fixed how the work was divided. In the <strong>orchestrator–workers</strong> pattern, that decision moves to the model <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. A central LLM, the orchestrator, looks at the incoming task, breaks it into subtasks <em>on the spot</em>, hands each to a worker LLM, and then synthesizes the workers’ results into a final answer. Picture a general contractor who arrives at a building site, sizes up the job, and only <em>then</em> decides she needs two electricians, a plumber, and a painter, a call she could not have made from the blueprint alone, because it depends on what she finds when she gets there.</p>
+<p>This is what separates orchestrator–workers from the parallelization we just saw, and the distinction is the whole point of the pattern. On a diagram the two look almost identical: a central node fanning out to several workers and gathering their results. But in parallelization the subtasks are <em>predetermined</em>: you wrote the sections into your code. In orchestrator–workers the subtasks are <em>discovered</em>: the orchestrator invents them based on the specific input, so neither you nor it knows the number or shape of the subtasks until the task arrives <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. <a href="#fig-orchestrator" class="quarto-xref">Figure&nbsp;<span>9.5</span></a> captures that difference; notice the orchestrator deciding the split at run time.</p>
+<div id="fig-orchestrator" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-orchestrator-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch09/fig-orchestrator.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-orchestrator-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.5: Orchestrator–workers. A central LLM breaks the task into subtasks at run time (their number and nature depend on the input), delegates each to a worker, and synthesizes the results. Unlike parallelization, the subtasks are not fixed in your code.
+</figcaption>
+</figure>
+</div>
+<p>The canonical home for this pattern is coding. When you ask a system to make a change across a codebase, nobody, not you, not the model, knows in advance how many files must change or what each change looks like; it depends entirely on the task and the code it touches <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. An orchestrator can read the request, figure out which files are involved, dispatch a worker to edit each one, and stitch the edits together. The same shape fits open-ended research, where a lead model decides which sources are worth chasing and sends workers to gather from each. You can feel the pattern edging toward true agency here: we have handed the model control over <em>how the work is divided</em>, which is a real slice of the control flow. It is still a workflow (the orchestrator’s job is bounded to “divide, delegate, synthesize”), but the line to an agent is getting thin. The last pattern crosses a different frontier: instead of dividing work, it loops on quality.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Orchestrator–workers, as a contract">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Orchestrator–workers, as a contract
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Orchestrator–workers <strong>assumes</strong> a model can produce a useful decomposition of the task at run time. Its <strong>gate</strong> is a budget and a required, structured subtask plan (the next callout spells this out). Its <strong>failure mode</strong> is decomposition gone wrong: over-splitting, redundant or missing workers, or a synthesis that never reconciles what the workers found. The <strong>signals</strong> to watch are the worker count against the size of the task (is it spawning a sensible number?) and the quality of the final synthesis.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Give the orchestrator a budget">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Give the orchestrator a budget
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Runtime decomposition is the most powerful shape in this chapter and the most dangerous when it is left unbounded. A poor orchestrator can over-split a simple task, spawn redundant workers, miss a critical one, or synthesize outputs that contradict each other. What keeps it safe is a set of hard constraints, the orchestrator’s version of the agentic step contract from <a href="08-workflows-vs-agents.html#sec-ch8-agentic-contract" class="quarto-xref"><span>Section 8.6.2</span></a>: a maximum number of workers, a maximum delegation depth, a required subtask schema so every delegation is structured rather than free-form, a required reason attached to each worker so a spurious one is easy to spot, aggregation that cites the evidence each worker returned, a fallback for when workers disagree, and a hard budget cap on total calls or spend. Give the orchestrator freedom to decide the decomposition, but never freedom without a ceiling.</p>
+</div>
+</div>
+</section>
+<section id="sec-ch9-evaluator" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="sec-ch9-evaluator"><span class="header-section-number">9.6</span> Evaluator–optimizer</h2>
+<p>The final pattern is the one closest to how a careful human actually produces good work, and you have already met its core idea. In <a href="../part2-llm-agents/07-reasoning-and-planning.html#sec-ch7-reflection" class="quarto-xref"><span>Section 7.6</span></a> we saw a model improve its own answer by critiquing a first draft and trying again. The <strong>evaluator–optimizer</strong> pattern turns that instinct into a structured two-role loop: one LLM call <em>generates</em> a response (the optimizer) and a second LLM call <em>evaluates</em> it against explicit criteria and hands back feedback, and the optimizer revises, around and around until the work is good enough <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. It is the difference between a writer who submits a first draft and a writer who works with an editor: the editor reads, says “the middle drags and the ending is unclear,” and the writer rewrites, a cycle that lifts the result far above what a single pass produces.</p>
+<p>Splitting the two roles is what makes this more than “ask the model to try harder.” The generator can pour its attention into producing, and the evaluator can pour its attention into judging against a checklist, without the two jobs blurring together. <a href="#fig-evaluator" class="quarto-xref">Figure&nbsp;<span>9.6</span></a> shows the loop: generate, evaluate, and either accept or send pointed feedback back for another round.</p>
+<div id="fig-evaluator" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-evaluator-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch09/fig-evaluator.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-evaluator-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.6: Evaluator–optimizer. One LLM generates a response; another evaluates it against explicit criteria and returns feedback. The loop repeats until the evaluator is satisfied: a structured version of the reflection idea from Chapter 7.
+</figcaption>
+</figure>
+</div>
+<p>This pattern earns its keep under two specific conditions, and it is worth checking for both before reaching for it. First, you must have <strong>clear evaluation criteria</strong>, a way to say concretely what “better” means, because a vague critic just adds noise. Second, <strong>iteration has to actually help</strong>: the tell-tale sign of a good fit is that a human giving written feedback would visibly improve the output, <em>and</em> that the model is capable of producing feedback of that kind <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. Literary translation is the textbook case: a first pass may miss nuances of tone that an evaluator can name (“this idiom reads too literally”), prompting a better rendering the generator would not have reached alone <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. Complex research fits too, with the evaluator deciding whether the gathered material is thorough enough or another round of searching is warranted.</p>
+<p>It is worth grounding this in Ledgerly before we move on, because the pattern’s strength has an edge to it. Evaluator–optimizer is a natural fit for <strong>drafting a customer reply</strong>: an evaluator can check the tone, confirm that a required policy citation is actually present, and verify that the reply answers the question that was asked. It is a poor fit for <strong>deciding whether a refund qualifies</strong>, unless the evaluator checks the draft against the real policy text and the actual billing evidence rather than whether it merely <em>sounds</em> right. The general lesson is to separate style feedback from correctness feedback: an evaluator can judge tone on its own, but it can only judge correctness when it is grounded in a real check <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Evaluator–optimizer, as a contract">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Evaluator–optimizer, as a contract
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Evaluator–optimizer <strong>assumes</strong> there is a meaningful, statable way to judge whether one attempt is better than another. Its <strong>gate</strong> is an explicit rubric, an acceptance threshold, and an iteration cap, so the loop cannot spin forever. Its <strong>failure mode</strong> is a vague evaluator that adds noise instead of signal: the loop churns without converging because “better” was never pinned down. The <strong>signals</strong> to watch are the quality gained per iteration (is each round actually improving the work?) and the number of iterations it takes to reach acceptance.</p>
+</div>
+</div>
+<p>With that, we have all five shapes in hand. The real skill, though, is not any one pattern but knowing how to combine them, and, just as important, when to stop.</p>
+</section>
+<section id="sec-ch9-assumptions" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="sec-ch9-assumptions"><span class="header-section-number">9.7</span> Patterns are assumptions, not recipes</h2>
+<p>Before we start stacking these shapes into bigger systems, it is worth seeing each pattern for what it really is. A pattern is not a prompt trick or a template you drop in. It is a decision about <em>where control lives</em>, and it works only because it assumes something specific about the problem in front of you. Prompt chaining works because it assumes the order of steps is known. Routing works because it assumes inputs fall into recognizable categories. Change the assumption and the pattern quietly stops fitting, no matter how carefully you wrote the prompts inside it.</p>
+<p><a href="#fig-pattern-assumptions" class="quarto-xref">Figure&nbsp;<span>9.7</span></a> lines up each pattern with the single assumption that lets it work. Read it as a diagnostic: if you can name which assumption your task satisfies, you have found your pattern; if none of them holds cleanly, that is a sign the task wants a combination, or a genuine agent.</p>
+<div id="fig-pattern-assumptions" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pattern-assumptions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch09/fig-pattern-assumptions.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pattern-assumptions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.7: Each workflow pattern is enabled by one assumption about the task. Name the assumption your task satisfies and you have found your pattern; if none holds cleanly, the task wants a combination or a genuine agent.
+</figcaption>
+</figure>
+</div>
+<section id="sec-ch9-control-lives" class="level3" data-number="9.7.1">
+<h3 data-number="9.7.1" class="anchored" data-anchor-id="sec-ch9-control-lives"><span class="header-section-number">9.7.1</span> Where control lives</h3>
+<p>That phrase, <em>where control lives</em>, is the same question <a href="08-workflows-vs-agents.html" class="quarto-xref"><span>Chapter 8</span></a> put at the center of the last chapter: who owns the control flow, your code or the model? The five patterns are five different answers, and lining them up that way makes the migration we keep mentioning concrete. In <strong>prompt chaining</strong>, your code owns the order, and the model only fills in each step. In <strong>routing</strong>, your code still owns the branch structure, but a classifier picks which branch a given input takes. In <strong>parallelization</strong>, your code owns the fan-out and the aggregation, and the model works inside the branches. In <strong>orchestrator–workers</strong>, control crosses a real line: the model decides the decomposition, so it, not your code, determines what the subtasks are. And in <strong>evaluator–optimizer</strong>, the evaluator owns the one decision that matters most in a loop, whether another iteration happens at all. Walk that list top to bottom and you are watching ownership of the control flow pass, one handhold at a time, from your code to the model.</p>
+</section>
+<section id="sec-ch9-gates" class="level3" data-number="9.7.2">
+<h3 data-number="9.7.2" class="anchored" data-anchor-id="sec-ch9-gates"><span class="header-section-number">9.7.2</span> Every pattern needs a gate</h3>
+<p>We introduced the idea of a <em>gate</em> back in prompt chaining, a plain code check between steps, but it was never a chaining-only idea. Every pattern has a natural place where a check belongs, and naming them together turns “gate” into a habit rather than a one-off trick:</p>
+<ul>
+<li><strong>Prompt chaining:</strong> did the intermediate output meet its requirement, for example did the outline contain the required sections, before we spend the next call?</li>
+<li><strong>Routing:</strong> is the classifier confident enough to commit, and if not, does the input fall through to a safe fallback route?</li>
+<li><strong>Parallelization:</strong> did every branch return usable output, and does the aggregation reconcile any disagreement rather than silently pick one?</li>
+<li><strong>Orchestrator–workers:</strong> did the orchestrator create a sensible number of subtasks, neither over-splitting nor missing a critical one, and does each carry a reason?</li>
+<li><strong>Evaluator–optimizer:</strong> did the evaluator apply the rubric consistently, and did we stop at the iteration cap instead of looping forever?</li>
+</ul>
+<p>In production these gates rarely stand alone. They pair with <strong>durable execution</strong>: checkpointing so a long run can resume after a failure, retry policies so a transient error does not sink the whole workflow, and human-in-the-loop steps for the decisions a machine should not make by itself <span class="citation" data-cites="mslearn2026agentic"><a href="../../references.html#ref-mslearn2026agentic" role="doc-biblioref">[2]</a></span>. The gate is not an afterthought bolted on at the end; it is part of the shape of the workflow, designed in from the start.</p>
+</section>
+<section id="sec-ch9-selection" class="level3" data-number="9.7.3">
+<h3 data-number="9.7.3" class="anchored" data-anchor-id="sec-ch9-selection"><span class="header-section-number">9.7.3</span> Choose the pattern whose assumptions your cases support</h3>
+<p>Put the assumptions and the gates side by side and pattern selection stops being a matter of taste. <a href="#tbl-pattern-selection" class="quarto-xref">Table&nbsp;<span>9.1</span></a> collects the five into a single decision aid: what each pattern is good for, where it breaks, and the one gate you should never ship without.</p>
+<div id="tbl-pattern-selection" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-pattern-selection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9.1: Choosing a workflow pattern by the assumption it makes and the gate it needs.
+</figcaption>
+<div aria-describedby="tbl-pattern-selection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pattern</th>
+<th>Use when</th>
+<th>Avoid when</th>
+<th>Key gate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Prompt chaining</td>
+<td>the steps are fixed and known in advance</td>
+<td>the right sequence depends on the input</td>
+<td>validate each intermediate output before the next call</td>
+</tr>
+<tr class="even">
+<td>Routing</td>
+<td>inputs fall into classes you can tell apart early</td>
+<td>categories blur and cases resist classification</td>
+<td>classifier-confidence check with a fallback route</td>
+</tr>
+<tr class="odd">
+<td>Parallelization</td>
+<td>subtasks are independent and can run at once</td>
+<td>subtasks secretly depend on one another</td>
+<td>aggregation that checks all branches and reconciles them</td>
+</tr>
+<tr class="even">
+<td>Orchestrator–workers</td>
+<td>a useful decomposition can only be found at run time</td>
+<td>the subtasks are known ahead of time (just parallelize)</td>
+<td>a budget plus a required structured subtask plan</td>
+</tr>
+<tr class="odd">
+<td>Evaluator–optimizer</td>
+<td>there is a clear, statable way to judge “better”</td>
+<td>“better” is vague, or iteration does not help</td>
+<td>an explicit rubric, an acceptance threshold, and an iteration cap</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The habit this table is meant to build is a single question you ask before adding any pattern: <em>what assumption am I making about this task, and do my real cases support it?</em> If you can answer it with evidence, the pattern will hold. If you cannot, no amount of prompt engineering inside the pattern will save you, because the mismatch is in the shape, not the wording. With each pattern understood as an assumption guarded by a gate, we are finally ready to do the thing real systems do: combine them.</p>
+</section>
+</section>
+<section id="sec-ch9-combining" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="sec-ch9-combining"><span class="header-section-number">9.8</span> Combining patterns</h2>
+<p>Here is the secret that makes the five patterns worth learning: they are not five separate machines but five <em>bricks</em>, and real systems are built by stacking them. None of the patterns is prescriptive; each is a shape you can nest inside another to fit the problem in front of you <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. A routing step can send a refund request into a prompt chain and a technical issue into an orchestrator–workers subsystem. Any single step in a chain can itself be an evaluator–optimizer loop. A worker inside an orchestrator can be running its own little parallelization. The patterns compose the way rooms compose into a house, and almost every production system you will ever read about is just a particular arrangement of these few rooms.</p>
+<p>But composability is a temptation as much as a gift, and this is the part to take to heart. Every brick you add buys some capability and charges you in latency, cost, and things that can go wrong: more calls to wait on, more places to debug, more surface for errors to compound. The guiding rule is the same one that opened <a href="08-workflows-vs-agents.html" class="quarto-xref"><span>Chapter 8</span></a>, now sharpened to a test: <strong>add a pattern only when it demonstrably improves the outcome</strong>, measured against real cases, not when it merely makes the architecture feel more sophisticated <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. The goal is never the most elaborate system; it is the <em>simplest one that meets the need</em>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When a system misbehaves, resist the reflex to add another pattern on top. More often the fix is to <em>remove</em> a layer, tighten a prompt, or sharpen an evaluator’s criteria. Measure first, then change one thing, then measure again. Complexity you cannot justify with numbers is complexity that will cost you later: in dollars, in latency, and in the hours you spend debugging it.</p>
+</div>
+</div>
+<section id="sec-ch9-observability" class="level3" data-number="9.8.1">
+<h3 data-number="9.8.1" class="anchored" data-anchor-id="sec-ch9-observability"><span class="header-section-number">9.8.1</span> If patterns compose, traces must compose</h3>
+<p>There is a hidden cost to all this stacking that the diagrams do not show, and it is worth naming before we build anything. A composed system is only as debuggable as its trace. When a router feeds a chain that contains an evaluator loop, a wrong final answer could have come from a misroute, a bad intermediate, or an evaluator that gave up too early, and if all you logged was the final reply you cannot tell which. Composed systems act over many steps, and mistakes in early steps propagate and compound downstream, so you have to be able to see the whole trajectory, not just the answer at the end <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[3]</a></span>.</p>
+<p>Concretely, log something at every pattern boundary:</p>
+<ul>
+<li>the <strong>input</strong> to the step, so you can reproduce it;</li>
+<li>the <strong>chosen path or route</strong>, and the classifier’s confidence when there was one;</li>
+<li>the <strong>intermediate outputs</strong> each step produced;</li>
+<li>the <strong>gate results</strong>, so you know which checks passed and which failed;</li>
+<li><strong>which model</strong> handled the step, since routing by difficulty means it varies;</li>
+<li>the <strong>tool calls</strong> made and what they returned;</li>
+<li>any <strong>errors</strong>, and the <strong>iteration counts</strong> for loops;</li>
+<li>the <strong>final decision</strong>, and any <strong>human handoff</strong> that occurred.</li>
+</ul>
+<p>This is exactly the payoff of expressing a workflow as an explicit graph: when the control flow is a structure your code can see rather than logic buried in prompts, tracing and debugging become possible, because every node and edge is a place you can instrument <span class="citation" data-cites="langgraph2024"><a href="../../references.html#ref-langgraph2024" role="doc-biblioref">[4]</a></span>. The later implementation chapters make these graphs concrete; for now, the rule to carry is that a system you cannot trace is a system you cannot trust, so design the trace at the same time as the patterns.</p>
+<div id="fig-complexity-cost" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-complexity-cost-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch09/fig-complexity-cost.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-complexity-cost-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.8: Every pattern you stack buys capability and charges you back in latency, cost, trace volume, failure points, and debugging effort. Add a pattern only when a measurement shows the capability is worth the bill.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-complexity-cost" class="quarto-xref">Figure&nbsp;<span>9.8</span></a> is why this matters in practice. Each pattern you add buys capability and charges you back in latency, cost, trace volume, and places to debug. Seeing the bill laid out next to the benefit is what turns “add a pattern only when a measurement earns it” from a slogan into a habit.</p>
+<p>There is one more thing to notice as we close the toolbox. Walk the five patterns from left to right and you can watch control quietly migrate from your code to the model: fixed in a chain, branching in a router, discovered by an orchestrator, looping under an evaluator’s judgment. Push that migration to its conclusion, let the model decide <em>every</em> step, not just how the work is divided or when it is done, and the workflow has become an agent, the autonomous loop we first opened up in <a href="../part2-llm-agents/07-reasoning-and-planning.html#sec-ch7-react" class="quarto-xref"><span>Section 7.5</span></a>. The patterns in this chapter are the well-lit path you should walk as far as it takes you before handing the model the wheel. To make all of this concrete, let’s build one modest system out of these bricks, end to end.</p>
+</section>
+</section>
+<section id="sec-ch9-worked" class="level2" data-number="9.9">
+<h2 data-number="9.9" class="anchored" data-anchor-id="sec-ch9-worked"><span class="header-section-number">9.9</span> A worked example: a support desk, assembled</h2>
+<p>Patterns are easiest to trust once you have watched them snap together on a real problem, so let’s build the customer-support system we kept using as an illustration, this time wiring the actual bricks. The goal is ordinary and concrete: a ticket comes in, and the system should produce a good reply (or escalate) without a human touching every one. Watch how each pattern earns its place, and notice that we reach for the fancier ones only where the simpler shapes run out.</p>
+<p>We start at the door with <strong>routing</strong>. A classifier reads the incoming ticket and sorts it into one of three lanes: a simple FAQ, a refund request, or a complex multi-part problem. That single decision lets each lane be built differently, which is the whole reason to route. The FAQ lane is the simplest thing that works: a single well-crafted LLM call with the relevant help article in context, no more. The refund lane is a <strong>prompt chain</strong>: look up the order, check it against the refund policy with a programmatic gate, then draft the reply, a fixed, auditable line of steps, exactly what you want when money is involved. The complex lane is the one no fixed path fits, so it hands off to an <strong>orchestrator–workers</strong> step that breaks the tangled ticket into its parts and works each one. Before anything is sent, every draft passes through a shared <strong>evaluator–optimizer</strong> gate that checks tone and correctness and sends weak drafts back for a rewrite. <a href="#fig-support-compose" class="quarto-xref">Figure&nbsp;<span>9.9</span></a> shows the assembled system.</p>
+<div id="fig-support-compose" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-support-compose-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch09/fig-support-compose.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-support-compose-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.9: A support desk assembled from four patterns. Routing sorts the ticket; each lane uses the simplest shape that fits (a single call, a chain, or an orchestrator); and a shared evaluator–optimizer gate reviews every draft before it is sent.
+</figcaption>
+</figure>
+</div>
+<p>Read the design back and you can see every principle of the chapter at work. Each lane uses the <em>simplest</em> pattern that fits its job, not the most powerful: the FAQ lane never gets an orchestrator it does not need. Control migrates rightward exactly where the problem demands it: the refund lane stays on a fixed chain because refunds <em>have</em> a fixed procedure, while the complex lane hands the model more freedom precisely because its tickets have no predictable shape. And the evaluator gate is shared, added once, because measurement showed drafts occasionally went out with the wrong tone, a pattern introduced to solve a real, observed problem rather than a hypothetical one. If a hand-drawn pseudocode sketch helps, the spine is just this: <code>lane = route(ticket)</code>, then <code>draft = lane.handle(ticket)</code>, then <code>while not evaluate(draft): draft = revise(draft)</code>, then <code>send(draft)</code>. Four patterns, one modest system, and nothing in it that a measurement did not justify. That restraint, building only what the problem asks for, is the real lesson to carry out of this chapter.</p>
+</section>
+<section id="sec-ch09-case" class="level2" data-number="9.10">
+<h2 data-number="9.10" class="anchored" data-anchor-id="sec-ch09-case"><span class="header-section-number">9.10</span> Case study: the Ledgerly support agent</h2>
+<p>Where we left off, <a href="08-workflows-vs-agents.html#sec-ch08-case" class="quarto-xref"><span>Section 8.9</span></a> sorted Ledgerly’s traffic into three lanes but left us without the machinery to run them. The worked example you just read, the assembled support desk in <a href="#sec-ch9-worked" class="quarto-xref"><span>Section 9.9</span></a>, <em>is</em> that machinery: it is the Ledgerly support desk, built from this chapter’s patterns. It is worth naming which pattern fills each lane, because that mapping is the whole design.</p>
+<p>The three lanes from <a href="08-workflows-vs-agents.html#sec-ch08-case" class="quarto-xref"><span>Section 8.9</span></a> land on the three shapes in <a href="#fig-support-compose" class="quarto-xref">Figure&nbsp;<span>9.9</span></a>. <strong>Routing</strong> at the door sorts a ticket into FAQ, refund, or complex, the classification we described by hand last chapter now done by a real classifier. The <strong>FAQ lane</strong> is the single well-crafted call, the simplest thing that works. The <strong>refund lane</strong> is the prompt chain, a fixed and auditable procedure, which is exactly right because <a href="08-workflows-vs-agents.html#sec-ch08-case" class="quarto-xref"><span>Section 8.9</span></a> argued a refund’s steps never change even though it moves money. The <strong>complex lane</strong> hands off to orchestrator–workers, the one place Ledgerly spends real autonomy. And a single shared <strong>evaluator–optimizer</strong> gate reviews every draft before it is sent, so tone and correctness are checked no matter which lane produced the reply.</p>
+<p>Stated as decisions, the whole design is five deliberate choices, one per Ledgerly need:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Ledgerly need</th>
+<th>Design decision</th>
+<th>Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Answer a policy or how-to question</td>
+<td>a single retrieval-augmented call</td>
+<td>RAG call</td>
+</tr>
+<tr class="even">
+<td>Decide whether a refund qualifies</td>
+<td>a fixed, auditable workflow</td>
+<td>prompt chain</td>
+</tr>
+<tr class="odd">
+<td>Untangle a messy multi-charge complaint</td>
+<td>an agent with room to investigate</td>
+<td>orchestrator–workers</td>
+</tr>
+<tr class="even">
+<td>Check every reply before it ships</td>
+<td>a shared quality gate</td>
+<td>evaluator–optimizer</td>
+</tr>
+<tr class="odd">
+<td>Actually move the money</td>
+<td>a human approval step</td>
+<td>human-in-the-loop</td>
+</tr>
+</tbody>
+</table>
+<p>The first four are built in this chapter. The fifth, approval before any refund is paid, is the human-in-the-loop gate already sketched into the blueprint (<a href="#fig-ledgerly-blueprint" class="quarto-xref">Figure&nbsp;<span>9.10</span></a>) and wired up in <a href="12-orchestration-langgraph.html#sec-ch12-case" class="quarto-xref"><span>Section 12.7</span></a>; it is a design decision now even though its machinery arrives later.</p>
+<p>The lesson the worked example draws, that you should build only what a measurement justifies, is the discipline Ledgerly carries into production. The evaluator gate was not added on a hunch; it earned its place because drafts occasionally went out with the wrong tone. That habit of adding a layer only when the evidence asks for it is what keeps the growing system from collapsing under its own cleverness.</p>
+<section id="sec-ch9-complex-lane" class="level3" data-number="9.10.1">
+<h3 data-number="9.10.1" class="anchored" data-anchor-id="sec-ch9-complex-lane"><span class="header-section-number">9.10.1</span> Inside the complex lane</h3>
+<p>The complex lane is worth opening up, because it is where three of this chapter’s patterns nest inside one another. When a messy multi-charge ticket arrives, the first thing Ledgerly needs is evidence, and the pieces of evidence do not depend on each other: the recent charges, the plan history, the relevant refund policy, and any prior tickets from this customer can all be fetched at once. That is <strong>parallelization</strong> by sectioning, and it is here purely for speed, since making four independent lookups one after another would keep the customer waiting for no reason.</p>
+<p>Most complex tickets are answered from that evidence alone. But some are genuinely unusual, a tangle no fixed set of lookups anticipated, and for those Ledgerly escalates to an <strong>orchestrator–workers</strong> step. The orchestrator reads the assembled evidence and decides, at run time, which role-scoped workers the case actually needs: a billing analyst to reconcile the charges, a policy worker to interpret the rules, a support-history worker to weigh the customer’s past, and a customer-communication worker to shape the tone. Crucially, it runs under the budget from <a href="08-workflows-vs-agents.html#sec-ch8-agentic-contract" class="quarto-xref"><span>Section 8.6.2</span></a> and this chapter’s orchestrator caution: a cap on workers, a required subtask schema, a reason attached to each worker, and a fallback for when they disagree, so the added freedom never becomes a runaway.</p>
+<p>Whatever the complex lane produces, the draft still passes through the same shared <strong>evaluator–optimizer</strong> gate as every other lane, which checks tone and correctness before a word reaches the customer. Notice what this lane is and is not. It is not sophisticated because it uses three patterns; a simpler ticket would use none of them. It is sophisticated because each pattern is used exactly where it fits: parallelization where the work is independent, an orchestrator where the decomposition cannot be known in advance, and an evaluator where quality has to be guaranteed. That is the whole discipline of the chapter, seen in one lane.</p>
+<p>Step back from the individual lanes and you can see Ledgerly whole. <a href="#fig-ledgerly-blueprint" class="quarto-xref">Figure&nbsp;<span>9.10</span></a> is the blueprint we will carry to the end of the book. This chapter builds its left half: the router at the door, the three lanes, and the shared evaluator gate that checks every reply. The other parts, the shared tools, the memory store, the human-approval gate, and the observability layer beneath everything, are already sketched in because each comes online in a chapter still ahead. From here on, every installment lights up one more part of this same picture instead of drawing an unrelated diagram.</p>
+<div id="fig-ledgerly-blueprint" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ledgerly-blueprint-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch09/fig-ledgerly-blueprint.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ledgerly-blueprint-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.10: The Ledgerly blueprint: one coherent system, completed over the chapters that follow. This chapter builds the router, the three lanes, and the shared evaluator gate; the shared tools, the memory store, the human-approval gate, and the observability layer each come online later, as its chapter arrives.
+</figcaption>
+</figure>
+</div>
+<p>The patterns give Ledgerly its floor plan, but two lanes assume the agent can actually <em>do</em> things: look up a charge, issue a refund. <a href="10-tools-and-mcp.html#sec-ch10-case" class="quarto-xref"><span>Section 10.9</span></a> designs those tools properly and puts them behind an MCP server the whole desk can share.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly so far">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🧾 Ledgerly so far
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The lanes now have machinery, drawn in <a href="#fig-ledgerly-blueprint" class="quarto-xref">Figure&nbsp;<span>9.10</span></a>:</p>
+<ol type="1">
+<li>A <strong>router</strong> at the door sends each ticket to the FAQ, refund, or complex lane.</li>
+<li>Lanes are built from named patterns: single call, prompt chain, orchestrator–workers.</li>
+<li>Tools, retrieval, and memory back every lane.</li>
+<li><strong>New this chapter:</strong> a shared <strong>evaluator gate</strong> reviews every draft before it is sent.</li>
+</ol>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-ch9-summary" class="level2" data-number="9.11">
+<h2 data-number="9.11" class="anchored" data-anchor-id="sec-ch9-summary"><span class="header-section-number">9.11</span> Summary</h2>
+<p>This chapter handed you the floor plans of agentic systems: a small set of reusable shapes that, combined, describe almost everything built in production.</p>
+<ul>
+<li><strong>Prompt chaining</strong> runs a task as a fixed line of steps, each working on the last one’s output, with optional gates between them. It trades a little latency for higher accuracy and fits tasks whose steps you already know.</li>
+<li><strong>Routing</strong> classifies each input and sends it to a specialized handler, giving separation of concerns, and, as a bonus, a way to send easy cases to cheap models and hard ones to capable ones.</li>
+<li><strong>Parallelization</strong> runs work concurrently: <em>sectioning</em> splits a task into different subtasks for focus and speed, while <em>voting</em> repeats the same task for confidence.</li>
+<li><strong>Orchestrator–workers</strong> lets a lead model divide a task into subtasks <em>at run time</em>, which is what you need when the subtasks cannot be known in advance, as in editing an unknown set of files.</li>
+<li><strong>Evaluator–optimizer</strong> loops a generator against a critic until the work meets explicit criteria, a structured form of the reflection idea from <a href="../part2-llm-agents/07-reasoning-and-planning.html#sec-ch7-reflection" class="quarto-xref"><span>Section 7.6</span></a>.</li>
+<li><strong>Compose freely, but add complexity only when it demonstrably helps.</strong> The patterns nest like rooms in a house; the craft is building the simplest arrangement that meets the need, and measuring before you add another layer.</li>
+<li><strong>Patterns are assumptions, not recipes.</strong> Each pattern works only because it assumes something about the task (a known order, known categories, independent subtasks, an unknown decomposition, or a clear notion of “better”); choose the one your real cases actually support, and ask what assumption you are making before you reach for it.</li>
+<li><strong>Every pattern needs a gate.</strong> An intermediate check, a routing-confidence fallback, an aggregation check, a worker budget, an evaluator rubric: the gate is what turns a pattern from a hopeful call into a dependable step, and in production these gates pair with durable execution.</li>
+<li><strong>Route by difficulty and risk, not only topic.</strong> Sending easy cases to cheap models, hard ones to capable models, and irreversible actions to a human is routing that spends the expensive resource only where it earns its place.</li>
+<li><strong>Give an orchestrator a budget, and give a composed system a composed trace.</strong> Runtime decomposition needs hard limits to stay safe, and a system built from many patterns is only debuggable if you log the input, path, gates, models, and decisions at every boundary.</li>
+</ul>
+<p>Read the patterns left to right and you watched control migrate from your code toward the model, step by step, until, at the far end, the model owns every decision and the workflow has become a true agent. Two of these patterns, though, quietly assumed something we have not yet examined closely: that the model can reach out and <em>do</em> things in the world, look up an order, edit a file, search a source. That capability is the augmented LLM’s hands, and it deserves a chapter of its own. Next we open up tools and the standard that is fast becoming their common language, the Model Context Protocol, in <a href="10-tools-and-mcp.html" class="quarto-xref"><span>Chapter 10</span></a>.</p>
+</section>
+<section id="sec-ch9-exercises" class="level2" data-number="9.12">
+<h2 data-number="9.12" class="anchored" data-anchor-id="sec-ch9-exercises"><span class="header-section-number">9.12</span> Exercises</h2>
+<ol type="1">
+<li><strong>Name that pattern.</strong> For each system, identify which pattern (or combination) it uses:
+<ol type="a">
+<li>a translator that drafts a translation, has a second model critique it, and revises;</li>
+<li>a moderation system where one model answers and another simultaneously screens the input;</li>
+<li>a help desk that sends billing questions and technical questions down different prompts;</li>
+<li>a coding tool that decides which files to change and edits each one.</li>
+</ol></li>
+<li><strong>Chain with a gate.</strong> Design a three-step prompt chain for turning a rough set of meeting notes into a polished summary. Where would you put a programmatic gate, and what would it check?</li>
+<li><strong>Sectioning vs.&nbsp;voting.</strong> Give one task where <em>sectioning</em> is the right form of parallelization and one where <em>voting</em> is, and explain what each buys you that the other would not.</li>
+<li><strong>Draw the line.</strong> Explain, in your own words, the difference between parallelization and orchestrator–workers. Why can the two look identical on a diagram yet solve different problems?</li>
+<li><strong>Resist the upgrade.</strong> Take the assembled support desk from <a href="#sec-ch9-worked" class="quarto-xref"><span>Section 9.9</span></a> and propose one pattern you could add to make it “smarter.” Then argue the other side: what evidence would you want before adding it, and what might it cost you?</li>
+<li><strong>Name the assumption.</strong> Pick a task you would build with one of the five patterns. State the hidden assumption that pattern makes about the task, then describe a real, specific case that would violate it and quietly break the pattern.</li>
+<li><strong>Gate every stage.</strong> Take a composed pipeline, say routing into a prompt chain whose last step is an evaluator loop, and design the gate for each stage: what does it check, and what happens when the check fails?</li>
+<li><strong>Budget the orchestrator.</strong> Write an explicit budget for Ledgerly’s complex lane: a maximum number of workers, the structured subtask schema each worker must receive, and the fallback to apply when two workers disagree.</li>
+<li><strong>Design the trace.</strong> List the fields you would log to debug a routing-plus-chain-plus-evaluator pipeline, and for each field explain which failure it would help you diagnose.</li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-anthropic2024effective" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">Anthropic, E. Schluntz, and B. Zhang, <span>“Building effective agents.”</span> <a href="https://www.anthropic.com/engineering/building-effective-agents" class="uri">https://www.anthropic.com/engineering/building-effective-agents</a>, Dec. 2024.</div>
+</div>
+<div id="ref-mslearn2026agentic" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Microsoft, <span>“Agentic application patterns.”</span> <a href="https://learn.microsoft.com/en-us/azure/durable-task/sdks/durable-agents-patterns" class="uri">https://learn.microsoft.com/en-us/azure/durable-task/sdks/durable-agents-patterns</a>, 2026.</div>
+</div>
+<div id="ref-anthropic2026evals" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">Anthropic, M. Grace, J. Hadfield, R. Olivares, and J. De Jonghe, <span>“Demystifying evals for AI agents.”</span> <a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents" class="uri">https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents</a>, Jan. 2026.</div>
+</div>
+<div id="ref-langgraph2024" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">LangChain, <span>“LangGraph documentation.”</span> <a href="https://langchain-ai.github.io/langgraph/" class="uri">https://langchain-ai.github.io/langgraph/</a>, 2024.</div>
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.bhavykhatri\.com\/Agentic-AI-Book\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../chapters/part3-building/08-workflows-vs-agents.html" class="pagination-link" aria-label="Workflows vs. Agents">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../chapters/part3-building/10-tools-and-mcp.html" class="pagination-link" aria-label="Tools &amp; the Model Context Protocol (MCP)">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

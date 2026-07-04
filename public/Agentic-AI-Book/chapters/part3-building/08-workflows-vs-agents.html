@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical, research-grounded guide that connects the classical theory of intelligent agents to the modern practice of building autonomous LLM agents with tools, memory, planning, and multi-agent orchestration.">
+
+<title>8&nbsp; Workflows vs.&nbsp;Agents – Agents: From Theory to Production</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../chapters/part3-building/09-agentic-patterns.html" rel="next">
+<link href="../../chapters/part2-llm-agents/07-reasoning-and-planning.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d166b450ba5a8e9f7a0ab969bf6592c1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9323ee001d31a54ee2476120b8c8bf56.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-20d87d490373df57c880857ccdca8cc5.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part3-building/08-workflows-vs-agents.html">Part III — Building Agents</a></li><li class="breadcrumb-item"><a href="../../chapters/part3-building/08-workflows-vs-agents.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Agents: From Theory to Production</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part I — Foundations of Agency</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/01-what-is-an-agent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What Is an Agent?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/02-history-and-theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A Short History &amp; the Theory of Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/03-agent-architectures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Agent Architectures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/04-environments-and-rationality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Environments &amp; Rationality</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part II — The LLM as an Agent</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/05-llms-as-reasoners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/06-the-augmented-llm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/07-reasoning-and-planning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part III — Building Agents</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/08-workflows-vs-agents.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/09-agentic-patterns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/10-tools-and-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/11-memory-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/12-orchestration-langgraph.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/13-openai-agents-sdk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/14-multi-agent-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part IV — Production &amp; Trust</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/15-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/16-observability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Observability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/17-safety-and-guardrails.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Safety &amp; Guardrails</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/18-deployment-and-cost.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part V — Frontiers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part5-frontiers/19-computer-use-and-embodiment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Computer Use &amp; Embodiment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part5-frontiers/20-frontiers-and-open-problems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Frontiers &amp; Open Problems</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendices/a-environment-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Appendix A — Environment Setup</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendices/b-glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Appendix B — Glossary</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendices/c-further-reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Appendix C — Further Reading</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-ch8-intuition" id="toc-sec-ch8-intuition" class="nav-link active" data-scroll-target="#sec-ch8-intuition"><span class="header-section-number">8.1</span> Opening intuition</a></li>
+  <li><a href="#sec-ch8-definitions" id="toc-sec-ch8-definitions" class="nav-link" data-scroll-target="#sec-ch8-definitions"><span class="header-section-number">8.2</span> Two ways to build with LLMs</a></li>
+  <li><a href="#sec-ch8-choosing" id="toc-sec-ch8-choosing" class="nav-link" data-scroll-target="#sec-ch8-choosing"><span class="header-section-number">8.3</span> When to choose which</a></li>
+  <li><a href="#sec-ch8-autonomy-budget" id="toc-sec-ch8-autonomy-budget" class="nav-link" data-scroll-target="#sec-ch8-autonomy-budget"><span class="header-section-number">8.4</span> Autonomy is a trade, not an upgrade</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch8-earns-autonomy" id="toc-sec-ch8-earns-autonomy" class="nav-link" data-scroll-target="#sec-ch8-earns-autonomy"><span class="header-section-number">8.4.1</span> When a task earns more autonomy</a></li>
+  <li><a href="#sec-ch8-less-autonomy" id="toc-sec-ch8-less-autonomy" class="nav-link" data-scroll-target="#sec-ch8-less-autonomy"><span class="header-section-number">8.4.2</span> When a task deserves less autonomy</a></li>
+  </ul></li>
+  <li><a href="#sec-ch8-start-from-process" id="toc-sec-ch8-start-from-process" class="nav-link" data-scroll-target="#sec-ch8-start-from-process"><span class="header-section-number">8.5</span> Start from the process, not the agent</a></li>
+  <li><a href="#sec-ch8-hybrids" id="toc-sec-ch8-hybrids" class="nav-link" data-scroll-target="#sec-ch8-hybrids"><span class="header-section-number">8.6</span> Hybrids: the best of both</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch8-hybrid-default" id="toc-sec-ch8-hybrid-default" class="nav-link" data-scroll-target="#sec-ch8-hybrid-default"><span class="header-section-number">8.6.1</span> Hybrid is the mature default, not a compromise</a></li>
+  <li><a href="#sec-ch8-agentic-contract" id="toc-sec-ch8-agentic-contract" class="nav-link" data-scroll-target="#sec-ch8-agentic-contract"><span class="header-section-number">8.6.2</span> The agentic step needs a contract</a></li>
+  </ul></li>
+  <li><a href="#sec-ch8-decision" id="toc-sec-ch8-decision" class="nav-link" data-scroll-target="#sec-ch8-decision"><span class="header-section-number">8.7</span> A decision guide</a></li>
+  <li><a href="#sec-ch8-evaluation" id="toc-sec-ch8-evaluation" class="nav-link" data-scroll-target="#sec-ch8-evaluation"><span class="header-section-number">8.8</span> The more autonomy you give, the more evaluation you owe</a></li>
+  <li><a href="#sec-ch08-case" id="toc-sec-ch08-case" class="nav-link" data-scroll-target="#sec-ch08-case"><span class="header-section-number">8.9</span> Case study: the Ledgerly support agent</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch8-case-hybrid" id="toc-sec-ch8-case-hybrid" class="nav-link" data-scroll-target="#sec-ch8-case-hybrid"><span class="header-section-number">8.9.1</span> Workflow, agent, or hybrid for one hard ticket</a></li>
+  </ul></li>
+  <li><a href="#sec-ch8-summary" id="toc-sec-ch8-summary" class="nav-link" data-scroll-target="#sec-ch8-summary"><span class="header-section-number">8.10</span> Summary</a></li>
+  <li><a href="#sec-ch8-exercises" id="toc-sec-ch8-exercises" class="nav-link" data-scroll-target="#sec-ch8-exercises"><span class="header-section-number">8.11</span> Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part3-building/08-workflows-vs-agents.html">Part III — Building Agents</a></li><li class="breadcrumb-item"><a href="../../chapters/part3-building/08-workflows-vs-agents.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-workflows-vs-agents" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p><em>“Civilization advances by extending the number of important operations which we can perform without thinking about them.”</em></p>
+<p>— Alfred North Whitehead, <em>An Introduction to Mathematics</em></p>
+</blockquote>
+<blockquote class="blockquote">
+<p>After this chapter you will be able to decide, for a given task, whether to use a predefined workflow or a model-driven agent, and how to combine the two.</p>
+</blockquote>
+<section id="sec-ch8-intuition" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="sec-ch8-intuition"><span class="header-section-number">8.1</span> Opening intuition</h2>
+<p>The last three chapters gave an LLM a great deal of power. We saw what it can reason about, we gave it hands, a book, and a notebook, and we taught it to think, act, reflect, and search. It would be natural to conclude that the answer to every problem is now “build an agent and let it figure things out.” This chapter exists to talk you out of that conclusion. The most consequential design decision in this whole field is often not <em>how</em> to make an agent clever, but <em>whether to use a free-ranging agent at all</em>, and surprisingly often, the right answer is not to.</p>
+<p>We first met this fork in the road all the way back in <a href="../part1-foundations/01-what-is-an-agent.html#sec-agent-vs-workflow" class="quarto-xref"><span>Section 1.4</span></a>, and now we can treat it properly. The single question that separates the two paths is this: <strong>who owns the control flow: you, or the model?</strong> Picture the difference between a railway and a taxi. A railway follows a fixed track laid down in advance; every train takes the same route, which is exactly why it is so dependable and easy to reason about, and exactly why it can never take you somewhere the track does not already go. A taxi is the opposite. You give the driver a destination and hand over control of the route; they decide which turns to take, reroute around a traffic jam, and improvise when the road is closed. That flexibility is precisely what you want when the journey is unpredictable, and precisely what you do <em>not</em> want when a fixed, well-understood route already gets you there every time.</p>
+<p>That is the whole tension of this chapter in a picture. A <strong>workflow</strong> is the railway: you, the developer, lay down the steps in advance, and the LLM runs along that track. An <strong>agent</strong> is the taxi: you hand the model a goal and let it decide the steps for itself. Neither is better in the abstract; they are tools for different jobs. The skill this chapter builds is knowing which one a given problem is asking for and, because real systems are rarely pure, how to combine them so that most of your system enjoys the predictability of rails while a few carefully chosen stretches get the freedom of a driver. We begin by making the two definitions precise.</p>
+</section>
+<section id="sec-ch8-definitions" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="sec-ch8-definitions"><span class="header-section-number">8.2</span> Two ways to build with LLMs</h2>
+<p>The taxi-and-railway picture has a precise counterpart in how practitioners talk about these systems. Anthropic, drawing on work with dozens of teams building LLM systems in production, groups everything under the umbrella of <em>agentic systems</em> but draws one sharp architectural line through the middle of it <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. On one side are <strong>workflows</strong>: systems where LLMs and tools are orchestrated through <em>predefined code paths</em> that you, the developer, wrote. On the other are <strong>agents</strong>: systems where the LLM <em>dynamically directs its own process and tool usage</em>, keeping control over how it accomplishes the task. The dividing line is exactly the one we drew: whether the sequence of steps is fixed in your code or decided by the model at run time.</p>
+<p>It helps to make this concrete. Imagine a system that takes a customer email, drafts a reply, and translates it into the customer’s language. As a <strong>workflow</strong>, you would write three steps in code: call the model to classify the email, call it again to draft a reply, call it a third time to translate. The path is fixed (always classify, then draft, then translate), and the LLM is doing the <em>work</em> at each station, but your code is driving the train. As an <strong>agent</strong>, you would instead hand the model the goal (“handle this customer’s email”) along with tools to look up orders, issue refunds, and send replies, and let <em>it</em> decide what to do: maybe it looks up the order, realizes a refund is warranted, issues it, and only then writes a reply, a sequence you never spelled out. <a href="#fig-workflow-vs-agent" class="quarto-xref">Figure&nbsp;<span>8.1</span></a> puts the two side by side.</p>
+<div id="fig-workflow-vs-agent" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-workflow-vs-agent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch08/fig-workflow-vs-agent.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-workflow-vs-agent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.1: Two ways to build with LLMs. In a workflow, your code fixes the path and the model does the work at each step. In an agent, you hand the model a goal and it decides the steps itself, looping through tools until the goal is met.
+</figcaption>
+</figure>
+</div>
+<p>Two things are worth noticing before we go further. First, both are <em>agentic systems</em> in the loose sense that both put a language model at the heart of the work; the distinction is not “smart versus dumb” but “who decides the order of operations.” Second, and this is the point the rest of the chapter turns on, the augmented LLM from <a href="../part2-llm-agents/06-the-augmented-llm.html" class="quarto-xref"><span>Chapter 6</span></a> is the building block in <em>both</em> cases. A workflow is several augmented-LLM calls wired together by your code; an agent is a single augmented LLM placed inside the reasoning loop from <a href="../part2-llm-agents/07-reasoning-and-planning.html#sec-ch7-react" class="quarto-xref"><span>Section 7.5</span></a> and handed the wheel. The difference lives entirely in where the control flow comes from, and that difference has real, practical consequences. It is time to weigh them.</p>
+</section>
+<section id="sec-ch8-choosing" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="sec-ch8-choosing"><span class="header-section-number">8.3</span> When to choose which</h2>
+<p>Now that the two options are clearly drawn, how do you pick? The honest starting point is a piece of advice that sounds almost too plain to be useful, and yet it is the single most important guideline in the practice of building these systems: <strong>find the simplest solution that works, and add complexity only when it demonstrably earns its place</strong> <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. Very often the simplest solution is not an agent, and sometimes it is not even a workflow: a single well-crafted LLM call, given the right context and a couple of examples, is enough for a great many tasks. The instinct to reach straight for a fully autonomous agent is the most common and expensive mistake newcomers make.</p>
+<p>The reason to hesitate is that autonomy is not free; it is a <em>trade</em>. When you hand the model the control flow, you buy flexibility, the ability to handle inputs you never anticipated and to find paths you never hard-coded, but you pay for it in three currencies. You pay in <strong>predictability</strong>, because a system that decides its own steps will not do the same thing twice, which makes it harder to test and harder to reason about. You pay in <strong>cost and latency</strong>, because an agent that loops for many turns makes many model calls where a workflow would make a fixed, small number. And you pay in <strong>exposure to compounding errors</strong>, because in a long autonomous run a mistake in step three becomes the input to step four, and small errors snowball into large ones, exactly the risk we flagged when we first opened up the reasoning loop. <a href="#tbl-wf-vs-agent" class="quarto-xref">Table&nbsp;<span>8.1</span></a> lays the trade-offs out side by side.</p>
+<div id="tbl-wf-vs-agent" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-wf-vs-agent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8.1: Choosing between a workflow and an agent.
+</figcaption>
+<div aria-describedby="tbl-wf-vs-agent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Consideration</th>
+<th>Workflow (you drive)</th>
+<th>Agent (model drives)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Control flow</td>
+<td>Fixed in your code</td>
+<td>Decided by the model at run time</td>
+</tr>
+<tr class="even">
+<td>Predictability</td>
+<td>High, same path every time</td>
+<td>Lower, varies with input and run</td>
+</tr>
+<tr class="odd">
+<td>Cost &amp; latency</td>
+<td>Low and bounded</td>
+<td>Higher and open-ended</td>
+</tr>
+<tr class="even">
+<td>Best for</td>
+<td>Well-defined, decomposable tasks</td>
+<td>Open-ended tasks with no fixed path</td>
+</tr>
+<tr class="odd">
+<td>Main risk</td>
+<td>Too rigid for messy inputs</td>
+<td>Compounding errors; harder to debug</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Read the table as a single rule of thumb. <strong>Workflows win when the task is well-defined</strong>, when you can look at it and already know the steps, when you want the same behavior every time, and when predictability and cost matter more than adaptability. <strong>Agents win when the task is genuinely open-ended</strong>, when you <em>cannot</em> predict how many steps it will take or what they will be, when the path depends on what the model discovers along the way, and when you have enough trust in the model’s judgment (and enough guardrails) to let it operate on its own <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. A tax-filing pipeline with fixed, auditable stages wants to be a workflow. A coding agent asked to fix an unfamiliar bug across an unknown number of files, where you truly cannot script the path in advance, is a natural fit for an agent. The question to keep asking is not “how capable is the model?” but “does <em>this task</em> actually need the model to own the control flow?” Most of the time, part of it does and part of it does not, which is why the systems that work best in practice are rarely pure.</p>
+</section>
+<section id="sec-ch8-autonomy-budget" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="sec-ch8-autonomy-budget"><span class="header-section-number">8.4</span> Autonomy is a trade, not an upgrade</h2>
+<p>We have twice now called autonomy a trade and hurried past it. The phrase deserves to sit at the center of its own section, because it is the idea that keeps every later decision honest. It is tempting to read the progression from a single call to a workflow to an agent as a <em>ladder</em>, with the full agent perched at the top as the most advanced, most capable design. That reading is wrong, and it is one of the costliest misconceptions in this field. Handing the model the control flow is not a promotion; it is a purchase. You buy flexibility, and you pay for it in predictability, cost, latency, debuggability, and control. An agent is not a better workflow. It is a different bargain.</p>
+<p>A helpful way to hold this in your head is a <strong>discretionary spending budget</strong>. Imagine you have just hired a capable new employee. On their first day you would not hand over the company card with no limit and say “use your judgment on everything.” You give them discretion where their judgment genuinely adds value, such as how to phrase a delicate reply to an angry customer or how to prioritize a chaotic inbox, and you keep firm rules where it does not, such as how expenses are filed, when a refund must be escalated, and which approvals a large purchase needs. Autonomy in a software system works exactly the same way. Every system has an <strong>autonomy budget</strong>: a limited amount of uncertainty, variation, cost, and operational risk you are willing to tolerate in exchange for letting the model choose its own path. The budget is finite. Spend it only where the flexibility it buys clearly pays for itself.</p>
+<p><a href="#fig-autonomy-budget" class="quarto-xref">Figure&nbsp;<span>8.2</span></a> makes the trade visible. As you slide a task rightward toward more autonomy, the thing you are buying (flexibility) does rise, but so does everything on the bill: cost, latency, output variance, and the burden of evaluating and guarding a system that no longer does the same thing twice.</p>
+<div id="fig-autonomy-budget" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-autonomy-budget-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch08/fig-autonomy-budget.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-autonomy-budget-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.2: Autonomy is a trade. As the model owns more of the control flow, flexibility rises, but so do cost, latency, output variance, and the evaluation and guardrail burden. You spend a finite autonomy budget, so spend it only where flexibility pays for itself.
+</figcaption>
+</figure>
+</div>
+<p>The rest of this section is just two questions asked with that budget in mind. When does a task genuinely earn the autonomy you would spend on it, and when does it deserve less than your instinct wants to give?</p>
+<section id="sec-ch8-earns-autonomy" class="level3" data-number="8.4.1">
+<h3 data-number="8.4.1" class="anchored" data-anchor-id="sec-ch8-earns-autonomy"><span class="header-section-number">8.4.1</span> When a task earns more autonomy</h3>
+<p>Some work quietly refuses to be scripted, and you can feel it the moment you try to write it down. You sit to list the steps and the list falls apart before the third line, because the third step depends on what the first two uncover. That is the clearest sign a task has earned some autonomy: the path cannot be fixed in advance. You know the destination but not the route, because the route is discovered by walking it, and each observation along the way quietly rewrites what should happen next. The right third action simply does not exist until the results of the first two are in.</p>
+<p>That discovery only counts for something if the agent can see where it is going, so the next sign travels close behind: reliable tools and honest feedback are available. An agent needs contact with reality. When its moves can be checked against search results, a database, a failing test, or any other patch of ground truth, a wrong turn is caught and corrected on the next step instead of compounding silently into a confident, elaborate mistake. Autonomy without feedback is not exploration; it is freefall.</p>
+<p>There is also the plain economics of attention. Autonomy earns its place when stopping to ask a human at every turn would be too slow or too expensive to bear. If a person has to bless each small decision, you have not built an agent so much as an elaborate way to make someone click approve all day, and you have surrendered most of what the flexibility was meant to buy. Delegating limited judgment becomes worthwhile exactly when the cost of constant oversight outruns the risk of letting the model act.</p>
+<p>What makes that delegation safe is a final pair of signs, and both are about consequences. The output can be verified before it acts on the world: a plan can be read, code can be run against its tests, a drafted reply can be checked before it ever reaches a customer. And the environment itself is safe to explore, so a wrong move can be undone, contained, or recovered rather than causing irreversible harm. Verification is the safety net under the tightrope; a reversible environment is soft ground to land on. Together they let an agent wander a little without the wandering ever costing anything real.</p>
+<p><a href="#fig-earns-autonomy" class="quarto-xref">Figure&nbsp;<span>8.3</span></a> makes the pattern concrete with an everyday errand. Planning a trip on a fixed script, search flights, book the cheapest, book a hotel, send the itinerary, works right up until a price spikes or a date slips. The adaptive version keeps the same goal but lets each finding steer the next move, looping back to widen the search or to compare a better option. The panel on the right names the six signals that, taken together, make that flexibility worth buying.</p>
+<div id="fig-earns-autonomy" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-earns-autonomy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch08/fig-earns-autonomy.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-earns-autonomy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.3: A task earns autonomy when a fixed path can no longer serve it. A predefined script (left) works only while the steps stay known; an adaptive path (middle) discovers the route as it goes, letting each finding steer the next step. The six signals (right) are the conditions that, together, make that flexibility worth its cost.
+</figcaption>
+</figure>
+</div>
+<p>No single one of these is decisive. A task earns autonomy when several hold at once: the path is unknowable, the feedback is honest, the oversight would be too dear, and the mistakes are cheap to catch and cheap to undo. The less predictable the route and the more trustworthy the feedback and the safeguards around it, the more autonomy the work can justify. When they converge, autonomy stops being an indulgence and becomes the right tool, and its extra cost and variance are simply the fair price of handling work no fixed path could. This is the “simplest thing that works” principle read from the other side: you take on the complexity of an agent precisely when the task proves it has earned the spending <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>.</p>
+</section>
+<section id="sec-ch8-less-autonomy" class="level3" data-number="8.4.2">
+<h3 data-number="8.4.2" class="anchored" data-anchor-id="sec-ch8-less-autonomy"><span class="header-section-number">8.4.2</span> When a task deserves less autonomy</h3>
+<p>The mirror image matters just as much, and it is where good instincts most often betray you, because a task can wear the costume of an agent while quietly deserving far less. The tell is usually that you already know the steps. If you can sit down and name the path from start to finish, writing it down is cheaper, faster, and safer than asking a model to rediscover it on every run. Rediscovery is only a virtue when the path was genuinely unknown; when it was known all along, it is just waste dressed up as intelligence.</p>
+<p>Two further signs raise the stakes past mere waste. When the process is regulated or audited, a reviewer must be able to see the same reviewable control flow every time, not a fresh improvisation that happened to work. And when an action is irreversible, such as moving money or deleting records, a single confident mistake cannot be taken back, and confident mistakes are the one thing language models produce reliably. In both cases the right move is to take discretion off the table rather than hope the model uses it wisely.</p>
+<p>The last three signs are quieter but no less telling. Sometimes consistency simply matters more than creativity, and two identical requests must return two identical, defensible answers rather than two plausible variations. Sometimes the success criteria are fixed and precise, with exactly one correct outcome, so there is nothing for exploration to find. And sometimes the output must obey strict business rules that are far easier to enforce in a few lines of code than to wish for in a prompt. In each case the flexibility of an agent buys you nothing and costs you the very predictability you were relying on.</p>
+<p>This is why seasoned practitioners keep a whole category of <strong>deterministic workflows</strong> on hand: designs in which your code owns the control flow and the model only does the work inside each step, never deciding the shape of the whole. That is the right choice when the sequence of steps is known ahead of time, when you need explicit guardrails over the system’s behavior, or when compliance and auditability demand a control flow a human can review <span class="citation" data-cites="mslearn2026agentic"><a href="../../references.html#ref-mslearn2026agentic" role="doc-biblioref">[2]</a></span>. Read the two lists together and a single rule emerges: the more unknowable the path and the more forgiving the mistakes, the more autonomy a task can justify; the more the path is known and the more a wrong move costs, the less it deserves. Autonomy you decline to spend here is autonomy you still have, ready for the work that truly needs it.</p>
+</section>
+</section>
+<section id="sec-ch8-start-from-process" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="sec-ch8-start-from-process"><span class="header-section-number">8.5</span> Start from the process, not the agent</h2>
+<p>Knowing <em>how</em> to spend an autonomy budget is only half the discipline. The other half is knowing <em>where to look</em> before you spend anything at all, and here newcomers make a predictable mistake: they start by choosing the technology (“we’re building an agent”) and only then go looking for a problem to point it at. The order should be reversed. Before you decide between a workflow and an agent, map the <strong>business process</strong> the system is meant to carry out, because the process, not the technology, tells you where autonomy is needed.</p>
+<p>Think of how a good architect works. Before choosing steel or glass or where to spend the budget, they study how the building will actually be <em>used</em>: where people enter, how they flow from room to room, where they queue and wait, which doors need security, which corridors carry the heaviest traffic. The materials come last, chosen to serve the way the space will really live. Designing an LLM system is the same. First you trace how the work actually flows, and only then do you choose which stretches run on rails and which get a driver.</p>
+<p>Mapping a process spine means answering a short, unglamorous list of questions about the work itself: what <strong>triggers</strong> the work; what <strong>output</strong> is ultimately required; what <strong>systems are read</strong> along the way; what <strong>systems are written</strong> to; what <strong>decisions</strong> get made; which of those steps are <strong>deterministic</strong> (the same every time); which need genuine <strong>judgment</strong>; where <strong>errors</strong> can creep in; where a <strong>human approval</strong> is required; and what <strong>success</strong> finally looks like. None of these questions mentions models or agents, and that is the point. They describe the terrain, and the terrain is what you are building for.</p>
+<p>Run that list over Ledgerly’s support process and a clear spine appears: a ticket arrives, the system identifies the customer and the type of issue, it retrieves the relevant account data, it diagnoses what actually happened, it applies the refund or escalation policy, it drafts a response, and it updates the ticket. Laid out this way, the process almost sorts itself. Identifying the customer, retrieving account data, applying a written policy, and updating the ticket are deterministic steps you already know how to script. Diagnosing a tangled complaint, where the story is ambiguous and the next lookup depends on the last, is the one step that needs judgment. Only <em>after</em> the spine is drawn do you decide which steps stay deterministic and which earn an agentic detour, and that same sorting, deterministic work in code versus open-ended work handed to the model, is the one practitioners reach for again and again <span class="citation" data-cites="mslearn2026agentic"><a href="../../references.html#ref-mslearn2026agentic" role="doc-biblioref">[2]</a></span>.</p>
+<p>The same mapping exercise, run across a handful of everyday tasks, produces the rough classification in <a href="#tbl-task-classification" class="quarto-xref">Table&nbsp;<span>8.2</span></a>. Read down each column and notice that the sorting tracks <em>how knowable the path is</em>, not how important or impressive the task sounds.</p>
+<p>Those four columns are really four stops along a single <strong>spectrum of autonomy</strong>, sketched in <a href="#fig-autonomy-spectrum" class="quarto-xref">Figure&nbsp;<span>8.4</span></a>. As you move from left to right, you hand the model progressively more of the control flow: a single call answers in one shot, a workflow runs a fixed order of steps, a hybrid keeps that order but hands one hard stretch to the model, and an agent is given only a goal and the freedom to find its own path.</p>
+<div id="fig-autonomy-spectrum" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-autonomy-spectrum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch08/fig-autonomy-spectrum.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-autonomy-spectrum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.4: The autonomy spectrum. From left to right, control over the path shifts from your code to the model: a single call is one prompt and one answer, a workflow follows a fixed order, a hybrid embeds one agentic stretch inside a fixed path, and an agent is handed an open-ended goal with many paths and tools to reach it.
+</figcaption>
+</figure>
+</div>
+<div id="tbl-task-classification" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-task-classification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8.2: Sorting everyday tasks by who should own the control flow. The column tracks how knowable the path is: a fixed one-shot job needs a single call, a known multi-step procedure is a workflow, a mostly-known process with one unpredictable stretch is a hybrid, and a genuinely open-ended goal is an agent.
+</figcaption>
+<div aria-describedby="tbl-task-classification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Single call</th>
+<th>Workflow</th>
+<th>Hybrid</th>
+<th>Agent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Rewrite a message in a friendlier tone</td>
+<td>Generate a weekly sales summary from fixed tables</td>
+<td>Triage incoming support tickets</td>
+<td>Research a business question online</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Translate a document into five languages</td>
+<td>Investigate an unknown billing dispute</td>
+<td>Fix an unknown bug across a codebase</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>With the terrain mapped and the tasks sorted, we are finally ready to design the systems that live on it, and almost none of them are pure.</p>
+</section>
+<section id="sec-ch8-hybrids" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="sec-ch8-hybrids"><span class="header-section-number">8.6</span> Hybrids: the best of both</h2>
+<p>If the previous section left you feeling that you have to pick a side, here is the good news: you usually don’t. The workflow-versus-agent choice is not made once for a whole system; it is made <em>per stretch of the journey</em>. The most robust real-world systems are <strong>hybrids</strong>: mostly laid out on rails, with a short agentic detour wired in exactly where the path genuinely can’t be known in advance. Think of it as a railway line with one stretch where the train is allowed to leave the track, drive itself around an obstacle, and rejoin the rails on the other side. The overall trip stays predictable and cheap, and you spend the expensive freedom of an agent only where it actually buys you something.</p>
+<p>A customer-support system is the classic example. Nearly all of it can be a workflow: a fixed pipeline receives a ticket, classifies its topic, looks up the customer’s account, retrieves the relevant help-center articles, drafts a reply, and routes it for sending. Every one of those steps is well-defined, and you want them to run the same dependable way every time; this is railway territory. But suppose a small fraction of tickets are gnarly: a multi-part complaint that touches billing, shipping, <em>and</em> a warranty claim at once, where no fixed path fits. For those, the workflow can hand off to an agentic step (“given this messy ticket and these tools, work the problem until it’s resolved or escalate to a human”) and then fold the result back into the normal pipeline for sending and logging. <a href="#fig-hybrid" class="quarto-xref">Figure&nbsp;<span>8.5</span></a> shows the shape.</p>
+<div id="fig-hybrid" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hybrid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch08/fig-hybrid.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hybrid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.5: A hybrid system. A predictable workflow handles the common path, with one agentic step reserved for the hard cases that no fixed path fits. The agent’s result rejoins the workflow for the final, dependable stages.
+</figcaption>
+</figure>
+</div>
+<p>This is the pattern to reach for far more often than a pure agent. It lets you honor the “simplest thing that works” principle at the level of each step rather than the whole system: the 90% of the job that is well-defined stays on rails, and you pay the cost, unpredictability, and compounding-error risk of autonomy only on the 10% that truly needs it. It also makes the system dramatically easier to debug, because when something goes wrong you can usually tell whether the failure was in a fixed step (which you can inspect and reproduce) or in the agentic detour (which you can sandbox and constrain). Designing a good hybrid, then, comes down to a single repeated judgment, namely for each step, do I own the control flow or does the model? That is exactly the decision the next section turns into a checklist.</p>
+<section id="sec-ch8-hybrid-default" class="level3" data-number="8.6.1">
+<h3 data-number="8.6.1" class="anchored" data-anchor-id="sec-ch8-hybrid-default"><span class="header-section-number">8.6.1</span> Hybrid is the mature default, not a compromise</h3>
+<p>That single repeated judgment gets easier the moment you stop thinking of a hybrid as a compromise. It is tempting to read a hybrid as a <em>timid</em> agent, an autonomous system with its wings clipped, something you would replace with a “real” agent once you trusted the model more. That framing is backwards. In production, a hybrid is usually the <em>mature</em> design, not the training-wheels version of one. It is the shape you arrive at precisely because you understand the task well enough to know which parts deserve autonomy and which do not.</p>
+<p>The clarity comes from dividing ownership cleanly. The <strong>workflow owns the predictable spine</strong>: intake and routing, input validation, guardrails on what may be touched, human approvals, state updates, and every step governed by a known business rule. The <strong>agentic step owns the genuinely open parts</strong>: ambiguous diagnosis, interpreting unstructured input, open-ended research, handling exceptions nobody scripted, and reasoning about policy over messy, real facts. The agent does its work, produces a result, and hands control back, and the workflow carries that result through the dependable final stages. This is the “one agentic detour” from earlier drawn as a division of labor rather than a diagram: rails wherever the path is known, a driver only across the one stretch that no map covers.</p>
+</section>
+<section id="sec-ch8-agentic-contract" class="level3" data-number="8.6.2">
+<h3 data-number="8.6.2" class="anchored" data-anchor-id="sec-ch8-agentic-contract"><span class="header-section-number">8.6.2</span> The agentic step needs a contract</h3>
+<p>Dividing ownership cleanly raises an obvious question: when the workflow calls that agentic step, what exactly is it calling? A well-designed agentic substep is not an open invitation to “go figure it out.” It is a component with a <strong>contract</strong>, the same way a well-behaved function has a signature, preconditions, and postconditions. The contract is what lets a predictable workflow trust an unpredictable step without inheriting its unpredictability. <a href="#tbl-agentic-contract" class="quarto-xref">Table&nbsp;<span>8.3</span></a> lists the fields worth pinning down.</p>
+<div id="tbl-agentic-contract" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-agentic-contract-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8.3: A contract for an agentic substep called from inside a workflow. The contract is what lets predictable code trust an unpredictable step.
+</figcaption>
+<div aria-describedby="tbl-agentic-contract-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Contract field</th>
+<th>What it pins down</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Input schema</td>
+<td>The exact information the step receives, in a fixed shape</td>
+</tr>
+<tr class="even">
+<td>Allowed tools</td>
+<td>The closed set of tools the step may call, and nothing beyond it</td>
+</tr>
+<tr class="odd">
+<td>Max steps</td>
+<td>A hard ceiling on loops or tool calls before the step must return</td>
+</tr>
+<tr class="even">
+<td>Output schema</td>
+<td>The structured result the workflow will parse, not free prose</td>
+</tr>
+<tr class="odd">
+<td>Confidence / uncertainty field</td>
+<td>An explicit signal of how sure the step is, so the workflow can react</td>
+</tr>
+<tr class="even">
+<td>Evidence used</td>
+<td>The facts and sources the conclusion actually rests on</td>
+</tr>
+<tr class="odd">
+<td>Stop condition</td>
+<td>What “done” means, so the step knows when to return a result</td>
+</tr>
+<tr class="even">
+<td>Escalation condition</td>
+<td>When to hand off to a human instead of deciding</td>
+</tr>
+<tr class="odd">
+<td>Failure modes</td>
+<td>What the step returns when it cannot succeed, never a silent guess</td>
+</tr>
+<tr class="even">
+<td>Human-approval trigger</td>
+<td>The conditions under which a person must sign off before acting</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Ledgerly’s diagnosis step shows the contract in the concrete. Its <strong>input</strong> is the customer’s complaint plus the account ID, the billing period in question, and the invoices already retrieved by the workflow. Its <strong>allowed tools</strong> are exactly three: a charge lookup, a plan-history lookup, and a policy-document retrieval, and nothing that can move money or close a ticket. Its <strong>output</strong> is a small structured object: a diagnosis category, the evidence it relied on, a recommended action, a confidence score, and an escalation flag. Notice what the step does <em>not</em> do. It does not issue the refund, it does not close the ticket, and it does not decide policy on its own. It investigates and reports, and the deterministic workflow around it reads that report and decides whether to proceed. The model supplies judgment; the code keeps control.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Do not hide deterministic rules inside prompts">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Do not hide deterministic rules inside prompts
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When you write the contract, resist the temptation to push hard rules into the agent’s prompt. Rules like “refunds above the threshold need a manager’s approval,” “verify identity before sharing account details,” “these fields are required,” “this tool may only be called after authorization,” and “a resolution code must be set before a ticket can close” are business logic, and business logic belongs in code. A prompt is <em>flexible</em> by design, which is exactly why it is the wrong place for a rule that must hold <em>every single time</em>. Code is enforceable; a prompt is a strong suggestion. Keep the enforceable rules in the workflow, and let the agentic step reason only over the parts that genuinely call for judgment.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-ch8-decision" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="sec-ch8-decision"><span class="header-section-number">8.7</span> A decision guide</h2>
+<p>Let’s turn everything so far into something you can actually run in your head when you sit down to design a system. The reasoning of this chapter collapses into a short chain of questions, asked in order, from cheapest option to most expensive. <a href="#fig-decision" class="quarto-xref">Figure&nbsp;<span>8.6</span></a> draws it as a flowchart; the trick is to <em>stop at the first option that works</em> rather than falling through to the bottom out of ambition.</p>
+<div id="fig-decision" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-decision-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch08/fig-decision.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-decision-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.6: A decision guide for a single task. Start at the top and stop at the first answer that works, reaching for full autonomy only when the path genuinely cannot be known in advance.
+</figcaption>
+</figure>
+</div>
+<p>Walk down it slowly, because the order matters. <strong>First</strong>, ask whether a single well-crafted LLM call can do the job; a surprising amount of work (summarizing, classifying, rewriting) needs nothing more, and reaching for anything heavier is wasted effort. <strong>Second</strong>, if it takes several steps but you already know what those steps are and what order they go in, you have a workflow: write the path in code and let the model do the work at each station. <strong>Third</strong>, if you cannot script the whole path but only <em>part</em> of it is genuinely unpredictable, build a hybrid: keep the known stretches on rails and reserve an agentic step for the messy part. <strong>Only at the bottom</strong>, when the task is open-ended enough that you truly cannot predict the steps in advance, do you hand the model the control flow and build a full agent, and even then you do it with the guardrails and sandboxed testing that autonomy demands.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When you do reach the bottom of the guide and build an agent, treat it as the beginning of the work, not the end. An autonomous system that decides its own steps must be tested in a sandbox, fenced with guardrails on the tools it can touch, and watched in production; the freedom you handed the model is exactly what makes these safeguards non-negotiable. We devote whole chapters to it later: evaluation in <a href="../part4-production/15-evaluation.html" class="quarto-xref"><span>Chapter 15</span></a> and safety in <a href="../part4-production/17-safety-and-guardrails.html" class="quarto-xref"><span>Chapter 17</span></a>.</p>
+</div>
+</div>
+<p>One honest caveat keeps this guide from being the whole story. Choosing <em>that</em> you want a workflow tells you the control flow is yours, but it does not tell you what <em>shape</em> that control flow should take: should the steps run in a chain, branch by routing, fan out in parallel, or loop through a critic? Those recurring shapes are a subject of their own, and they are exactly where we go next.</p>
+</section>
+<section id="sec-ch8-evaluation" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="sec-ch8-evaluation"><span class="header-section-number">8.8</span> The more autonomy you give, the more evaluation you owe</h2>
+<p>The tip that closed the decision guide made a promise: the freedom you hand the model is exactly what makes testing and guardrails non-negotiable. Before we assemble everything into Ledgerly’s real system, it is worth taking the <em>testing</em> half of that promise seriously, because it follows straight from the autonomy trade. Every unit of autonomy you spend is a unit of evaluation you now owe. A workflow and an agent are not just built differently; they have to be <em>judged</em> differently, and forgetting that is how a demo that dazzled turns into a production system nobody can trust.</p>
+<p>The difference is the difference between grading a multiple-choice test and grading a game of chess. On a multiple-choice test you can check each answer in isolation: question by question, the answer is either right or wrong, and the steps do not interact. A workflow evaluates like that. Because you fixed the path, you can inspect each station on its own and ask whether it did its job. An agent is nothing like a multiple-choice test. It is more like a chess game or an open-ended essay, where no single move is right in isolation and you have to judge the whole line of play. The agent acts over many turns, calling tools, modifying state, and adapting based on what it finds, which means a good final answer can come from a reckless path and a bad outcome can hide a sound one. Worse, because each step feeds the next, a small mistake early does not stay small: it becomes the input to the next step, and errors propagate and compound down the trajectory <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[3]</a></span>. You cannot judge that by looking only at the last move.</p>
+<p><a href="#tbl-eval-by-architecture" class="quarto-xref">Table&nbsp;<span>8.4</span></a> lays the two styles of judgment side by side. The left column is the step-by-step checking a fixed path allows; the right column is the whole-trajectory judgment an autonomous one demands.</p>
+<div id="tbl-eval-by-architecture" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-eval-by-architecture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8.4: Two architectures, two ways to grade them. A workflow can be checked station by station; an agent must be judged as a whole line of play.
+</figcaption>
+<div aria-describedby="tbl-eval-by-architecture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Workflow evaluation (check each step)</th>
+<th>Agent evaluation (judge the whole trajectory)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Did each step produce the output the next step expected?</td>
+<td>Did it choose a sensible path toward the goal?</td>
+</tr>
+<tr class="even">
+<td>Did each gate catch invalid intermediate results?</td>
+<td>Did it call the right tools, and only those, at the right time?</td>
+</tr>
+<tr class="odd">
+<td>Did the deterministic rules fire when they should have?</td>
+<td>Did it stop at the right moment, neither too early nor too late?</td>
+</tr>
+<tr class="even">
+<td>Did each handoff pass the correct data forward?</td>
+<td>Did it recover from an error instead of compounding it?</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Did it satisfy the task’s constraints and avoid unsafe actions?</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Because agents resist step-by-step grading, practitioners have built a small, sturdy vocabulary for evaluating them, and it is worth meeting here so the pattern is familiar later. An evaluation is assembled from four parts. A <strong>task</strong> is a single test with defined inputs and a success criterion. A <strong>trial</strong> is one attempt at that task, and because an agent’s output varies from run to run, you repeat trials rather than trusting a single lucky pass. A <strong>grader</strong> is the logic that scores some aspect of a trial, and graders come in three flavors: code-based checks, a model acting as an LLM judge, and a human reviewer. And every trial leaves two things worth distinguishing: the <strong>transcript</strong>, meaning the full record of what happened including every tool call and reasoning step, and the <strong>outcome</strong>, meaning the final state the agent left behind in the world <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[3]</a></span>. The usual guidance is to grade the outcome rather than insist on one exact path, since many good paths can reach the same right result, while still watching transcript-level signals such as which tools were used and how many turns it took, because for an agent <em>how</em> it got there is part of whether you can trust it <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[3]</a></span>.</p>
+<p>This is only a first taste; evaluation earns a chapter of its own in <a href="../part4-production/15-evaluation.html" class="quarto-xref"><span>Chapter 15</span></a>, and the guardrails that fence an agent’s actions get theirs in <a href="../part4-production/17-safety-and-guardrails.html" class="quarto-xref"><span>Chapter 17</span></a>. The point to carry forward is simply the equation in this section’s title. Autonomy and evaluation are two sides of one coin: the more of the control flow you hand the model, the more of the judging you take on in return. With that debt acknowledged, we can finally assemble Ledgerly’s system and watch the whole chapter come together on a single hard ticket.</p>
+</section>
+<section id="sec-ch08-case" class="level2" data-number="8.9">
+<h2 data-number="8.9" class="anchored" data-anchor-id="sec-ch08-case"><span class="header-section-number">8.9</span> Case study: the Ledgerly support agent</h2>
+<p>Where we left off, <a href="../part2-llm-agents/06-the-augmented-llm.html#sec-ch06-case" class="quarto-xref"><span>Section 6.7</span></a> gave the Ledgerly agent hands, an open book, and a notebook. Now we decide <em>when</em> to let it use that freedom, because the customer-support system described just above is Ledgerly’s, and the hybrid shape from <a href="#sec-ch8-hybrids" class="quarto-xref"><span>Section 8.6</span></a> is exactly the architecture we first sketched in <a href="../part1-foundations/01-what-is-an-agent.html#sec-ch01-case" class="quarto-xref"><span>Section 1.8</span></a>. The judgment this chapter asks for, namely “for each request, do I own the control flow or does the model?”, is what turns that sketch into a concrete design.</p>
+<p>Run Ledgerly’s real traffic down the decision guide from <a href="#sec-ch8-decision" class="quarto-xref"><span>Section 8.7</span></a> and it sorts itself into three lanes. Most tickets are a <strong>single well-crafted call</strong>: “email me invoice #4471” or “what plan am I on?” need one lookup and one reply, so reaching for anything heavier would only add latency. A smaller set are <strong>known multi-step workflows</strong>: a refund has a fixed procedure every time (look up the charge, check it against the policy, issue the refund if it qualifies, then reply), so we script that path in code and let the model do the work at each station. And a stubborn minority are <strong>genuinely open-ended</strong>: the multi-part complaint that tangles a double charge, a failed plan change, and a warranty question at once, where no fixed path fits. Only that last lane hands the model the wheel.</p>
+<p>Drawing the line this way keeps Ledgerly honest about the trade from this chapter. The predictable majority stays on rails, cheap and auditable, and the expensive freedom of an agent, along with its compounding-error risk, is spent only on the fraction that truly needs it. Notice that the refund lane stays a workflow <em>even though it moves money</em>, because its steps never change. What makes a request agentic is unpredictability, not importance.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 55%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Example ticket</th>
+<th>Who owns the control flow</th>
+<th>Lane</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>“Email me invoice #4471.”</td>
+<td>you: one fixed step</td>
+<td>FAQ, a single call</td>
+</tr>
+<tr class="even">
+<td>“Refund my duplicate charge.”</td>
+<td>you: a fixed procedure</td>
+<td>Refund, a workflow</td>
+</tr>
+<tr class="odd">
+<td>“Two wrong charges and a failed plan change at once.”</td>
+<td>the model: no fixed path</td>
+<td>Complex, an agent</td>
+</tr>
+</tbody>
+</table>
+<section id="sec-ch8-case-hybrid" class="level3" data-number="8.9.1">
+<h3 data-number="8.9.1" class="anchored" data-anchor-id="sec-ch8-case-hybrid"><span class="header-section-number">8.9.1</span> Workflow, agent, or hybrid for one hard ticket</h3>
+<p>The three lanes are tidy in a table, but the real lesson of this chapter only lands when you watch a genuinely hard ticket move through the system. Take the kind of message that lands in Ledgerly’s complex lane: <em>“I changed my plan last month and now I see two charges. Why did this happen, and can you refund one of them?”</em> It is ambiguous (the second charge might be a duplicate or a legitimate proration), it touches money, and its resolution depends on facts nobody has looked up yet. It is exactly the sort of ticket that tempts an engineer to reach for a full agent.</p>
+<p>That temptation is the wrong move, and it is worth being precise about why. The <strong>bad design</strong> hands the whole ticket to an autonomous agent and lets it decide everything: what data to fetch, what the policy means, whether a refund is owed, how much, then executes the refund and closes the ticket. Every one of those is a place where the model’s judgment is now load-bearing for an <em>irreversible, money-moving</em> action, and the compounding-error risk we keep returning to now has real dollars attached. Handing that much control to a model is not sophistication; it is spending your entire autonomy budget on a step that never asked for it.</p>
+<p>The <strong>better design</strong> is the hybrid this chapter has been building toward: a deterministic workflow that wraps a single agentic detour, with the money and the rules kept firmly in code. <a href="#fig-ledgerly-hybrid" class="quarto-xref">Figure&nbsp;<span>8.7</span></a> traces the eight stages.</p>
+<div id="fig-ledgerly-hybrid" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ledgerly-hybrid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch08/fig-ledgerly-hybrid.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ledgerly-hybrid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.7: One hard ticket through Ledgerly’s hybrid. The workflow (rails) owns identity, retrieval, the refund rules, the approval gate, and the ticket update. A single agentic step (the driver) owns only the ambiguous diagnosis, and a human signs off on the irreversible action.
+</figcaption>
+</figure>
+</div>
+<p>Walk the stages and notice how little the model actually gets to decide. The workflow <strong>verifies identity</strong> and <strong>retrieves the account and billing period</strong>, because those steps are the same every time. Only then does control pass to the <strong>agentic diagnosis step</strong>, whose job is the one genuinely open question: given these charges and this plan change, what actually happened? It investigates and returns a structured verdict, and there it stops. The workflow takes over again to <strong>run the deterministic refund-eligibility checks</strong> and to <strong>gate the refund by amount and approval policy</strong>, so no refund above the threshold slips through without a human. The model is invited back to <strong>draft the customer explanation</strong> in warm, clear prose, a job it is genuinely good at, but a <strong>human approves</strong> the actual refund before it happens, and the workflow <strong>updates the ticket and logs the outcome</strong> for the audit trail. The agent touched exactly one stage: the one where the path was unclear.</p>
+<p>That is the whole chapter compressed into a single pipeline. <strong>Use the agent where the path is unclear; use the workflow where the rule is known.</strong> One agentic step, wrapped in deterministic rails, gives you the flexibility to handle a messy complaint without giving up the predictability, auditability, and control that a money-moving process demands.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="🛠️ In practice">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🛠️ In practice
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A hybrid that pauses for human approval, as this one does at stage seven, needs <strong>durable state</strong>. The reviewer might approve minutes or hours after the diagnosis ran, and they must be approving <em>this</em> refund, still attached to the exact evidence and account snapshot that justified it. If the intermediate state is lost when the process pauses, the approval floats free of the facts that created it, which is precisely the kind of gap an auditor will find. Durable execution, with automatic checkpointing between steps, is what keeps the human’s decision connected to the evidence <span class="citation" data-cites="mslearn2026agentic"><a href="../../references.html#ref-mslearn2026agentic" role="doc-biblioref">[2]</a></span>.</p>
+</div>
+</div>
+<p>We now have three lanes but no machinery to run them. <a href="09-agentic-patterns.html#sec-ch09-case" class="quarto-xref"><span>Section 9.10</span></a> assembles Ledgerly’s support desk from the handful of recurring patterns this next chapter introduces.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly so far">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🧾 Ledgerly so far
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The atom from <a href="../part2-llm-agents/06-the-augmented-llm.html#sec-ch06-case" class="quarto-xref"><span>Section 6.7</span></a> now has a shape:</p>
+<ol type="1">
+<li>A <strong>router</strong> reads each ticket and picks a lane by <em>who owns the control flow</em>.</li>
+<li><strong>FAQ lane:</strong> a single well-crafted call.</li>
+<li><strong>Refund lane:</strong> a fixed workflow (look up, check policy, refund, reply).</li>
+<li><strong>Complex lane:</strong> an agent, reserved for open-ended tickets.</li>
+<li>Every lane draws on the Ch6 faculties: bounded tools, grounded retrieval, memory.</li>
+</ol>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-ch8-summary" class="level2" data-number="8.10">
+<h2 data-number="8.10" class="anchored" data-anchor-id="sec-ch8-summary"><span class="header-section-number">8.10</span> Summary</h2>
+<p>This chapter drew the most important line in the design of LLM systems and gave you a way to place any task on the right side of it.</p>
+<ul>
+<li><strong>The real question is who owns the control flow, you or the model.</strong> A <em>workflow</em> is a railway: you fix the steps in code and the model does the work at each station. An <em>agent</em> is a taxi: you hand the model a goal and it decides the steps itself <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>.</li>
+<li><strong>The augmented LLM is the building block of both.</strong> A workflow wires several augmented-LLM calls together with your code; an agent puts one augmented LLM inside the reasoning loop and hands it the wheel. The difference is only where the control flow comes from.</li>
+<li><strong>Autonomy is a trade, not an upgrade.</strong> Handing the model the control flow buys flexibility but costs predictability, raises cost and latency, and exposes you to compounding errors. Start with the simplest thing that works and add complexity only when it earns its place.</li>
+<li><strong>Workflows suit well-defined tasks; agents suit open-ended ones.</strong> If you already know the steps, write them down. Reach for a full agent only when you genuinely cannot predict the path in advance.</li>
+<li><strong>The best real systems are hybrids.</strong> Keep most of the work on rails and reserve an agentic step for the small part that truly needs it: you get predictability where you can and flexibility where you must.</li>
+<li><strong>Every system has an autonomy budget.</strong> Autonomy buys flexibility and spends predictability, cost, latency, and control, so treat that trade as a finite budget and spend it only where flexibility clearly pays for itself.</li>
+<li><strong>Start from the process, not the agent.</strong> Map the business process first (its triggers, reads, writes, decisions, and approvals), and only then decide which steps stay deterministic and which earn an agentic detour <span class="citation" data-cites="mslearn2026agentic"><a href="../../references.html#ref-mslearn2026agentic" role="doc-biblioref">[2]</a></span>.</li>
+<li><strong>A hybrid is the mature default, and its agentic step needs a contract.</strong> The workflow owns intake, validation, rules, approvals, and state; the agentic step owns the ambiguous, open-ended part, bound by a contract (input and output schema, allowed tools, stop and escalation conditions). Keep enforceable business rules in code, not in prompts.</li>
+<li><strong>The more autonomy you give, the more evaluation you owe.</strong> A workflow can be checked step by step; an agent must be judged as a whole trajectory, because it acts over many turns and its errors compound, so grade the outcome while still watching the path <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[3]</a></span>.</li>
+</ul>
+<p>With the <em>decision</em> settled, the next question is one of <em>form</em>: when you do build a workflow, what shapes does its control flow tend to take, and what does a well-structured agent loop look like up close? Those recurring patterns (chaining, routing, parallelization, reflection, and more) are the subject of <a href="09-agentic-patterns.html" class="quarto-xref"><span>Chapter 9</span></a>.</p>
+</section>
+<section id="sec-ch8-exercises" class="level2" data-number="8.11">
+<h2 data-number="8.11" class="anchored" data-anchor-id="sec-ch8-exercises"><span class="header-section-number">8.11</span> Exercises</h2>
+<ol type="1">
+<li><strong>Sort the tasks.</strong> For each of the following, decide whether you would build a single LLM call, a workflow, a hybrid, or a full agent, and justify your choice using the decision guide: (a) translating a document into five languages; (b) triaging incoming bug reports and filing them to the right team; (c) researching an open question by browsing the web until it finds a defensible answer; (d) generating a weekly sales summary from a fixed set of tables.</li>
+<li><strong>Find the agentic step.</strong> Take a mostly-predictable system you know (or invent one) and identify the single stretch where the path genuinely cannot be known in advance. Sketch it as a hybrid in the style of <a href="#fig-hybrid" class="quarto-xref">Figure&nbsp;<span>8.5</span></a>, with a workflow around one agentic detour.</li>
+<li><strong>Price the autonomy.</strong> Explain in your own words the three “currencies” you spend when you give the model the control flow, and describe a concrete situation in which the flexibility you gain is clearly <em>not</em> worth the price.</li>
+<li><strong>Stress-test the guide.</strong> Construct a task that seems open-ended at first glance but that, on reflection, decomposes into a fixed set of known steps. What made it look like an agent problem, and what revealed it was really a workflow?</li>
+<li><strong>Write a contract.</strong> Pick a task that genuinely needs an agentic step, then write that step’s contract using the fields in <a href="#tbl-agentic-contract" class="quarto-xref">Table&nbsp;<span>8.3</span></a>: its input and output schema, its allowed tools, its stop and escalation conditions, and the trigger for human approval. Which rules did you deliberately keep in the surrounding workflow rather than the prompt, and why?</li>
+<li><strong>Map a process spine.</strong> Take a real process you understand (onboarding a customer, reviewing an expense, publishing an article) and map its spine using the questions in
+<ol class="example" type="1">
+<li>Mark each step as deterministic or judgment-needing, and circle the single step, if any, that truly earns autonomy.</li>
+</ol></li>
+<li><strong>Judge the trajectory.</strong> Explain why an agent needs trajectory-level evaluation and not just a final-answer check. Give one concrete trajectory check (a signal about the path the agent took) that a final-answer-only test would miss entirely, and say what failure it would catch.</li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-anthropic2024effective" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">Anthropic, E. Schluntz, and B. Zhang, <span>“Building effective agents.”</span> <a href="https://www.anthropic.com/engineering/building-effective-agents" class="uri">https://www.anthropic.com/engineering/building-effective-agents</a>, Dec. 2024.</div>
+</div>
+<div id="ref-mslearn2026agentic" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Microsoft, <span>“Agentic application patterns.”</span> <a href="https://learn.microsoft.com/en-us/azure/durable-task/sdks/durable-agents-patterns" class="uri">https://learn.microsoft.com/en-us/azure/durable-task/sdks/durable-agents-patterns</a>, 2026.</div>
+</div>
+<div id="ref-anthropic2026evals" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">Anthropic, M. Grace, J. Hadfield, R. Olivares, and J. De Jonghe, <span>“Demystifying evals for AI agents.”</span> <a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents" class="uri">https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents</a>, Jan. 2026.</div>
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.bhavykhatri\.com\/Agentic-AI-Book\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../chapters/part2-llm-agents/07-reasoning-and-planning.html" class="pagination-link" aria-label="Reasoning &amp; Planning">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../chapters/part3-building/09-agentic-patterns.html" class="pagination-link" aria-label="Agentic Patterns">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

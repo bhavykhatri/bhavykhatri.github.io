@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical, research-grounded guide that connects the classical theory of intelligent agents to the modern practice of building autonomous LLM agents with tools, memory, planning, and multi-agent orchestration.">
+
+<title>18&nbsp; Deployment &amp; Cost – Agents: From Theory to Production</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../chapters/part5-frontiers/19-computer-use-and-embodiment.html" rel="next">
+<link href="../../chapters/part4-production/17-safety-and-guardrails.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d166b450ba5a8e9f7a0ab969bf6592c1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9323ee001d31a54ee2476120b8c8bf56.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-20d87d490373df57c880857ccdca8cc5.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part4-production/15-evaluation.html">Part IV — Production &amp; Trust</a></li><li class="breadcrumb-item"><a href="../../chapters/part4-production/18-deployment-and-cost.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Agents: From Theory to Production</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part I — Foundations of Agency</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/01-what-is-an-agent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What Is an Agent?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/02-history-and-theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A Short History &amp; the Theory of Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/03-agent-architectures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Agent Architectures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/04-environments-and-rationality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Environments &amp; Rationality</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part II — The LLM as an Agent</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/05-llms-as-reasoners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/06-the-augmented-llm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/07-reasoning-and-planning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part III — Building Agents</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/08-workflows-vs-agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/09-agentic-patterns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/10-tools-and-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/11-memory-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/12-orchestration-langgraph.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/13-openai-agents-sdk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/14-multi-agent-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part IV — Production &amp; Trust</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/15-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/16-observability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Observability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/17-safety-and-guardrails.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Safety &amp; Guardrails</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/18-deployment-and-cost.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part V — Frontiers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part5-frontiers/19-computer-use-and-embodiment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Computer Use &amp; Embodiment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part5-frontiers/20-frontiers-and-open-problems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Frontiers &amp; Open Problems</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendices/a-environment-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Appendix A — Environment Setup</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendices/b-glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Appendix B — Glossary</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendices/c-further-reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Appendix C — Further Reading</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-ch18-intuition" id="toc-sec-ch18-intuition" class="nav-link active" data-scroll-target="#sec-ch18-intuition"><span class="header-section-number">18.1</span> The meter is running</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch18-anatomy" id="toc-sec-ch18-anatomy" class="nav-link" data-scroll-target="#sec-ch18-anatomy"><span class="header-section-number">18.1.1</span> Where the money actually goes</a></li>
+  <li><a href="#sec-ch18-trajectory" id="toc-sec-ch18-trajectory" class="nav-link" data-scroll-target="#sec-ch18-trajectory"><span class="header-section-number">18.1.2</span> The fare is the whole trajectory</a></li>
+  </ul></li>
+  <li><a href="#sec-ch18-levers" id="toc-sec-ch18-levers" class="nav-link" data-scroll-target="#sec-ch18-levers"><span class="header-section-number">18.2</span> Levers for cost and latency</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch18-routing" id="toc-sec-ch18-routing" class="nav-link" data-scroll-target="#sec-ch18-routing"><span class="header-section-number">18.2.1</span> Model routing: match the model to the difficulty</a></li>
+  <li><a href="#sec-ch18-caching" id="toc-sec-ch18-caching" class="nav-link" data-scroll-target="#sec-ch18-caching"><span class="header-section-number">18.2.2</span> Caching: never pay twice for the same tokens</a></li>
+  <li><a href="#sec-ch18-batching" id="toc-sec-ch18-batching" class="nav-link" data-scroll-target="#sec-ch18-batching"><span class="header-section-number">18.2.3</span> Batching: trade a little latency for a lot of throughput</a></li>
+  <li><a href="#sec-ch18-turncaps" id="toc-sec-ch18-turncaps" class="nav-link" data-scroll-target="#sec-ch18-turncaps"><span class="header-section-number">18.2.4</span> Turn caps: refuse to let a loop bill you forever</a></li>
+  </ul></li>
+  <li><a href="#sec-ch18-reliability" id="toc-sec-ch18-reliability" class="nav-link" data-scroll-target="#sec-ch18-reliability"><span class="header-section-number">18.3</span> Reliability when the world misbehaves</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch18-shields" id="toc-sec-ch18-shields" class="nav-link" data-scroll-target="#sec-ch18-shields"><span class="header-section-number">18.3.1</span> The three standard shields</a></li>
+  <li><a href="#sec-ch18-idempotency" id="toc-sec-ch18-idempotency" class="nav-link" data-scroll-target="#sec-ch18-idempotency"><span class="header-section-number">18.3.2</span> Idempotency: the shield agents make essential</a></li>
+  <li><a href="#sec-ch18-longtools" id="toc-sec-ch18-longtools" class="nav-link" data-scroll-target="#sec-ch18-longtools"><span class="header-section-number">18.3.3</span> Slow tools need a sense of time</a></li>
+  </ul></li>
+  <li><a href="#sec-ch18-scaling" id="toc-sec-ch18-scaling" class="nav-link" data-scroll-target="#sec-ch18-scaling"><span class="header-section-number">18.4</span> Scaling and operations</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch18-concurrency" id="toc-sec-ch18-concurrency" class="nav-link" data-scroll-target="#sec-ch18-concurrency"><span class="header-section-number">18.4.1</span> Concurrency: many runs waiting at once</a></li>
+  <li><a href="#sec-ch18-ratelimits" id="toc-sec-ch18-ratelimits" class="nav-link" data-scroll-target="#sec-ch18-ratelimits"><span class="header-section-number">18.4.2</span> Rate limits: living within the provider’s ceiling</a></li>
+  <li><a href="#sec-ch18-state" id="toc-sec-ch18-state" class="nav-link" data-scroll-target="#sec-ch18-state"><span class="header-section-number">18.4.3</span> State persistence: so any worker can resume any run</a></li>
+  </ul></li>
+  <li><a href="#sec-ch18-case" id="toc-sec-ch18-case" class="nav-link" data-scroll-target="#sec-ch18-case"><span class="header-section-number">18.5</span> Case study: the Ledgerly support agent</a></li>
+  <li><a href="#sec-ch18-summary" id="toc-sec-ch18-summary" class="nav-link" data-scroll-target="#sec-ch18-summary"><span class="header-section-number">18.6</span> Summary</a></li>
+  <li><a href="#sec-ch18-exercises" id="toc-sec-ch18-exercises" class="nav-link" data-scroll-target="#sec-ch18-exercises"><span class="header-section-number">18.7</span> Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part4-production/15-evaluation.html">Part IV — Production &amp; Trust</a></li><li class="breadcrumb-item"><a href="../../chapters/part4-production/18-deployment-and-cost.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-deployment-cost" class="quarto-section-identifier"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p><em>“Premature optimization is the root of all evil.”</em></p>
+<p>— Donald E. Knuth</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>After this chapter you will be able to reason about the latency, cost, and reliability trade-offs of running agents in production.</p>
+</blockquote>
+<section id="sec-ch18-intuition" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="sec-ch18-intuition"><span class="header-section-number">18.1</span> The meter is running</h2>
+<p>Our agent is now evaluated, observable, and guarded, but it still lives on a workbench. Turning it into a service that real users depend on forces us to confront the trade we have gestured at all book long and can no longer avoid: an agent’s autonomy is <em>expensive</em>. Every step of reasoning is a call to a large model, which costs both money and time, and an agent may take many steps to finish a job. This chapter is about managing that expense deliberately rather than discovering it on an invoice.</p>
+<p>The cleanest way to feel it is to return to the taxi from <a href="../part3-building/08-workflows-vs-agents.html" class="quarto-xref"><span>Chapter 8</span></a>. A workflow, we said, is like a train on fixed rails, and its cost is like a train ticket: a known, fixed price for a known route. An agent is like a taxi, and it comes with a taxi’s defining feature: <em>the meter is running.</em> Every moment the agent spends thinking, every extra tool call it decides to make, every loop back to reconsider, ticks the meter upward in tokens and in seconds the user waits. That flexibility is exactly what makes the taxi valuable, because it can go where no train track leads, but it also means the fare is variable and, if you are not watching, alarmingly large. <a href="#fig-meter" class="quarto-xref">Figure&nbsp;<span>18.1</span></a> shows the meter climbing across a run.</p>
+<div id="fig-meter" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-meter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch18/fig-meter.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-meter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;18.1: Why agents cost more than workflows: each reasoning step and tool call in an agent’s loop adds tokens and latency, so the ‘fare’ accumulates with every turn rather than being fixed in advance.
+</figcaption>
+</figure>
+</div>
+<p>This is the practical face of a principle Anthropic states plainly: agentic autonomy trades cost and latency for capability, and you should reach for it only when the task justifies the fare <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. But “use it only when justified” is a design-time decision. Once you have decided an agent is warranted, you still have to <em>run</em> it well, and that means pulling three sets of levers: the ones that control cost and latency, the ones that keep the service reliable when the world misbehaves, and the ones that let it scale to many users at once. Before we reach for any of them, though, it helps to know exactly where the money goes.</p>
+<section id="sec-ch18-anatomy" class="level3" data-number="18.1.1">
+<h3 data-number="18.1.1" class="anchored" data-anchor-id="sec-ch18-anatomy"><span class="header-section-number">18.1.1</span> Where the money actually goes</h3>
+<p>The meter measures one thing above all: <em>tokens</em>. A model charges for the tokens it reads (the prompt, or input) and the tokens it writes (the completion, or output), and for most providers each output token costs several times more than an input one. That asymmetry matters for agents because an agent is a machine for generating both in bulk. Every turn it reads a prompt and writes a response, and every tool result it collects gets folded back into the next prompt.</p>
+<p>Here is the subtle part that surprises people the first time they read their bill. An agent does not pay a flat fee per turn; it re-reads its <em>entire growing conversation</em> on every single turn. Turn one sends a short prompt. Turn five sends the original prompt plus four turns of reasoning and four tool results stacked on top. By turn twenty the agent may be re-reading a small book on every step. So the cost of a run does not grow with the number of turns so much as with something closer to the <em>square</em> of them, because each new turn is both longer than the last and one of more. This is why a task that looks twice as hard can cost far more than twice as much, and why the single most effective thing you can do for an agent’s budget is to keep its loops short and its context lean.</p>
+<p>That anatomy, input versus output tokens and a context that compounds every turn, is half the story of where the money goes. The other half is that a single request is rarely a single call.</p>
+</section>
+<section id="sec-ch18-trajectory" class="level3" data-number="18.1.2">
+<h3 data-number="18.1.2" class="anchored" data-anchor-id="sec-ch18-trajectory"><span class="header-section-number">18.1.2</span> The fare is the whole trajectory</h3>
+<p>In a demo we picture one request and one answer: a prompt in, a completion out. A production agent almost never behaves that way. A single user request fans out into a whole <em>trajectory</em> of work: a triage step to classify the request, a retrieval or two to gather context, several reasoning turns, a handful of tool calls, sometimes a verifier or judge to check the result (<a href="15-evaluation.html" class="quarto-xref"><span>Chapter 15</span></a>), the odd retry when something wobbles, and finally the response the user actually sees. The fare is the sum of all of it, not the price of the last step.</p>
+<p>This is why the same agent feels cheap in a demo and expensive in production: the demo shows the happy path with one clean loop, while the real workload drags in retries, escalations, and multi-step investigations. Think of it as the whole taxi trip rather than the drop of the flag, since every detour, every stop to ask directions, and every loop around the block adds to the meter. It also explains where the cost-cutting research we are about to meet aims its efforts, because the biggest wins come from not spending on the parts of a trajectory that never needed the spending.</p>
+<p>Ledgerly makes the point concrete. A simple “what is my refund window?” is close to a single small model call. But “I changed my plan last month and now I see two charges, can I get one refunded?” unfolds into triage, a charge lookup, a plan-history lookup, a refund-policy retrieval, a diagnosis step, an eligibility check, a human-approval gate, and a drafted reply. The cost of <em>that</em> answer is the cost of the whole support trajectory, and it is the trajectory, not the model’s per-token price, that the levers below are built to tame.</p>
+</section>
+</section>
+<section id="sec-ch18-levers" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="sec-ch18-levers"><span class="header-section-number">18.2</span> Levers for cost and latency</h2>
+<p>Once the meter is running, the engineer’s job is to make each run cheaper and faster without making the agent worse, and there are four reliable levers for it. The unifying idea is the one any careful household or business already knows: <em>don’t pay premium prices for economy work.</em> A hospital does not send every patient to its top surgeon; it triages, matching the level of resource to the level of need. Running agents affordably is the same discipline applied to model calls. <a href="#fig-levers" class="quarto-xref">Figure&nbsp;<span>18.2</span></a> gathers the four levers; the subsections that follow take them one at a time.</p>
+<div id="fig-levers" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-levers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch18/fig-levers.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-levers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;18.2: Four levers for cheaper, faster agents: route easy steps to a small model and hard ones to a large model, cache repeated work, batch independent calls, and cap the number of turns.
+</figcaption>
+</figure>
+</div>
+<section id="sec-ch18-routing" class="level3" data-number="18.2.1">
+<h3 data-number="18.2.1" class="anchored" data-anchor-id="sec-ch18-routing"><span class="header-section-number">18.2.1</span> Model routing: match the model to the difficulty</h3>
+<p>The first and biggest lever is <strong>model routing</strong>, the deployment-time face of the routing pattern from <a href="../part3-building/09-agentic-patterns.html#sec-ch9-routing" class="quarto-xref"><span>Section 9.3</span></a>. Use a small, cheap, fast model for the many easy steps, like classifying a request or formatting an answer, and reserve the large, expensive model for the genuinely hard reasoning. Because a frontier model can cost many times more per token than a small one, sending only the hard steps its way can cut the bill dramatically while barely touching quality. The art is in the routing decision itself: a cheap classifier, or even a rule, decides whether each step is a job for the intern or the specialist. Get that judgment right and most traffic never touches the expensive model at all.</p>
+<p>This is not just folk wisdom; it is a measured result. FrugalGPT showed that arranging models into a <em>cascade</em>, trying a cheap model first and escalating to a stronger one only when its answer looks doubtful, can match the quality of the best single model at up to 98 percent lower cost, helped along by the fact that prices across LLM APIs can differ by two orders of magnitude <span class="citation" data-cites="chen2023frugalgpt"><a href="../../references.html#ref-chen2023frugalgpt" role="doc-biblioref">[2]</a></span>. Because a hand-written rule is a blunt instrument, later work like RouteLLM <em>learns</em> the routing decision from data, training a small router to send each query to the stronger or weaker model and cutting cost by more than half with no measurable drop in quality <span class="citation" data-cites="ong2024routellm"><a href="../../references.html#ref-ong2024routellm" role="doc-biblioref">[3]</a></span>. The deployment lesson is that routing is a decision worth <em>evaluating</em>, not guessing: measure where the cheap model is genuinely good enough, and pay for the expensive one only on the rest.</p>
+</section>
+<section id="sec-ch18-caching" class="level3" data-number="18.2.2">
+<h3 data-number="18.2.2" class="anchored" data-anchor-id="sec-ch18-caching"><span class="header-section-number">18.2.2</span> Caching: never pay twice for the same tokens</h3>
+<p>The second lever is <strong>caching</strong>: if the same question or the same sub-computation recurs, store the answer and serve it again cheaply rather than paying the model to redo it, the same “look it up instead of recomputing” instinct behind the memory of <a href="../part3-building/11-memory-systems.html#sec-ch11-vectors" class="quarto-xref"><span>Section 11.3</span></a>. Caching comes in two flavors for agents. The obvious one is caching whole <em>results</em>, so a hundred identical “what’s your refund window?” questions cost one lookup, not a hundred. The subtler and often larger win is <strong>prompt caching</strong>, where the provider caches the long, unchanging <em>prefix</em> of your prompt, the system instructions and few-shot examples every call repeats, and charges a fraction of the usual price to reuse it. Anthropic reports that prompt caching can cut cost by up to 90 percent and latency by up to 85 percent for long, stable prompts, which is exactly the shape of an agent that re-sends the same tool definitions and instructions on every turn <span class="citation" data-cites="anthropic2024promptcaching"><a href="../../references.html#ref-anthropic2024promptcaching" role="doc-biblioref">[4]</a></span>. Notion, for instance, adopted prompt caching to make its Claude-powered assistant both faster and cheaper without touching quality <span class="citation" data-cites="anthropic2024promptcaching"><a href="../../references.html#ref-anthropic2024promptcaching" role="doc-biblioref">[4]</a></span>.</p>
+<p>There is also a caching idea unique to agents, one level up from tokens: caching <em>plans</em> rather than answers. Many agent tasks that look different on the surface share the same underlying <em>shape</em> of work. A billing investigation, whoever the customer, tends to follow the same steps: identify the account, fetch the charges, pull the plan history, check the policy, decide. Agentic plan caching exploits this by storing the reusable plan template from a completed run and adapting it to the next similar request, rather than making the agent re-derive its whole strategy from scratch; across real agent workloads this cut cost by about half and latency by roughly a quarter while holding quality steady <span class="citation" data-cites="zhang2025plancaching"><a href="../../references.html#ref-zhang2025plancaching" role="doc-biblioref">[5]</a></span>. The caution is the same as for any cache: reuse the <em>plan</em>, but never the customer-specific <em>decision</em>, because a refund verdict must always be recomputed against fresh, real data.</p>
+</section>
+<section id="sec-ch18-batching" class="level3" data-number="18.2.3">
+<h3 data-number="18.2.3" class="anchored" data-anchor-id="sec-ch18-batching"><span class="header-section-number">18.2.3</span> Batching: trade a little latency for a lot of throughput</h3>
+<p>The third lever is <strong>batching</strong>, grouping many independent requests into one job where the provider allows it. When work does not need an immediate answer, such as embedding a backlog of documents, classifying a dataset, or running an offline evaluation, a batch endpoint processes it in bulk at a steep discount. OpenAI’s Batch API, for example, runs asynchronous jobs at half the synchronous price with a 24-hour turnaround and its own higher rate limits <span class="citation" data-cites="openai2024batch"><a href="../../references.html#ref-openai2024batch" role="doc-biblioref">[6]</a></span>. The trade is explicit: you give up immediacy and get back both throughput and savings, which is a bargain for any workload a user is not sitting and waiting on.</p>
+</section>
+<section id="sec-ch18-turncaps" class="level3" data-number="18.2.4">
+<h3 data-number="18.2.4" class="anchored" data-anchor-id="sec-ch18-turncaps"><span class="header-section-number">18.2.4</span> Turn caps: refuse to let a loop bill you forever</h3>
+<p>The fourth lever is <strong>limiting turns</strong>, capping how many reasoning-and-tool loops the agent may take. This is the stop condition from <a href="17-safety-and-guardrails.html#sec-ch17-oversight" class="quarto-xref"><span>Section 17.4</span></a> seen now as a <em>cost</em> control rather than only a safety one: an agent that cannot loop forever cannot run up an unbounded bill. A turn cap is the seatbelt for the compounding-context problem from <a href="#sec-ch18-anatomy" class="quarto-xref"><span>Section 18.1.1</span></a>. Because each extra turn is more expensive than the last, a runaway loop does not just waste steps, it burns money at an accelerating rate, and a hard ceiling is the simplest guarantee that a single confused run cannot bankrupt the budget.</p>
+<p>The theme tying these four together is that most of an agent’s cost comes from treating every step as equally expensive when it is not. Match the model to the difficulty, avoid repeating work you have already done, group what can be grouped, and refuse to let a runaway loop bill you forever, and the same agent that looked ruinously expensive becomes practical to run at scale. Cost and speed are only half of production, though. An agent that is cheap and fast but falls over the moment a tool times out is not a service anyone can trust, which brings us to reliability.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Deep dive: optimizations below the agent">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Deep dive: optimizations below the agent
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Not every cost and latency lever lives in the agent’s design. A layer down, in how the model itself is <em>served</em>, systems squeeze out more speed. <strong>Speculative decoding</strong>, for example, uses a small, fast model to draft several tokens ahead and then has the large model verify them in parallel, decoding several tokens per step instead of one and cutting latency without changing the output <span class="citation" data-cites="xia2024speculative"><a href="../../references.html#ref-xia2024speculative" role="doc-biblioref">[7]</a></span>. You rarely control this layer when calling a hosted API, but it is worth knowing that cost and latency are attacked at several layers at once: agent design, context and prompt shape, model routing, caching, and the serving engine underneath. The rule is the same at every layer, though, apply a lever and then <em>measure</em> whether it actually helped your workload before you trust it.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-ch18-reliability" class="level2" data-number="18.3">
+<h2 data-number="18.3" class="anchored" data-anchor-id="sec-ch18-reliability"><span class="header-section-number">18.3</span> Reliability when the world misbehaves</h2>
+<p>Production is a hostile environment for a program that depends on external services. The model API will occasionally be slow or return an error; a tool’s server will time out; a network hiccup will drop a call mid-flight. An agent that assumes everything always works will fail the first time reality proves otherwise, so reliability engineering is about building an agent that <em>degrades gracefully</em> instead of collapsing. The analogy is a good delivery service: when a road is blocked it reroutes, it does not wait forever at a closed bridge, and, crucially, it never delivers the same package twice. <a href="#fig-reliability" class="quarto-xref">Figure&nbsp;<span>18.3</span></a> wraps a single tool call in the protections that make this possible.</p>
+<div id="fig-reliability" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-reliability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch18/fig-reliability.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reliability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;18.3: A reliable tool call: a timeout bounds how long the agent waits, a failure triggers a bounded retry with backoff, an idempotency key makes that retry safe, and repeated failure trips a stop condition instead of looping forever.
+</figcaption>
+</figure>
+</div>
+<section id="sec-ch18-shields" class="level3" data-number="18.3.1">
+<h3 data-number="18.3.1" class="anchored" data-anchor-id="sec-ch18-shields"><span class="header-section-number">18.3.1</span> The three standard shields</h3>
+<p>Three of the four techniques are ordinary resilience patterns, adapted to agents. <strong>Retries</strong> handle transient failures: when a call fails for a fleeting reason, try again, ideally with <em>exponential backoff</em> so a struggling service is not hammered by a storm of immediate retries. <strong>Timeouts</strong> prevent hanging: every external call gets a deadline, so a tool that never responds does not freeze the whole agent. That is the closed-bridge rule, a delivery driver who waits five minutes and then reroutes rather than parking at the barrier all day. <strong>Stop conditions</strong>, from <a href="17-safety-and-guardrails.html#sec-ch17-oversight" class="quarto-xref"><span>Section 17.4</span></a>, are the circuit breaker: when something is clearly going wrong, halt rather than thrash. None of these is new to distributed systems, and that is the point. An agent is a distributed system, and it inherits the same hard-won defenses.</p>
+</section>
+<section id="sec-ch18-idempotency" class="level3" data-number="18.3.2">
+<h3 data-number="18.3.2" class="anchored" data-anchor-id="sec-ch18-idempotency"><span class="header-section-number">18.3.2</span> Idempotency: the shield agents make essential</h3>
+<p>The fourth technique is the one agents turn from a nicety into a necessity: <strong>idempotency</strong>. Because agents take real actions in the world, a naive retry is dangerous. If “charge the customer $50” times out <em>after</em> the charge went through but <em>before</em> the confirmation came back, a blind retry would charge them twice. The fix is to make each action idempotent, meaning that performing it twice has the same effect as performing it once. In practice you attach a unique <strong>idempotency key</strong> to the request, and the downstream service remembers that key: the first call does the work, and any repeat with the same key returns the original result instead of acting again.</p>
+<p>This is not a theoretical concern; it is exactly how serious payment infrastructure is built. Stripe, for instance, has every write request accept an idempotency key, saves the outcome of the first call under that key, and returns the identical response, success or failure, for any later retry that reuses it <span class="citation" data-cites="stripe2024idempotency"><a href="../../references.html#ref-stripe2024idempotency" role="doc-biblioref">[8]</a></span>. That single discipline is what lets a payment system survive network chaos without ever double-charging a customer, and it is precisely the guarantee an action-taking agent needs before it is allowed anywhere near money or other irreversible operations.</p>
+</section>
+<section id="sec-ch18-longtools" class="level3" data-number="18.3.3">
+<h3 data-number="18.3.3" class="anchored" data-anchor-id="sec-ch18-longtools"><span class="header-section-number">18.3.3</span> Slow tools need a sense of time</h3>
+<p>Timeouts quietly assume a tool either answers quickly or has failed, but agents increasingly call tools that do neither. As <a href="../part3-building/10-tools-and-mcp.html" class="quarto-xref"><span>Chapter 10</span></a> noted, many real actions do not return at once: a refund must clear a payment processor, a report takes minutes to compile, a bulk export runs for an hour. Wrapping these in a short timeout would declare them dead while they are merely working. The fix is to give long-running tools a richer sense of <em>time</em>: the ability to report progress, to be polled or to call back when they finish, to be cancelled, and above all to let the agent stay responsive instead of blocking on one slow call. Ledgerly should not freeze a customer’s chat while a refund settles; it starts the request, records in its state that a result is pending, and picks the conversation back up when the outcome arrives. A tool designed with time in mind is what keeps a slow dependency from turning into a frozen user.</p>
+<p>The mindset shift these patterns encode is to treat failure as <em>normal</em> and design for it, rather than treating it as an exception you hope never comes. This complements the two failure disciplines we already have: where evaluation asked “is the agent’s <em>judgment</em> good?” and safety asked “can it be <em>attacked</em>?”, reliability asks “does it <em>hold up</em> when its dependencies wobble?” Together they make an agent trustworthy. What remains is the last production question, not how one run behaves, but how the system behaves when thousands of runs arrive at once.</p>
+</section>
+</section>
+<section id="sec-ch18-scaling" class="level2" data-number="18.4">
+<h2 data-number="18.4" class="anchored" data-anchor-id="sec-ch18-scaling"><span class="header-section-number">18.4</span> Scaling and operations</h2>
+<p>One agent serving one user on a laptop is a demo; a service serving thousands at once is a different engineering problem, and three concerns dominate it. The analogy is scaling a restaurant from a single table to a full dining room on a busy night: you need many staff working in parallel, you cannot exceed what the kitchen can produce, and every order must be tracked somewhere central so any waiter can pick it up. <a href="#fig-scaling" class="quarto-xref">Figure&nbsp;<span>18.4</span></a> shows the shape these three concerns push an agent service toward.</p>
+<div id="fig-scaling" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-scaling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch18/fig-scaling.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scaling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;18.4: Scaling agents horizontally: a load balancer spreads requests across many stateless workers that share an external state store, while a throttle mediates the rate-limited model API so no worker exceeds the provider’s ceiling.
+</figcaption>
+</figure>
+</div>
+<section id="sec-ch18-concurrency" class="level3" data-number="18.4.1">
+<h3 data-number="18.4.1" class="anchored" data-anchor-id="sec-ch18-concurrency"><span class="header-section-number">18.4.1</span> Concurrency: many runs waiting at once</h3>
+<p>The first concern is <strong>concurrency</strong>. Agent runs are long, and they spend most of their time <em>waiting</em>, on the model, on tools, on the network, rather than computing. A server that handled one run at a time would sit idle through all that waiting while requests piled up behind it. The fix is the same one that lets a single waiter tend many tables that are each mid-meal: asynchronous, non-blocking execution, so one worker can hold hundreds of in-flight runs and attend to whichever one just got an answer back. This is why agent systems lean so heavily on async runtimes; the workload is almost all waiting, and waiting is cheap to overlap.</p>
+</section>
+<section id="sec-ch18-ratelimits" class="level3" data-number="18.4.2">
+<h3 data-number="18.4.2" class="anchored" data-anchor-id="sec-ch18-ratelimits"><span class="header-section-number">18.4.2</span> Rate limits: living within the provider’s ceiling</h3>
+<p>The second concern is <strong>rate limits</strong>. Model providers cap how many requests and tokens you may use per minute, and a busy service will hit those ceilings. If you let requests slam into the cap unmanaged, the provider starts rejecting them and the failures cascade into user-facing errors. The discipline is to treat the model API as a shared, metered resource and mediate your own traffic: queue work, throttle it to stay under the ceiling, and when a “too many requests” response does come back, retry it politely with backoff rather than immediately trying again. This is the kitchen that can only plate so many dishes a minute; the dining room runs smoothly only if the floor staff pace their orders to what the kitchen can sustain.</p>
+</section>
+<section id="sec-ch18-state" class="level3" data-number="18.4.3">
+<h3 data-number="18.4.3" class="anchored" data-anchor-id="sec-ch18-state"><span class="header-section-number">18.4.3</span> State persistence: so any worker can resume any run</h3>
+<p>The third concern, and the one most particular to agents, is <strong>state persistence</strong>. An agent is <em>stateful</em>: it carries memory and, as we saw in <a href="../part3-building/12-orchestration-langgraph.html#sec-ch12-persistence" class="quarto-xref"><span>Section 12.3</span></a>, checkpoints of its progress. If that state lives inside one server’s process, you can never add a second server, because the next request in a conversation might land on a machine that has never heard of it. The fix is to externalize state into a shared store, exactly the role the checkpointer and memory systems of <a href="../part3-building/11-memory-systems.html" class="quarto-xref"><span>Chapter 11</span></a> were designed to fill. Once state lives outside the workers, the workers become interchangeable: any one of them can pick up any run, and you scale simply by adding more of them. This is the central order board every waiter can read, the thing that turns a crowd of individual servers into one coordinated service.</p>
+<p>The lesson that ties this chapter together is that an agent is not just a clever prompt but a piece of <em>software infrastructure</em>, subject to the same operational realities as any other distributed system: budgets, failures, and load. Treat it that way and the classic disciplines of software engineering apply cleanly on top of everything specific to agents we have built. With that, an agent can be run responsibly and at scale, and Part 4 is complete: we can evaluate it, observe it, guard it, and operate it. Part 5 turns from these established practices toward the horizon, beginning with agents that step beyond text and APIs to act in the visual, physical world of screens and devices.</p>
+</section>
+</section>
+<section id="sec-ch18-case" class="level2" data-number="18.5">
+<h2 data-number="18.5" class="anchored" data-anchor-id="sec-ch18-case"><span class="header-section-number">18.5</span> Case study: the Ledgerly support agent</h2>
+<p>Where we left off, <a href="../part1-foundations/01-what-is-an-agent.html#sec-ch01-case" class="quarto-xref"><span>Section 1.8</span></a> sketched Ledgerly as an idea. Eleven installments later it can reason, use tools, remember its customers, orchestrate itself as a graph, and defend against attack. This chapter ships it, and the four cost levers from <a href="#sec-ch18-levers" class="quarto-xref"><span>Section 18.2</span></a> map straight onto the lanes we drew back in <a href="../part3-building/08-workflows-vs-agents.html#sec-ch08-case" class="quarto-xref"><span>Section 8.9</span></a>:</p>
+<ul>
+<li><strong>Model routing.</strong> The easy FAQ lane and the triage step run on a small, cheap model; only the open-ended double-charge investigations escalate to a large one. Most tickets are easy, so most tickets are cheap.</li>
+<li><strong>Caching.</strong> Ledgerly caches its retrieval of the refund policy and common invoice lookups, so a hundred identical “what’s your refund window?” tickets do not pay for a hundred identical searches.</li>
+<li><strong>Batching and turn caps.</strong> Embeddings for incoming tickets are batched, and every run is capped at a bounded number of reason–act turns so a confused agent cannot run up an unbounded bill.</li>
+</ul>
+<p>Then reliability, because Ledgerly moves money. The billing API gets a timeout and a bounded retry with backoff (<a href="#sec-ch18-reliability" class="quarto-xref"><span>Section 18.3</span></a>), so a slow provider does not hang a customer. But retrying an action that <em>pays out</em> is dangerous: a naive retry could refund the same customer twice. The fix is an <strong>idempotency key</strong> on <code>issue_refund</code>, one unique token per intended refund, so if the request is retried the billing system recognizes it and pays exactly once. That single detail is what makes the whole guarded, checkpointed refund flow safe to run at scale.</p>
+<p>And because thousands of customers write in at once, Ledgerly’s state, its memory and its graph checkpoints, lives in the shared store from <a href="../part3-building/11-memory-systems.html#sec-ch11-case" class="quarto-xref"><span>Section 11.9</span></a> and <a href="../part3-building/12-orchestration-langgraph.html#sec-ch12-case" class="quarto-xref"><span>Section 12.7</span></a> rather than inside one server’s process (<a href="#sec-ch18-scaling" class="quarto-xref"><span>Section 18.4</span></a>), so any worker can pick up any conversation.</p>
+<p>The whole deployment plan fits on one card:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 72%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Lever</th>
+<th>Ledgerly setting</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Model routing</td>
+<td>small model for FAQ and triage; large only for complex tickets</td>
+</tr>
+<tr class="even">
+<td>Caching</td>
+<td>the refund policy and common invoice lookups</td>
+</tr>
+<tr class="odd">
+<td>Batching and caps</td>
+<td>batched embeddings; bounded reason–act turns per run</td>
+</tr>
+<tr class="even">
+<td>Reliability</td>
+<td>timeout plus bounded retry; <strong>idempotency key</strong> on refunds</td>
+</tr>
+<tr class="odd">
+<td>Scaling</td>
+<td>memory and graph checkpoints in a shared store</td>
+</tr>
+</tbody>
+</table>
+<p>That closes the arc. We began in <a href="../part1-foundations/01-what-is-an-agent.html#sec-ch01-case" class="quarto-xref"><span>Section 1.8</span></a> unsure whether Ledgerly should even be an agent; we end with a system that is designed, specified, built, orchestrated, evaluated, observed, guarded, and now deployed, affordably and reliably, at scale. Every chapter of this book added one more part to it. Part 5 now carries these same disciplines to the frontier, where agents step beyond text and APIs to act in the visual and physical world.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly so far">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🧾 Ledgerly so far
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Every part of <a href="../part3-building/09-agentic-patterns.html#fig-ledgerly-blueprint" class="quarto-xref">Figure&nbsp;<span>9.10</span></a> is now live, the whole system, shipped:</p>
+<ol type="1">
+<li>Router to three lanes (FAQ call, refund workflow, complex agent), each backed by bounded MCP tools and three-store memory.</li>
+<li>A shared evaluator gate and a human-approval step fence quality and the one irreversible action.</li>
+<li>Evaluated (golden set), observable (traces and metrics), and guarded (defense in depth).</li>
+<li><strong>New this chapter:</strong> shipped for scale, cheap-model routing, turn and cost caps, <strong>idempotent refunds</strong>, and shared state so any worker resumes any conversation.</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="In practice: a deployment readiness checklist">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+In practice: a deployment readiness checklist
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before an agent takes real traffic, it helps to walk a short list, each item a discipline from this book made operational:</p>
+<ul>
+<li><strong>Evaluated.</strong> A golden-set eval passes and guards against regressions (<a href="15-evaluation.html" class="quarto-xref"><span>Chapter 15</span></a>).</li>
+<li><strong>Observable.</strong> Traces, metrics, and cost dashboards are wired, so you can see what a run did and what it cost (<a href="16-observability.html" class="quarto-xref"><span>Chapter 16</span></a>).</li>
+<li><strong>Bounded.</strong> Every run has caps: turns, tokens, retries, wall-clock time, and an estimated spend ceiling.</li>
+<li><strong>Reliable.</strong> Timeouts, bounded retries with backoff, and stop conditions are in place, and every side-effecting action is idempotent.</li>
+<li><strong>Stateful.</strong> Session, checkpoint, and memory state live in a shared store, not one worker’s process.</li>
+<li><strong>Governed.</strong> Risky actions route through human approval, model and prompt versions are tracked, and there is a rollback path and an incident plan.</li>
+</ul>
+<p>The point is not the specific list but the habit: production readiness is these disciplines wired together, not any single one of them.</p>
+</div>
+</div>
+</section>
+<section id="sec-ch18-summary" class="level2" data-number="18.6">
+<h2 data-number="18.6" class="anchored" data-anchor-id="sec-ch18-summary"><span class="header-section-number">18.6</span> Summary</h2>
+<p>This chapter took the agent off the workbench and into production, where autonomy meets budgets, failures, and load. The recurring theme was that an agent is software infrastructure and must be run like it.</p>
+<ul>
+<li><strong>Autonomy is expensive, because the meter is running.</strong> Each reasoning step is a paid model call, so an agent’s cost is a variable taxi fare, not a fixed train ticket. Use autonomy where it is justified <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>.</li>
+<li><strong>Four levers cut cost and latency:</strong> route easy steps to a small model and hard ones to a large one, cache repeated work, batch independent calls, and cap the number of turns.</li>
+<li><strong>Design for failure, because it is normal.</strong> Retries with backoff, timeouts, and stop conditions keep the agent standing when dependencies wobble, and <strong>idempotency keys</strong> make retries safe for agents that take real-world actions.</li>
+<li><strong>Scaling needs concurrency, rate-limit handling, and externalized state.</strong> Long, waiting runs demand async execution; provider ceilings demand throttling; and state must live in a shared store so any worker can resume any run.</li>
+<li><strong>An agent is a distributed system.</strong> The classic operational disciplines apply on top of everything agent-specific.</li>
+</ul>
+<p>Part 4 is now complete: we can evaluate an agent, observe it, guard it, and operate it at scale, the full production toolkit. Everything so far, though, has assumed an agent that acts through text and structured tool calls. Part 5 looks toward the frontier, where agents break out of that mold to perceive and act in richer worlds. We begin with agents that use a computer the way a person does, by looking at the screen and moving the mouse: <a href="../part5-frontiers/19-computer-use-and-embodiment.html" class="quarto-xref"><span>Chapter 19</span></a>.</p>
+</section>
+<section id="sec-ch18-exercises" class="level2" data-number="18.7">
+<h2 data-number="18.7" class="anchored" data-anchor-id="sec-ch18-exercises"><span class="header-section-number">18.7</span> Exercises</h2>
+<ol type="1">
+<li><strong>Train or taxi?</strong> Explain why an agent’s cost is a variable fare rather than a fixed ticket, and name one task where the taxi is worth it and one where the train would do.</li>
+<li><strong>Pull a lever.</strong> For an agent whose bill is too high, walk through how you would apply model routing and turn limits, and estimate qualitatively where the savings come from.</li>
+<li><strong>Make it idempotent.</strong> Describe a scenario where a naive retry double-charges a customer, and explain how an idempotency key prevents it.</li>
+<li><strong>Survive a wobble.</strong> A tool your agent depends on starts timing out intermittently. Which reliability techniques from the chapter keep the service usable, and how?</li>
+<li><strong>Scale it out.</strong> Explain why an agent that stores its state in one server’s memory cannot be scaled to two servers, and what change fixes it.</li>
+<li><strong>Follow the compounding cost.</strong> An agent re-reads its entire growing conversation on every turn. Explain why this makes a 20-turn run cost far more than twice a 10-turn run, and name two levers from the chapter that attack this specific problem.</li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-anthropic2024effective" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">Anthropic, E. Schluntz, and B. Zhang, <span>“Building effective agents.”</span> <a href="https://www.anthropic.com/engineering/building-effective-agents" class="uri">https://www.anthropic.com/engineering/building-effective-agents</a>, Dec. 2024.</div>
+</div>
+<div id="ref-chen2023frugalgpt" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">L. Chen, M. Zaharia, and J. Zou, <span>“FrugalGPT: How to use large language models while reducing cost and improving performance,”</span> <em>arXiv preprint arXiv:2305.05176</em>, 2023.</div>
+</div>
+<div id="ref-ong2024routellm" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">I. Ong <em>et al.</em>, <span>“RouteLLM: Learning to route LLMs with preference data,”</span> <em>arXiv preprint arXiv:2406.18665</em>, 2024.</div>
+</div>
+<div id="ref-anthropic2024promptcaching" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">Anthropic, <span>“Prompt caching with claude.”</span> <a href="https://www.anthropic.com/news/prompt-caching" class="uri">https://www.anthropic.com/news/prompt-caching</a>, Aug. 2024.</div>
+</div>
+<div id="ref-zhang2025plancaching" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">Q. Zhang, M. Wornow, G. Wan, and K. Olukotun, <span>“Agentic plan caching: Test-time memory for fast and cost-efficient LLM agents,”</span> <em>arXiv preprint arXiv:2506.14852</em>, 2025.</div>
+</div>
+<div id="ref-openai2024batch" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">OpenAI, <span>“Batch API.”</span> <a href="https://platform.openai.com/docs/guides/batch" class="uri">https://platform.openai.com/docs/guides/batch</a>, 2024.</div>
+</div>
+<div id="ref-xia2024speculative" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">H. Xia <em>et al.</em>, <span>“Unlocking efficiency in large language model inference: A comprehensive survey of speculative decoding,”</span> in <em>Findings of the association for computational linguistics: ACL 2024</em>, Bangkok, Thailand: Association for Computational Linguistics, 2024, pp. 7655–7671.</div>
+</div>
+<div id="ref-stripe2024idempotency" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">Stripe, <span>“Idempotent requests.”</span> <a href="https://docs.stripe.com/api/idempotent_requests" class="uri">https://docs.stripe.com/api/idempotent_requests</a>, 2024.</div>
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.bhavykhatri\.com\/Agentic-AI-Book\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../chapters/part4-production/17-safety-and-guardrails.html" class="pagination-link" aria-label="Safety &amp; Guardrails">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Safety &amp; Guardrails</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../chapters/part5-frontiers/19-computer-use-and-embodiment.html" class="pagination-link" aria-label="Computer Use &amp; Embodiment">
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Computer Use &amp; Embodiment</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

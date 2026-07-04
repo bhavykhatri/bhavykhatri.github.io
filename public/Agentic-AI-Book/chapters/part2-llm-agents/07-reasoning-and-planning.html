@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical, research-grounded guide that connects the classical theory of intelligent agents to the modern practice of building autonomous LLM agents with tools, memory, planning, and multi-agent orchestration.">
+
+<title>7&nbsp; Reasoning &amp; Planning – Agents: From Theory to Production</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../chapters/part3-building/08-workflows-vs-agents.html" rel="next">
+<link href="../../chapters/part2-llm-agents/06-the-augmented-llm.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d166b450ba5a8e9f7a0ab969bf6592c1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9323ee001d31a54ee2476120b8c8bf56.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-20d87d490373df57c880857ccdca8cc5.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part2-llm-agents/05-llms-as-reasoners.html">Part II — The LLM as an Agent</a></li><li class="breadcrumb-item"><a href="../../chapters/part2-llm-agents/07-reasoning-and-planning.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Agents: From Theory to Production</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part I — Foundations of Agency</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/01-what-is-an-agent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What Is an Agent?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/02-history-and-theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A Short History &amp; the Theory of Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/03-agent-architectures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Agent Architectures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/04-environments-and-rationality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Environments &amp; Rationality</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part II — The LLM as an Agent</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/05-llms-as-reasoners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/06-the-augmented-llm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/07-reasoning-and-planning.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part III — Building Agents</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/08-workflows-vs-agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/09-agentic-patterns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/10-tools-and-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/11-memory-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/12-orchestration-langgraph.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/13-openai-agents-sdk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/14-multi-agent-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part IV — Production &amp; Trust</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/15-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/16-observability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Observability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/17-safety-and-guardrails.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Safety &amp; Guardrails</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/18-deployment-and-cost.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part V — Frontiers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part5-frontiers/19-computer-use-and-embodiment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Computer Use &amp; Embodiment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part5-frontiers/20-frontiers-and-open-problems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Frontiers &amp; Open Problems</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendices/a-environment-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Appendix A — Environment Setup</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendices/b-glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Appendix B — Glossary</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendices/c-further-reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Appendix C — Further Reading</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-ch7-intuition" id="toc-sec-ch7-intuition" class="nav-link active" data-scroll-target="#sec-ch7-intuition"><span class="header-section-number">7.1</span> Opening intuition</a></li>
+  <li><a href="#sec-ch7-reasoning-planning-control" id="toc-sec-ch7-reasoning-planning-control" class="nav-link" data-scroll-target="#sec-ch7-reasoning-planning-control"><span class="header-section-number">7.2</span> Reasoning, planning, and control are different jobs</a></li>
+  <li><a href="#sec-ch7-cot" id="toc-sec-ch7-cot" class="nav-link" data-scroll-target="#sec-ch7-cot"><span class="header-section-number">7.3</span> Chain-of-thought: thinking in a straight line</a></li>
+  <li><a href="#sec-ch7-plan-solve" id="toc-sec-ch7-plan-solve" class="nav-link" data-scroll-target="#sec-ch7-plan-solve"><span class="header-section-number">7.4</span> Plan-and-solve: make the plan explicit</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch7-plan-anatomy" id="toc-sec-ch7-plan-anatomy" class="nav-link" data-scroll-target="#sec-ch7-plan-anatomy"><span class="header-section-number">7.4.1</span> What a plan contains</a></li>
+  </ul></li>
+  <li><a href="#sec-ch7-react" id="toc-sec-ch7-react" class="nav-link" data-scroll-target="#sec-ch7-react"><span class="header-section-number">7.5</span> ReAct: reasoning and acting together</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch7-react-loop" id="toc-sec-ch7-react-loop" class="nav-link" data-scroll-target="#sec-ch7-react-loop"><span class="header-section-number">7.5.1</span> ReAct is a closed feedback loop</a></li>
+  </ul></li>
+  <li><a href="#sec-ch7-reflection" id="toc-sec-ch7-reflection" class="nav-link" data-scroll-target="#sec-ch7-reflection"><span class="header-section-number">7.6</span> Reflection: learning from your own mistakes</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch7-reflection-judge" id="toc-sec-ch7-reflection-judge" class="nav-link" data-scroll-target="#sec-ch7-reflection-judge"><span class="header-section-number">7.6.1</span> Reflection needs a judge</a></li>
+  </ul></li>
+  <li><a href="#sec-ch7-search" id="toc-sec-ch7-search" class="nav-link" data-scroll-target="#sec-ch7-search"><span class="header-section-number">7.7</span> Search-based planning: exploring many paths</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch7-branching-rule" id="toc-sec-ch7-branching-rule" class="nav-link" data-scroll-target="#sec-ch7-branching-rule"><span class="header-section-number">7.7.1</span> When branching is worth it</a></li>
+  </ul></li>
+  <li><a href="#sec-ch7-parallel" id="toc-sec-ch7-parallel" class="nav-link" data-scroll-target="#sec-ch7-parallel"><span class="header-section-number">7.8</span> Parallel planning: when actions are independent</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch7-planner-executor" id="toc-sec-ch7-planner-executor" class="nav-link" data-scroll-target="#sec-ch7-planner-executor"><span class="header-section-number">7.8.1</span> Planner, executor, controller</a></li>
+  </ul></li>
+  <li><a href="#sec-ch7-tradeoffs" id="toc-sec-ch7-tradeoffs" class="nav-link" data-scroll-target="#sec-ch7-tradeoffs"><span class="header-section-number">7.9</span> Choosing a strategy: matching effort to difficulty</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch7-stop" id="toc-sec-ch7-stop" class="nav-link" data-scroll-target="#sec-ch7-stop"><span class="header-section-number">7.9.1</span> A plan needs a stop condition</a></li>
+  <li><a href="#sec-ch7-plan-repair" id="toc-sec-ch7-plan-repair" class="nav-link" data-scroll-target="#sec-ch7-plan-repair"><span class="header-section-number">7.9.2</span> Repairing the plan when the world disagrees</a></li>
+  </ul></li>
+  <li><a href="#sec-ch7-case" id="toc-sec-ch7-case" class="nav-link" data-scroll-target="#sec-ch7-case"><span class="header-section-number">7.10</span> Case study: planning a Ledgerly billing investigation</a></li>
+  <li><a href="#sec-ch7-summary" id="toc-sec-ch7-summary" class="nav-link" data-scroll-target="#sec-ch7-summary"><span class="header-section-number">7.11</span> Summary</a></li>
+  <li><a href="#sec-ch7-exercises" id="toc-sec-ch7-exercises" class="nav-link" data-scroll-target="#sec-ch7-exercises"><span class="header-section-number">7.12</span> Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part2-llm-agents/05-llms-as-reasoners.html">Part II — The LLM as an Agent</a></li><li class="breadcrumb-item"><a href="../../chapters/part2-llm-agents/07-reasoning-and-planning.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-reasoning-planning" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p><em>“Plans are worthless, but planning is everything.”</em></p>
+<p>— Dwight D. Eisenhower</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>After this chapter you will be able to apply the major reasoning strategies (chain-of-thought, ReAct, reflection, and search-based planning) and choose the right depth of deliberation for the task in front of you.</p>
+</blockquote>
+<section id="sec-ch7-intuition" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="sec-ch7-intuition"><span class="header-section-number">7.1</span> Opening intuition</h2>
+<p>The last chapter ended on a small but pregnant detail. We built the augmented LLM, a model with hands, a book, and a notebook, and in the final sketch we let it do something it had never done before: call a tool, look at the result, and <em>decide what to do next</em>. That tiny <code>while</code> loop was the whole difference between answering a question and working toward a goal. This chapter is about what happens when we take that loop seriously and let the model reason across many steps rather than one.</p>
+<p>To feel why this matters, think about how you yourself handle two very different kinds of question. If someone asks you the capital of France, you simply answer; the response is already sitting in your memory and no deliberation is required. But if someone asks you to plan a two-week trip through a country you’ve never visited, on a fixed budget, you do something completely different. You think out loud. You look things up. You sketch a rough plan, notice that it blows the budget, and revise it. You might explore two possible routes before committing to one. The answer is not <em>recalled</em>; it is <em>constructed</em>, step by step, with plenty of checking and backtracking along the way. That second mode, deliberate, multi-step, self-correcting, is exactly what we want to give an agent, and it does not come for free from a model that was trained to produce one fluent response at a time.</p>
+<p>The good news is that we do not need to invent this from scratch, because the field has worked out a family of reasoning strategies that coax exactly this behavior out of a language model. They form a natural progression, each one adding a capability the previous one lacked, and the whole chapter is organized around climbing that ladder. First the model learns to <strong>think</strong> before it answers, laying its reasoning out in a straight line. Then it learns to <strong>act</strong> as it thinks, interleaving reasoning with real tool calls so its thoughts stay grounded in the world. Then it learns to <strong>check</strong> its own work, criticizing a first attempt and trying again. And finally it learns to <strong>search</strong>, exploring several possible lines of reasoning and keeping the best rather than gambling everything on the first path it tries. <a href="#fig-reasoning-ladder" class="quarto-xref">Figure&nbsp;<span>7.1</span></a> lays out that progression, and it is the map for everything that follows.</p>
+<div id="fig-reasoning-ladder" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-reasoning-ladder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch07/fig-reasoning-ladder.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reasoning-ladder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.1: The ladder of reasoning strategies this chapter climbs. Each rung adds a capability the one below it lacks: thinking in a line, acting while thinking, checking your own work, and searching across alternatives.
+</figcaption>
+</figure>
+</div>
+<p>A word of honesty before we climb, because it is the theme the chapter closes on. More reasoning is not automatically better. Each rung up the ladder buys accuracy on harder problems, but it pays for that accuracy in tokens, latency, and cost, and pointing a tree-search at a question a single sentence could answer is simply waste. The real skill is not knowing the fanciest strategy; it is matching the depth of deliberation to the difficulty of the task. We will earn that judgment by understanding each strategy in turn. But before we climb, it pays to separate three jobs the ladder quietly bundles together, because a capable agent does more than think: it also plans and it controls itself.</p>
+</section>
+<section id="sec-ch7-reasoning-planning-control" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="sec-ch7-reasoning-planning-control"><span class="header-section-number">7.2</span> Reasoning, planning, and control are different jobs</h2>
+<p>Watch a skilled emergency-room doctor for one shift and you will see three distinct jobs running at once, not one. When she reads a chart and concludes “these symptoms point to sepsis,” she is <strong>reasoning</strong>: drawing a conclusion from what she already knows. When she decides “so we draw blood, start fluids, and order a scan, in that order,” she is <strong>planning</strong>: laying out a sequence of actions toward a goal. And when the first result comes back inconclusive and she chooses whether to reorder the test, try a different one, or page a specialist, she is exercising <strong>control</strong>: deciding, at each moment, whether to continue, retry, branch, stop, or escalate. Every agent worth the name does all three, and keeping them distinct is the key that unlocks the rest of this chapter.</p>
+<p>The three jobs answer three different questions, and <a href="#fig-reasoning-planning-control" class="quarto-xref">Figure&nbsp;<span>7.2</span></a> lines them up. Reasoning asks <em>what follows from what I know?</em> Planning asks <em>what should I do next?</em> Control asks <em>should I continue, retry, branch, stop, or escalate?</em> The reasoning ladder we just sketched is really a ladder of better answers to the first question, but a system that only reasons will happily think itself into an elegant dead end, because nothing is choosing its actions or deciding when enough is enough. Planning and control are what turn a thinker into an agent.</p>
+<div id="fig-reasoning-planning-control" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-reasoning-planning-control-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch07/fig-reasoning-planning-control.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reasoning-planning-control-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.2: Three different jobs inside one agent. Reasoning draws conclusions, planning sequences actions toward a goal, and control decides at each step whether to keep going, retry, branch, stop, or escalate.
+</figcaption>
+</figure>
+</div>
+<p>Ledgerly makes the split concrete. A customer writes in claiming they were charged twice. <strong>Reasoning</strong> forms the hypothesis: two charges in one cycle <em>might</em> be a duplicate, or might be a valid proration from a mid-cycle plan change. <strong>Planning</strong> turns that hypothesis into a sequence of lookups: pull the invoice, check the billing periods, retrieve the plan history, read the current refund policy. <strong>Control</strong> watches over the whole thing, deciding to retry a billing lookup that times out, to escalate when the records conflict with the policy, and to stop and request human approval before issuing any refund above the agent’s auto-approval threshold. One complaint, handled by all three jobs at once.</p>
+<p>This is the sentence to carry through the rest of the chapter: <strong>planning is reasoning under control</strong>. Reasoning supplies the raw inferences, planning arranges them into a course of action, and control decides, step by step, whether that action is still the right one to be taking. A good agent does not merely think longer than a bad one. It keeps state, acts, observes, revises, checks its progress against the goal, and knows when to stop. Every rung of the ladder we are about to climb, from a single chain of thought to a full tree search, is best understood as a way of doing one or more of these three jobs better. We start where all of them begin: with thinking itself, laid out in a straight line.</p>
+</section>
+<section id="sec-ch7-cot" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="sec-ch7-cot"><span class="header-section-number">7.3</span> Chain-of-thought: thinking in a straight line</h2>
+<p>The bottom rung of the ladder is one we have already climbed once, in <a href="05-llms-as-reasoners.html#sec-cot" class="quarto-xref"><span>Section 5.3</span></a>, so here we only need to recall it and see it in its new role. <strong>Chain-of-thought</strong> prompting is the simple, powerful move of letting the model reason step by step before it commits to an answer, rather than blurting a conclusion in one leap <span class="citation" data-cites="wei2022cot"><a href="../../references.html#ref-wei2022cot" role="doc-biblioref">[1]</a></span>. We saw <em>why</em> it works: every word the model writes is fed back in as context for the next word, so writing the steps down literally gives the model a scratch pad to think on, turning one hard leap into a staircase of small, safe steps. A model asked to “show its work” is measurably more reliable on arithmetic and logic than one forced to answer instantly, and remarkably, even an invitation as bare as “let’s think step by step” is enough to switch the behavior on <span class="citation" data-cites="kojima2022zeroshot"><a href="../../references.html#ref-kojima2022zeroshot" role="doc-biblioref">[2]</a></span>.</p>
+<p>For this chapter, the point is to see chain-of-thought as the <em>foundation the other three strategies are built on</em>, and to be equally clear about what it cannot do. Its power is that it lets the model deliberate; its limits are two, and each one is answered by a rung further up the ladder. First, a chain of thought is still just the model talking to itself; it cannot look anything up or take any action, so every step rests on the model’s own possibly mistaken beliefs, and a wrong fact early in the chain propagates confidently to the end. That is the gap <strong>ReAct</strong> will close by letting the model act. Second, a chain of thought commits to a single line of reasoning and rides it to the finish; if that line goes wrong, there is no mechanism to notice and no alternative in reserve. Those are the gaps <strong>reflection</strong> and <strong>search</strong> will close. Chain-of-thought, in other words, taught the model to think, and the rest of the chapter is about teaching it to think <em>well</em>. The very next step is to notice that a chain is not yet a plan, and to make the plan explicit.</p>
+</section>
+<section id="sec-ch7-plan-solve" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="sec-ch7-plan-solve"><span class="header-section-number">7.4</span> Plan-and-solve: make the plan explicit</h2>
+<p>A chain of thought looks like a plan, but it usually is not one, and the difference matters more than it first appears. Chain-of-thought solves <em>while</em> it writes: it starts producing steps toward the answer immediately, discovering the shape of the problem as it goes. That works beautifully for a self-contained puzzle, but it has a characteristic failure. Because the model never pauses to lay out the whole task before diving in, it tends to skip a step, forget a sub-part of a multi-part question, or wander off the point partway through. <strong>Plan-and-solve prompting</strong> fixes this with a deceptively simple reordering: first devise a plan that divides the task into subtasks, then carry the subtasks out, rather than fusing the two into one continuous stream <span class="citation" data-cites="wang2023planandsolve"><a href="../../references.html#ref-wang2023planandsolve" role="doc-biblioref">[3]</a></span>. Naming the subtasks up front is what cuts the missing-step errors, along with the calculation slips and misreadings, that a terse chain tends to leave behind.</p>
+<p>The everyday version is a cook and a recipe. A careful cook reads the whole recipe first, notices that the oven should be preheating and the butter should be softening before anything else happens, and only then starts. A hurried cook reads one line at a time and discovers, too late, that step four needed something that should have begun in step one. Plan-and-solve is simply the model reading the whole recipe before it starts to cook.</p>
+<p>The difference between a chain and a plan shows in a single Ledgerly example. A terse chain-of-thought might reason, in one breath, “user says they were double charged, so check the invoice and issue a refund.” It reaches an action almost immediately, and it is almost certainly wrong, because it never established whether the second charge was actually a duplicate. A proper plan names the subtasks before touching anything:</p>
+<ol type="1">
+<li>Identify the account and the billing period in question.</li>
+<li>Retrieve the charges for that period.</li>
+<li>Compare them by subscription, period, amount, and adjustment reason.</li>
+<li>If the dates straddle a plan change, retrieve the plan history.</li>
+<li>Retrieve the current refund policy.</li>
+<li>Decide eligibility from the evidence, not the customer’s framing.</li>
+<li>Act only within the approval rules, or escalate.</li>
+</ol>
+<p>Same complaint, but now the refund is the <em>last</em> step, taken only if the evidence earns it, rather than the first reflex.</p>
+<section id="sec-ch7-plan-anatomy" class="level3" data-number="7.4.1">
+<h3 data-number="7.4.1" class="anchored" data-anchor-id="sec-ch7-plan-anatomy"><span class="header-section-number">7.4.1</span> What a plan contains</h3>
+<p>Once you start writing plans explicitly, they turn out to share a skeleton, whatever the task. <a href="#fig-plan-anatomy" class="quarto-xref">Figure&nbsp;<span>7.3</span></a> sketches its spine, and <a href="#tbl-plan-anatomy" class="quarto-xref">Table&nbsp;<span>7.1</span></a> fills it in for Ledgerly. A usable plan names its <strong>goal</strong> (what “done” means), the <strong>current state</strong> (what is known right now), the <strong>known constraints</strong> (rules that bound the actions), the <strong>missing information</strong> (what must be fetched before deciding), the <strong>candidate actions</strong> and their <strong>dependencies</strong> (what can be done, and in what order), the <strong>success criteria</strong> (how to tell it worked), the <strong>stop condition</strong> (when to stop reasoning), and the <strong>escalation criteria</strong> (when to hand off to a human).</p>
+<div id="fig-plan-anatomy" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-plan-anatomy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch07/fig-plan-anatomy.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-plan-anatomy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.3: The spine of a plan. A goal and the current state expose what information is missing; fetching it drives the actions and their dependencies, which are checked against success criteria and a stop condition.
+</figcaption>
+</figure>
+</div>
+<div id="tbl-plan-anatomy" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-plan-anatomy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;7.1: The anatomy of a plan, instantiated for a Ledgerly billing dispute.
+</figcaption>
+<div aria-describedby="tbl-plan-anatomy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Plan element</th>
+<th>What it names</th>
+<th>Ledgerly instantiation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Goal</td>
+<td>what “done” means</td>
+<td>resolve the double-charge claim correctly</td>
+</tr>
+<tr class="even">
+<td>Current state</td>
+<td>what is known now</td>
+<td>customer reports two charges last month</td>
+</tr>
+<tr class="odd">
+<td>Known constraints</td>
+<td>rules that bound actions</td>
+<td>refund policy and the auto-approval threshold</td>
+</tr>
+<tr class="even">
+<td>Missing information</td>
+<td>what to fetch first</td>
+<td>invoice, billing periods, plan history, policy</td>
+</tr>
+<tr class="odd">
+<td>Actions and dependencies</td>
+<td>what to do, in order</td>
+<td>fetch evidence, then compare, then decide, then act</td>
+</tr>
+<tr class="even">
+<td>Success criteria</td>
+<td>how to tell it worked</td>
+<td>charge classified and the customer’s issue resolved</td>
+</tr>
+<tr class="odd">
+<td>Stop condition</td>
+<td>when to stop reasoning</td>
+<td>account cannot be identified, or evidence is sufficient</td>
+</tr>
+<tr class="even">
+<td>Escalation criteria</td>
+<td>when to hand off</td>
+<td>records conflict, or the refund exceeds the threshold</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>A plan on paper, though, is still only a plan. The moment the agent starts fetching that missing information, its thoughts have to touch the world, and grounding them in what the world returns is the rung ReAct climbs.</p>
+</section>
+</section>
+<section id="sec-ch7-react" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="sec-ch7-react"><span class="header-section-number">7.5</span> ReAct: reasoning and acting together</h2>
+<p>Here is the rung that turns a thinker into a doer, and it is arguably the single most important pattern in this whole book. Chain-of-thought let the model reason, but only in its own head; the model could talk itself confidently into a wrong fact with nothing to check it against. <strong>ReAct</strong>, a compression of <em>reasoning and acting</em>, fixes this by interleaving the two, so the model alternates between having a thought and taking an action in the world, then folding what it observes back into its next thought <span class="citation" data-cites="yao2023react"><a href="../../references.html#ref-yao2023react" role="doc-biblioref">[4]</a></span>. It is the marriage of the reasoning from Chapter 5 with the tools from Chapter 6, and it is what most people actually mean when they say “an agent.”</p>
+<p>The everyday analogy is the difference between solving a problem with your eyes closed and solving it with your eyes open. Imagine trying to fix a leaking tap purely by reasoning in an armchair: you would build an elaborate theory of the fault and might be completely wrong, because you never actually looked. Now imagine doing it with your hands on the pipe: you form a small hypothesis (“maybe the washer is worn”), you <em>act</em> on it (you open the valve and look), you <em>observe</em> the result (water still drips), and that observation reshapes your next thought (“not the washer, then; check the seal”). You are still reasoning, but every step is anchored to what the world just told you, so you can never drift too far from reality before being corrected. ReAct gives a model exactly this rhythm.</p>
+<p>Concretely, the model’s output is structured into a repeating cycle of three moves, <strong>Thought</strong>, <strong>Action</strong>, and <strong>Observation</strong>, that runs until the model decides it has the answer. In the Thought it reasons about what to do next; in the Action it calls one of its tools; and the Observation is the real result that the runtime feeds back, exactly the function-calling handshake we drew in <a href="06-the-augmented-llm.html#sec-ch6-tools" class="quarto-xref"><span>Section 6.3</span></a>. <a href="#fig-react" class="quarto-xref">Figure&nbsp;<span>7.4</span></a> shows the cycle, and it is worth noticing that it is simply the agent loop from Chapter 1, sense, decide, act, with an LLM installed in the “decide” box and its own thoughts added to what it senses.</p>
+<div id="fig-react" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-react-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch07/fig-react.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-react-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.4: The ReAct loop. The model alternates Thought (reason about what to do), Action (call a tool), and Observation (read the real result), repeating until it can answer, keeping every step grounded in what the world actually returns.
+</figcaption>
+</figure>
+</div>
+<p>A short transcript makes the rhythm concrete. Suppose an agent is asked, “Which is taller, the Eiffel Tower or the Statue of Liberty, and by how much?” A pure chain-of-thought model would answer from memory and might misremember a number. A ReAct agent instead grounds each claim as it goes:</p>
+<pre class="text"><code>Thought:  I need the height of each, then the difference. Start with the Eiffel Tower.
+Action:   search("height of the Eiffel Tower")
+Observation: About 330 metres (including antennas).
+Thought:  Now the Statue of Liberty.
+Action:   search("height of the Statue of Liberty")
+Observation: About 93 metres (ground to torch).
+Thought:  330 minus 93 is 237. The Eiffel Tower is taller.
+Answer:   The Eiffel Tower, by roughly 237 metres.</code></pre>
+<p>Notice what the loop bought us. Each height came from a real lookup rather than the model’s recollection, so the notorious hallucination risk is cut off at the source; the one piece of arithmetic could itself have been delegated to a calculator tool for the same reason. This is the deep reason ReAct is so central: it is the pattern that operationalizes the whole “grounding” idea from Chapter 5’s list of remedies. Reasoning tells the agent <em>what</em> it needs to find out, acting lets it actually find out, and observing keeps its reasoning honest. Almost every agent framework you will meet (and much of Part III) is, under the hood, a careful implementation of this Thought–Action–Observation cycle.</p>
+<section id="sec-ch7-react-loop" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="sec-ch7-react-loop"><span class="header-section-number">7.5.1</span> ReAct is a closed feedback loop</h3>
+<p>ReAct is easy to mistake for a prompting trick, a template that says “write a thought, then an action, then an observation.” It is really something stronger: a <strong>closed feedback loop</strong> <span class="citation" data-cites="yao2023react"><a href="../../references.html#ref-yao2023react" role="doc-biblioref">[4]</a></span>. Each move feeds the next. The thought updates the hypothesis, the action queries or changes the environment, and the observation brings a piece of the real world back into the model’s context. The crucial discipline is that the <em>next</em> thought must be conditioned on the observation, not on the guess that preceded it. An agent that ignores what a tool returned and keeps reasoning from its prior assumption has broken the loop, and it will drift exactly as far from reality as a pure chain of thought would.</p>
+<p>A Ledgerly trace makes the loop visible. Suppose a customer writes, “I changed my plan last month and now I see two charges.” A grounded ReAct agent works like this:</p>
+<pre class="text"><code>Thought:  Two charges could be a duplicate. Let me look at the recent charges.
+Action:   retrieve_charges(account, last_period)
+Observation: Two charges. One has a different adjustment reason from the other.
+Thought:  A different reason suggests a plan change, not a duplicate. Check the plan history.
+Action:   retrieve_plan_history(account)
+Observation: The plan changed mid-cycle last month.
+Thought:  Mid-cycle changes can be prorated. I need the refund policy before I decide.
+Action:   retrieve_refund_policy()
+Observation: Refunds apply only to true duplicates, not to valid proration.
+Thought:  The evidence points to valid proration, not a duplicate. Continue validating,
+          and escalate if the records still conflict.</code></pre>
+<p>Notice that the plan was not fixed in advance. Each observation reshaped the next thought: the different adjustment reason sent the agent to the plan history, and the plan history sent it to the policy. That is the loop doing its job, and it is why ReAct handles a tangled case that a straight chain of thought would have answered wrongly in one confident sentence.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Observation is not truth either">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Observation is not truth either
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An observation grounds the agent, but it is not automatically correct. A tool’s output can be partial, stale, ambiguous, filtered by permissions, wrong because of a system error, or simply misread by the model. At Ledgerly, a billing API that returns only <em>settled</em> charges will hide a pending one, and a plan-history tool that lags behind the billing system can make the agent conclude there was no migration when there was. This is the same lesson as <a href="06-the-augmented-llm.html#sec-ch6-tools" class="quarto-xref"><span>Section 6.3</span></a>: a tool’s output is an observation, not an instruction. Treat it as evidence to be weighed, and let the next thought question it when it looks incomplete.</p>
+</div>
+</div>
+<p>But ReAct still has a blind spot: it reacts step by step and rarely stops to ask whether its overall approach is working. Teaching it to do that is the next rung.</p>
+</section>
+</section>
+<section id="sec-ch7-reflection" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="sec-ch7-reflection"><span class="header-section-number">7.6</span> Reflection: learning from your own mistakes</h2>
+<p>ReAct keeps an agent grounded moment to moment, but it is still, in a sense, always looking at the next step rather than at the whole attempt. Anyone who has written a first draft knows that this is not how good work gets made. The difference between a mediocre essay and a good one is rarely the first pass; it is the <em>re-reading</em>, the moment you step back, notice the argument doesn’t hold together, and rewrite. <strong>Reflection</strong> gives an agent that same capacity to critique its own output and try again.</p>
+<p>The analogy that captures it best is a chess player reviewing a game they just lost. They do not simply feel bad and move on; they replay the game, find the move where it went wrong, put that lesson into words (“I overextended on the queenside”) and carry that verbal lesson into the next game. Reflection works exactly this way for an agent. After an attempt, the agent is asked to look back over what it did, judge whether it succeeded, and if it failed, articulate <em>in words</em> what went wrong and what it should do differently. That written self-critique is then added to its context for the next attempt, so the agent is quite literally learning from its own mistakes within a single session, without anyone retraining the underlying model. The research that introduced this called it <em>verbal reinforcement learning</em>, because the reward signal driving improvement is not a numeric gradient but a sentence of feedback the agent writes to itself <span class="citation" data-cites="shinn2023reflexion"><a href="../../references.html#ref-shinn2023reflexion" role="doc-biblioref">[5]</a></span>. <a href="#fig-reflection" class="quarto-xref">Figure&nbsp;<span>7.5</span></a> shows the loop.</p>
+<div id="fig-reflection" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-reflection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch07/fig-reflection.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reflection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.5: The reflection loop. After an attempt, the agent evaluates its own result; if it fell short, it writes a verbal critique of what went wrong and feeds that lesson into the next attempt.
+</figcaption>
+</figure>
+</div>
+<section id="sec-ch7-reflection-judge" class="level3" data-number="7.6.1">
+<h3 data-number="7.6.1" class="anchored" data-anchor-id="sec-ch7-reflection-judge"><span class="header-section-number">7.6.1</span> Reflection needs a judge</h3>
+<p>Reflection is the most over-sold rung on the ladder, so it is worth being precise about why it works when it works. Reflexion improved because a <em>feedback signal</em> drove each retry, not because a model can reliably grade itself in a vacuum <span class="citation" data-cites="shinn2023reflexion"><a href="../../references.html#ref-shinn2023reflexion" role="doc-biblioref">[5]</a></span>. The self-critique is only as good as the judge behind it. Give reflection a real judge and it becomes powerful; ask the model to be its own judge on a fuzzy target and it mostly rephrases its earlier confidence.</p>
+<p>A good judge supplies evidence the model cannot argue with: a failing unit test, a tool error, a policy or constraint validator, direct user feedback, a human reviewer, a deterministic rule, a known benchmark answer, or a scoring rubric. Reflection turns weak in the opposite conditions: when the target is subjective, when the model is the sole judge, when the failure is subtle, when there is no concrete evidence to point at, or when the critique simply repeats the same wrong assumption that caused the first failure.</p>
+<p>At Ledgerly, a refund-eligibility validator, a small deterministic check that compares the charges against the policy, is a far better judge than asking the model whether a refund “seems fair.” The validator can say <em>no, these are prorated charges and the policy excludes them</em>, and that verdict gives the reflection something real to correct. This is the same grounding that let Reflexion reach 91% pass@1 on HumanEval where a prior GPT-4 result sat at 80% <span class="citation" data-cites="shinn2023reflexion"><a href="../../references.html#ref-shinn2023reflexion" role="doc-biblioref">[5]</a></span>: the code either passed the tests or it did not, and the tests were the judge.</p>
+<p>Reflection is the concrete form of the second remedy from Chapter 5 (<em>verify rather than trust a single pass</em>) and it pairs naturally with everything below it on the ladder. You can wrap a reflection loop around a chain of thought, asking the model to check its own reasoning, and you can wrap one around a whole ReAct trajectory, letting the agent notice that its overall strategy is failing and change tack. It is worth being honest about the catch, though, because it foreshadows a real limit: an agent’s self-critique is only as good as its ability to <em>tell</em> that it failed. When there is a clear external signal (code that won’t compile, a test that fails, a search that returns nothing) reflection is powerful, because reality is supplying the verdict. When success is fuzzy and the agent has to be the sole judge of its own work, reflection helps less, because a model that was confidently wrong the first time may be just as confidently wrong about whether it was wrong. Even reflection, then, benefits from being grounded. That still leaves one gap on the ladder: reflection improves an attempt <em>after</em> the fact, but what if we want the agent to weigh several possibilities <em>before</em> committing? For that we need to let it search.</p>
+</section>
+</section>
+<section id="sec-ch7-search" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="sec-ch7-search"><span class="header-section-number">7.7</span> Search-based planning: exploring many paths</h2>
+<p>Every strategy so far has followed a single thread. Chain-of-thought writes one line of reasoning; ReAct walks one trajectory of thought and action; reflection improves that one trajectory after the fact. But some problems cannot be solved by walking a single path, because the first move you make forecloses the answer before you even know whether it was right. Think back to the trip-planning example that opened this chapter: a good planner does not commit to the first route that comes to mind, they <em>hold several possibilities open at once</em>, weigh them, and only then commit. This final rung teaches an agent to do the same: to <strong>search</strong> across alternatives rather than gamble everything on its first idea.</p>
+<p>The analogy to hold is exploring a maze. If you commit to the first turning at every junction and never look back, you will almost certainly hit a dead end and, worse, have no way to recover; you have already thrown away the choices that might have led out. A careful explorer instead treats the maze as a branching tree of possibilities: at each junction they consider the available turns, form a judgment about which look promising, explore those, and <em>backtrack</em> when a path dead-ends. This is one of the oldest ideas in artificial intelligence (Newell and Simon framed problem solving itself as search through a space of possible states half a century ago <span class="citation" data-cites="newell1976symbols"><a href="../../references.html#ref-newell1976symbols" role="doc-biblioref">[6]</a></span>), and <strong>Tree of Thoughts</strong> brings it to language models <span class="citation" data-cites="yao2023tot"><a href="../../references.html#ref-yao2023tot" role="doc-biblioref">[7]</a></span>. Instead of generating one chain of thought, the model generates several candidate “thoughts” at each step, <em>evaluates</em> how promising each one looks, and expands the best while abandoning the rest. <a href="#fig-tot" class="quarto-xref">Figure&nbsp;<span>7.6</span></a> contrasts the single line of chain-of-thought with this branching search.</p>
+<div id="fig-tot" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch07/fig-tot.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.6: Chain-of-thought follows one line of reasoning to the end; Tree of Thoughts branches at each step, evaluates the candidates, and expands the most promising while pruning the rest, exploring alternatives instead of gambling on the first path.
+</figcaption>
+</figure>
+</div>
+<p>The payoff shows up precisely on the problems where a first guess is likely to be wrong and lookahead is essential. On the Game of 24 (a numbers puzzle where you must combine four values with arithmetic to reach 24, and a bad opening move quickly leads nowhere), GPT-4 using chain-of-thought solved just 4% of the puzzles, while the same model wrapped in a Tree of Thoughts search solved 74% <span class="citation" data-cites="yao2023tot"><a href="../../references.html#ref-yao2023tot" role="doc-biblioref">[7]</a></span>. That is not a subtle improvement; it is the difference between a method that mostly fails and one that mostly succeeds, and it comes entirely from letting the model explore and evaluate alternatives instead of committing to its first thought.</p>
+<section id="sec-ch7-branching-rule" class="level3" data-number="7.7.1">
+<h3 data-number="7.7.1" class="anchored" data-anchor-id="sec-ch7-branching-rule"><span class="header-section-number">7.7.1</span> When branching is worth it</h3>
+<p>Tree search is powerful, but that 4% to 74% jump should come with a warning label: it happened on a problem practically designed for search, and most tasks are not. Branching earns its cost only under specific conditions. It is worth it when early choices strongly constrain later ones, when several plausible paths genuinely exist, when the search space is bounded, when partial solutions can be evaluated, when backtracking is possible, and when a wrong early move is expensive to undo. It is <em>not</em> worth it for a simple lookup, when tool evidence directly resolves the question, when the space is enormous, when partial progress cannot be judged, or when latency and cost budgets are tight.</p>
+<p>Ledgerly shows both faces. There is no tree to grow for “show me invoice 4471”; one lookup answers it, and any branching is pure waste. But a genuinely tangled enterprise dispute, where the two charges could be a duplicate, a valid proration, a failed-and-retried refund, a plan-migration bug, an account-owner mismatch, or the result of two overlapping subscriptions, is exactly the kind of knot where holding several hypotheses open and weighing each against the evidence pays off. This is the classical picture Newell and Simon drew: a state to start from, actions that move between states, a plan as a path through that space, and heuristics to judge which paths look promising <span class="citation" data-cites="newell1976symbols"><a href="../../references.html#ref-newell1976symbols" role="doc-biblioref">[6]</a></span>. Branch when the problem is really a search; do not when it is really a lookup.</p>
+<p>It is worth seeing that search and the earlier rungs are variations on one theme: considering more than one possibility. The simplest version of the idea needs no tree at all: <strong>self-consistency</strong>, which we met in Chapter 5, just samples several independent chains of thought and takes the answer they most agree on <span class="citation" data-cites="wang2023selfconsistency"><a href="../../references.html#ref-wang2023selfconsistency" role="doc-biblioref">[8]</a></span>. Tree of Thoughts is the richer, structured cousin that branches, evaluates, and backtracks step by step. Both trade the same currency: exploring many paths means running the model many times, and that is anything but free. There is a happier way several paths can play out, though, and it is worth a short detour before we tally the bill: sometimes the paths do not depend on each other at all.</p>
+</section>
+</section>
+<section id="sec-ch7-parallel" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="sec-ch7-parallel"><span class="header-section-number">7.8</span> Parallel planning: when actions are independent</h2>
+<p>Everything on the ladder so far has been sequential, and ReAct most of all: think, act, observe, then think again, one step at a time. That is the right shape when each step depends on the last, as it did in the plan-migration trace, where the agent could not know it needed the policy until the plan history came back. But not every subtask depends on the one before it. Some are simply independent, and running them one after another is a self-inflicted delay, like a manager who runs three unrelated errands in sequence when three people could have run them at once.</p>
+<p>The idea is to let a planner build a small dependency graph of the subtasks, then run the independent ones in parallel while the dependent ones wait their turn. The <strong>LLM Compiler</strong> is the clearest statement of this: a Function Calling Planner decides the tasks and their dependencies, a Task Fetching Unit dispatches each call as soon as its inputs are ready, and an Executor runs the independent calls concurrently <span class="citation" data-cites="kim2023llmcompiler"><a href="../../references.html#ref-kim2023llmcompiler" role="doc-biblioref">[9]</a></span>. Because ordinary function calling forces a fresh round of reasoning before every single call, the sequential version is slow and expensive; parallelizing the independent calls, the authors report, cut latency by up to 3.7x, cost by up to 6.7x, and even improved accuracy by up to about 9% against a ReAct baseline. Parallelism, in other words, is not only about speed: it also removes the chance for the model to talk itself off course between calls.</p>
+<div id="fig-parallel-planning" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-parallel-planning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch07/fig-parallel-planning.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-parallel-planning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.7: Parallel planning at Ledgerly. Three independent fetches fan out and run concurrently, then join at a single reasoning and decision step once all of them have returned.
+</figcaption>
+</figure>
+</div>
+<p>At Ledgerly, when the double-charge complaint arrives, several facts are needed and none of them depends on the others: the recent charges, the current refund policy, the subscription’s plan history, and the customer’s support history. A sequential agent fetches them one at a time, reasoning in between; a parallel planner fires them all at once and reasons only once they have arrived. <a href="#fig-parallel-planning" class="quarto-xref">Figure&nbsp;<span>7.7</span></a> shows that fan-out and join.</p>
+<section id="sec-ch7-planner-executor" class="level3" data-number="7.8.1">
+<h3 data-number="7.8.1" class="anchored" data-anchor-id="sec-ch7-planner-executor"><span class="header-section-number">7.8.1</span> Planner, executor, controller</h3>
+<p>Pulling the loop apart this way reveals a clean separation of roles that will reappear throughout Part III. The <strong>planner</strong> decides which tasks to run and how they depend on each other. The <strong>executor</strong> actually runs the calls. The <strong>observer</strong> collects the outputs. The <strong>evaluator</strong> judges progress against the goal. And the <strong>controller</strong> makes the control decision we named at the start of the chapter: continue, retry, branch, stop, or escalate. In the Ledgerly investigation, the planner lays out the parallel fetches plus the later comparison, the executor calls the billing tools, the observer gathers the charges and policy, the evaluator checks whether the evidence classifies the charge, and the controller decides whether to refund, explain, ask, or escalate.</p>
+<p>These are roles, not yet software. Full orchestration frameworks such as LangGraph (<a href="../part3-building/12-orchestration-langgraph.html" class="quarto-xref"><span>Chapter 12</span></a>) and the OpenAI Agents SDK (<a href="../part3-building/13-openai-agents-sdk.html" class="quarto-xref"><span>Chapter 13</span></a>) give each role a concrete home, and we build them there. For now the point is the mental model: an agent that plans is really running these five roles in a loop, whether or not you have named them.</p>
+</section>
+</section>
+<section id="sec-ch7-tradeoffs" class="level2" data-number="7.9">
+<h2 data-number="7.9" class="anchored" data-anchor-id="sec-ch7-tradeoffs"><span class="header-section-number">7.9</span> Choosing a strategy: matching effort to difficulty</h2>
+<p>We promised at the start to be honest about the cost of all this thinking, and now we can pay that debt. Each rung of the ladder buys accuracy by spending <em>computation</em>, and the spending is not linear. A direct answer is one call to the model. Chain-of-thought is still one call, but a longer one, since the model now writes out its reasoning. ReAct multiplies that by the number of steps it takes, because each Thought–Action–Observation cycle is another round trip. Reflection multiplies it again by the number of retries. And search is the most expensive of all, because exploring a tree means generating and evaluating many thoughts at every branch. It is entirely possible to build an agent that answers a trivial question with a hundred model calls and a ten-second delay, and that is not sophistication, it is waste. <a href="#fig-reasoning-cost" class="quarto-xref">Figure&nbsp;<span>7.8</span></a> lines the strategies up against their cost.</p>
+<div id="fig-reasoning-cost" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-reasoning-cost-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch07/fig-reasoning-cost.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reasoning-cost-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.8: Reasoning strategies ordered by roughly increasing cost and latency. More deliberation buys accuracy on hard problems but wastes time and money on easy ones; the skill is matching the strategy to the difficulty of the task.
+</figcaption>
+</figure>
+</div>
+<p>The guiding principle, then, is to <strong>match the depth of deliberation to the difficulty of the task</strong>, and it mirrors how you spend your own effort. You answer a colleague’s simple question off the top of your head; you would not convene a week-long planning offsite to decide where to eat lunch, nor would you pick a company’s five-year strategy by blurting the first idea that came to mind. An agent deserves the same judgment. If a task is a single, factual lookup, a direct answer or one tool call is plenty. If it needs a few steps of reasoning over facts it must fetch, ReAct is the natural fit. Reserve reflection for tasks where a first attempt can be <em>checked</em> (code that must pass tests, a plan that must satisfy constraints), and reserve full tree search for the genuinely hard problems where a wrong first move is fatal and lookahead earns its keep.</p>
+<p><a href="#tbl-strategy-ladder" class="quarto-xref">Table&nbsp;<span>7.2</span></a> gathers the whole ladder, now including the two planning ideas this chapter added, into one view: what each strategy is for, where it breaks, and what it looks like at Ledgerly.</p>
+<div id="tbl-strategy-ladder" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-strategy-ladder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;7.2: A strategy ladder, with each rung’s sweet spot, weakness, and a Ledgerly example.
+</figcaption>
+<div aria-describedby="tbl-strategy-ladder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Strategy</th>
+<th>Best for</th>
+<th>Weakness</th>
+<th>Ledgerly example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Direct answer</td>
+<td>a known fact or simple lookup</td>
+<td>no reasoning, no grounding</td>
+<td>“show invoice 4471”</td>
+</tr>
+<tr class="even">
+<td>Chain-of-thought</td>
+<td>self-contained multi-step reasoning</td>
+<td>ungrounded, single path</td>
+<td>explain how proration is computed</td>
+</tr>
+<tr class="odd">
+<td>Plan-and-solve</td>
+<td>multi-part tasks that skip steps</td>
+<td>still ungrounded until it acts</td>
+<td>lay out the double-charge investigation</td>
+</tr>
+<tr class="even">
+<td>ReAct</td>
+<td>tasks needing fetched evidence</td>
+<td>sequential, can drift on bad data</td>
+<td>pull charges, plan history, and policy in turn</td>
+</tr>
+<tr class="odd">
+<td>Reflection</td>
+<td>attempts with a clear failure signal</td>
+<td>weak when the model judges itself</td>
+<td>retry after a refund-validator rejection</td>
+</tr>
+<tr class="even">
+<td>Tree of Thoughts</td>
+<td>tangled problems with costly early moves</td>
+<td>most expensive, needs evaluable partials</td>
+<td>untangle a multi-hypothesis dispute</td>
+</tr>
+<tr class="odd">
+<td>Parallel planning</td>
+<td>independent subtasks</td>
+<td>needs a correct dependency graph</td>
+<td>fetch charges, policy, history at once</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="In practice">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+In practice
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Start with the cheapest strategy that could plausibly work and add deliberation only when you see it failing, rather than reaching for tree search on day one. In production, the depth of reasoning is itself a dial you can turn per task: many systems route easy requests to a single quick call and escalate only the hard ones to ReAct or search. Two levers keep this affordable: treat reasoning as a <em>budget</em> you spend deliberately rather than by default, and <em>parallelize</em> independent tool calls so extra grounding costs latency once, not once per step. Measured against a real evaluation set (the subject of <a href="../part3-building/08-workflows-vs-agents.html" class="quarto-xref"><span>Chapter 8</span></a> and, later, our chapter on evaluation), this “as much reasoning as the task needs, and no more” discipline is usually what separates an agent that is both accurate <em>and</em> affordable from one that is merely one or the other.</p>
+</div>
+</div>
+<section id="sec-ch7-stop" class="level3" data-number="7.9.1">
+<h3 data-number="7.9.1" class="anchored" data-anchor-id="sec-ch7-stop"><span class="header-section-number">7.9.1</span> A plan needs a stop condition</h3>
+<p>Every plan so far has quietly assumed something we now have to make explicit: it ends. An agent without a stop condition is not thorough, it is a runaway loop, burning tokens and, worse, taking actions long after it should have paused. A plan should stop when the goal is satisfied, when the required evidence has been collected, when a hard constraint blocks further progress, when a tool has failed repeatedly, when a step limit is reached, when the next action is high-risk and needs approval, when the model is too uncertain and needs the user to clarify, or when further reasoning is unlikely to change the answer. This is the same discipline as the loop’s “repeat up to N times” bound from Chapter 1: a termination rule is not a nuisance, it is a safety feature, and it is flagged for exactly this reason in the OWASP guidance on unbounded agent behavior <span class="citation" data-cites="owasp2025llm"><a href="../../references.html#ref-owasp2025llm" role="doc-biblioref">[10]</a></span>.</p>
+<p>Ledgerly makes the three most important stops concrete. If the account cannot be identified, the agent stops and asks rather than guessing. If the refund tool fails twice, it stops and escalates rather than retrying forever. And if the refund would exceed the auto-approval threshold, it stops and requests human approval before acting. Each stop trades a little autonomy for a lot of safety.</p>
+</section>
+<section id="sec-ch7-plan-repair" class="level3" data-number="7.9.2">
+<h3 data-number="7.9.2" class="anchored" data-anchor-id="sec-ch7-plan-repair"><span class="header-section-number">7.9.2</span> Repairing the plan when the world disagrees</h3>
+<p>Stopping is one response to trouble; repairing the plan is the other, and it is worth separating from reflection. Reflection critiques an <em>attempt</em> after it finishes. Plan repair happens <em>mid-flight</em>, when an observation contradicts the plan the agent is currently executing. A plan can break for many ordinary reasons: a tool returns no data, a policy contradicts the hypothesis, a permission is missing, the user supplies new information, an assumption turns out false, or the environment simply changed since the plan was made. A capable agent treats its plan as provisional and rewrites it when the world disagrees.</p>
+<p>The Ledgerly investigation shows a clean repair. The initial plan is straightforward: retrieve the charges, confirm the duplicate, issue the refund. Then the observation lands, and one of the two charges carries a valid proration reason, not a duplicate. The refund path is now wrong. The repair abandons it, switches to explaining how the two charges compose the month’s bill, and offers escalation if the customer still disputes the policy. Same goal, resolve the complaint correctly, but a completely different plan, chosen because the evidence demanded it.</p>
+<p>These strategies (think, plan, act, check, search, and parallelize) are the vocabulary of agent reasoning, and almost every sophisticated behavior you will meet later is a combination of them. Before we leave reasoning behind, it is worth watching every one of them cooperate on a single realistic problem, the kind Ledgerly meets every day.</p>
+</section>
+</section>
+<section id="sec-ch7-case" class="level2" data-number="7.10">
+<h2 data-number="7.10" class="anchored" data-anchor-id="sec-ch7-case"><span class="header-section-number">7.10</span> Case study: planning a Ledgerly billing investigation</h2>
+<p>Bring the whole chapter to bear on one message. A Ledgerly customer writes: “I changed my plan last month and now I see two charges. Why did this happen, and can you refund one of them?” It is the hardest kind of request the agent meets, because the customer has already proposed the answer, a refund, and the honest answer might be no. Reasoning, planning, and control all have to work together to get it right.</p>
+<p>The plan the agent should follow reads like the anatomy from <a href="#sec-ch7-plan-anatomy" class="quarto-xref"><span>Section 7.4.1</span></a>, made specific, and <a href="#fig-ledgerly-plan" class="quarto-xref">Figure&nbsp;<span>7.9</span></a> draws it:</p>
+<ol type="1">
+<li>Identify the account and the billing period.</li>
+<li>In parallel, fetch the charges, the plan history, and the current refund policy.</li>
+<li>Compare the charges by subscription, period, amount, and adjustment reason.</li>
+<li>Classify the situation: duplicate, proration, renewal, or unresolved.</li>
+<li>If it is a duplicate and the policy allows, act within the approval rules.</li>
+<li>If it is a valid proration, explain how the two charges compose the bill.</li>
+<li>If the records conflict, escalate to a human.</li>
+<li>Save the outcome to memory for the next conversation.</li>
+</ol>
+<div id="fig-ledgerly-plan" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ledgerly-plan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch07/fig-ledgerly-plan.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ledgerly-plan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.9: Planning a Ledgerly billing investigation. The complaint drives three parallel fetches, which join at a classification step that routes to a refund, an explanation, a clarifying question, or an escalation.
+</figcaption>
+</figure>
+</div>
+<p>The ways this goes wrong are predictable, and each maps to a lesson from this chapter. The agent issues the refund before checking the plan history (no plan, straight to action). It treats a valid proration as a duplicate (reasoning ungrounded by the policy). It keeps reasoning after a billing tool fails instead of stopping to ask (no stop condition). It quotes a stale refund rule from training instead of the current policy (no grounding). Or it presses ahead and refunds an amount that should have required sign-off (no approval gate).</p>
+<p>The safeguards are the mirror image. Evidence comes from tools, not the customer’s framing. A policy validator, not the model’s sense of fairness, decides eligibility. A stop condition halts the loop when the account is unclear or a tool has failed. An approval gate guards any refund above the threshold. An audit log records what was decided and why. And reflection is used only when the failure signal is clear, such as a validator rejection, never as a vague “does this feel right?”</p>
+<div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly so far">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🧾 Ledgerly so far
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The agent grows a head for planning:</p>
+<ol type="1">
+<li>It now <strong>plans</strong> before acting: name the subtasks, then carry them out.</li>
+<li>It <strong>tracks state</strong> across a ReAct loop and repairs the plan when the evidence disagrees.</li>
+<li>It <strong>runs independent lookups in parallel</strong> (charges, policy, plan history) and reasons once.</li>
+<li>It <strong>knows when to stop</strong>: ask when the account is unclear, escalate on conflict, and request approval above the refund threshold.</li>
+</ol>
+</div>
+</div>
+<p>Ledgerly’s agent can now reason, plan, act, check its work, and stop itself. But that raises a prior question we have quietly stepped past: for a given billing request, do you even want a free-ranging agent that decides its own steps, or a fixed workflow that runs the same reliable path every time? That is one of the most important design decisions you will make, and <a href="../part3-building/08-workflows-vs-agents.html" class="quarto-xref"><span>Chapter 8</span></a> takes it up, arguing, perhaps surprisingly, that the simpler answer is often the right one.</p>
+</section>
+<section id="sec-ch7-summary" class="level2" data-number="7.11">
+<h2 data-number="7.11" class="anchored" data-anchor-id="sec-ch7-summary"><span class="header-section-number">7.11</span> Summary</h2>
+<ul>
+<li>Reasoning, planning, and control are <strong>three different jobs</strong>: reasoning asks what follows from what it knows, planning asks what to do next, and control asks whether to continue, retry, branch, stop, or escalate. Planning is reasoning under control.</li>
+<li>Reasoning strategies form a <strong>ladder</strong>, each rung adding what the one below lacks: chain-of-thought (think), ReAct (act while thinking), reflection (check your work), and tree search (explore alternatives).</li>
+<li><strong>Chain-of-thought</strong> lets the model deliberate in a straight line, but its steps rest on the model’s own beliefs and it commits to a single path <span class="citation" data-cites="wei2022cot"><a href="../../references.html#ref-wei2022cot" role="doc-biblioref">[1]</a></span>.</li>
+<li><strong>Plan-and-solve</strong> names the subtasks before solving them, cutting the missing-step errors a terse chain leaves behind: a chain is not always a plan <span class="citation" data-cites="wang2023planandsolve"><a href="../../references.html#ref-wang2023planandsolve" role="doc-biblioref">[3]</a></span>.</li>
+<li><strong>ReAct</strong> interleaves Thought, Action, and Observation so reasoning stays grounded in real tool results. It is the pattern most people mean by “an agent,” and the operational form of Chapter 5’s <em>grounding</em> remedy <span class="citation" data-cites="yao2023react"><a href="../../references.html#ref-yao2023react" role="doc-biblioref">[4]</a></span>.</li>
+<li><strong>Reflection</strong> has the agent critique its own attempt in words and retry, but it needs a real judge (a test, a validator, a signal); it is weak when the model must grade itself in a vacuum <span class="citation" data-cites="shinn2023reflexion"><a href="../../references.html#ref-shinn2023reflexion" role="doc-biblioref">[5]</a></span>.</li>
+<li><strong>Search</strong> (Tree of Thoughts) explores and evaluates many reasoning paths, dramatically helping on problems where a first move can be fatal (4% to 74% on the Game of 24), but only when branching truly matters <span class="citation" data-cites="yao2023tot"><a href="../../references.html#ref-yao2023tot" role="doc-biblioref">[7]</a></span>.</li>
+<li><strong>Parallel planning</strong> runs independent tool calls at once behind a dependency graph, cutting latency and cost rather than just accuracy <span class="citation" data-cites="kim2023llmcompiler"><a href="../../references.html#ref-kim2023llmcompiler" role="doc-biblioref">[9]</a></span>.</li>
+<li>A plan needs a <strong>stop condition</strong>: knowing when to stop, ask, or escalate is a safety feature, not a nuisance <span class="citation" data-cites="owasp2025llm"><a href="../../references.html#ref-owasp2025llm" role="doc-biblioref">[10]</a></span>.</li>
+<li>Deliberation costs tokens, latency, and money, and the cost rises steeply up the ladder; the real skill is <strong>matching the depth of reasoning to the difficulty of the task</strong>.</li>
+</ul>
+<p>We now know how to make a single agent reason well, from a quick thought to a deliberate search. The next question is architectural rather than cognitive: given a problem, should you hand it to a flexible agent that chooses its own steps, or to a fixed workflow that runs a reliable path every time? <a href="../part3-building/08-workflows-vs-agents.html" class="quarto-xref"><span>Chapter 8</span></a> takes up that decision, and argues, perhaps surprisingly, that the simpler answer is often the right one.</p>
+</section>
+<section id="sec-ch7-exercises" class="level2" data-number="7.12">
+<h2 data-number="7.12" class="anchored" data-anchor-id="sec-ch7-exercises"><span class="header-section-number">7.12</span> Exercises</h2>
+<ol type="1">
+<li>For each rung of the ladder (chain-of-thought, ReAct, reflection, tree search) name a task where it is clearly the <em>right</em> amount of deliberation, and a task where it would be overkill. What feature of the task drives your choice?</li>
+<li>ReAct grounds each reasoning step in a real observation. Take the Eiffel Tower transcript from <a href="#sec-ch7-react" class="quarto-xref"><span>Section 7.5</span></a> and explain, step by step, where a pure chain-of-thought agent could have gone wrong and how the Thought–Action–Observation loop prevents it.</li>
+<li>Reflection is “only as good as the agent’s ability to tell that it failed.” Give one task where the success signal is crisp enough for reflection to work well, and one where it is too fuzzy, and explain what makes the difference.</li>
+<li>Tree of Thoughts turned 4% into 74% on the Game of 24 but is the most expensive strategy on the ladder. Describe a task where that trade is clearly worth it, and one where it clearly is not, using the cost picture from <a href="#fig-reasoning-cost" class="quarto-xref">Figure&nbsp;<span>7.8</span></a>.</li>
+<li>Sketch how you might <em>combine</em> two strategies for a coding agent, for example ReAct to gather context and run tests, wrapped in a reflection loop. What signal would trigger a reflection, and when would the loop stop?</li>
+<li>Write an explicit plan for a Ledgerly scenario of your choice using the anatomy from <a href="#sec-ch7-plan-anatomy" class="quarto-xref"><span>Section 7.4.1</span></a>, and give it concrete <strong>stop</strong> and <strong>escalation</strong> conditions. Which condition fires first if the billing tool keeps timing out?</li>
+<li>Take the billing investigation in <a href="#sec-ch7-case" class="quarto-xref"><span>Section 7.10</span></a> and sort its subtasks into those that can run <strong>in parallel</strong> and those that must run <strong>in sequence</strong>. For each dependency you find, name the specific piece of evidence that forces the ordering.</li>
+<li>You are handed a new Ledgerly dispute. Using the rule in <a href="#sec-ch7-branching-rule" class="quarto-xref"><span>Section 7.7.1</span></a>, decide whether <strong>tree search</strong> is worth its cost, and justify your answer from the features of the task rather than from the fanciness of the method.</li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-wei2022cot" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">J. Wei <em>et al.</em>, <span>“Chain-of-thought prompting elicits reasoning in large language models,”</span> in <em>Advances in neural information processing systems (NeurIPS)</em>, 2022.</div>
+</div>
+<div id="ref-kojima2022zeroshot" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">T. Kojima, S. S. Gu, M. Reid, Y. Matsuo, and Y. Iwasawa, <span>“Large language models are zero-shot reasoners,”</span> in <em>Advances in neural information processing systems (NeurIPS)</em>, 2022.</div>
+</div>
+<div id="ref-wang2023planandsolve" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">L. Wang <em>et al.</em>, <span>“Plan-and-solve prompting: Improving zero-shot chain-of-thought reasoning by large language models,”</span> in <em>Proceedings of the 61st annual meeting of the association for computational linguistics (ACL)</em>, 2023.</div>
+</div>
+<div id="ref-yao2023react" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">S. Yao <em>et al.</em>, <span>“<span>ReAct</span>: Synergizing reasoning and acting in language models,”</span> in <em>International conference on learning representations (ICLR)</em>, 2023.</div>
+</div>
+<div id="ref-shinn2023reflexion" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">N. Shinn, F. Cassano, E. Berman, A. Gopinath, K. Narasimhan, and S. Yao, <span>“Reflexion: Language agents with verbal reinforcement learning,”</span> in <em>Advances in neural information processing systems (NeurIPS)</em>, 2023.</div>
+</div>
+<div id="ref-newell1976symbols" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">A. Newell and H. A. Simon, <span>“Computer science as empirical inquiry: Symbols and search,”</span> <em>Communications of the ACM</em>, vol. 19, no. 3, pp. 113–126, 1976.</div>
+</div>
+<div id="ref-yao2023tot" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">S. Yao <em>et al.</em>, <span>“Tree of thoughts: Deliberate problem solving with large language models,”</span> in <em>Advances in neural information processing systems (NeurIPS)</em>, 2023.</div>
+</div>
+<div id="ref-wang2023selfconsistency" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">X. Wang <em>et al.</em>, <span>“Self-consistency improves chain of thought reasoning in language models,”</span> in <em>International conference on learning representations (ICLR)</em>, 2023.</div>
+</div>
+<div id="ref-kim2023llmcompiler" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">S. Kim <em>et al.</em>, <span>“An <span>LLM</span> compiler for parallel function calling,”</span> in <em>International conference on machine learning (ICML)</em>, 2024.</div>
+</div>
+<div id="ref-owasp2025llm" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[10] </div><div class="csl-right-inline">OWASP, <span>“OWASP top 10 for large language model applications.”</span> <a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" class="uri">https://owasp.org/www-project-top-10-for-large-language-model-applications/</a>, 2025.</div>
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.bhavykhatri\.com\/Agentic-AI-Book\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../chapters/part2-llm-agents/06-the-augmented-llm.html" class="pagination-link" aria-label="The Augmented LLM">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../chapters/part3-building/08-workflows-vs-agents.html" class="pagination-link" aria-label="Workflows vs. Agents">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

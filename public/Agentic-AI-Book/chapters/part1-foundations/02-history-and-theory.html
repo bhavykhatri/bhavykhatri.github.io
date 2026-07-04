@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical, research-grounded guide that connects the classical theory of intelligent agents to the modern practice of building autonomous LLM agents with tools, memory, planning, and multi-agent orchestration.">
+
+<title>2&nbsp; A Short History &amp; the Theory of Agents – Agents: From Theory to Production</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../chapters/part1-foundations/03-agent-architectures.html" rel="next">
+<link href="../../chapters/part1-foundations/01-what-is-an-agent.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d166b450ba5a8e9f7a0ab969bf6592c1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9323ee001d31a54ee2476120b8c8bf56.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-20d87d490373df57c880857ccdca8cc5.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part1-foundations/01-what-is-an-agent.html">Part I — Foundations of Agency</a></li><li class="breadcrumb-item"><a href="../../chapters/part1-foundations/02-history-and-theory.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A Short History &amp; the Theory of Agents</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Agents: From Theory to Production</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part I — Foundations of Agency</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/01-what-is-an-agent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What Is an Agent?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/02-history-and-theory.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A Short History &amp; the Theory of Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/03-agent-architectures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Agent Architectures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/04-environments-and-rationality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Environments &amp; Rationality</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part II — The LLM as an Agent</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/05-llms-as-reasoners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/06-the-augmented-llm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/07-reasoning-and-planning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part III — Building Agents</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/08-workflows-vs-agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/09-agentic-patterns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/10-tools-and-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/11-memory-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/12-orchestration-langgraph.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/13-openai-agents-sdk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/14-multi-agent-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part IV — Production &amp; Trust</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/15-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/16-observability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Observability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/17-safety-and-guardrails.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Safety &amp; Guardrails</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/18-deployment-and-cost.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part V — Frontiers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part5-frontiers/19-computer-use-and-embodiment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Computer Use &amp; Embodiment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part5-frontiers/20-frontiers-and-open-problems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Frontiers &amp; Open Problems</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendices/a-environment-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Appendix A — Environment Setup</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendices/b-glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Appendix B — Glossary</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendices/c-further-reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Appendix C — Further Reading</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-ch2-intuition" id="toc-sec-ch2-intuition" class="nav-link active" data-scroll-target="#sec-ch2-intuition"><span class="header-section-number">2.1</span> Opening intuition</a></li>
+  <li><a href="#sec-symbolic" id="toc-sec-symbolic" class="nav-link" data-scroll-target="#sec-symbolic"><span class="header-section-number">2.2</span> Symbolic AI and the deliberative tradition</a></li>
+  <li><a href="#sec-reactive" id="toc-sec-reactive" class="nav-link" data-scroll-target="#sec-reactive"><span class="header-section-number">2.3</span> The reactive turn</a></li>
+  <li><a href="#sec-bdi" id="toc-sec-bdi" class="nav-link" data-scroll-target="#sec-bdi"><span class="header-section-number">2.4</span> BDI: Belief–Desire–Intention</a></li>
+  <li><a href="#sec-rl" id="toc-sec-rl" class="nav-link" data-scroll-target="#sec-rl"><span class="header-section-number">2.5</span> Reinforcement learning</a></li>
+  <li><a href="#sec-synthesis" id="toc-sec-synthesis" class="nav-link" data-scroll-target="#sec-synthesis"><span class="header-section-number">2.6</span> The rational-agent synthesis</a></li>
+  <li><a href="#sec-ch2-code" id="toc-sec-ch2-code" class="nav-link" data-scroll-target="#sec-ch2-code"><span class="header-section-number">2.7</span> A tiny illustration: reflex vs.&nbsp;goal-based</a></li>
+  <li><a href="#sec-ch2-summary" id="toc-sec-ch2-summary" class="nav-link" data-scroll-target="#sec-ch2-summary"><span class="header-section-number">2.8</span> Summary</a></li>
+  <li><a href="#sec-ch2-exercises" id="toc-sec-ch2-exercises" class="nav-link" data-scroll-target="#sec-ch2-exercises"><span class="header-section-number">2.9</span> Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part1-foundations/01-what-is-an-agent.html">Part I — Foundations of Agency</a></li><li class="breadcrumb-item"><a href="../../chapters/part1-foundations/02-history-and-theory.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A Short History &amp; the Theory of Agents</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-history-and-theory" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A Short History &amp; the Theory of Agents</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p><em>“Those who cannot remember the past are condemned to repeat it.”</em></p>
+<p>— George Santayana, <em>The Life of Reason</em></p>
+</blockquote>
+<blockquote class="blockquote">
+<p>After this chapter you will understand the intellectual lineage of today’s agents and the core theoretical models that still shape how we build them.</p>
+</blockquote>
+<section id="sec-ch2-intuition" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="sec-ch2-intuition"><span class="header-section-number">2.1</span> Opening intuition</h2>
+<p><a href="01-what-is-an-agent.html" class="quarto-xref"><span>Chapter 1</span></a> defined an agent as something that senses, decides, and acts in a loop. That definition is young; the <em>ideas</em> inside it are not. When an LLM agent plans a task, second-guesses itself, and tries again, it can feel like something brand new. It isn’t. Almost every idea inside a modern agent — planning toward a goal, reacting to the world, holding beliefs and intentions, learning from reward — was worked out, often decades ago, by researchers who had no transformers at all. Today’s agents are the newest layer on a long stack.</p>
+<p>Knowing that history is not nostalgia. Each earlier tradition discovered a specific strength <em>and</em> a specific failure mode, and modern agents inherit both. If you can see which tradition a design belongs to, you can predict how it will break. Recent surveys of LLM agents make the same point by tracing the idea all the way back through AI to its philosophical roots before arriving at today’s systems <span class="citation" data-cites="xi2023rise"><a href="../../references.html#ref-xi2023rise" role="doc-biblioref">[1]</a></span> — the lineage is real, and worth knowing.</p>
+<p>This chapter walks four traditions — symbolic/deliberative, reactive, BDI, and reinforcement learning — and ends with the synthesis that frames the rest of the book.</p>
+</section>
+<section id="sec-symbolic" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="sec-symbolic"><span class="header-section-number">2.2</span> Symbolic AI and the deliberative tradition</h2>
+<p>The first paradigm treated intelligence as <strong>symbol manipulation</strong>: represent the world as symbols, and produce intelligent behavior by searching over those symbols for a sequence of actions that reaches a goal. Newell and Simon called this the <em>physical symbol system hypothesis</em> — the claim that symbol manipulation is sufficient for general intelligent action <span class="citation" data-cites="newell1976symbols"><a href="../../references.html#ref-newell1976symbols" role="doc-biblioref">[2]</a></span>.</p>
+<p>A <strong>deliberative</strong> agent in this tradition keeps an explicit model of the world, and <em>plans</em>: it searches forward through possible actions to find a path from the current state to a goal state <span class="citation" data-cites="russell2021aima"><a href="../../references.html#ref-russell2021aima" role="doc-biblioref">[3]</a></span>.</p>
+<p>Think of planning a road trip with a <strong>paper map</strong> spread across the kitchen table. You haven’t started the car; you haven’t even put your shoes on. And yet you are already <em>travelling</em> — in your head. Your finger traces one route, then backs up and tries another, comparing them: this one is shorter but goes through the mountains, that one is longer but avoids the toll road. You weigh the options, settle on a plan, and only <em>then</em> pick up the keys. That whole process — exploring possible futures on a model of the world before committing to a single action in the real one — is deliberation in a nutshell. The agent builds a little model of the world (in your case, on the table) and <em>searches</em> it for a good plan, exactly as <a href="#fig-deliberative-loop" class="quarto-xref">Figure&nbsp;<span>2.1</span></a> shows.</p>
+<div id="fig-deliberative-loop" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-deliberative-loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch02/fig-deliberative-loop.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-deliberative-loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.1: A deliberative agent builds a world model from percepts, searches it for a plan, and acts — then senses again.
+</figcaption>
+</figure>
+</div>
+<p><strong>What it’s good at.</strong> When the model is accurate and the world behaves itself, deliberation is genuinely powerful — and, just as importantly, it is <em>explainable</em>. Because the agent has literally laid out a plan, you can read that plan, check it, and understand exactly why it intends to do what it’s about to do. For a whole class of problems — proving a theorem, solving a logistics puzzle, playing a board game — thinking before acting is precisely what you want.</p>
+<p><strong>Where it falls apart.</strong> The trouble is that deliberation is <strong>brittle</strong>. Building and maintaining a correct symbolic model of a messy, changing world turns out to be enormously hard, and the search for a plan can explode into more possibilities than any computer could ever sift through. Worse, a plan is only as good as the model it was built on. The moment reality drifts away from that model, the plan quietly becomes wrong — like confidently following your paper map straight into a road that was closed for construction last month.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="🧠 Deep dive: why this matters for LLM agents">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🧠 Deep dive: why this matters for LLM agents
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When you ask an LLM to “make a plan, then execute it,” you are reinventing deliberative AI — and you inherit its brittleness. The plan is only as good as the model’s (implicit) picture of the world, which may be hallucinated. This is exactly why modern agents re-plan continuously and re-ground themselves in tool results at each step, rather than committing to one long plan up front <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[4]</a></span>.</p>
+</div>
+</div>
+</section>
+<section id="sec-reactive" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="sec-reactive"><span class="header-section-number">2.3</span> The reactive turn</h2>
+<p>By the late 1980s, the brittleness of grand symbolic models provoked a rebellion. Rodney Brooks argued, provocatively, for <em>intelligence without representation</em>: robust behavior can emerge from tight couplings between perception and action, with <strong>no central world model</strong> at all <span class="citation" data-cites="brooks1991intelligence"><a href="../../references.html#ref-brooks1991intelligence" role="doc-biblioref">[5]</a></span>. In his <em>subsumption architecture</em>, simple behaviors (“avoid obstacles,” “wander,” “explore”) run in parallel and layer over one another, and competent overall behavior <em>emerges</em> from their interaction.</p>
+<p>A <strong>reactive</strong> agent maps situations directly to actions — condition → action — without deliberating about the future.</p>
+<p>The everyday version is pulling your hand off a hot stove. Think about what does <em>not</em> happen in that moment: you don’t consult a mental map of the kitchen, you don’t weigh the pros and cons of moving your arm, and you certainly don’t plan a sequence of steps. The heat simply triggers the withdrawal, directly and almost instantly — in fact your spinal cord fires the reflex before the signal even reaches your brain. That is a pure condition → action mapping, and it is fast precisely <em>because</em> it skips all the thinking. A great deal of a housefly’s competence works this way too. It has almost no capacity to plan, yet it is maddeningly hard to swat, because its escape behavior is wired as a set of tight, lightning-quick reflexes from its eyes straight to its wings. No deliberation, no model of you and your rolled-up newspaper — just reaction, and it works beautifully.</p>
+<p><strong>What it’s good at.</strong> Reactive agents are fast, robust, and cheap. There is no model to build, no plan to compute, and therefore nothing that can go stale. In a world that changes faster than you could ever plan for, that immediacy is a genuine superpower — it is why your reflexes, not your deliberations, are what keep you from touching the hot stove.</p>
+<p><strong>Where it falls apart.</strong> The price of all that speed is a complete lack of foresight. A purely reactive agent lives entirely in the present moment, so it simply cannot pursue a goal that requires thinking several steps ahead. And because it has no memory of what it just did, it can happily get stuck repeating the same action forever, never noticing that it is going in circles.</p>
+<p>The lasting lesson from this clash of traditions is a spectrum rather than a winner: reaction is fast but shallow, while deliberation is deep but slow and brittle. Real agents almost always need a bit of both — a tension we finally resolve in <a href="03-agent-architectures.html" class="quarto-xref"><span>Chapter 3</span></a>.</p>
+</section>
+<section id="sec-bdi" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="sec-bdi"><span class="header-section-number">2.4</span> BDI: Belief–Desire–Intention</h2>
+<p>The <strong>Belief–Desire–Intention</strong> model gave agents a principled internal structure grounded in a theory of practical reasoning <span class="citation" data-cites="rao1995bdi"><a href="../../references.html#ref-rao1995bdi" role="doc-biblioref">[6]</a></span>. It names three things going on inside an agent at once. Its <strong>beliefs</strong> are what it takes to be true about the world — its running picture of how things currently are, which may be incomplete or even wrong. Its <strong>desires</strong> are the states of affairs it would like to bring about — the goals it cares about, several of which may quietly conflict. And its <strong>intentions</strong> are the particular desires it has actually <em>committed</em> to pursuing right now, the ones it has stopped merely wishing for and started acting on.</p>
+<p>The key insight is <strong>commitment</strong>. An agent that reconsiders everything at every instant never gets anything done; one that never reconsiders is blind to change. BDI is about balancing persistence toward chosen goals against responsiveness to new information.</p>
+<p>You live this every day, and the gym is the perfect illustration. Suppose you <em>desire</em> two things that quietly pull against each other: to be healthy, and to relax and enjoy yourself. This morning you resolved the tension by forming an <em>intention</em> — you committed to going to the gym after work. Now watch what that commitment does for you. On the way there, a friend calls with a tempting offer to grab a drink instead. Here is the whole drama of BDI in one moment. If you abandon the gym at the very first whiff of something more fun, you will <em>never</em> get fit, because you’ll re-decide your entire life every five minutes and finish nothing — that’s too <em>little</em> commitment. But if you would march grimly past a car accident, ignoring someone who needs help, just to hit your workout on schedule, something has gone badly wrong in the other direction — that’s too <em>much</em> commitment. Acting sensibly means holding your intention firmly <em>enough</em> that you actually make progress toward your goals, yet loosely <em>enough</em> that you can drop it when the world genuinely changes. That delicate balancing act — persistence on one side, responsiveness on the other — is exactly what the BDI model sets out to formalize.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="🛠️ In practice">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🛠️ In practice
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The BDI vocabulary maps cleanly onto agent design decisions you will make in Part III. “Beliefs” become the agent’s memory and retrieved context; “desires” become the task and success criteria; “intentions” become the current plan or the active sub-goal on the stack. When your agent thrashes — abandoning tasks halfway or looping — you usually have a <em>commitment</em> problem, not a model problem.</p>
+</div>
+</div>
+</section>
+<section id="sec-rl" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="sec-rl"><span class="header-section-number">2.5</span> Reinforcement learning</h2>
+<p>A fourth tradition asks a different question: rather than <em>program</em> the right behavior, can an agent <em>learn</em> it from experience? In <strong>reinforcement learning (RL)</strong>, an agent interacts with an environment, takes actions, receives a scalar <strong>reward</strong>, and learns a <strong>policy</strong> — a mapping from states to actions — that maximizes cumulative reward over time <span class="citation" data-cites="sutton2018reinforcement"><a href="../../references.html#ref-sutton2018reinforcement" role="doc-biblioref">[7]</a></span>.</p>
+<p>This is how you train a puppy, and the comparison is worth taking seriously because it’s almost exact. You cannot sit the puppy down and <em>explain</em> the word “sit” — there’s no shared language, no manual you can hand over. So instead you set up a situation and let the puppy experiment. It mills around, sniffs the floor, jumps up, and every so often, more or less by accident, its rear end touches the ground — and the instant it does, you hand over a treat. Nothing is explained; the puppy just notices, over many repetitions, that one particular thing it does reliably makes treats appear. Gradually it builds up a <em>policy</em> — “when I hear the sound ‘sit,’ lowering my rear leads to good things” — without anyone ever stating that rule out loud. <a href="#fig-rl-loop" class="quarto-xref">Figure&nbsp;<span>2.2</span></a> shows the very same loop an RL agent runs: it acts, the environment hands back a reward, and over thousands of such cycles the agent slowly reshapes its behavior toward whatever earns the most reward.</p>
+<div id="fig-rl-loop" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rl-loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch02/fig-rl-loop.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rl-loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.2: The reinforcement-learning loop: the agent acts, the environment returns a new state and a reward, and the agent updates its policy.
+</figcaption>
+</figure>
+</div>
+<p>RL contributes three ideas that echo throughout modern agents, and each one is worth pausing on. The first is the <strong>agent–environment loop</strong> as the fundamental abstraction — the very same act-observe-repeat rhythm we met as the sense–plan–act loop back in <a href="01-what-is-an-agent.html#sec-classical-definition" class="quarto-xref"><span>Section 1.2</span></a>, only now with a reward attached to each turn. The second is the pairing of <strong>policies and value functions</strong>, which is really the habit of reasoning about the <em>long-run</em> value of an action rather than its immediate payoff; a move that looks bad this instant may be exactly right if it sets up something better three steps later. The third is the idea of <strong>reward as the objective</strong> — a single signal that says “more of this, less of that” — and it turns out to be one of the most consequential ideas in the whole field. Reward reappears when we <em>align</em> and <em>evaluate</em> LLM agents, and again in the reward signals used to train the underlying models themselves.</p>
+<p><strong>Where it falls apart.</strong> Reinforcement learning has two stubborn weaknesses. First, it is sample-hungry: the puppy needs many, many treats, and a software agent may need millions of attempts before it learns anything useful. Second, and more subtly, the reward is fiendishly hard to specify. Get it slightly wrong and you produce behavior that is confident, competent, and completely misguided — a phenomenon known as <em>reward hacking</em>. Ask a cleaning robot to maximize “dust collected,” for instance, and it may learn to tip the dustbin back onto the floor so it can vacuum the same dust over and over. It earns a perfect score while leaving the room filthy. The agent did exactly what you rewarded; it just wasn’t what you <em>meant</em>.</p>
+</section>
+<section id="sec-synthesis" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="sec-synthesis"><span class="header-section-number">2.6</span> The rational-agent synthesis</h2>
+<p>Russell and Norvig unified these threads under one framing: study the <strong>rational agent</strong> — the agent that acts to maximize its expected performance measure given what it has perceived and what it knows <span class="citation" data-cites="russell2021aima"><a href="../../references.html#ref-russell2021aima" role="doc-biblioref">[3]</a></span>. This framing is deliberately neutral about <em>how</em> the agent works inside. Reactive, deliberative, BDI, and learning agents are all just different ways of implementing the mapping from percepts to actions.</p>
+<p>That neutrality is why the framing still fits. A modern LLM agent is a new <em>implementation</em> of the rational-agent idea: its “policy” is next-token prediction over a context window; its beliefs are the prompt, memory, and retrieved facts; its actions are tool calls. The table below traces one idea across all four traditions.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>Symbolic</th>
+<th>Reactive</th>
+<th>BDI</th>
+<th>RL</th>
+<th>LLM agent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>How is the world represented?</td>
+<td>Explicit symbols</td>
+<td>(None)</td>
+<td>Beliefs</td>
+<td>State signal</td>
+<td>Prompt + memory + retrieval</td>
+</tr>
+<tr class="even">
+<td>How are actions chosen?</td>
+<td>Search/planning</td>
+<td>Condition→action</td>
+<td>Intentions over desires</td>
+<td>Learned policy</td>
+<td>LLM reasoning over context</td>
+</tr>
+<tr class="odd">
+<td>Where does competence come from?</td>
+<td>Human-authored model</td>
+<td>Emergent from behaviors</td>
+<td>Practical reasoning</td>
+<td>Reward-driven learning</td>
+<td>Pretraining + tools + feedback</td>
+</tr>
+<tr class="even">
+<td>Signature failure</td>
+<td>Brittleness</td>
+<td>No look-ahead</td>
+<td>Poor commitment</td>
+<td>Reward misspecification</td>
+<td>Hallucination / no grounding</td>
+</tr>
+</tbody>
+</table>
+<p>The rest of the book lives in the last column — but every failure in that column has a named ancestor in the others.</p>
+</section>
+<section id="sec-ch2-code" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="sec-ch2-code"><span class="header-section-number">2.7</span> A tiny illustration: reflex vs.&nbsp;goal-based</h2>
+<p>The reactive/deliberative contrast is easiest to <em>feel</em> with a concrete toy. The snippet below is entirely optional — the idea stands on its own — but some readers like to see it. Two agents solve the same task (reach a target number by stepping): the reflex agent reacts to the current gap; the goal-based agent plans the full sequence before acting.</p>
+<div id="ff15f6f7" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reflex agent: pure condition -&gt; action, no look-ahead.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> reflex_agent(state, target):</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    step <span class="op">=</span> <span class="dv">1</span> <span class="cf">if</span> state <span class="op">&lt;</span> target <span class="cf">else</span> <span class="op">-</span><span class="dv">1</span>     <span class="co"># react to the sign of the gap</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> state <span class="op">+</span> step</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Goal-based agent: plan the whole path to the goal, then act.</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> goal_based_agent(state, target):</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    plan <span class="op">=</span> [<span class="dv">1</span> <span class="cf">if</span> target <span class="op">&gt;</span> state <span class="cf">else</span> <span class="op">-</span><span class="dv">1</span>] <span class="op">*</span> <span class="bu">abs</span>(target <span class="op">-</span> state)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> state, plan                      <span class="co"># commit to a plan (a BDI "intention")</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Reflex: repeatedly react until we arrive.</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>s, target <span class="op">=</span> <span class="dv">0</span>, <span class="dv">3</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>trace <span class="op">=</span> [s]</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> s <span class="op">!=</span> target:</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> reflex_agent(s, target)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    trace.append(s)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"reflex path: "</span>, trace)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Goal-based: compute the plan once, then execute it.</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>start, plan <span class="op">=</span> goal_based_agent(<span class="dv">0</span>, <span class="dv">3</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>path, s <span class="op">=</span> [start], start</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> a <span class="kw">in</span> plan:</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    s <span class="op">+=</span> a</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    path.append(s)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"planned path:"</span>, path, <span class="st">"| plan:"</span>, plan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>reflex path:  [0, 1, 2, 3]
+planned path: [0, 1, 2, 3] | plan: [1, 1, 1]</code></pre>
+</div>
+</div>
+<p>On this trivial, fully observable task the two behave identically — which is exactly the point: <strong>the architecture only matters when the environment gets harder.</strong> Add partial observability or a moving target and the reflex agent keeps coping while the goal-based agent’s up-front plan goes stale. That trade-off is the subject of <a href="03-agent-architectures.html" class="quarto-xref"><span>Chapter 3</span></a>.</p>
+</section>
+<section id="sec-ch2-summary" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="sec-ch2-summary"><span class="header-section-number">2.8</span> Summary</h2>
+<ul>
+<li>Modern agents inherit four traditions: <strong>symbolic/deliberative</strong> (plan over an explicit model), <strong>reactive</strong> (map situations to actions), <strong>BDI</strong> (beliefs, desires, intentions, and commitment), and <strong>reinforcement learning</strong> (learn a policy from reward).</li>
+<li>Each tradition pairs a strength with a signature failure mode; LLM agents inherit both, which is why they re-plan and re-ground continuously.</li>
+<li>Russell and Norvig’s <strong>rational-agent</strong> framing unifies them and still frames LLM agents today <span class="citation" data-cites="russell2021aima"><a href="../../references.html#ref-russell2021aima" role="doc-biblioref">[3]</a></span>.</li>
+<li>Architecture matters most when the environment is hard — partial, dynamic, or adversarial.</li>
+</ul>
+</section>
+<section id="sec-ch2-exercises" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="sec-ch2-exercises"><span class="header-section-number">2.9</span> Exercises</h2>
+<ol type="1">
+<li>For a household robot vacuum, describe a purely reactive design and a purely deliberative design. Which failure mode does each risk?</li>
+<li>Map an agent you use (a coding assistant, say) onto the BDI vocabulary. What are its beliefs, desires, and intentions? Where does its <em>commitment</em> balance sit?</li>
+<li>Give an example of reward misspecification for an agent whose goal is “keep the user engaged.” How would the classical failure show up in an LLM agent?</li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-xi2023rise" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">Z. Xi <em>et al.</em>, <span>“The rise and potential of large language model based agents: A survey,”</span> <em>arXiv preprint arXiv:2309.07864</em>, 2023.</div>
+</div>
+<div id="ref-newell1976symbols" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">A. Newell and H. A. Simon, <span>“Computer science as empirical inquiry: Symbols and search,”</span> <em>Communications of the ACM</em>, vol. 19, no. 3, pp. 113–126, 1976.</div>
+</div>
+<div id="ref-russell2021aima" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">S. Russell and P. Norvig, <em>Artificial intelligence: A modern approach</em>, 4th ed. Pearson, 2021.</div>
+</div>
+<div id="ref-anthropic2024effective" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">Anthropic, E. Schluntz, and B. Zhang, <span>“Building effective agents.”</span> <a href="https://www.anthropic.com/engineering/building-effective-agents" class="uri">https://www.anthropic.com/engineering/building-effective-agents</a>, Dec. 2024.</div>
+</div>
+<div id="ref-brooks1991intelligence" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">R. A. Brooks, <span>“Intelligence without representation,”</span> <em>Artificial Intelligence</em>, vol. 47, no. 1–3, pp. 139–159, 1991.</div>
+</div>
+<div id="ref-rao1995bdi" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">A. S. Rao and M. P. Georgeff, <span>“BDI agents: From theory to practice,”</span> in <em>Proceedings of the first international conference on multi-agent systems (ICMAS)</em>, 1995.</div>
+</div>
+<div id="ref-sutton2018reinforcement" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">R. S. Sutton and A. G. Barto, <em>Reinforcement learning: An introduction</em>, 2nd ed. MIT Press, 2018.</div>
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.bhavykhatri\.com\/Agentic-AI-Book\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../chapters/part1-foundations/01-what-is-an-agent.html" class="pagination-link" aria-label="What Is an Agent?">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What Is an Agent?</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../chapters/part1-foundations/03-agent-architectures.html" class="pagination-link" aria-label="Agent Architectures">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Agent Architectures</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
