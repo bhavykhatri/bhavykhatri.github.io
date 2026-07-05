@@ -68,7 +68,6 @@ const parts = [
   /* Real book cover image */
   .cover {
     display: block;
-    aspect-ratio: 3 / 4;
     border-radius: 4px 10px 10px 4px;
     box-shadow: var(--shadow-lg), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
     transform: perspective(1200px) rotateY(-16deg);
@@ -76,7 +75,7 @@ const parts = [
     overflow: hidden;
   }
   .book:hover .cover { transform: perspective(1200px) rotateY(-8deg) translateY(-4px); }
-  .cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cover img { width: 100%; height: auto; display: block; }
 
   .copy h2 { font-size: 2rem; margin: 0.5rem 0 0.75rem; }
   .lede { color: var(--muted); margin: 0 0 1.4rem; max-width: 42ch; }
