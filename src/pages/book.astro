@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import BookFeature from '../components/BookFeature.astro';
 
 const bookUrl = '/Agentic-AI-Book/';
+const pdfUrl = '/Agents-From-Theory-to-Production.pdf';
 const issuesUrl = 'https://github.com/bhavykhatri/bhavykhatri.github.io/issues/new?title=%5BBook%5D%20&labels=book';
 
 const topics = [
@@ -52,11 +53,15 @@ const topics = [
           <a class="btn btn-primary" href={bookUrl}>
             Start reading <span aria-hidden="true">→</span>
           </a>
+          <a class="btn btn-ghost" href={pdfUrl} target="_blank" rel="noopener">
+            Read the PDF version
+          </a>
           <a class="btn btn-ghost" href={issuesUrl} target="_blank" rel="noopener">
             Found an issue? Let me know
           </a>
         </div>
         <p class="note">
+          Prefer to read offline? Grab the <a href={pdfUrl} target="_blank" rel="noopener">full PDF version of the book</a>.
           Spotted a typo, a broken link, or something that could be clearer? Open an issue and I'll take a look.
         </p>
       </div>
