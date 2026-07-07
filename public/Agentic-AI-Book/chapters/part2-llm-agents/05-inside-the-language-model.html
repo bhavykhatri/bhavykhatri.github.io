@@ -472,17 +472,27 @@ Figure&nbsp;5.1: The model sits at the center of the agent loop we drew in Part 
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="sec-ch5-tokenizer"><span class="header-section-number">5.2.1</span> How a tokenizer splits text</h3>
 <p>You might expect the model to split text into words, or maybe into single letters. It does neither. It uses something in between, a <strong>subword</strong> scheme, most commonly a method called byte-pair encoding <span class="citation" data-cites="sennrich2016bpe"><a href="../../references.html#ref-sennrich2016bpe" role="doc-biblioref">[1]</a></span>. The idea is delightfully simple. Start with raw characters, then repeatedly glue together the pair of symbols that appears most often in a huge pile of text. Do that tens of thousands of times and you end up with a fixed list of chunks, the model’s <strong>vocabulary</strong>, where common words like ” the” or ” and” become a single token, while rarer words get built from a few pieces. The word “tokenization” might split into <code>token</code> and <code>ization</code>; a name the tokenizer has never seen might shatter into five or six fragments.</p>
 <p>Each token in that vocabulary has a fixed slot number, its <strong>token ID</strong>. The tokenizer’s whole job is a lookup: it turns your sentence into a list of these integers, and turns the model’s output integers back into text. Nothing more. The model itself only ever sees the numbers.</p>
-<div id="fig-tokenization" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-token-schemes" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-tokenization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch05/fig-tokenization.png" class="img-fluid figure-img">
+<div aria-describedby="fig-token-schemes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch05/fig-token-schemes.png" class="img-fluid figure-img">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tokenization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.2: Tokenization from every angle. The same sentence splits differently under word-level, character-level, and subword schemes; modern models use subword tokenization such as BPE or SentencePiece, built by repeatedly merging the most frequent pairs of symbols, so common words become single tokens and rarer ones are assembled from pieces. Because the model works over token IDs rather than letters, numbers, spelling, casing, symbols, and non-English text all fragment in ways that shape how it reasons. The model thinks in tokens, not words.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-token-schemes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.2: The same short sentence, split four ways. Word-level and character-level are the two extremes; modern models use a subword scheme in between, where common words stay whole and rarer ones are built from pieces. Whatever the scheme, the model ultimately reads a list of token IDs, not letters.
 </figcaption>
 </figure>
 </div>
 <p>Why chop words into subwords at all, rather than keeping a giant list of whole words? Because language is open-ended. New words, typos, product names, code identifiers, and other languages appear endlessly, and no fixed word list could ever hold them all. Subwords give the model a finite vocabulary, usually somewhere around fifty to a hundred thousand tokens, that can still spell out anything by combining pieces. It is the same trick the alphabet plays: twenty-six letters, infinite words. Subword tokens are a coarser alphabet, tuned so the common stuff is cheap and the rare stuff is still expressible.</p>
+<div id="fig-bpe-merge" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bpe-merge-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch05/fig-bpe-merge.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bpe-merge-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.3: How byte-pair encoding grows that vocabulary. It begins with raw characters, then repeatedly merges the pair of symbols that occurs most often, one merge at a time, until frequent chunks like “est” become single tokens. Because those chunks are reused across words, a small fixed vocabulary can still spell almost anything.
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="sec-ch5-tokens-meter" class="level3" data-number="5.2.2">
 <h3 data-number="5.2.2" class="anchored" data-anchor-id="sec-ch5-tokens-meter"><span class="header-section-number">5.2.2</span> Why tokens are also the meter</h3>
@@ -491,6 +501,16 @@ Figure&nbsp;5.2: Tokenization from every angle. The same sentence splits differe
 <section id="sec-ch5-tokens-break" class="level3" data-number="5.2.3">
 <h3 data-number="5.2.3" class="anchored" data-anchor-id="sec-ch5-tokens-break"><span class="header-section-number">5.2.3</span> Why this breaks exact reasoning</h3>
 <p>This is the moment tokenization stops being trivia. A famous party trick is to ask a capable model how many times the letter “r” appears in “strawberry” and watch it stumble. The reason is not stupidity. It is that the model never saw the letters. “strawberry” may have arrived as two or three tokens, and inside the model those tokens are single opaque symbols, not a sequence of characters it can count. Asking it to count letters is like asking someone to count the strokes in a word they only ever heard spoken. The information was thrown away at the door. It is our new colleague again: fluent, widely read, and yet unable to see the very letters you are pointing at.</p>
+<div id="fig-token-reasoning" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-token-reasoning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch05/fig-token-reasoning.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-token-reasoning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.4: The same blind spot, four ways. Because the model works over tokens rather than letters, anything that depends on exact characters tends to fragment: numbers split unevenly, casing changes the tokens, code and symbols break into pieces, and non-English text splits into more tokens. Work like this belongs to a tool, not the model’s intuition.
+</figcaption>
+</figure>
+</div>
 <p>The same root cause explains a cluster of related weaknesses. Digits get grouped into tokens in irregular ways, so “1234” and “12345” may be split quite differently, which is part of why models are shakier at long multiplication than their fluency suggests <span class="citation" data-cites="mirzadeh2024gsmsymbolic"><a href="../../references.html#ref-mirzadeh2024gsmsymbolic" role="doc-biblioref">[2]</a></span>. Reversing a string, counting words, or manipulating text character by character all run against the same grain: the model reasons over tokens, not over the raw symbols you see. None of this makes the model useless at these tasks. It makes them tasks you should hand to a tool, a calculator or a few lines of code, rather than trust to the model’s intuition. That instinct, “let the model decide and a tool compute,” is one we will build on for the rest of the book, and it starts here, with a clear-eyed view of what the model literally cannot see.</p>
 <p>With the input now reduced to a list of numbers, we can follow those numbers inward and ask the central question: what actually happens between the tokens going in and a prediction coming out?</p>
 </section>
@@ -506,6 +526,16 @@ Figure&nbsp;5.2: Tokenization from every angle. The same sentence splits differe
 <h3 data-number="5.3.2" class="anchored" data-anchor-id="sec-ch5-attention"><span class="header-section-number">5.3.2</span> Attention: letting words look at each other</h3>
 <p>A pile of word-points is not yet understanding, because the meaning of a word depends on its neighbors. In “I sat by the river bank” and “I deposited it at the bank,” the word “bank” is identical on the page but means two different things, and the only way to tell them apart is to look at the surrounding words. This is the job of <strong>attention</strong>, the mechanism the transformer is named for.</p>
 <p>The idea, stripped to its core, is this: at every position, the model looks back over all the earlier words and decides which ones are relevant to the word it is currently processing, then pulls in information from those and largely ignores the rest. When it processes “it” in “the trophy did not fit in the suitcase because it was too big,” a well-trained model learns to attend from “it” back to “trophy” rather than “suitcase,” which is exactly the piece of context needed to resolve the pronoun. Attention is a learned spotlight: for each word, it brightens the handful of earlier words that matter and dims the rest, so every word’s representation gets updated in light of its real context rather than its dictionary definition.</p>
+<div id="fig-attention-head" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-attention-head-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch05/fig-attention-head.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-attention-head-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.5: Attention for one head, step by step. Each token’s query is compared against every earlier token’s key to score relevance; a causal mask blocks any look at tokens that come later; a softmax turns those scores into weights; and the weights blend the earlier tokens’ values into a new, context-aware representation of the current token. Stacking many such heads and blocks is what turns a pile of word points into understanding.
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="sec-ch5-depth" class="level3" data-number="5.3.3">
 <h3 data-number="5.3.3" class="anchored" data-anchor-id="sec-ch5-depth"><span class="header-section-number">5.3.3</span> Depth: stacking the trick</h3>
@@ -517,7 +547,7 @@ Figure&nbsp;5.2: Tokenization from every angle. The same sentence splits differe
 <img src="../..\images/ch05/fig-transformer-block.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-transformer-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.3: One transformer block, opened up for readers who want the machinery behind the intuition. Tokens enter as vectors; masked multi-head self-attention lets each position gather from the tokens before it, never ahead; a position-wise feed-forward network then transforms each position on its own; and residual connections with normalization keep a deep stack trainable. A model is dozens to hundreds of these identical blocks stacked, and the causal mask is exactly what forces generation to run one token at a time. Note the efficiency add-ons in the corner, the KV cache and mixture-of-experts, which we return to at the end of the chapter.
+Figure&nbsp;5.6: One transformer block, opened up, and the stack it lives in. On the left, a decoder-only model is little more than token and position embeddings, then the same block repeated L times, topped by a head that turns the final vectors into next-token probabilities. On the right, inside one block: masked multi-head self-attention lets each position gather from the tokens before it, never ahead, and a position-wise feed-forward network then transforms each position on its own, with residual connections and normalization keeping a deep stack trainable.
 </figcaption>
 </figure>
 </div>
@@ -530,18 +560,28 @@ Figure&nbsp;5.3: One transformer block, opened up for readers who want the machi
 <section id="sec-ch5-distribution" class="level3" data-number="5.4.1">
 <h3 data-number="5.4.1" class="anchored" data-anchor-id="sec-ch5-distribution"><span class="header-section-number">5.4.1</span> A probability for every token</h3>
 <p>When the model finishes processing your prompt, it does not produce a sentence. It produces a single thing: a <strong>probability</strong> for every token in its vocabulary, a score for how likely each one is to come next. Given “The capital of France is,” the token ” Paris” might get a very high probability, ” a” a modest one, and ” banana” a vanishingly small one. That entire distribution, tens of thousands of numbers, is the model’s raw output for one step. Everything the model “knows” at that moment is compressed into this one ranked list of guesses.</p>
+<div id="fig-generation-step" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-generation-step-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch05/fig-generation-step.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-generation-step-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.7: One generation step, end to end. The current tokens are looked up as embeddings, run through the decoder layers, and turned into a probability over the entire vocabulary; a decoding strategy then picks a single token, which is appended so the whole thing can repeat. Every word a model writes is produced one pass of this loop at a time.
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="sec-ch5-sampling" class="level3" data-number="5.4.2">
 <h3 data-number="5.4.2" class="anchored" data-anchor-id="sec-ch5-sampling"><span class="header-section-number">5.4.2</span> Sampling, and why answers vary</h3>
 <p>To turn that distribution into an actual token, the system has to pick one. The simplest rule is to always take the highest-scoring token, which is called greedy decoding. But most systems instead <strong>sample</strong>: they roll a weighted die, so a token with probability 0.6 is chosen about sixty percent of the time and lower-ranked tokens occasionally win. This is why the same prompt can give different answers on different runs. Our new colleague, asked the same question on Monday and again on Friday, answers a little differently each time, not from indecision but because a weighted roll of the dice is simply how they think. It is not a bug or a sign of creativity in any mystical sense. It is a deliberate coin-flip baked into how text is produced.</p>
 <p>Two dials control that coin-flip. <strong>Temperature</strong> flattens or sharpens the distribution: low temperature makes the model almost always take its top guess, giving steady, repetitive, predictable text; high temperature spreads the odds, giving surprising and sometimes incoherent text. A related setting, top-p or nucleus sampling, keeps only the smallest set of top tokens whose probabilities add up to some threshold and samples from those, which trims off the long tail of absurd options while still allowing variety <span class="citation" data-cites="holtzman2020nucleus"><a href="../../references.html#ref-holtzman2020nucleus" role="doc-biblioref">[4]</a></span>. The practical upshot is a knob you will reach for often: turn it down when you need reliable, near-deterministic output, such as producing structured data or following a strict format, and turn it up when you want range and are willing to tolerate the occasional odd turn.</p>
-<div id="fig-autoregression-practice" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-autoregression-loop" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-autoregression-practice-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch05/fig-autoregression-practice.png" class="img-fluid figure-img">
+<div aria-describedby="fig-autoregression-loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch05/fig-autoregression-loop.png" class="img-fluid figure-img">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-autoregression-practice-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.4: Autoregressive generation, start to finish. In a single step the model reads the current tokens, runs them through the decoder, and produces a probability over the whole vocabulary; a decoding strategy, greedy or sampling with temperature, top-k, or top-p, picks one token, which is appended and fed back in. Follow the worked example and the point lands: the same simple loop that appends ‘Paris,’ then ‘France,’ then a period is all it takes to turn a next-token predictor into a system that writes arbitrary text, which is also why more tokens mean more compute, latency, and cost.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-autoregression-loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.8: The same step, run in a loop, is all it takes to write. Each row feeds the current sequence to the model, which predicts one token; that token is appended and the sequence rolls forward into the next row, adding “Paris,” then “France,” then a period, and on. A next-token predictor becomes a system that writes arbitrary text, which is also why more tokens mean more compute, latency, and cost.
 </figcaption>
 </figure>
 </div>
@@ -554,20 +594,30 @@ Figure&nbsp;5.4: Autoregressive generation, start to finish. In a single step th
 <section id="sec-ch5-context-window" class="level3" data-number="5.4.4">
 <h3 data-number="5.4.4" class="anchored" data-anchor-id="sec-ch5-context-window"><span class="header-section-number">5.4.4</span> The context window is all it has</h3>
 <p>There is a hard limit on how much text the model can be fed at once, its <strong>context window</strong>, measured, of course, in tokens. Everything the model can use to answer, the system instructions, the conversation history, any documents you pasted, the tool results, and its own reply so far, has to fit inside that window. The surprise is what happens between requests: the model remembers nothing. It does not carry a running memory of your conversation. The illusion of memory is created by resending the whole transcript on every turn, so it fits back inside the window and the model can read what was said before.</p>
+<div id="fig-context-window" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-context-window-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch05/fig-context-window.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-context-window-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.9: The context window is the whole of the model’s working memory. The conversation so far is flattened into one token sequence that must fit inside a fixed window; the model attends across everything in the window to generate the next token. Anything that falls outside has to be resent, retrieved, or summarized back in, because nothing persists between calls on its own.
+</figcaption>
+</figure>
+</div>
 <p>That single fact drives an enormous amount of agent design. It is why long conversations eventually forget their own beginnings, why important instructions can get lost in the middle of a huge prompt <span class="citation" data-cites="liu2024lostmiddle"><a href="../../references.html#ref-liu2024lostmiddle" role="doc-biblioref">[6]</a></span>, and why the entire discipline of memory systems, which gets its own chapter later, exists at all. The model’s working memory is a fixed-size scratchpad that gets wiped and rewritten on every call. Everything durable has to be stored outside it and fed back in. Keep that picture close: it is the reason so much of building agents is really the craft of deciding what to put in the window, and what to leave out.</p>
 <p>So the model reads, thinks, and writes. What we have not asked is where any of its competence, its grammar, its facts, its manners, its willingness to follow instructions, actually came from. That is a story about training, and it is the key to predicting how a model will behave.</p>
 </section>
 </section>
 <section id="sec-ch5-training" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="sec-ch5-training"><span class="header-section-number">5.5</span> How a model is trained</h2>
-<p>A useful model is not built in one step. It is raised in stages, and each stage installs a different kind of competence. This matters to you as a builder because a model’s habits, what it is good at, what it refuses, how it phrases things, how hard it tries to be correct versus merely agreeable, are not random personality quirks. They are the direct fingerprints of how it was trained. If the earlier sections introduced our new colleague, this one is their upbringing and their work history, the record that explains every habit you will later rely on or work around. Learn the four stages and you can usually predict, and sometimes fix, why a model behaves the way it does.</p>
+<p>A useful model is not built in one step. It is raised in stages, and each stage installs a different kind of competence. This matters to you as a builder because a model’s habits, what it is good at, what it refuses, how it phrases things, how hard it tries to be correct versus merely agreeable, are not random personality quirks. They are the direct fingerprints of how it was trained. If the earlier sections introduced our new colleague, this one is their upbringing and their work history, the record that explains every habit you will later rely on or work around. Learn these stages and you can usually predict, and sometimes fix, why a model behaves the way it does.</p>
 <div id="fig-training-pipeline" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-training-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="../..\images/ch05/fig-training-pipeline.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-training-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.5: How a raw predictor becomes a helpful, careful reasoner, one training stage at a time. Pretraining reads the world to build broad competence; supervised fine-tuning teaches it to answer rather than merely continue; preference and reward modeling capture what people actually like; alignment tunes the model toward those preferences to be helpful, honest, and safe; and reasoning training rewards getting verifiable problems actually right. Each stage installs a capability the one before it lacks.
+Figure&nbsp;5.10: How a raw predictor becomes a helpful, careful reasoner, one training stage at a time. Pretraining reads the world to build broad competence; supervised fine-tuning teaches it to answer rather than merely continue; preference and reward modeling capture what people actually like; alignment tunes the model toward those preferences to be helpful, honest, and safe; and reasoning training rewards getting verifiable problems actually right. Each stage installs a capability the one before it lacks.
 </figcaption>
 </figure>
 </div>
@@ -616,7 +666,7 @@ Figure&nbsp;5.5: How a raw predictor becomes a helpful, careful reasoner, one tr
 <img src="../..\images/ch05/fig-kv-cache.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kv-cache-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.6: The context window and the KV cache together. A model can only attend to the tokens inside its fixed context window; older tokens fall out and have to be brought back by memory or retrieval. The KV cache stores each earlier token’s key and value states so that during generation only the new token is computed rather than the whole history recomputed, which cuts latency and cost and makes long-context use practical. The cache still grows with the window, so context stays a scarce resource: shorten where possible, retrieve what matters, summarize the rest, and cache and reuse.
+Figure&nbsp;5.11: Why the KV cache makes generation practical. On the first pass the model computes each token’s key and value once and stores them. As it then generates, it reuses those cached keys and values for every earlier token and computes only the new one, so each step does a small amount of work instead of reprocessing the entire history. This is the single biggest reason long outputs generate at usable speed.
 </figcaption>
 </figure>
 </div>
