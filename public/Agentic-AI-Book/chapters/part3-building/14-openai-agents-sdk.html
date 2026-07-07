@@ -8,7 +8,7 @@
 
 <meta name="description" content="A practical, research-grounded guide that connects the classical theory of intelligent agents to the modern practice of building autonomous LLM agents with tools, memory, planning, and multi-agent orchestration.">
 
-<title>13&nbsp; The OpenAI Agents SDK – Agents: From Theory to Production</title>
+<title>14&nbsp; The OpenAI Agents SDK – Agents: From Theory to Production</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,8 +85,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../chapters/part3-building/14-multi-agent-systems.html" rel="next">
-<link href="../../chapters/part3-building/12-orchestration-langgraph.html" rel="prev">
+<link href="../../chapters/part3-building/15-multi-agent-systems.html" rel="next">
+<link href="../../chapters/part3-building/13-orchestration-langgraph.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -138,7 +138,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part3-building/08-workflows-vs-agents.html">Part III — Building Agents</a></li><li class="breadcrumb-item"><a href="../../chapters/part3-building/13-openai-agents-sdk.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part3-building/09-workflows-vs-agents.html">Part III — Building Agents</a></li><li class="breadcrumb-item"><a href="../../chapters/part3-building/14-openai-agents-sdk.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -225,20 +225,26 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part2-llm-agents/05-llms-as-reasoners.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></a>
+  <a href="../../chapters/part2-llm-agents/05-inside-the-language-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Inside the Language Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part2-llm-agents/06-the-augmented-llm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span></a>
+  <a href="../../chapters/part2-llm-agents/06-llms-as-reasoners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part2-llm-agents/07-reasoning-and-planning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span></a>
+  <a href="../../chapters/part2-llm-agents/07-the-augmented-llm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/08-reasoning-and-planning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span></a>
   </div>
 </li>
       </ul>
@@ -254,44 +260,44 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/08-workflows-vs-agents.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span></a>
+  <a href="../../chapters/part3-building/09-workflows-vs-agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/09-agentic-patterns.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span></a>
+  <a href="../../chapters/part3-building/10-agentic-patterns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/10-tools-and-mcp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span></a>
+  <a href="../../chapters/part3-building/11-tools-and-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/11-memory-systems.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></a>
+  <a href="../../chapters/part3-building/12-memory-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/12-orchestration-langgraph.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></a>
+  <a href="../../chapters/part3-building/13-orchestration-langgraph.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/13-openai-agents-sdk.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></a>
+  <a href="../../chapters/part3-building/14-openai-agents-sdk.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/14-multi-agent-systems.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></a>
+  <a href="../../chapters/part3-building/15-multi-agent-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></a>
   </div>
 </li>
       </ul>
@@ -307,26 +313,26 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/15-evaluation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
+  <a href="../../chapters/part4-production/16-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/16-observability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Observability</span></span></a>
+  <a href="../../chapters/part4-production/17-observability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Observability</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/17-safety-and-guardrails.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Safety &amp; Guardrails</span></span></a>
+  <a href="../../chapters/part4-production/18-safety-and-guardrails.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Safety &amp; Guardrails</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/18-deployment-and-cost.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></span></a>
+  <a href="../../chapters/part4-production/19-deployment-and-cost.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></span></a>
   </div>
 </li>
       </ul>
@@ -342,14 +348,14 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part5-frontiers/19-computer-use-and-embodiment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Computer Use &amp; Embodiment</span></span></a>
+  <a href="../../chapters/part5-frontiers/20-computer-use-and-embodiment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Computer Use &amp; Embodiment</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part5-frontiers/20-frontiers-and-open-problems.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Frontiers &amp; Open Problems</span></span></a>
+  <a href="../../chapters/part5-frontiers/21-frontiers-and-open-problems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Frontiers &amp; Open Problems</span></span></a>
   </div>
 </li>
       </ul>
@@ -366,19 +372,19 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../chapters/appendices/a-environment-setup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Appendix A — Environment Setup</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Appendix A — Environment Setup</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../chapters/appendices/b-glossary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Appendix B — Glossary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Appendix B — Glossary</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../chapters/appendices/c-further-reading.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Appendix C — Further Reading</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Appendix C — Further Reading</span></span></a>
   </div>
 </li>
       </ul>
@@ -405,29 +411,29 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-ch13-intuition" id="toc-sec-ch13-intuition" class="nav-link active" data-scroll-target="#sec-ch13-intuition"><span class="header-section-number">13.1</span> A smaller kit of parts</a></li>
-  <li><a href="#sec-ch13-primitives" id="toc-sec-ch13-primitives" class="nav-link" data-scroll-target="#sec-ch13-primitives"><span class="header-section-number">13.2</span> The core primitives</a></li>
-  <li><a href="#sec-ch13-responses" id="toc-sec-ch13-responses" class="nav-link" data-scroll-target="#sec-ch13-responses"><span class="header-section-number">13.3</span> The Responses API underneath</a>
+  <li><a href="#sec-ch13-intuition" id="toc-sec-ch13-intuition" class="nav-link active" data-scroll-target="#sec-ch13-intuition"><span class="header-section-number">14.1</span> A smaller kit of parts</a></li>
+  <li><a href="#sec-ch13-primitives" id="toc-sec-ch13-primitives" class="nav-link" data-scroll-target="#sec-ch13-primitives"><span class="header-section-number">14.2</span> The core primitives</a></li>
+  <li><a href="#sec-ch13-responses" id="toc-sec-ch13-responses" class="nav-link" data-scroll-target="#sec-ch13-responses"><span class="header-section-number">14.3</span> The Responses API underneath</a>
   <ul class="collapse">
-  <li><a href="#sec-ch13-which-layer" id="toc-sec-ch13-which-layer" class="nav-link" data-scroll-target="#sec-ch13-which-layer"><span class="header-section-number">13.3.1</span> Which layer do you actually need?</a></li>
+  <li><a href="#sec-ch13-which-layer" id="toc-sec-ch13-which-layer" class="nav-link" data-scroll-target="#sec-ch13-which-layer"><span class="header-section-number">14.3.1</span> Which layer do you actually need?</a></li>
   </ul></li>
-  <li><a href="#sec-ch13-contracts" id="toc-sec-ch13-contracts" class="nav-link" data-scroll-target="#sec-ch13-contracts"><span class="header-section-number">13.4</span> Lightweight does not mean loose</a>
+  <li><a href="#sec-ch13-contracts" id="toc-sec-ch13-contracts" class="nav-link" data-scroll-target="#sec-ch13-contracts"><span class="header-section-number">14.4</span> Lightweight does not mean loose</a>
   <ul class="collapse">
-  <li><a href="#sec-ch13-handoff-vs-tool" id="toc-sec-ch13-handoff-vs-tool" class="nav-link" data-scroll-target="#sec-ch13-handoff-vs-tool"><span class="header-section-number">13.4.1</span> Handoff or agent-as-tool?</a></li>
-  <li><a href="#sec-ch13-guardrails" id="toc-sec-ch13-guardrails" class="nav-link" data-scroll-target="#sec-ch13-guardrails"><span class="header-section-number">13.4.2</span> Guardrails are checks, not prompts</a></li>
+  <li><a href="#sec-ch13-handoff-vs-tool" id="toc-sec-ch13-handoff-vs-tool" class="nav-link" data-scroll-target="#sec-ch13-handoff-vs-tool"><span class="header-section-number">14.4.1</span> Handoff or agent-as-tool?</a></li>
+  <li><a href="#sec-ch13-guardrails" id="toc-sec-ch13-guardrails" class="nav-link" data-scroll-target="#sec-ch13-guardrails"><span class="header-section-number">14.4.2</span> Guardrails are checks, not prompts</a></li>
   </ul></li>
-  <li><a href="#sec-ch13-worked" id="toc-sec-ch13-worked" class="nav-link" data-scroll-target="#sec-ch13-worked"><span class="header-section-number">13.5</span> A worked example: triage and handoff</a></li>
-  <li><a href="#sec-ch13-summary" id="toc-sec-ch13-summary" class="nav-link" data-scroll-target="#sec-ch13-summary"><span class="header-section-number">13.6</span> Summary</a></li>
-  <li><a href="#sec-ch13-exercises" id="toc-sec-ch13-exercises" class="nav-link" data-scroll-target="#sec-ch13-exercises"><span class="header-section-number">13.7</span> Exercises</a></li>
+  <li><a href="#sec-ch13-worked" id="toc-sec-ch13-worked" class="nav-link" data-scroll-target="#sec-ch13-worked"><span class="header-section-number">14.5</span> A worked example: triage and handoff</a></li>
+  <li><a href="#sec-ch13-summary" id="toc-sec-ch13-summary" class="nav-link" data-scroll-target="#sec-ch13-summary"><span class="header-section-number">14.6</span> Summary</a></li>
+  <li><a href="#sec-ch13-exercises" id="toc-sec-ch13-exercises" class="nav-link" data-scroll-target="#sec-ch13-exercises"><span class="header-section-number">14.7</span> Exercises</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/bhavykhatri/bhavykhatri.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part3-building/08-workflows-vs-agents.html">Part III — Building Agents</a></li><li class="breadcrumb-item"><a href="../../chapters/part3-building/13-openai-agents-sdk.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part3-building/09-workflows-vs-agents.html">Part III — Building Agents</a></li><li class="breadcrumb-item"><a href="../../chapters/part3-building/14-openai-agents-sdk.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-openai-agents-sdk" class="quarto-section-identifier"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></h1>
+<h1 class="title"><span id="sec-openai-agents-sdk" class="quarto-section-identifier"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></h1>
 </div>
 
 
@@ -451,50 +457,50 @@ div.csl-indent {
 <blockquote class="blockquote">
 <p>After this chapter you will be able to build single- and multi-agent systems with the OpenAI Agents SDK using agents, handoffs, guardrails, and tracing.</p>
 </blockquote>
-<section id="sec-ch13-intuition" class="level2" data-number="13.1">
-<h2 data-number="13.1" class="anchored" data-anchor-id="sec-ch13-intuition"><span class="header-section-number">13.1</span> A smaller kit of parts</h2>
+<section id="sec-ch13-intuition" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="sec-ch13-intuition"><span class="header-section-number">14.1</span> A smaller kit of parts</h2>
 <p>The last chapter handed you a full control panel. With LangGraph you draw every node and every edge yourself, and in exchange you get complete authority over how the agent moves: durability, time travel, an interrupt wherever you want one. That explicitness is a feature, but it is also a cost: for many everyday agents, drawing the whole state machine by hand is more ceremony than the problem deserves. So before we leave single- and small-team agents behind, it is worth meeting a framework built on the opposite instinct, one that hands you a handful of parts and lets plain Python do the wiring. This is the “second, lighter-weight framework” the last chapter promised: the <strong>OpenAI Agents SDK</strong> <span class="citation" data-cites="openai2025tools"><a href="../../references.html#ref-openai2025tools" role="doc-biblioref">[1]</a></span>.</p>
 <p>The everyday version of the contrast is a new manager choosing how to run a team. One manager writes a detailed flowchart pinned to the wall (<em>first this person does X, then if the result looks like Y, that person does Z</em>) and the team follows the chart. That is the LangGraph style. The other manager does something simpler: she hires a few capable specialists, writes each of them a short job description, and adds one standing rule: <em>“if a request isn’t your area, hand it to the colleague whose area it is.”</em> She does not draw a chart at all; the routing happens because each person knows their job and knows who to pass work to. The Agents SDK is that second manager. You describe a few agents and let them delegate among themselves, and the framework quietly runs the loop underneath.</p>
-<p><a href="#fig-sdk-delegation" class="quarto-xref">Figure&nbsp;<span>13.1</span></a> shows that delegation instinct in its smallest form: a front-desk agent that either answers a request itself or hands it to the right specialist.</p>
+<p><a href="#fig-sdk-delegation" class="quarto-xref">Figure&nbsp;<span>14.1</span></a> shows that delegation instinct in its smallest form: a front-desk agent that either answers a request itself or hands it to the right specialist.</p>
 <div id="fig-sdk-delegation" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sdk-delegation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch13/fig-sdk-delegation.png" class="img-fluid figure-img">
+<img src="../..\images/ch14/fig-sdk-delegation.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sdk-delegation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.1: The core instinct of the OpenAI Agents SDK: a front-desk agent handles what it can and hands off the rest to a specialist, with no hand-drawn flowchart connecting them.
+Figure&nbsp;14.1: The core instinct of the OpenAI Agents SDK: a front-desk agent handles what it can and hands off the rest to a specialist, with no hand-drawn flowchart connecting them.
 </figcaption>
 </figure>
 </div>
 <p>Notice what is <em>missing</em> from that picture compared with a LangGraph diagram: there is no explicit edge you had to declare, no shared-state object you had to design, no conditional-edge function you had to write. The front desk simply knows it can hand off, and the framework turns that into the right sequence of model calls. That is the trade the SDK makes: you give up some of LangGraph’s fine-grained control and get, in return, a much smaller kit of parts to learn. The rest of this chapter takes that kit apart piece by piece, starting with the three primitives everything else is built from.</p>
 </section>
-<section id="sec-ch13-primitives" class="level2" data-number="13.2">
-<h2 data-number="13.2" class="anchored" data-anchor-id="sec-ch13-primitives"><span class="header-section-number">13.2</span> The core primitives</h2>
+<section id="sec-ch13-primitives" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="sec-ch13-primitives"><span class="header-section-number">14.2</span> The core primitives</h2>
 <p>The SDK’s whole design philosophy is stated in two lines in its own documentation: <em>enough features to be worth using, but few enough primitives to make it quick to learn</em> <span class="citation" data-cites="openai2025tools"><a href="../../references.html#ref-openai2025tools" role="doc-biblioref">[1]</a></span>. Where LangGraph gives you a general graph and lets you build anything, the Agents SDK gives you a very small vocabulary and trusts plain Python to combine the words. There are really just three nouns to learn (<strong>agents</strong>, <strong>handoffs</strong>, and <strong>guardrails</strong>) plus a verb, the <strong>runner</strong>, that ties them together.</p>
-<p>Think of it like staffing a small office. An <strong>agent</strong> is a single employee: a language model given a name, a set of written instructions (its job description), and a drawer of tools it is allowed to use: the function tools and MCP servers from <a href="10-tools-and-mcp.html" class="quarto-xref"><span>Chapter 10</span></a>. A <strong>handoff</strong> is the office rule for passing work along: one agent can transfer a conversation to another agent better suited to it, exactly the front-desk-to-specialist move from the last section. A <strong>guardrail</strong> is the office’s quality-and-safety check: a fast validation that runs <em>alongside</em> the agent on its inputs or outputs and can halt the run the moment something looks wrong: an off-topic request, a policy violation, a malformed answer. And the <strong>runner</strong> is the office manager who actually keeps things moving: you hand it an agent and an input, and it runs the loop we have described since Chapter 7 (call the model, execute any tool the model asked for, feed the result back, repeat) until the agent produces a final answer. <a href="#fig-sdk-primitives" class="quarto-xref">Figure&nbsp;<span>13.2</span></a> shows how the four fit together around a single run.</p>
+<p>Think of it like staffing a small office. An <strong>agent</strong> is a single employee: a language model given a name, a set of written instructions (its job description), and a drawer of tools it is allowed to use: the function tools and MCP servers from <a href="11-tools-and-mcp.html" class="quarto-xref"><span>Chapter 11</span></a>. A <strong>handoff</strong> is the office rule for passing work along: one agent can transfer a conversation to another agent better suited to it, exactly the front-desk-to-specialist move from the last section. A <strong>guardrail</strong> is the office’s quality-and-safety check: a fast validation that runs <em>alongside</em> the agent on its inputs or outputs and can halt the run the moment something looks wrong: an off-topic request, a policy violation, a malformed answer. And the <strong>runner</strong> is the office manager who actually keeps things moving: you hand it an agent and an input, and it runs the loop we have described since Chapter 8 (call the model, execute any tool the model asked for, feed the result back, repeat) until the agent produces a final answer. <a href="#fig-sdk-primitives" class="quarto-xref">Figure&nbsp;<span>14.2</span></a> shows how the four fit together around a single run.</p>
 <div id="fig-sdk-primitives" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sdk-primitives-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch13/fig-sdk-primitives.png" class="img-fluid figure-img">
+<img src="../..\images/ch14/fig-sdk-primitives.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sdk-primitives-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.2: The Agents SDK’s small vocabulary: the runner drives an agent’s think–act loop, guardrails validate the edges of the run, and a handoff can pass control to another agent mid-run.
+Figure&nbsp;14.2: The Agents SDK’s small vocabulary: the runner drives an agent’s think–act loop, guardrails validate the edges of the run, and a handoff can pass control to another agent mid-run.
 </figcaption>
 </figure>
 </div>
 <p>The reason this small vocabulary goes a long way is that the primitives compose through ordinary Python rather than through a special orchestration language. Because an agent is just an object, you can put a list of possible handoff targets on it, wrap a plain function as one of its tools, or even hand one agent to another <em>as</em> a tool so the caller stays in control, all with the language features you already know, no new abstraction to learn. That is the deliberate difference in feel from LangGraph: instead of declaring a graph up front and then running it, you configure a few agents and let the runner discover the path at execution time. The loop that discovers that path leans on one piece of OpenAI infrastructure we should look at directly before we build anything: the Responses API underneath.</p>
 </section>
-<section id="sec-ch13-responses" class="level2" data-number="13.3">
-<h2 data-number="13.3" class="anchored" data-anchor-id="sec-ch13-responses"><span class="header-section-number">13.3</span> The Responses API underneath</h2>
+<section id="sec-ch13-responses" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="sec-ch13-responses"><span class="header-section-number">14.3</span> The Responses API underneath</h2>
 <p>Every framework sits on top of something lower. LangGraph sits on top of your own model calls; the Agents SDK sits on top of OpenAI’s <strong>Responses API</strong>, and it is worth understanding that layer because it explains where some of the SDK’s power comes from without any extra code on your part. If the runner is the office manager, the Responses API is the phone system and filing cabinet the whole office runs on: the primitive that actually places a call to the model and keeps the paperwork.</p>
-<p>The Responses API is OpenAI’s newer, agent-oriented way of talking to a model, and it differs from the older Chat Completions endpoint in a way that matters for agents. Chat Completions is essentially stateless and text-in, text-out: you send the whole message history every time and get one reply. The Responses API is built for multi-step work: it can carry state, and, most usefully, it exposes a set of <strong>hosted tools</strong> that run on OpenAI’s side rather than in your process. Web search, file search over your uploaded documents, and computer use (the screen-clicking capability we will meet in <a href="../part5-frontiers/19-computer-use-and-embodiment.html" class="quarto-xref"><span>Chapter 19</span></a>) are all available as built-in tools the model can invoke through the same mechanism as your own functions. <a href="#fig-responses-stack" class="quarto-xref">Figure&nbsp;<span>13.3</span></a> shows the layering: your agents sit on the SDK, the SDK sits on the Responses API, and the API brokers both the model and its hosted tools.</p>
+<p>The Responses API is OpenAI’s newer, agent-oriented way of talking to a model, and it differs from the older Chat Completions endpoint in a way that matters for agents. Chat Completions is essentially stateless and text-in, text-out: you send the whole message history every time and get one reply. The Responses API is built for multi-step work: it can carry state, and, most usefully, it exposes a set of <strong>hosted tools</strong> that run on OpenAI’s side rather than in your process. Web search, file search over your uploaded documents, and computer use (the screen-clicking capability we will meet in <a href="../part5-frontiers/20-computer-use-and-embodiment.html" class="quarto-xref"><span>Chapter 20</span></a>) are all available as built-in tools the model can invoke through the same mechanism as your own functions. <a href="#fig-responses-stack" class="quarto-xref">Figure&nbsp;<span>14.3</span></a> shows the layering: your agents sit on the SDK, the SDK sits on the Responses API, and the API brokers both the model and its hosted tools.</p>
 <div id="fig-responses-stack" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-responses-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch13/fig-responses-stack.png" class="img-fluid figure-img">
+<img src="../..\images/ch14/fig-responses-stack.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-responses-stack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.3: The layers under an Agents SDK program: your agents and handoffs run on the SDK runtime, which by default speaks to OpenAI models through the Responses API, the layer that also brokers hosted tools like web and file search.
+Figure&nbsp;14.3: The layers under an Agents SDK program: your agents and handoffs run on the SDK runtime, which by default speaks to OpenAI models through the Responses API, the layer that also brokers hosted tools like web and file search.
 </figcaption>
 </figure>
 </div>
@@ -512,13 +518,13 @@ Figure&nbsp;13.3: The layers under an Agents SDK program: your agents and handof
 <p>The Responses API and the Agents SDK are recent additions, and provider APIs evolve quickly. Treat the exact endpoints, hosted tools, and method names here as a snapshot of the design rather than a frozen contract. Before you build on them, check the current OpenAI documentation for the latest feature set, pricing, and limits. The <em>shape</em> of the ideas, a managed runner, hosted tools, and a contract on each primitive, is what will endure.</p>
 </div>
 </div>
-<section id="sec-ch13-which-layer" class="level3" data-number="13.3.1">
-<h3 data-number="13.3.1" class="anchored" data-anchor-id="sec-ch13-which-layer"><span class="header-section-number">13.3.1</span> Which layer do you actually need?</h3>
-<p>That choice is really a three-way one, because the last chapter gave you a third option. Below the SDK sits the raw Responses API, and above it sits LangGraph’s explicit graph. The three form a ladder of control, and the guiding rule is to climb no higher than your problem needs: reach for the lowest layer that still gives you enough control, and stop there. <a href="#tbl-ch13-layers" class="quarto-xref">Table&nbsp;<span>13.1</span></a> lays the three side by side.</p>
+<section id="sec-ch13-which-layer" class="level3" data-number="14.3.1">
+<h3 data-number="14.3.1" class="anchored" data-anchor-id="sec-ch13-which-layer"><span class="header-section-number">14.3.1</span> Which layer do you actually need?</h3>
+<p>That choice is really a three-way one, because the last chapter gave you a third option. Below the SDK sits the raw Responses API, and above it sits LangGraph’s explicit graph. The three form a ladder of control, and the guiding rule is to climb no higher than your problem needs: reach for the lowest layer that still gives you enough control, and stop there. <a href="#tbl-ch13-layers" class="quarto-xref">Table&nbsp;<span>14.1</span></a> lays the three side by side.</p>
 <div id="tbl-ch13-layers" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ch13-layers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;13.1: Three layers of orchestration control, from the bare API to the explicit graph. Climb only as high as the problem needs.
+Table&nbsp;14.1: Three layers of orchestration control, from the bare API to the explicit graph. Climb only as high as the problem needs.
 </figcaption>
 <div aria-describedby="tbl-ch13-layers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -558,14 +564,14 @@ Table&nbsp;13.1: Three layers of orchestration control, from the bare API to the
 <p>Read the table as a warning in both directions. Reaching too low means rebuilding handoffs, memory, and tracing by hand that the SDK would have given you. Reaching too high means drawing a full LangGraph state machine for a job that a few agents and a handoff would have handled. The SDK is the comfortable middle rung, and choosing it is choosing a lighter set of parts. But lighter does not mean looser, and the next section explains where the design discipline goes instead.</p>
 </section>
 </section>
-<section id="sec-ch13-contracts" class="level2" data-number="13.4">
-<h2 data-number="13.4" class="anchored" data-anchor-id="sec-ch13-contracts"><span class="header-section-number">13.4</span> Lightweight does not mean loose</h2>
+<section id="sec-ch13-contracts" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="sec-ch13-contracts"><span class="header-section-number">14.4</span> Lightweight does not mean loose</h2>
 <p>It is tempting to read “smaller vocabulary” as “less to get right,” and that is the one misunderstanding this chapter most wants to head off. The SDK removes orchestration <em>surface area</em>, not design <em>responsibility</em>. In LangGraph the discipline is visible: it lives in the nodes, edges, and state you draw by hand, so a reviewer can see the control flow on the page. In the Agents SDK that same discipline does not disappear; it moves inside the primitives, into the words you write on each agent, tool, handoff, and guardrail.</p>
-<p>The everyday version is the small office again. The manager who pins a detailed flowchart to the wall can hire loosely, because the chart carries the coordination. The manager who hires a few specialists and lets them pass work among themselves has no chart to lean on, so each person’s job description has to be exact: what is mine, what is not, who I pass things to, and when I must stop and check with someone. Fewer rules on the wall means each person’s brief must be sharper. In the SDK, those briefs are <strong>contracts</strong>, and there are four of them worth naming. <a href="#tbl-ch13-contracts" class="quarto-xref">Table&nbsp;<span>13.2</span></a> gathers them.</p>
+<p>The everyday version is the small office again. The manager who pins a detailed flowchart to the wall can hire loosely, because the chart carries the coordination. The manager who hires a few specialists and lets them pass work among themselves has no chart to lean on, so each person’s job description has to be exact: what is mine, what is not, who I pass things to, and when I must stop and check with someone. Fewer rules on the wall means each person’s brief must be sharper. In the SDK, those briefs are <strong>contracts</strong>, and there are four of them worth naming. <a href="#tbl-ch13-contracts" class="quarto-xref">Table&nbsp;<span>14.2</span></a> gathers them.</p>
 <div id="tbl-ch13-contracts" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ch13-contracts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;13.2: The four contracts of the Agents SDK. With fewer visible edges, each primitive’s brief has to carry more of the design.
+Table&nbsp;14.2: The four contracts of the Agents SDK. With fewer visible edges, each primitive’s brief has to carry more of the design.
 </figcaption>
 <div aria-describedby="tbl-ch13-contracts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -615,24 +621,24 @@ Table&nbsp;13.2: The four contracts of the Agents SDK. With fewer visible edges,
 </div>
 <p>These briefs stay abstract until a vague one bites. Take the guardrail row. A guardrail written as <em>“block refunds over $500”</em> looks airtight until the model phrases the same action as <em>“issue a $500 credit”</em> and slips underneath it, and an output guardrail told to <em>“redact customer PII”</em> does nothing useful until someone names which fields count: the phone number, the email, or the account number. A contract is only as strong as its most easily reworded clause.</p>
 <p>Two of these contracts deserve a closer look because they are where lightweight designs most often turn loose. Because the SDK hides the control flow that LangGraph would have made explicit, an agent’s <strong>instructions</strong> stop being mere tone and become load-bearing: the sentence “you handle refunds and nothing else, and you hand billing questions back to triage” <em>is</em> the routing logic that a graph would have drawn as an edge. In the same way, a <strong>tool’s description</strong> is not developer documentation the model happens to ignore; it is part of the control surface, because the model reads it to decide whether and when to call the tool <span class="citation" data-cites="openai2025agentssdk"><a href="../../references.html#ref-openai2025agentssdk" role="doc-biblioref">[2]</a></span>. Get those words vague and the lightness curdles into unpredictability. The next two subsections take the two contracts that most often get conflated with something simpler than they are.</p>
-<section id="sec-ch13-handoff-vs-tool" class="level3" data-number="13.4.1">
-<h3 data-number="13.4.1" class="anchored" data-anchor-id="sec-ch13-handoff-vs-tool"><span class="header-section-number">13.4.1</span> Handoff or agent-as-tool?</h3>
-<p>The first easy confusion is between two ways one agent can involve another, and telling them apart is probably the single most useful distinction in this chapter. Under the hood both look like the model calling a tool, but they mean opposite things about <em>who is in charge afterward</em> <span class="citation" data-cites="openai2025agentssdk"><a href="../../references.html#ref-openai2025agentssdk" role="doc-biblioref">[2]</a></span>. A <strong>handoff</strong> transfers control: the receiving specialist takes over the conversation and owns the final answer, and the original agent steps out of the way. Using one agent <strong>as a tool</strong> does the opposite: the caller consults a specialist for one bounded answer and then keeps ownership, writing the final reply itself. <a href="#fig-handoff-vs-tool" class="quarto-xref">Figure&nbsp;<span>13.4</span></a> sets the two side by side.</p>
+<section id="sec-ch13-handoff-vs-tool" class="level3" data-number="14.4.1">
+<h3 data-number="14.4.1" class="anchored" data-anchor-id="sec-ch13-handoff-vs-tool"><span class="header-section-number">14.4.1</span> Handoff or agent-as-tool?</h3>
+<p>The first easy confusion is between two ways one agent can involve another, and telling them apart is probably the single most useful distinction in this chapter. Under the hood both look like the model calling a tool, but they mean opposite things about <em>who is in charge afterward</em> <span class="citation" data-cites="openai2025agentssdk"><a href="../../references.html#ref-openai2025agentssdk" role="doc-biblioref">[2]</a></span>. A <strong>handoff</strong> transfers control: the receiving specialist takes over the conversation and owns the final answer, and the original agent steps out of the way. Using one agent <strong>as a tool</strong> does the opposite: the caller consults a specialist for one bounded answer and then keeps ownership, writing the final reply itself. <a href="#fig-handoff-vs-tool" class="quarto-xref">Figure&nbsp;<span>14.4</span></a> sets the two side by side.</p>
 <div id="fig-handoff-vs-tool" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-handoff-vs-tool-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch13/fig-handoff-vs-tool.png" class="img-fluid figure-img">
+<img src="../..\images/ch14/fig-handoff-vs-tool.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-handoff-vs-tool-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.4: Two ways to involve another agent. In a handoff (left) control transfers and the specialist owns the final answer; as a tool (right) the caller only consults the specialist and keeps ownership of the reply.
+Figure&nbsp;14.4: Two ways to involve another agent. In a handoff (left) control transfers and the specialist owns the final answer; as a tool (right) the caller only consults the specialist and keeps ownership of the reply.
 </figcaption>
 </figure>
 </div>
-<p>The choice turns on a single question: should the other agent <em>take over</em>, or just <em>advise</em>? <a href="#tbl-ch13-handoff" class="quarto-xref">Table&nbsp;<span>13.3</span></a> makes the split concrete on our running Ledgerly support desk.</p>
+<p>The choice turns on a single question: should the other agent <em>take over</em>, or just <em>advise</em>? <a href="#tbl-ch13-handoff" class="quarto-xref">Table&nbsp;<span>14.3</span></a> makes the split concrete on our running Ledgerly support desk.</p>
 <div id="tbl-ch13-handoff" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ch13-handoff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;13.3: Handoff versus agent-as-tool, the same distinction seen from the angle of ownership.
+Table&nbsp;14.3: Handoff versus agent-as-tool, the same distinction seen from the angle of ownership.
 </figcaption>
 <div aria-describedby="tbl-ch13-handoff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -670,8 +676,8 @@ Table&nbsp;13.3: Handoff versus agent-as-tool, the same distinction seen from th
 </div>
 <p>Getting this wrong is how a tidy team of specialists degrades into a free-for-all. If every agent can hand off to every other one on a whim, no agent is accountable for the final answer and a request can ricochet around the office forever. The contract fixes that: a handoff needs a clear reason and a clear owner on the other side, and an agent-as-tool call needs a clear, bounded question. Name which one you mean, every time.</p>
 </section>
-<section id="sec-ch13-guardrails" class="level3" data-number="13.4.2">
-<h3 data-number="13.4.2" class="anchored" data-anchor-id="sec-ch13-guardrails"><span class="header-section-number">13.4.2</span> Guardrails are checks, not prompts</h3>
+<section id="sec-ch13-guardrails" class="level3" data-number="14.4.2">
+<h3 data-number="14.4.2" class="anchored" data-anchor-id="sec-ch13-guardrails"><span class="header-section-number">14.4.2</span> Guardrails are checks, not prompts</h3>
 <p>The second easy confusion is to treat a guardrail as just another instruction, and separating the two is what turns a demo into something you would trust with real customers. A prompt is <em>guidance</em>: it says “please do not issue a refund above the limit without approval,” and the model follows it when it cooperates and quietly ignores it when it does not. A guardrail is a <em>check</em>: it asks, while the run is happening, “did this run try to refund above the limit without approval?” and stops the run if the answer is yes <span class="citation" data-cites="openai2025agentssdk"><a href="../../references.html#ref-openai2025agentssdk" role="doc-biblioref">[2]</a></span>. The prompt lives inside the model’s goodwill; the guardrail runs whether the model cooperates or not.</p>
 <p>That difference is worth stating plainly, because it is a real step up in production maturity:</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Safety: a prompt is a wish, a guardrail is a wall">
@@ -690,10 +696,10 @@ Safety: a prompt is a wish, a guardrail is a wall
 <p>Guardrails come in a few flavours, sorted by <em>where</em> they sit in the run. An <strong>input</strong> guardrail checks the request before an agent works on it, rejecting abuse or off-topic messages early. An <strong>output</strong> guardrail checks the answer before it reaches the user, catching leaked identifiers or malformed structure. A <strong>tool</strong> guardrail checks a tool call before it fires, so a state-changing action like <code>issue_refund</code> can be blocked unless its preconditions are met. And a <strong>human-review</strong> guardrail deliberately pauses on high-risk or low-confidence cases so a person can decide. For Ledgerly, a prompt can <em>ask</em> the refund agent to avoid exposing a customer’s private identifiers, but an output guardrail is what actually <em>blocks</em> a reply that contains them. Prompts shape behaviour; guardrails enforce it. With the contracts in view, we can finally assemble the primitives into something that runs.</p>
 </section>
 </section>
-<section id="sec-ch13-worked" class="level2" data-number="13.5">
-<h2 data-number="13.5" class="anchored" data-anchor-id="sec-ch13-worked"><span class="header-section-number">13.5</span> A worked example: triage and handoff</h2>
-<p>Let us build the front desk from <a href="#fig-sdk-delegation" class="quarto-xref">Figure&nbsp;<span>13.1</span></a> for real, because it shows all three primitives cooperating in about a dozen lines, and it is the seed of the multi-agent systems we take up in the next chapter. The scenario is Ledgerly’s support desk, the running example we have followed since Chapter 1. Its inbox receives two broad kinds of message, billing and technical, and we want each one answered by an agent that specializes in it rather than by one overloaded generalist.</p>
-<p>We start by writing the two specialists, each just a name, a job description, and (in real life) its own tools. Then we write a triage agent whose only job is to read the incoming message and hand off to the right specialist, which we express by listing the specialists in its <code>handoffs</code>. Notice that each job description is really the <strong>agent contract</strong> from <a href="#tbl-ch13-contracts" class="quarto-xref">Table&nbsp;<span>13.2</span></a> in miniature: it names what the agent owns and, by omission, what it does not. Finally we hand the triage agent to the runner and let it drive.</p>
+<section id="sec-ch13-worked" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="sec-ch13-worked"><span class="header-section-number">14.5</span> A worked example: triage and handoff</h2>
+<p>Let us build the front desk from <a href="#fig-sdk-delegation" class="quarto-xref">Figure&nbsp;<span>14.1</span></a> for real, because it shows all three primitives cooperating in about a dozen lines, and it is the seed of the multi-agent systems we take up in the next chapter. The scenario is Ledgerly’s support desk, the running example we have followed since Chapter 1. Its inbox receives two broad kinds of message, billing and technical, and we want each one answered by an agent that specializes in it rather than by one overloaded generalist.</p>
+<p>We start by writing the two specialists, each just a name, a job description, and (in real life) its own tools. Then we write a triage agent whose only job is to read the incoming message and hand off to the right specialist, which we express by listing the specialists in its <code>handoffs</code>. Notice that each job description is really the <strong>agent contract</strong> from <a href="#tbl-ch13-contracts" class="quarto-xref">Table&nbsp;<span>14.2</span></a> in miniature: it names what the agent owns and, by omission, what it does not. Finally we hand the triage agent to the runner and let it drive.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> agents <span class="im">import</span> Agent, Runner</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>billing <span class="op">=</span> Agent(</span>
@@ -713,21 +719,21 @@ Safety: a prompt is a wish, a guardrail is a wall
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> Runner.run_sync(triage, <span class="st">"I was charged twice for last month."</span>)</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result.final_output)          <span class="co"># answered by the Billing agent</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Trace what the runner does with that last line and every primitive from this chapter shows up. It starts the loop on the triage agent, which reads <em>“I was charged twice”</em> and decides this is a billing matter, so it performs a <strong>handoff</strong>: control passes to the <code>Billing</code> agent, which now owns the conversation and produces the answer that lands in <code>result.final_output</code>. This is a handoff, not an agent-as-tool call: triage steps out of the way and billing owns the reply, exactly the left-hand pattern of <a href="#fig-handoff-vs-tool" class="quarto-xref">Figure&nbsp;<span>13.4</span></a>. <a href="#fig-sdk-handoff" class="quarto-xref">Figure&nbsp;<span>13.5</span></a> follows that path as a sequence. Nowhere did we draw an edge or write a routing function; the triage agent’s instructions plus its <code>handoffs</code> list were enough, and the runner discovered the rest at run time.</p>
+<p>Trace what the runner does with that last line and every primitive from this chapter shows up. It starts the loop on the triage agent, which reads <em>“I was charged twice”</em> and decides this is a billing matter, so it performs a <strong>handoff</strong>: control passes to the <code>Billing</code> agent, which now owns the conversation and produces the answer that lands in <code>result.final_output</code>. This is a handoff, not an agent-as-tool call: triage steps out of the way and billing owns the reply, exactly the left-hand pattern of <a href="#fig-handoff-vs-tool" class="quarto-xref">Figure&nbsp;<span>14.4</span></a>. <a href="#fig-sdk-handoff" class="quarto-xref">Figure&nbsp;<span>14.5</span></a> follows that path as a sequence. Nowhere did we draw an edge or write a routing function; the triage agent’s instructions plus its <code>handoffs</code> list were enough, and the runner discovered the rest at run time.</p>
 <div id="fig-sdk-handoff" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sdk-handoff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch13/fig-sdk-handoff.png" class="img-fluid figure-img">
+<img src="../..\images/ch14/fig-sdk-handoff.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sdk-handoff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.5: One run of the triage office: the runner starts the triage agent, which hands the billing question off to the Billing specialist; the specialist’s reply becomes the run’s final output.
+Figure&nbsp;14.5: One run of the triage office: the runner starts the triage agent, which hands the billing question off to the Billing specialist; the specialist’s reply becomes the run’s final output.
 </figcaption>
 </figure>
 </div>
 <p>To make this production-ready you would add the pieces we named but did not need for the happy path, and each one is a contract rather than a code rewrite. An <strong>input guardrail</strong> on the triage agent rejects abuse or off-topic requests before they reach a specialist. A <strong>tool guardrail</strong> on a state-changing action like <code>issue_refund</code> blocks it unless eligibility and approval have already been checked, so a persuasive customer cannot talk the model into a refund the rules forbid. A <strong>session</strong> lets a follow-up message remember the earlier turn, and <strong>tracing</strong> left on lets you replay any conversation that went wrong to see which agent classified it, which handoff fired, and which guardrail stopped it. Each of those is a small addition rather than a restructuring, which is exactly the lightness the SDK promises, as long as the contracts behind each one are precise. But notice the shape of what we just built: several agents, each a specialist, cooperating to answer one request. Stretch that idea by adding more agents, richer patterns of delegation, agents that debate or check each other, and you arrive at the central question of the next chapter, multi-agent systems.</p>
 </section>
-<section id="sec-ch13-summary" class="level2" data-number="13.6">
-<h2 data-number="13.6" class="anchored" data-anchor-id="sec-ch13-summary"><span class="header-section-number">13.6</span> Summary</h2>
+<section id="sec-ch13-summary" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="sec-ch13-summary"><span class="header-section-number">14.6</span> Summary</h2>
 <p>This chapter met a framework built on the opposite instinct from LangGraph: instead of drawing the whole state machine, you configure a few agents and let plain Python and a managed runner do the wiring.</p>
 <ul>
 <li><strong>The OpenAI Agents SDK trades control for lightness.</strong> Where LangGraph makes you declare every node and edge, the SDK gives you a tiny vocabulary and lets the runtime discover the path at run time <span class="citation" data-cites="openai2025tools"><a href="../../references.html#ref-openai2025tools" role="doc-biblioref">[1]</a></span>.</li>
@@ -740,16 +746,16 @@ Figure&nbsp;13.5: One run of the triage office: the runner starts the triage age
 <li><strong>Sessions and tracing come with the runtime.</strong> Memory across turns and a replayable log of every model call, tool call, and handoff are switches rather than sub-projects.</li>
 <li><strong>A triage-and-handoff office is the smallest multi-agent system.</strong> A router that delegates to specialists shows every primitive cooperating, and points straight at the next chapter.</li>
 </ul>
-<p>We have now built single agents two ways, the explicit graph and the lightweight kit, and in the worked example we quietly crossed a line: we used <em>more than one agent</em> to answer a single request. That raises a new and richer set of questions. When is a team of agents actually better than one? How should they be organized: as a manager with workers, as equals that debate, as a pipeline? And what new failure modes appear when agents talk to each other? Those are the questions of <a href="14-multi-agent-systems.html" class="quarto-xref"><span>Chapter 14</span></a>.</p>
+<p>We have now built single agents two ways, the explicit graph and the lightweight kit, and in the worked example we quietly crossed a line: we used <em>more than one agent</em> to answer a single request. That raises a new and richer set of questions. When is a team of agents actually better than one? How should they be organized: as a manager with workers, as equals that debate, as a pipeline? And what new failure modes appear when agents talk to each other? Those are the questions of <a href="15-multi-agent-systems.html" class="quarto-xref"><span>Chapter 15</span></a>.</p>
 </section>
-<section id="sec-ch13-exercises" class="level2" data-number="13.7">
-<h2 data-number="13.7" class="anchored" data-anchor-id="sec-ch13-exercises"><span class="header-section-number">13.7</span> Exercises</h2>
+<section id="sec-ch13-exercises" class="level2" data-number="14.7">
+<h2 data-number="14.7" class="anchored" data-anchor-id="sec-ch13-exercises"><span class="header-section-number">14.7</span> Exercises</h2>
 <ol type="1">
 <li><strong>Name the parts.</strong> Map each of the four SDK pieces (agent, handoff, guardrail, runner) onto the small-office analogy (employee, pass-along rule, quality check, office manager) in your own words.</li>
 <li><strong>Pick the layer.</strong> For each of these tasks, say whether you would reach for the bare Responses API, the Agents SDK, or LangGraph, and justify it in terms of what each layer manages for you: (a) summarizing a pasted document with one web-search tool; (b) a support desk that routes to three specialists and remembers the conversation; (c) a loan-approval workflow that must pause for human sign-off, resume later, and be auditable step by step.</li>
 <li><strong>Prompt or guardrail?</strong> For Ledgerly’s refund agent, classify each rule as something you would put in the <em>prompt</em> or enforce with a <em>guardrail</em>, and explain why: “be polite,” “never refund above $500 without approval,” “answer in the customer’s language,” “never reveal another customer’s account number.”</li>
 <li><strong>Handoff versus agent-as-tool.</strong> The SDK lets one agent involve another either as a <em>handoff</em> (control transfers) or as a <em>tool</em> (the caller stays in charge). Give a Ledgerly situation that suits each, and explain the difference in who owns the final answer.</li>
-<li><strong>Write a contract.</strong> Pick one tool a Ledgerly agent might use (say <code>issue_refund</code>) and write its four-part contract from <a href="#tbl-ch13-contracts" class="quarto-xref">Table&nbsp;<span>13.2</span></a>: what it does, its arguments, its side effects, and when the agent must <em>not</em> call it.</li>
+<li><strong>Write a contract.</strong> Pick one tool a Ledgerly agent might use (say <code>issue_refund</code>) and write its four-part contract from <a href="#tbl-ch13-contracts" class="quarto-xref">Table&nbsp;<span>14.2</span></a>: what it does, its arguments, its side effects, and when the agent must <em>not</em> call it.</li>
 <li><strong>Extend the office.</strong> Add a third specialist to the triage example and describe, without writing the graph, how the runner would route a mixed billing-and-technical message to the right place.</li>
 </ol>
 
@@ -1328,13 +1334,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../chapters/part3-building/12-orchestration-langgraph.html" class="pagination-link" aria-label="Orchestration with LangGraph">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span>
+      <a href="../../chapters/part3-building/13-orchestration-langgraph.html" class="pagination-link" aria-label="Orchestration with LangGraph">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../chapters/part3-building/14-multi-agent-systems.html" class="pagination-link" aria-label="Multi-Agent Systems">
-        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../chapters/part3-building/15-multi-agent-systems.html" class="pagination-link" aria-label="Multi-Agent Systems">
+        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

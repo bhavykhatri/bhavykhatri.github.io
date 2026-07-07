@@ -8,7 +8,7 @@
 
 <meta name="description" content="A practical, research-grounded guide that connects the classical theory of intelligent agents to the modern practice of building autonomous LLM agents with tools, memory, planning, and multi-agent orchestration.">
 
-<title>5&nbsp; LLMs as Reasoners – Agents: From Theory to Production</title>
+<title>6&nbsp; LLMs as Reasoners – Agents: From Theory to Production</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -51,8 +51,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../chapters/part2-llm-agents/06-the-augmented-llm.html" rel="next">
-<link href="../../chapters/part1-foundations/04-environments-and-rationality.html" rel="prev">
+<link href="../../chapters/part2-llm-agents/07-the-augmented-llm.html" rel="next">
+<link href="../../chapters/part2-llm-agents/05-inside-the-language-model.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -104,7 +104,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part2-llm-agents/05-llms-as-reasoners.html">Part II — The LLM as an Agent</a></li><li class="breadcrumb-item"><a href="../../chapters/part2-llm-agents/05-llms-as-reasoners.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part2-llm-agents/05-inside-the-language-model.html">Part II — The LLM as an Agent</a></li><li class="breadcrumb-item"><a href="../../chapters/part2-llm-agents/06-llms-as-reasoners.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -191,20 +191,26 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part2-llm-agents/05-llms-as-reasoners.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></a>
+  <a href="../../chapters/part2-llm-agents/05-inside-the-language-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Inside the Language Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part2-llm-agents/06-the-augmented-llm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span></a>
+  <a href="../../chapters/part2-llm-agents/06-llms-as-reasoners.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part2-llm-agents/07-reasoning-and-planning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span></a>
+  <a href="../../chapters/part2-llm-agents/07-the-augmented-llm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/08-reasoning-and-planning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span></a>
   </div>
 </li>
       </ul>
@@ -220,44 +226,44 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/08-workflows-vs-agents.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span></a>
+  <a href="../../chapters/part3-building/09-workflows-vs-agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/09-agentic-patterns.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span></a>
+  <a href="../../chapters/part3-building/10-agentic-patterns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/10-tools-and-mcp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span></a>
+  <a href="../../chapters/part3-building/11-tools-and-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/11-memory-systems.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></a>
+  <a href="../../chapters/part3-building/12-memory-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/12-orchestration-langgraph.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></a>
+  <a href="../../chapters/part3-building/13-orchestration-langgraph.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/13-openai-agents-sdk.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></a>
+  <a href="../../chapters/part3-building/14-openai-agents-sdk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/14-multi-agent-systems.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></a>
+  <a href="../../chapters/part3-building/15-multi-agent-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></a>
   </div>
 </li>
       </ul>
@@ -273,26 +279,26 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/15-evaluation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
+  <a href="../../chapters/part4-production/16-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/16-observability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Observability</span></span></a>
+  <a href="../../chapters/part4-production/17-observability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Observability</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/17-safety-and-guardrails.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Safety &amp; Guardrails</span></span></a>
+  <a href="../../chapters/part4-production/18-safety-and-guardrails.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Safety &amp; Guardrails</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/18-deployment-and-cost.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></span></a>
+  <a href="../../chapters/part4-production/19-deployment-and-cost.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></span></a>
   </div>
 </li>
       </ul>
@@ -308,14 +314,14 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part5-frontiers/19-computer-use-and-embodiment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Computer Use &amp; Embodiment</span></span></a>
+  <a href="../../chapters/part5-frontiers/20-computer-use-and-embodiment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Computer Use &amp; Embodiment</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part5-frontiers/20-frontiers-and-open-problems.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Frontiers &amp; Open Problems</span></span></a>
+  <a href="../../chapters/part5-frontiers/21-frontiers-and-open-problems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Frontiers &amp; Open Problems</span></span></a>
   </div>
 </li>
       </ul>
@@ -332,19 +338,19 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../chapters/appendices/a-environment-setup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Appendix A — Environment Setup</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Appendix A — Environment Setup</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../chapters/appendices/b-glossary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Appendix B — Glossary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Appendix B — Glossary</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../chapters/appendices/c-further-reading.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Appendix C — Further Reading</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Appendix C — Further Reading</span></span></a>
   </div>
 </li>
       </ul>
@@ -371,40 +377,40 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-ch5-intuition" id="toc-sec-ch5-intuition" class="nav-link active" data-scroll-target="#sec-ch5-intuition"><span class="header-section-number">5.1</span> Opening intuition</a></li>
-  <li><a href="#sec-next-token" id="toc-sec-next-token" class="nav-link" data-scroll-target="#sec-next-token"><span class="header-section-number">5.2</span> From guessing words to modeling the world</a></li>
-  <li><a href="#sec-cot" id="toc-sec-cot" class="nav-link" data-scroll-target="#sec-cot"><span class="header-section-number">5.3</span> Thinking out loud</a>
+  <li><a href="#sec-ch5-intuition" id="toc-sec-ch5-intuition" class="nav-link active" data-scroll-target="#sec-ch5-intuition"><span class="header-section-number">6.1</span> Opening intuition</a></li>
+  <li><a href="#sec-next-token" id="toc-sec-next-token" class="nav-link" data-scroll-target="#sec-next-token"><span class="header-section-number">6.2</span> From guessing words to modeling the world</a></li>
+  <li><a href="#sec-cot" id="toc-sec-cot" class="nav-link" data-scroll-target="#sec-cot"><span class="header-section-number">6.3</span> Thinking out loud</a>
   <ul class="collapse">
-  <li><a href="#sec-ch5-cot-caution" id="toc-sec-ch5-cot-caution" class="nav-link" data-scroll-target="#sec-ch5-cot-caution"><span class="header-section-number">5.3.1</span> Chain of thought is a scaffold, not proof</a></li>
-  <li><a href="#sec-ch5-paths" id="toc-sec-ch5-paths" class="nav-link" data-scroll-target="#sec-ch5-paths"><span class="header-section-number">5.3.2</span> More than one path</a></li>
+  <li><a href="#sec-ch5-cot-caution" id="toc-sec-ch5-cot-caution" class="nav-link" data-scroll-target="#sec-ch5-cot-caution"><span class="header-section-number">6.3.1</span> Chain of thought is a scaffold, not proof</a></li>
+  <li><a href="#sec-ch5-paths" id="toc-sec-ch5-paths" class="nav-link" data-scroll-target="#sec-ch5-paths"><span class="header-section-number">6.3.2</span> More than one path</a></li>
   </ul></li>
-  <li><a href="#sec-ch5-strengths" id="toc-sec-ch5-strengths" class="nav-link" data-scroll-target="#sec-ch5-strengths"><span class="header-section-number">5.4</span> What LLMs are genuinely good at</a>
+  <li><a href="#sec-ch5-strengths" id="toc-sec-ch5-strengths" class="nav-link" data-scroll-target="#sec-ch5-strengths"><span class="header-section-number">6.4</span> What LLMs are genuinely good at</a>
   <ul class="collapse">
-  <li><a href="#sec-ch5-taxonomy" id="toc-sec-ch5-taxonomy" class="nav-link" data-scroll-target="#sec-ch5-taxonomy"><span class="header-section-number">5.4.1</span> Reasoning is not one thing</a></li>
-  <li><a href="#sec-ch5-capabilities" id="toc-sec-ch5-capabilities" class="nav-link" data-scroll-target="#sec-ch5-capabilities"><span class="header-section-number">5.4.2</span> Four capabilities agents are built on</a></li>
+  <li><a href="#sec-ch5-taxonomy" id="toc-sec-ch5-taxonomy" class="nav-link" data-scroll-target="#sec-ch5-taxonomy"><span class="header-section-number">6.4.1</span> Reasoning is not one thing</a></li>
+  <li><a href="#sec-ch5-capabilities" id="toc-sec-ch5-capabilities" class="nav-link" data-scroll-target="#sec-ch5-capabilities"><span class="header-section-number">6.4.2</span> Four capabilities agents are built on</a></li>
   </ul></li>
-  <li><a href="#sec-ch5-failures" id="toc-sec-ch5-failures" class="nav-link" data-scroll-target="#sec-ch5-failures"><span class="header-section-number">5.5</span> Where they quietly break</a>
+  <li><a href="#sec-ch5-failures" id="toc-sec-ch5-failures" class="nav-link" data-scroll-target="#sec-ch5-failures"><span class="header-section-number">6.5</span> Where they quietly break</a>
   <ul class="collapse">
-  <li><a href="#sec-ch5-testing" id="toc-sec-ch5-testing" class="nav-link" data-scroll-target="#sec-ch5-testing"><span class="header-section-number">5.5.1</span> How to test whether it is really reasoning</a></li>
+  <li><a href="#sec-ch5-testing" id="toc-sec-ch5-testing" class="nav-link" data-scroll-target="#sec-ch5-testing"><span class="header-section-number">6.5.1</span> How to test whether it is really reasoning</a></li>
   </ul></li>
-  <li><a href="#sec-ch5-implications" id="toc-sec-ch5-implications" class="nav-link" data-scroll-target="#sec-ch5-implications"><span class="header-section-number">5.6</span> What this means for building agents</a>
+  <li><a href="#sec-ch5-implications" id="toc-sec-ch5-implications" class="nav-link" data-scroll-target="#sec-ch5-implications"><span class="header-section-number">6.6</span> What this means for building agents</a>
   <ul class="collapse">
-  <li><a href="#sec-ch5-grounding-verify" id="toc-sec-ch5-grounding-verify" class="nav-link" data-scroll-target="#sec-ch5-grounding-verify"><span class="header-section-number">5.6.1</span> Grounding gives evidence, not correctness</a></li>
-  <li><a href="#sec-ch5-vs-planning" id="toc-sec-ch5-vs-planning" class="nav-link" data-scroll-target="#sec-ch5-vs-planning"><span class="header-section-number">5.6.2</span> Reasoning versus planning</a></li>
-  <li><a href="#sec-ch5-abstention" id="toc-sec-ch5-abstention" class="nav-link" data-scroll-target="#sec-ch5-abstention"><span class="header-section-number">5.6.3</span> A reasoner must know when to abstain</a></li>
-  <li><a href="#sec-ch5-case" id="toc-sec-ch5-case" class="nav-link" data-scroll-target="#sec-ch5-case"><span class="header-section-number">5.6.4</span> When reasoning becomes action</a></li>
+  <li><a href="#sec-ch5-grounding-verify" id="toc-sec-ch5-grounding-verify" class="nav-link" data-scroll-target="#sec-ch5-grounding-verify"><span class="header-section-number">6.6.1</span> Grounding gives evidence, not correctness</a></li>
+  <li><a href="#sec-ch5-vs-planning" id="toc-sec-ch5-vs-planning" class="nav-link" data-scroll-target="#sec-ch5-vs-planning"><span class="header-section-number">6.6.2</span> Reasoning versus planning</a></li>
+  <li><a href="#sec-ch5-abstention" id="toc-sec-ch5-abstention" class="nav-link" data-scroll-target="#sec-ch5-abstention"><span class="header-section-number">6.6.3</span> A reasoner must know when to abstain</a></li>
+  <li><a href="#sec-ch5-case" id="toc-sec-ch5-case" class="nav-link" data-scroll-target="#sec-ch5-case"><span class="header-section-number">6.6.4</span> When reasoning becomes action</a></li>
   </ul></li>
-  <li><a href="#sec-ch5-summary" id="toc-sec-ch5-summary" class="nav-link" data-scroll-target="#sec-ch5-summary"><span class="header-section-number">5.7</span> Summary</a></li>
-  <li><a href="#sec-ch5-exercises" id="toc-sec-ch5-exercises" class="nav-link" data-scroll-target="#sec-ch5-exercises"><span class="header-section-number">5.8</span> Exercises</a></li>
+  <li><a href="#sec-ch5-summary" id="toc-sec-ch5-summary" class="nav-link" data-scroll-target="#sec-ch5-summary"><span class="header-section-number">6.7</span> Summary</a></li>
+  <li><a href="#sec-ch5-exercises" id="toc-sec-ch5-exercises" class="nav-link" data-scroll-target="#sec-ch5-exercises"><span class="header-section-number">6.8</span> Exercises</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/bhavykhatri/bhavykhatri.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part2-llm-agents/05-llms-as-reasoners.html">Part II — The LLM as an Agent</a></li><li class="breadcrumb-item"><a href="../../chapters/part2-llm-agents/05-llms-as-reasoners.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part2-llm-agents/05-inside-the-language-model.html">Part II — The LLM as an Agent</a></li><li class="breadcrumb-item"><a href="../../chapters/part2-llm-agents/06-llms-as-reasoners.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-llms-as-reasoners" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></h1>
+<h1 class="title"><span id="sec-llms-as-reasoners" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></h1>
 </div>
 
 
@@ -428,52 +434,52 @@ div.csl-indent {
 <blockquote class="blockquote">
 <p>After this chapter you will understand what turns a next-word predictor into a usable reasoning engine for an agent: what it does well, where it quietly breaks, and why almost every design choice in the rest of the book is a response to those limits.</p>
 </blockquote>
-<section id="sec-ch5-intuition" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="sec-ch5-intuition"><span class="header-section-number">5.1</span> Opening intuition</h2>
+<section id="sec-ch5-intuition" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="sec-ch5-intuition"><span class="header-section-number">6.1</span> Opening intuition</h2>
 <p>Part I left us with a picture and a promise. The picture was the agent loop from <a href="../part1-foundations/01-what-is-an-agent.html" class="quarto-xref"><span>Chapter 1</span></a>: sense the world, <em>decide</em> what to do, act, and repeat. The promise, made at the close of <a href="../part1-foundations/04-environments-and-rationality.html" class="quarto-xref"><span>Chapter 4</span></a>, was that Part II would open up the box labelled <strong>decide</strong> and look at the engine we actually put inside it today, the large language model. This chapter keeps that promise. Before you can reason about tools, memory, or planning, you have to understand the strange little machine at the center of it all, because everything else in the book is built to work <em>around</em> its particular strengths and weaknesses.</p>
 <p>And it really is strange, when you stop to think about it. A large language model is trained to do one almost comically simple thing: given a stretch of text, predict the next word. That’s the whole objective. It is autocomplete, the same idea as the grey suggestion your phone offers when you type “running a little” and it guesses “late.” Nobody sat down and programmed it with the rules of arithmetic, the plot of <em>Hamlet</em>, or how to read a Python stack trace. It was simply shown an enormous amount of text and asked, over and over, billions of times: <em>what word comes next?</em></p>
 <p>Here is the puzzle that should nag at you. That humble training objective somehow produces a system that can draft a contract clause, walk step by step through a math problem, translate between languages nobody explicitly paired up for it, and decide which tool to call in the middle of an agent loop. How on earth does “guess the next word” turn into something that looks, at least from the outside, like <em>thinking</em>? Answering that question is the whole job of this chapter, and the answer matters, because it tells us exactly how far we can trust the result before we start handing this engine real work to do.</p>
 <p>That trust question is not academic. In Part I an agent could afford to be a little abstract, but from here on we are building something that will take actions in the world on its own. If the engine at its center is brilliant in some ways and quietly unreliable in others, then knowing precisely <em>which</em> is which is the difference between an agent you can deploy and one that will embarrass you at the worst possible moment. So we will spend this chapter getting honest about both.</p>
 </section>
-<section id="sec-next-token" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="sec-next-token"><span class="header-section-number">5.2</span> From guessing words to modeling the world</h2>
+<section id="sec-next-token" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="sec-next-token"><span class="header-section-number">6.2</span> From guessing words to modeling the world</h2>
 <p>Let’s start by dissolving the magic trick, because once you see how “guess the next word” becomes “reason about the world,” it stops feeling like sorcery and starts feeling almost inevitable. The key insight is this: <strong>predicting the next word well is not a shallow task.</strong> Done to a high enough standard, it quietly forces the model to learn an enormous amount about the world that produced the words.</p>
 <p>Picture a mystery novel whose very last sentence reads: “The detective gathered everyone in the drawing room, paused for effect, and announced that the murderer was none other than ___.” Now try to fill in that blank with the <em>correct</em> name. You cannot do it from grammar alone. To get it right you must have followed the whole plot, kept track of who had a motive, remembered who was standing where when the clock struck nine, and absorbed how detective stories tend to resolve. That single missing word sits at the tip of an enormous iceberg of understanding. A system trained to predict that word (not just any plausible word, but the <em>right</em> one, across millions of stories, arguments, and explanations) is under constant pressure to build the iceberg underneath. Language is a compressed encoding of human thought and the world it describes, and to predict language well you are quietly forced to decompress a good deal of that world back out. That is why a “mere” next-word predictor ends up knowing things.</p>
 <p>Pressure alone, though, is not the whole story. Three specific ingredients turned that pressure into the genuinely capable models we build on today, and each one is worth meeting on its own.</p>
 <p>The first ingredient is simply <strong>scale</strong>: more data, more parameters, more computation. As researchers trained larger and larger models, they noticed something more interesting than a smooth improvement. Certain abilities were essentially <em>absent</em> in small models and then, past some size, began to appear: multi-step arithmetic, answering questions that require chaining several facts together, and more. These jumps were striking enough to earn a name, <em>emergent abilities</em> <span class="citation" data-cites="wei2022emergent"><a href="../../references.html#ref-wei2022emergent" role="doc-biblioref">[1]</a></span>. Researchers still argue about how sharp and sudden the jumps truly are, and you should hold the strong version of the claim loosely, but the uncontroversial core is what matters here: make a next-word predictor large enough, and feed it enough text, and it crosses into territory it was never explicitly taught to reach.</p>
 <p>The second ingredient is <strong>in-context learning</strong>, and it is the quiet superpower behind almost everything we will do with agents. A large model can pick up a brand-new task from just a handful of examples placed in its prompt: no retraining, no new weights, nothing but a few demonstrations <span class="citation" data-cites="brown2020fewshot"><a href="../../references.html#ref-brown2020fewshot" role="doc-biblioref">[2]</a></span>. Show it two or three lines of the pattern you want (“English: <em>hello</em> → French: <em>bonjour</em>; English: <em>thanks</em> → French: <em>merci</em>”) and it will happily continue the pattern for a word you never showed it. Think of it as a sharp new hire on their first morning: you don’t send them back to school, you just show them a couple of worked examples and they infer the shape of the job. This is precisely why so much of the craft of working with LLMs lives in <em>what you put in the prompt</em> rather than in retraining anything.</p>
-<p>The third ingredient is <strong>instruction following</strong>, and it is what turned these models from things you had to trick into things you can simply talk to. A raw pretrained model is a pure continuer of text: hand it “Write a poem about the sea” and it might unhelpfully continue with “…and three other poems for a children’s anthology,” because that is a plausible way for such a sentence to continue somewhere on the web. Researchers closed this gap by fine-tuning the model on examples of instructions paired with good responses, then using human preferences to reward the more helpful answers, a recipe known as reinforcement learning from human feedback <span class="citation" data-cites="ouyang2022instructgpt"><a href="../../references.html#ref-ouyang2022instructgpt" role="doc-biblioref">[3]</a></span>. The payoff is a model that treats your prompt as <em>a request to fulfil</em> rather than <em>a string to extend</em>. <a href="#fig-llm-pipeline" class="quarto-xref">Figure&nbsp;<span>5.1</span></a> lays out all three stages in order.</p>
+<p>The third ingredient is <strong>instruction following</strong>, and it is what turned these models from things you had to trick into things you can simply talk to. A raw pretrained model is a pure continuer of text: hand it “Write a poem about the sea” and it might unhelpfully continue with “…and three other poems for a children’s anthology,” because that is a plausible way for such a sentence to continue somewhere on the web. Researchers closed this gap by fine-tuning the model on examples of instructions paired with good responses, then using human preferences to reward the more helpful answers, a recipe known as reinforcement learning from human feedback <span class="citation" data-cites="ouyang2022instructgpt"><a href="../../references.html#ref-ouyang2022instructgpt" role="doc-biblioref">[3]</a></span>. The payoff is a model that treats your prompt as <em>a request to fulfil</em> rather than <em>a string to extend</em>. <a href="#fig-llm-pipeline" class="quarto-xref">Figure&nbsp;<span>6.1</span></a> lays out all three stages in order.</p>
 <div id="fig-llm-pipeline" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-llm-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch05/fig-llm-pipeline.png" class="img-fluid figure-img">
+<img src="../..\images/ch06/fig-llm-pipeline.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-llm-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.1: How a raw next-word predictor becomes a usable reasoning engine: pretraining builds broad competence, instruction tuning teaches it to follow requests, and in-context learning adapts it to each new task at prompt time, feeding the ‘decide’ box of the agent loop.
+Figure&nbsp;6.1: How a raw next-word predictor becomes a usable reasoning engine: pretraining builds broad competence, instruction tuning teaches it to follow requests, and in-context learning adapts it to each new task at prompt time, feeding the ‘decide’ box of the agent loop.
 </figcaption>
 </figure>
 </div>
 <p>Put the three together and the mystery genuinely dissolves. A model pressured to predict text learns a rich, implicit picture of the world; scale sharpens that picture; instruction tuning aims it at your goals; and in-context learning lets you steer it, task by task, without ever touching its weights. <em>That</em> is the engine we are about to drop into the <strong>decide</strong> box of the agent loop, and now we can ask what it is like to actually reason with it.</p>
 </section>
-<section id="sec-cot" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="sec-cot"><span class="header-section-number">5.3</span> Thinking out loud</h2>
+<section id="sec-cot" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="sec-cot"><span class="header-section-number">6.3</span> Thinking out loud</h2>
 <p>Knowing how the engine came to be is one thing; getting it to reason <em>reliably</em> is another, and it turns out there is a single technique that matters more than any other. Better still, it falls straight out of the way the model works, so it will deepen your intuition rather than add a new mystery.</p>
 <p>Picture a bright student who is asked a tricky word problem and forced to answer instantly, with no pause, no paper, just the very first thing out of their mouth. They’ll stumble more often than not, not because they’re incapable, but because they never got the chance to work it through. Now hand the same student a scratchpad and say the four magic words: “show your work.” Suddenly they’re far more reliable, because each line they write down sets up the next, and a single hard leap becomes a staircase of small, safe steps. Large language models behave in almost exactly the same way, and the technique that takes advantage of it is called <strong>chain-of-thought prompting</strong>: rather than asking for the answer straight away, you invite the model to reason step by step before it commits to one <span class="citation" data-cites="wei2022cot"><a href="../../references.html#ref-wei2022cot" role="doc-biblioref">[4]</a></span>.</p>
-<p>Why would writing the steps out help a <em>machine</em>, though? The answer is the most important idea in this section, and it comes directly from how generation works. Every word the model produces is immediately fed back in as part of the context for the word that follows. So when the model writes “First, there are 3 boxes with 4 apples each, which makes 12 apples,” those words become <em>scratch paper it can now read back</em>. The reasoning is not happening somewhere hidden and then getting summarized for us; the writing quite literally <em>is</em> the thinking, spelled out one token at a time in the open, each step handing the next step a concrete foothold instead of a guess. <a href="#fig-cot" class="quarto-xref">Figure&nbsp;<span>5.2</span></a> shows the difference between blurting an answer and working it out.</p>
+<p>Why would writing the steps out help a <em>machine</em>, though? The answer is the most important idea in this section, and it comes directly from how generation works. Every word the model produces is immediately fed back in as part of the context for the word that follows. So when the model writes “First, there are 3 boxes with 4 apples each, which makes 12 apples,” those words become <em>scratch paper it can now read back</em>. The reasoning is not happening somewhere hidden and then getting summarized for us; the writing quite literally <em>is</em> the thinking, spelled out one token at a time in the open, each step handing the next step a concrete foothold instead of a guess. <a href="#fig-cot" class="quarto-xref">Figure&nbsp;<span>6.2</span></a> shows the difference between blurting an answer and working it out.</p>
 <div id="fig-cot" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch05/fig-cot.png" class="img-fluid figure-img">
+<img src="../..\images/ch06/fig-cot.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.2: Answering directly forces the model to leap straight to a conclusion; chain-of-thought lets each written step become context for the next, turning one hard problem into a chain of easy ones.
+Figure&nbsp;6.2: Answering directly forces the model to leap straight to a conclusion; chain-of-thought lets each written step become context for the next, turning one hard problem into a chain of easy ones.
 </figcaption>
 </figure>
 </div>
 <p>What’s striking is how little it takes to switch this on. Researchers found that simply appending the phrase “Let’s think step by step” to a question measurably improved a model’s performance on math and logic problems, with no worked examples, no fine-tuning, just an invitation to slow down <span class="citation" data-cites="kojima2022zeroshot"><a href="../../references.html#ref-kojima2022zeroshot" role="doc-biblioref">[5]</a></span>. And there’s a sturdier cousin of the trick worth knowing about, because agents will lean on it later. Instead of trusting a single chain of reasoning, you can have the model generate <em>several</em> independent chains and then keep the answer they most agree on. It’s the same instinct as asking three students to solve a problem separately and going with the majority verdict; a lone chain might wander off, but three chains rarely wander off in the <em>same</em> wrong direction. This technique is called <strong>self-consistency</strong> <span class="citation" data-cites="wang2023selfconsistency"><a href="../../references.html#ref-wang2023selfconsistency" role="doc-biblioref">[6]</a></span>.</p>
 <p>Chain-of-thought is the raw material for a great deal of what follows, so it is worth being just as clear about what it is <em>not</em> before we lean on it. The next two subsections do exactly that: first a caution about how much the written trace really tells you, then a quick map of the richer shapes reasoning can take once one straight line is not enough.</p>
-<section id="sec-ch5-cot-caution" class="level3" data-number="5.3.1">
-<h3 data-number="5.3.1" class="anchored" data-anchor-id="sec-ch5-cot-caution"><span class="header-section-number">5.3.1</span> Chain of thought is a scaffold, not proof</h3>
+<section id="sec-ch5-cot-caution" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="sec-ch5-cot-caution"><span class="header-section-number">6.3.1</span> Chain of thought is a scaffold, not proof</h3>
 <p>There is a tempting mistake hiding inside everything we just praised. Because the model writes its reasoning out in plain, orderly steps, it is natural to read that trace as a <em>confession</em>: this is how the model actually reached its answer, laid bare for you to inspect. Treat it that way and you will eventually be burned, because the written chain is a scaffold that helps the model think, not a faithful record of what happened inside it.</p>
 <p>Picture a student who quietly settles on an answer the moment they read the question, then fills in tidy working <em>backwards</em> to justify the number they already liked. The working looks like a derivation. It is really a rationalization, assembled after the fact to look convincing. Large language models do the same thing more often than their fluent prose suggests. Researchers have shown that a model’s stated reasoning can be <strong>unfaithful</strong>: it can reach the right answer for a reason it never writes down, or write down a reason that is not what actually drove the answer, and this happens even on ordinary, naturally worded prompts rather than only on trick questions designed to mislead it <span class="citation" data-cites="arcuschin2025unfaithful"><a href="../../references.html#ref-arcuschin2025unfaithful" role="doc-biblioref">[7]</a></span>. Follow-up work on dedicated reasoning models found the same gap: when a hint in the prompt secretly steered the answer, the models usually did not mention the hint in their chain of thought at all, so the visible reasoning quietly hid the thing that most influenced the result <span class="citation" data-cites="chen2025cotfaith"><a href="../../references.html#ref-chen2025cotfaith" role="doc-biblioref">[8]</a></span>.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Safety: the trace is evidence, not an audit log">
@@ -493,40 +499,40 @@ Safety: the trace is evidence, not an audit log
 <li>It is <strong>incomplete</strong>: the real computation happens in the weights, and the words are a lossy shadow of it.</li>
 <li>It can <strong>rationalize</strong>: the trace may be a plausible story invented to fit an answer the model had already reached, so a coherent chain is not proof that the reasoning is sound.</li>
 </ul>
-<p>For an agent, the practical consequence is sharp. Do not treat the model’s narration as your audit trail. The trail that actually holds up under scrutiny is the <em>record of what the agent did</em>: which policy document it retrieved, which tool it called, with what arguments, what result came back, and whether a human approved the action before it ran. That record, unlike the narration, cannot be quietly rewritten to sound convincing. It is a major reason <a href="../part4-production/16-observability.html" class="quarto-xref"><span>Chapter 16</span></a> later insists on logging every step.</p>
+<p>For an agent, the practical consequence is sharp. Do not treat the model’s narration as your audit trail. The trail that actually holds up under scrutiny is the <em>record of what the agent did</em>: which policy document it retrieved, which tool it called, with what arguments, what result came back, and whether a human approved the action before it ran. That record, unlike the narration, cannot be quietly rewritten to sound convincing. It is a major reason <a href="../part4-production/17-observability.html" class="quarto-xref"><span>Chapter 17</span></a> later insists on logging every step.</p>
 </div>
 </div>
 <p>This is also why checking only the final answer is not enough. A useful distinction from the research on training reliable reasoners is between <strong>outcome supervision</strong>, which judges only whether the last number is right, and <strong>process supervision</strong>, which checks each intermediate step; the latter turns out to produce markedly more reliable reasoning because it catches the flawed steps that a lucky final answer would otherwise hide <span class="citation" data-cites="lightman2023verify"><a href="../../references.html#ref-lightman2023verify" role="doc-biblioref">[9]</a></span>. Carry that lesson into agent design. Imagine Ledgerly, the billing-support agent whose task we specified back in <a href="../part1-foundations/04-environments-and-rationality.html#sec-ch04-case" class="quarto-xref"><span>Section 4.6</span></a>, denies a refund, and the denial happens to be correct. If it reached that decision by actually reading the refund policy and the invoice, the process was sound. If it simply guessed and got lucky, the process was broken, and the next customer with a slightly different case will get a wrong answer delivered with the same confidence. A right answer from a bad process is a bug that has not surfaced yet.</p>
 </section>
-<section id="sec-ch5-paths" class="level3" data-number="5.3.2">
-<h3 data-number="5.3.2" class="anchored" data-anchor-id="sec-ch5-paths"><span class="header-section-number">5.3.2</span> More than one path</h3>
-<p>A single chain of thought commits to one line of reasoning and rides it to the end. That is often enough, but when a problem is hard or the first idea might be wrong, you want the model to consider more than one path. It helps to see the options as a small ladder of shapes, which researchers call <strong>reasoning topologies</strong> <span class="citation" data-cites="besta2024topologies"><a href="../../references.html#ref-besta2024topologies" role="doc-biblioref">[10]</a></span>, and <a href="#fig-reasoning-topologies" class="quarto-xref">Figure&nbsp;<span>5.3</span></a> lays out the three that matter here.</p>
+<section id="sec-ch5-paths" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="sec-ch5-paths"><span class="header-section-number">6.3.2</span> More than one path</h3>
+<p>A single chain of thought commits to one line of reasoning and rides it to the end. That is often enough, but when a problem is hard or the first idea might be wrong, you want the model to consider more than one path. It helps to see the options as a small ladder of shapes, which researchers call <strong>reasoning topologies</strong> <span class="citation" data-cites="besta2024topologies"><a href="../../references.html#ref-besta2024topologies" role="doc-biblioref">[10]</a></span>, and <a href="#fig-reasoning-topologies" class="quarto-xref">Figure&nbsp;<span>6.3</span></a> lays out the three that matter here.</p>
 <div id="fig-reasoning-topologies" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reasoning-topologies-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch05/fig-reasoning-topologies.png" class="img-fluid figure-img">
+<img src="../..\images/ch06/fig-reasoning-topologies.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reasoning-topologies-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.3: Three shapes reasoning can take. A chain follows one line of steps; a tree branches to explore alternatives and can back out of a bad one; a graph lets separate lines of reasoning merge and reinforce each other.
+Figure&nbsp;6.3: Three shapes reasoning can take. A chain follows one line of steps; a tree branches to explore alternatives and can back out of a bad one; a graph lets separate lines of reasoning merge and reinforce each other.
 </figcaption>
 </figure>
 </div>
 <p>The plainest shape is a <strong>direct answer</strong>, no visible reasoning at all. Add a scratch pad and you get a <strong>chain</strong>. Sample several chains and vote and you get <strong>self-consistency</strong>, which we already met. Let the model branch, explore competing lines, and abandon the ones that go nowhere, and you have a <strong>tree</strong>; let those lines rejoin and reinforce one another and you have a <strong>graph</strong>. Each step up the ladder buys the ability to recover from a wrong turn, at the cost of more computation.</p>
 <p>One caution travels with this idea, because it is easy to assume that simply generating <em>more</em> paths must be better. It is not, if the extra paths are bad. When several reasoning paths disagree, blindly taking a majority vote lets confident-but-wrong paths outvote a correct one, so the useful move is to <em>validate paths before aggregating them</em>, keeping a path’s conclusion only when its reasoning actually holds up. Adding such a validation step on top of tree-style reasoning has been shown to raise accuracy on grade-school math problems over plain tree search across several models <span class="citation" data-cites="haji2024validator"><a href="../../references.html#ref-haji2024validator" role="doc-biblioref">[11]</a></span>. The lesson to carry forward is that quantity of reasoning is not quality; bad paths must be filtered, not merely counted.</p>
-<p>We will not go further here, because branching, searching, and self-correction are the whole subject of <a href="07-reasoning-and-planning.html" class="quarto-xref"><span>Chapter 7</span></a>, where ReAct, Tree of Thoughts, and reflection loops each turn one of these shapes into a working strategy. For this chapter, the point is only to know the shapes exist and to remember the caution: an LLM reasons best when you let it think out loud, and it reasons more reliably when you give its thoughts room to branch and a way to be checked.</p>
+<p>We will not go further here, because branching, searching, and self-correction are the whole subject of <a href="08-reasoning-and-planning.html" class="quarto-xref"><span>Chapter 8</span></a>, where ReAct, Tree of Thoughts, and reflection loops each turn one of these shapes into a working strategy. For this chapter, the point is only to know the shapes exist and to remember the caution: an LLM reasons best when you let it think out loud, and it reasons more reliably when you give its thoughts room to branch and a way to be checked.</p>
 </section>
 </section>
-<section id="sec-ch5-strengths" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="sec-ch5-strengths"><span class="header-section-number">5.4</span> What LLMs are genuinely good at</h2>
+<section id="sec-ch5-strengths" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="sec-ch5-strengths"><span class="header-section-number">6.4</span> What LLMs are genuinely good at</h2>
 <p>Now that we understand how the engine works, we can be precise about where it excels, and being precise matters, because these strengths are not a grab-bag of neat tricks. They are the exact capabilities that make the whole idea of an LLM agent possible in the first place. Take any one of them away and the agents in this book would not work.</p>
-<section id="sec-ch5-taxonomy" class="level3" data-number="5.4.1">
-<h3 data-number="5.4.1" class="anchored" data-anchor-id="sec-ch5-taxonomy"><span class="header-section-number">5.4.1</span> Reasoning is not one thing</h3>
+<section id="sec-ch5-taxonomy" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="sec-ch5-taxonomy"><span class="header-section-number">6.4.1</span> Reasoning is not one thing</h3>
 <p>Before we list what the model is good at, we have to retire a lazy habit of speech. People say “the model can reason” or “the model can’t reason” as if reasoning were a single dial turned up or down. It is not. Think of a brilliant novelist who can hold a thousand-page plot in their head and turn a phrase that gives you chills, yet cannot be trusted to split a restaurant bill three ways without a calculator. The eloquence and the arithmetic are simply different faculties, and being world-class at one tells you almost nothing about the other. Language models are the same. A model can be a fluent essayist and a shaky accountant <em>at the same time</em>, strong at reasoning that lives in words and weak at reasoning that demands exact symbol manipulation. Worse for an agent builder, it can explain a plan beautifully and then choose a poor next action, because narrating a good plan and <em>selecting</em> a good move are, once again, not the same skill.</p>
-<p>It helps to name the different kinds of reasoning an agent actually leans on, because each one fails in its own characteristic way. <a href="#tbl-reasoning-types" class="quarto-xref">Table&nbsp;<span>5.1</span></a> lays them out against Ledgerly’s support setting, so you can see where the same model might shine and stumble within a single ticket.</p>
+<p>It helps to name the different kinds of reasoning an agent actually leans on, because each one fails in its own characteristic way. <a href="#tbl-reasoning-types" class="quarto-xref">Table&nbsp;<span>6.1</span></a> lays them out against Ledgerly’s support setting, so you can see where the same model might shine and stumble within a single ticket.</p>
 <div id="tbl-reasoning-types" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-reasoning-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;5.1: Kinds of reasoning an agent leans on within a single billing ticket, and how each one characteristically fails.
+Table&nbsp;6.1: Kinds of reasoning an agent leans on within a single billing ticket, and how each one characteristically fails.
 </figcaption>
 <div aria-describedby="tbl-reasoning-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -594,8 +600,8 @@ Table&nbsp;5.1: Kinds of reasoning an agent leans on within a single billing tic
 </div>
 <p>Keep this table in the back of your mind for the rest of the chapter. When we reach the failure modes, you will notice that they cluster on the right-hand columns of exactly this table: the model’s linguistic and social reasoning are usually its strong suit, while its mathematical, logical, and causal reasoning are where the quiet cracks appear.</p>
 </section>
-<section id="sec-ch5-capabilities" class="level3" data-number="5.4.2">
-<h3 data-number="5.4.2" class="anchored" data-anchor-id="sec-ch5-capabilities"><span class="header-section-number">5.4.2</span> Four capabilities agents are built on</h3>
+<section id="sec-ch5-capabilities" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="sec-ch5-capabilities"><span class="header-section-number">6.4.2</span> Four capabilities agents are built on</h3>
 <p>With that landscape in view, here are the four capabilities the rest of this book leans on hardest. They are not the whole of what a model can do, but they are the ones that turn a text predictor into something you can build an agent around.</p>
 <p>The first and most far-reaching strength is <strong>in-context learning</strong>, which we met earlier as the ability to absorb a task from a few examples in the prompt. What’s worth appreciating now is how much <em>leverage</em> this gives an agent builder. Because you can teach the model a new job without touching its weights, a single underlying model can play a dozen different roles in one system (classifying a ticket in one call, extracting dates from a contract in the next, rewriting a paragraph in a friendlier tone in a third) with nothing changing but the instructions you hand it. That flexibility is what lets a small team build something that would once have required a dozen separate, specially trained models.</p>
 <p>The second strength is <strong>following instructions written in plain language</strong>. You don’t have to encode your intent in a rigid schema, a config file, or a special syntax; you can more or less ask for what you want the way you’d ask a colleague. This is easy to take for granted, but it is precisely what lets an agent accept a messy, very human goal, “figure out why this customer keeps getting billed twice,” and actually make headway, instead of demanding the request be pre-chewed into some machine-shaped form first.</p>
@@ -603,16 +609,16 @@ Table&nbsp;5.1: Kinds of reasoning an agent leans on within a single billing tic
 <p>The fourth strength is sheer <strong>breadth of knowledge</strong>. Having digested a vast sweep of text, one model can hold a passable conversation about tax rules, Python decorators, and medieval trade routes, which means an agent doesn’t need a hand-built knowledge base for every domain it might wander into. This breadth is genuinely useful, but notice that it is also a temptation. It invites you to <em>trust the model’s memory</em>, and that trust, as the next section shows, is exactly where things start to go wrong.</p>
 </section>
 </section>
-<section id="sec-ch5-failures" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="sec-ch5-failures"><span class="header-section-number">5.5</span> Where they quietly break</h2>
-<p>Everything so far might tempt you to treat an LLM as a reliable reasoning oracle. It is not, and understanding precisely <em>how</em> it fails is more valuable than being impressed by how it succeeds. The reason is the agent loop itself: a single confident mistake early in a loop becomes the input to every later step, so a small error at the start can snowball into a completely wrong outcome by the end. What makes this especially treacherous is that all four of the failures below share one root cause, the very thing we started the chapter with: the model was trained to produce <em>plausible text</em>, not <em>true statements</em>. <a href="#fig-llm-failures" class="quarto-xref">Figure&nbsp;<span>5.4</span></a> gathers them under that common root.</p>
+<section id="sec-ch5-failures" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="sec-ch5-failures"><span class="header-section-number">6.5</span> Where they quietly break</h2>
+<p>Everything so far might tempt you to treat an LLM as a reliable reasoning oracle. It is not, and understanding precisely <em>how</em> it fails is more valuable than being impressed by how it succeeds. The reason is the agent loop itself: a single confident mistake early in a loop becomes the input to every later step, so a small error at the start can snowball into a completely wrong outcome by the end. What makes this especially treacherous is that all four of the failures below share one root cause, the very thing we started the chapter with: the model was trained to produce <em>plausible text</em>, not <em>true statements</em>. <a href="#fig-llm-failures" class="quarto-xref">Figure&nbsp;<span>6.4</span></a> gathers them under that common root.</p>
 <div id="fig-llm-failures" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-llm-failures-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch05/fig-llm-failures.png" class="img-fluid figure-img">
+<img src="../..\images/ch06/fig-llm-failures.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-llm-failures-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.4: Four recurring failure modes of LLM reasoning, all flowing from a single root cause: the model is optimized for plausible text, not for truth.
+Figure&nbsp;6.4: Four recurring failure modes of LLM reasoning, all flowing from a single root cause: the model is optimized for plausible text, not for truth.
 </figcaption>
 </figure>
 </div>
@@ -621,7 +627,7 @@ Figure&nbsp;5.4: Four recurring failure modes of LLM reasoning, all flowing from
 <p>A vivid illustration of that same brittleness is so oddly specific that it’s almost funny, yet it reveals how alien the model’s grasp of a “fact” can be. Tell a model that “A is B” and it will frequently fail to conclude that “B is A”, a quirk researchers named the <strong>reversal curse</strong>. In one test, GPT-4 could answer “Who is Tom Cruise’s mother?” correctly about 79% of the time, but when the very same fact was probed in reverse, “Who is Mary Lee Pfeiffer’s son?”, it succeeded only around 33% of the time, even though the two questions are logically identical <span class="citation" data-cites="berglund2024reversal"><a href="../../references.html#ref-berglund2024reversal" role="doc-biblioref">[14]</a></span>. A person who knows one direction automatically knows the other; the model, it turns out, often learned a one-way word association rather than a symmetric fact about the world. It is a sharp reminder that “knowing” something, for an LLM, is not what it is for us.</p>
 <p>The third failure matters enormously the moment your agent starts stuffing long documents and long histories into the prompt: models have <strong>context blind spots</strong>. You might assume that as long as the crucial fact is <em>somewhere</em> in the input, the model will find and use it. Not so. When researchers hid a needed piece of information at different positions in a long context, models used it reliably when it sat near the beginning or the end, but their accuracy sagged noticeably when the fact was buried in the <em>middle</em>, a U-shaped pattern the authors memorably dubbed being “lost in the middle” <span class="citation" data-cites="liu2024lostmiddle"><a href="../../references.html#ref-liu2024lostmiddle" role="doc-biblioref">[15]</a></span>. The lesson is one to tattoo on the back of your hand: a longer context window is not the same thing as a longer attention span.</p>
 <p>Underlying much of the above is a fourth, more diffuse fragility: LLMs are <strong>sensitive to how you ask</strong>. The same question, reworded, reordered, or with its examples shuffled, can produce a different answer. This is the reason “prompt engineering” became a discipline at all, and the reason you should be quietly suspicious of any agent whose success rests on one perfectly phrased, magical prompt. If a small change in wording breaks it, it was never truly reasoning; it was reciting, and reciting is brittle.</p>
-<p>It is worth seeing these four as faces of one underlying fragility rather than a list to memorize. Distractor sensitivity (a model thrown off by an irrelevant clause), an unfaithful or shortcut rationale (a tidy explanation that is not what drove the answer, as we saw in <a href="#sec-ch5-cot-caution" class="quarto-xref"><span>Section 5.3.1</span></a>), step-error propagation (one wrong step early quietly poisoning every step after it), plain overconfidence, and poor abstention (pressing ahead instead of admitting it does not know) are all the same coin seen from different angles. Each one traces back to a system optimized to produce text that <em>looks</em> right rather than text that <em>is</em> right, which is exactly why none of them announce themselves.</p>
+<p>It is worth seeing these four as faces of one underlying fragility rather than a list to memorize. Distractor sensitivity (a model thrown off by an irrelevant clause), an unfaithful or shortcut rationale (a tidy explanation that is not what drove the answer, as we saw in <a href="#sec-ch5-cot-caution" class="quarto-xref"><span>Section 6.3.1</span></a>), step-error propagation (one wrong step early quietly poisoning every step after it), plain overconfidence, and poor abstention (pressing ahead instead of admitting it does not know) are all the same coin seen from different angles. Each one traces back to a system optimized to produce text that <em>looks</em> right rather than text that <em>is</em> right, which is exactly why none of them announce themselves.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Safety: confident and wrong is the dangerous combination">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -635,37 +641,37 @@ Safety: confident and wrong is the dangerous combination
 <p>Notice that none of these failures announce themselves. The model does not hedge, stammer, or flag its own uncertainty; a hallucinated citation and a brittle miscalculation arrive wrapped in the same calm, authoritative prose as a correct answer. In an autonomous agent that acts on its own conclusions, that quiet confidence is exactly what makes these failures hazardous: an agent cannot route around a mistake it does not know it made. This is why the verification and grounding techniques in the next section are not optional polish; they are structural necessities.</p>
 </div>
 </div>
-<section id="sec-ch5-testing" class="level3" data-number="5.5.1">
-<h3 data-number="5.5.1" class="anchored" data-anchor-id="sec-ch5-testing"><span class="header-section-number">5.5.1</span> How to test whether it is really reasoning</h3>
+<section id="sec-ch5-testing" class="level3" data-number="6.5.1">
+<h3 data-number="6.5.1" class="anchored" data-anchor-id="sec-ch5-testing"><span class="header-section-number">6.5.1</span> How to test whether it is really reasoning</h3>
 <p>The GSM-Symbolic result gives us more than a warning; it hands us a <em>method</em>. If a model is genuinely reasoning, its conclusion should move only when the underlying facts move, and stay put when you merely change the wording. If instead the answer swings around as you rephrase the question, you are watching pattern-matching wearing the costume of reasoning. So before you trust a model on a class of task, poke it the way a good teacher probes a student who might be reciting rather than understanding: keep the substance fixed and vary the surface, then keep the surface fixed and vary the substance, and watch which way the answer follows.</p>
-<p>Here is a practical perturbation checklist you can run against any reasoning step an agent depends on. Change the names. Change the numbers. Reorder the facts. Add an irrelevant clause that sounds related but changes nothing. Add a contradictory detail and see whether the model notices. Remove a fact the answer actually requires and see whether the model invents it or asks for it. Reverse the relationship (the reversal-curse test). Reword the whole thing in a different register. Run the same prompt several times, because a stable reasoner should not flip its verdict from one sample to the next. And inspect the intermediate steps, not only the final answer, since a right answer reached by a broken step is the very bug <a href="#sec-ch5-cot-caution" class="quarto-xref"><span>Section 5.3.1</span></a> warned about.</p>
-<p>The rule underneath all of these is a single sentence worth memorizing: <strong>the conclusion should change only when the facts change, not when the wording changes.</strong> Ledgerly makes it concrete. “I was charged twice,” “there are two debits on my card,” and “I got two invoices right after I switched plans” are three surface forms of what may be the same underlying situation. If the account’s records are equivalent in each case, a reasoning agent should reach the same conclusion for all three; if it clears the charge under one phrasing and escalates under another, its judgment is riding on wording, not facts, and it is not ready to act unsupervised. This is precisely the kind of stability that <a href="../part4-production/15-evaluation.html" class="quarto-xref"><span>Chapter 15</span></a> turns into a repeatable test suite, so that “does it really reason here?” becomes a number you can track rather than a hunch.</p>
+<p>Here is a practical perturbation checklist you can run against any reasoning step an agent depends on. Change the names. Change the numbers. Reorder the facts. Add an irrelevant clause that sounds related but changes nothing. Add a contradictory detail and see whether the model notices. Remove a fact the answer actually requires and see whether the model invents it or asks for it. Reverse the relationship (the reversal-curse test). Reword the whole thing in a different register. Run the same prompt several times, because a stable reasoner should not flip its verdict from one sample to the next. And inspect the intermediate steps, not only the final answer, since a right answer reached by a broken step is the very bug <a href="#sec-ch5-cot-caution" class="quarto-xref"><span>Section 6.3.1</span></a> warned about.</p>
+<p>The rule underneath all of these is a single sentence worth memorizing: <strong>the conclusion should change only when the facts change, not when the wording changes.</strong> Ledgerly makes it concrete. “I was charged twice,” “there are two debits on my card,” and “I got two invoices right after I switched plans” are three surface forms of what may be the same underlying situation. If the account’s records are equivalent in each case, a reasoning agent should reach the same conclusion for all three; if it clears the charge under one phrasing and escalates under another, its judgment is riding on wording, not facts, and it is not ready to act unsupervised. This is precisely the kind of stability that <a href="../part4-production/16-evaluation.html" class="quarto-xref"><span>Chapter 16</span></a> turns into a repeatable test suite, so that “does it really reason here?” becomes a number you can track rather than a hunch.</p>
 </section>
 </section>
-<section id="sec-ch5-implications" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="sec-ch5-implications"><span class="header-section-number">5.6</span> What this means for building agents</h2>
-<p>Here is the reframing that will carry you through the rest of the book. Once you stop seeing that list of failures as a disappointment and start seeing it as a <em>specification</em>, the whole architecture of an agent snaps into focus. Almost every technique in the chapters ahead exists for one reason: to shore up a specific weakness we just named. The raw model is the engine; the agent is the whole car built around it: the brakes, the mirrors, and the seatbelts that make the engine safe to actually drive. Broadly, those safety systems come in three families, and <a href="#fig-compensate" class="quarto-xref">Figure&nbsp;<span>5.5</span></a> lines each one up against the weakness it is there to answer.</p>
+<section id="sec-ch5-implications" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="sec-ch5-implications"><span class="header-section-number">6.6</span> What this means for building agents</h2>
+<p>Here is the reframing that will carry you through the rest of the book. Once you stop seeing that list of failures as a disappointment and start seeing it as a <em>specification</em>, the whole architecture of an agent snaps into focus. Almost every technique in the chapters ahead exists for one reason: to shore up a specific weakness we just named. The raw model is the engine; the agent is the whole car built around it: the brakes, the mirrors, and the seatbelts that make the engine safe to actually drive. Broadly, those safety systems come in three families, and <a href="#fig-compensate" class="quarto-xref">Figure&nbsp;<span>6.5</span></a> lines each one up against the weakness it is there to answer.</p>
 <div id="fig-compensate" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-compensate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch05/fig-compensate.png" class="img-fluid figure-img">
+<img src="../..\images/ch06/fig-compensate.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-compensate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.5: Each core weakness of a raw LLM is answered by a family of techniques developed in later chapters; the agent is the scaffolding that turns an unreliable engine into a dependable system.
+Figure&nbsp;6.5: Each core weakness of a raw LLM is answered by a family of techniques developed in later chapters; the agent is the scaffolding that turns an unreliable engine into a dependable system.
 </figcaption>
 </figure>
 </div>
 <p>The first move is to <strong>ground</strong> the model, to stop it from relying on its own fallible memory and instead give it a real source of truth. Rather than asking the model what the weather is, you hand it a weather tool and let it read the live answer; rather than trusting it to recall a company’s refund policy, you retrieve the actual policy document and place it in the context. This is the whole idea behind giving models tools <span class="citation" data-cites="schick2023toolformer"><a href="../../references.html#ref-schick2023toolformer" role="doc-biblioref">[16]</a></span>, retrieving relevant documents before answering <span class="citation" data-cites="lewis2020rag"><a href="../../references.html#ref-lewis2020rag" role="doc-biblioref">[17]</a></span>, and interleaving reasoning with real actions the way the ReAct pattern does <span class="citation" data-cites="yao2023react"><a href="../../references.html#ref-yao2023react" role="doc-biblioref">[18]</a></span>. Grounding attacks hallucination and stale knowledge at the root: a model that can <em>look things up</em> has far less need to <em>make things up</em>.</p>
-<p>The second move is to <strong>verify</strong> rather than trust a single pass. Because a lone answer can be confidently wrong, you build in a check. Sometimes that means sampling several reasoning paths and taking the answer they agree on, which is exactly the self-consistency idea from earlier in this chapter <span class="citation" data-cites="wang2023selfconsistency"><a href="../../references.html#ref-wang2023selfconsistency" role="doc-biblioref">[6]</a></span>. Sometimes it means letting the agent critique its own output, notice a flaw, and try again, the reflection loop we will meet in <a href="07-reasoning-and-planning.html" class="quarto-xref"><span>Chapter 7</span></a>. Either way the principle is the same as asking a colleague to double-check a number before you send it to the CEO: a second look is cheap, and it catches the brittle mistakes a first pass sails right past.</p>
+<p>The second move is to <strong>verify</strong> rather than trust a single pass. Because a lone answer can be confidently wrong, you build in a check. Sometimes that means sampling several reasoning paths and taking the answer they agree on, which is exactly the self-consistency idea from earlier in this chapter <span class="citation" data-cites="wang2023selfconsistency"><a href="../../references.html#ref-wang2023selfconsistency" role="doc-biblioref">[6]</a></span>. Sometimes it means letting the agent critique its own output, notice a flaw, and try again, the reflection loop we will meet in <a href="08-reasoning-and-planning.html" class="quarto-xref"><span>Chapter 8</span></a>. Either way the principle is the same as asking a colleague to double-check a number before you send it to the CEO: a second look is cheap, and it catches the brittle mistakes a first pass sails right past.</p>
 <p>The third move is the humblest and the most important: <strong>keep a human in the loop</strong> wherever the cost of a silent error is high. This is the same lesson we drew back in <a href="../part1-foundations/01-what-is-an-agent.html#sec-when-not" class="quarto-xref"><span>Section 1.7</span></a>, now with teeth. Because the model’s mistakes are confident and quiet, the design question is never merely “can the agent do this?” but “what happens when it does this <em>wrong</em>, and who catches it?” For a task that drafts a suggestion you will review anyway, full autonomy is fine. For a task that moves money, deletes records, or emails a customer, a checkpoint where a person approves the action is not a lack of ambition, it is the mark of a system designed by someone who understands the engine.</p>
-<p>These three moves are not a menu you pick one item from; they stack. <a href="#fig-reliability-ladder" class="quarto-xref">Figure&nbsp;<span>5.6</span></a> arranges them as a <strong>reliability ladder</strong>, from a bare direct answer at the bottom to a human-approved action at the top, with each rung adding a layer of support the rung below it lacks. A direct answer is fine for something trivial. Letting the model think out loud adds a scratch pad; sampling several chains and voting adds a sanity check; grounding the answer in a tool or a retrieved document replaces memory with evidence; verifying the individual steps catches a lucky-but-broken process; checking the result against policy enforces the rules that matter; and, at the top, a human approves before anything irreversible happens. The skill is not to climb as high as possible every time. It is to match the height of the ladder to the cost of being wrong: a low rung for drafting a suggestion, the top rung before moving a customer’s money.</p>
+<p>These three moves are not a menu you pick one item from; they stack. <a href="#fig-reliability-ladder" class="quarto-xref">Figure&nbsp;<span>6.6</span></a> arranges them as a <strong>reliability ladder</strong>, from a bare direct answer at the bottom to a human-approved action at the top, with each rung adding a layer of support the rung below it lacks. A direct answer is fine for something trivial. Letting the model think out loud adds a scratch pad; sampling several chains and voting adds a sanity check; grounding the answer in a tool or a retrieved document replaces memory with evidence; verifying the individual steps catches a lucky-but-broken process; checking the result against policy enforces the rules that matter; and, at the top, a human approves before anything irreversible happens. The skill is not to climb as high as possible every time. It is to match the height of the ladder to the cost of being wrong: a low rung for drafting a suggestion, the top rung before moving a customer’s money.</p>
 <div id="fig-reliability-ladder" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reliability-ladder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch05/fig-reliability-ladder.png" class="img-fluid figure-img">
+<img src="../..\images/ch06/fig-reliability-ladder.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reliability-ladder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.6: The reliability ladder. Each rung adds a layer of support the one below it lacks; match the height you climb to the cost of being wrong, not to how impressive it looks.
+Figure&nbsp;6.6: The reliability ladder. Each rung adds a layer of support the one below it lacks; match the height you climb to the cost of being wrong, not to how impressive it looks.
 </figcaption>
 </figure>
 </div>
@@ -682,29 +688,29 @@ In practice
 <p>A useful habit when designing any agent is to walk down the failure list and ask, for each one, “how am I covered here?” Where could this agent hallucinate, and have I grounded it? Where could its logic be brittle, and have I added a verification step? Where would a silent mistake be expensive, and is a human watching that spot? An agent is only as trustworthy as its answer to those three questions, and you now know enough to ask them.</p>
 </div>
 </div>
-<section id="sec-ch5-grounding-verify" class="level3" data-number="5.6.1">
-<h3 data-number="5.6.1" class="anchored" data-anchor-id="sec-ch5-grounding-verify"><span class="header-section-number">5.6.1</span> Grounding gives evidence, not correctness</h3>
+<section id="sec-ch5-grounding-verify" class="level3" data-number="6.6.1">
+<h3 data-number="6.6.1" class="anchored" data-anchor-id="sec-ch5-grounding-verify"><span class="header-section-number">6.6.1</span> Grounding gives evidence, not correctness</h3>
 <p>It is easy to hear “just ground the model” and assume grounding solves the reliability problem on its own. It does not, and the gap between the two is subtle enough to be worth its own subsection. Grounding fetches <em>evidence</em>. Being correct means <em>using that evidence rightly</em>, and those are separate acts. A detective handed the right case file has not solved the case; they still have to read it correctly, and a file sitting on the desk proves nothing by itself.</p>
 <p>All the ways this can go wrong are ordinary, not exotic. Retrieval can fetch the wrong passage, or fetch the right passage that the model then misreads. A tool can return perfectly correct data that the model then uses incorrectly. Two sources can conflict, and the model has to decide which to believe. And the model can simply overlook the single most relevant line in favor of a less relevant one, the lost-in-the-middle failure wearing a new coat. Grounding narrows the space for error, but it does not close it, which is why verification has to be a deliberate, separate step and not a side effect of retrieval.</p>
 <p>Ledgerly makes the distinction sharp. Suppose its billing tool truthfully reports two charges on the account. That fact, on its own, does <em>not</em> prove a duplicate. Before the agent can call it one, it has to verify that the two charges are for the same subscription, cover the same period, share the same reason, and trace to the same invoice, and it has to rule out the ordinary explanations: that one is a legitimate one-time adjustment, or that a refund for it was already issued last week. The evidence was grounded the moment the tool returned; the <em>conclusion</em> is earned only after those checks. An agent that skips them is not grounded, it is merely confident with a citation attached.</p>
 </section>
-<section id="sec-ch5-vs-planning" class="level3" data-number="5.6.2">
-<h3 data-number="5.6.2" class="anchored" data-anchor-id="sec-ch5-vs-planning"><span class="header-section-number">5.6.2</span> Reasoning versus planning</h3>
-<p>There is a distinction humming underneath this whole chapter that we can now name outright, because it draws the exact line between where Chapter 5 ends and the next reasoning chapter begins. <strong>Reasoning</strong> asks, “what follows from what I know?” <strong>Planning</strong> asks, “what should I do next?” They sound like the same activity, but they are not, and an agent can be fluent at one while stumbling on the other. A model can produce a flawless explanation of <em>why</em> a customer was double-charged and, in the very same breath, choose a bad next action, issuing the refund before confirming the customer’s identity, say, or escalating a case it could have closed. Getting the <em>account</em> of the world right is not the same as getting the <em>move</em> right.</p>
-<p>This chapter has been about the first activity: what kinds of reasoning a model does, how to coax it out, how far to trust it. The second activity, turning reasoning into a sequence of grounded actions with checking and backtracking along the way, is the entire subject of <a href="07-reasoning-and-planning.html" class="quarto-xref"><span>Chapter 7</span></a>, where patterns like ReAct, Tree of Thoughts, and reflection loops give the model a disciplined way to decide what to do next. Hold the distinction in mind as you cross into that chapter: everything there builds on the reasoning we have described here, but adds the machinery for acting on it well.</p>
+<section id="sec-ch5-vs-planning" class="level3" data-number="6.6.2">
+<h3 data-number="6.6.2" class="anchored" data-anchor-id="sec-ch5-vs-planning"><span class="header-section-number">6.6.2</span> Reasoning versus planning</h3>
+<p>There is a distinction humming underneath this whole chapter that we can now name outright, because it draws the exact line between where Chapter 6 ends and the next reasoning chapter begins. <strong>Reasoning</strong> asks, “what follows from what I know?” <strong>Planning</strong> asks, “what should I do next?” They sound like the same activity, but they are not, and an agent can be fluent at one while stumbling on the other. A model can produce a flawless explanation of <em>why</em> a customer was double-charged and, in the very same breath, choose a bad next action, issuing the refund before confirming the customer’s identity, say, or escalating a case it could have closed. Getting the <em>account</em> of the world right is not the same as getting the <em>move</em> right.</p>
+<p>This chapter has been about the first activity: what kinds of reasoning a model does, how to coax it out, how far to trust it. The second activity, turning reasoning into a sequence of grounded actions with checking and backtracking along the way, is the entire subject of <a href="08-reasoning-and-planning.html" class="quarto-xref"><span>Chapter 8</span></a>, where patterns like ReAct, Tree of Thoughts, and reflection loops give the model a disciplined way to decide what to do next. Hold the distinction in mind as you cross into that chapter: everything there builds on the reasoning we have described here, but adds the machinery for acting on it well.</p>
 </section>
-<section id="sec-ch5-abstention" class="level3" data-number="5.6.3">
-<h3 data-number="5.6.3" class="anchored" data-anchor-id="sec-ch5-abstention"><span class="header-section-number">5.6.3</span> A reasoner must know when to abstain</h3>
+<section id="sec-ch5-abstention" class="level3" data-number="6.6.3">
+<h3 data-number="6.6.3" class="anchored" data-anchor-id="sec-ch5-abstention"><span class="header-section-number">6.6.3</span> A reasoner must know when to abstain</h3>
 <p>The most underrated skill a reasoner can have is knowing when <em>not</em> to answer. A junior employee who confidently invents a policy rather than admitting they need to check is more dangerous than one who simply asks, and the same is true of an agent. Because an LLM will almost always produce a fluent answer whether or not it has grounds for one, a well-designed agent needs explicit triggers that tell it to stop, ask, or hand off rather than press ahead.</p>
-<p>A short list of those triggers covers most real cases. The agent should abstain or escalate when the evidence it needs is missing, when two pieces of evidence conflict, when the customer’s identity or account is ambiguous, when it would have to assert a policy it cannot point to, when a tool returns an error, when the action it is about to take is high-risk or irreversible, when repeated reasoning over the same facts keeps giving inconsistent answers, and when what it is told contradicts what it already has in memory. For Ledgerly the rule is concrete: if the agent cannot pin down which account or which invoice the customer means, the right move is to <em>ask</em>, or to call the lookup tool, never to infer a plausible-looking account and act on it. Knowing when to abstain is not timidity; it is the core of safe agent behavior, and <a href="../part4-production/17-safety-and-guardrails.html" class="quarto-xref"><span>Chapter 17</span></a> builds a whole layer of guardrails on exactly this instinct.</p>
+<p>A short list of those triggers covers most real cases. The agent should abstain or escalate when the evidence it needs is missing, when two pieces of evidence conflict, when the customer’s identity or account is ambiguous, when it would have to assert a policy it cannot point to, when a tool returns an error, when the action it is about to take is high-risk or irreversible, when repeated reasoning over the same facts keeps giving inconsistent answers, and when what it is told contradicts what it already has in memory. For Ledgerly the rule is concrete: if the agent cannot pin down which account or which invoice the customer means, the right move is to <em>ask</em>, or to call the lookup tool, never to infer a plausible-looking account and act on it. Knowing when to abstain is not timidity; it is the core of safe agent behavior, and <a href="../part4-production/18-safety-and-guardrails.html" class="quarto-xref"><span>Chapter 18</span></a> builds a whole layer of guardrails on exactly this instinct.</p>
 </section>
-<section id="sec-ch5-case" class="level3" data-number="5.6.4">
-<h3 data-number="5.6.4" class="anchored" data-anchor-id="sec-ch5-case"><span class="header-section-number">5.6.4</span> When reasoning becomes action</h3>
-<p>It helps to see all of this land in one place, so let us watch a handful of tickets reach Ledgerly, the support agent whose world we mapped in <a href="../part1-foundations/04-environments-and-rationality.html#sec-ch04-case" class="quarto-xref"><span>Section 4.6</span></a>, and pass through the machinery. Each request calls on a different <em>kind</em> of reasoning from <a href="#tbl-reasoning-types" class="quarto-xref">Table&nbsp;<span>5.1</span></a>, exposes a different characteristic <em>failure</em>, and therefore needs a different <em>safeguard</em>. <a href="#tbl-billing-cases" class="quarto-xref">Table&nbsp;<span>5.2</span></a> lines them up.</p>
+<section id="sec-ch5-case" class="level3" data-number="6.6.4">
+<h3 data-number="6.6.4" class="anchored" data-anchor-id="sec-ch5-case"><span class="header-section-number">6.6.4</span> When reasoning becomes action</h3>
+<p>It helps to see all of this land in one place, so let us watch a handful of tickets reach Ledgerly, the support agent whose world we mapped in <a href="../part1-foundations/04-environments-and-rationality.html#sec-ch04-case" class="quarto-xref"><span>Section 4.6</span></a>, and pass through the machinery. Each request calls on a different <em>kind</em> of reasoning from <a href="#tbl-reasoning-types" class="quarto-xref">Table&nbsp;<span>6.1</span></a>, exposes a different characteristic <em>failure</em>, and therefore needs a different <em>safeguard</em>. <a href="#tbl-billing-cases" class="quarto-xref">Table&nbsp;<span>6.2</span></a> lines them up.</p>
 <div id="tbl-billing-cases" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-billing-cases-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;5.2: A few billing tickets, the reasoning each demands, its likely failure, and the safeguard that catches it.
+Table&nbsp;6.2: A few billing tickets, the reasoning each demands, its likely failure, and the safeguard that catches it.
 </figcaption>
 <div aria-describedby="tbl-billing-cases-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -758,23 +764,23 @@ Table&nbsp;5.2: A few billing tickets, the reasoning each demands, its likely fa
 </div>
 </figure>
 </div>
-<p>The through-line is that no single ticket is handled by reasoning alone. Each one pairs a reasoning step with a grounding step, a verification step, and, where money moves, a human or policy checkpoint. <a href="#fig-billing-reasoning-flow" class="quarto-xref">Figure&nbsp;<span>5.7</span></a> draws the shape that every row of the table really follows: the agent forms hypotheses, gathers evidence to test them, checks the result against policy, validates before it acts, and either takes the grounded action or escalates when the evidence will not support one.</p>
+<p>The through-line is that no single ticket is handled by reasoning alone. Each one pairs a reasoning step with a grounding step, a verification step, and, where money moves, a human or policy checkpoint. <a href="#fig-billing-reasoning-flow" class="quarto-xref">Figure&nbsp;<span>6.7</span></a> draws the shape that every row of the table really follows: the agent forms hypotheses, gathers evidence to test them, checks the result against policy, validates before it acts, and either takes the grounded action or escalates when the evidence will not support one.</p>
 <div id="fig-billing-reasoning-flow" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-billing-reasoning-flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch05/fig-billing-reasoning-flow.png" class="img-fluid figure-img">
+<img src="../..\images/ch06/fig-billing-reasoning-flow.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-billing-reasoning-flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.7: How a billing complaint becomes a grounded action. Reasoning proposes; evidence, policy, and validation dispose; and anything unsupported routes to a human rather than to a confident guess.
+Figure&nbsp;6.7: How a billing complaint becomes a grounded action. Reasoning proposes; evidence, policy, and validation dispose; and anything unsupported routes to a human rather than to a confident guess.
 </figcaption>
 </figure>
 </div>
-<p>Notice that this small flow already gestures at almost everything the rest of the book will build: the tools that gather evidence (<a href="06-the-augmented-llm.html" class="quarto-xref"><span>Chapter 6</span></a> and the tools chapter), the memory that supplies history, the policies and checks that gate an action, the logging that makes the whole path auditable (<a href="../part4-production/16-observability.html" class="quarto-xref"><span>Chapter 16</span></a>), and the human approval that guards irreversible moves (<a href="../part4-production/17-safety-and-guardrails.html" class="quarto-xref"><span>Chapter 17</span></a>). Chapter 5 is where you learn <em>why</em> each of those exists. The chapters ahead are where you learn to build them.</p>
-<p>Seen this way, the failures are not a reason to abandon LLMs; they are the blueprint for everything we build next. The chapters ahead are, in a real sense, a guided tour of these three moves (grounding, verifying, and supervising) applied over and over in richer and richer combinations. The very next chapter starts at the most fundamental of them: taking the bare model and giving it its first real capabilities, turning it into what we will call the <strong>augmented LLM</strong> in <a href="06-the-augmented-llm.html" class="quarto-xref"><span>Chapter 6</span></a>.</p>
+<p>Notice that this small flow already gestures at almost everything the rest of the book will build: the tools that gather evidence (<a href="07-the-augmented-llm.html" class="quarto-xref"><span>Chapter 7</span></a> and the tools chapter), the memory that supplies history, the policies and checks that gate an action, the logging that makes the whole path auditable (<a href="../part4-production/17-observability.html" class="quarto-xref"><span>Chapter 17</span></a>), and the human approval that guards irreversible moves (<a href="../part4-production/18-safety-and-guardrails.html" class="quarto-xref"><span>Chapter 18</span></a>). Chapter 6 is where you learn <em>why</em> each of those exists. The chapters ahead are where you learn to build them.</p>
+<p>Seen this way, the failures are not a reason to abandon LLMs; they are the blueprint for everything we build next. The chapters ahead are, in a real sense, a guided tour of these three moves (grounding, verifying, and supervising) applied over and over in richer and richer combinations. The very next chapter starts at the most fundamental of them: taking the bare model and giving it its first real capabilities, turning it into what we will call the <strong>augmented LLM</strong> in <a href="07-the-augmented-llm.html" class="quarto-xref"><span>Chapter 7</span></a>.</p>
 </section>
 </section>
-<section id="sec-ch5-summary" class="level2" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="sec-ch5-summary"><span class="header-section-number">5.7</span> Summary</h2>
+<section id="sec-ch5-summary" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="sec-ch5-summary"><span class="header-section-number">6.7</span> Summary</h2>
 <ul>
 <li>An LLM is trained to do one simple thing, <strong>predict the next word</strong>, yet at scale that objective yields in-context learning, instruction following, and something that looks, from the outside, like reasoning <span class="citation" data-cites="wei2022emergent brown2020fewshot"><a href="../../references.html#ref-wei2022emergent" role="doc-biblioref">[1]</a>, <a href="../../references.html#ref-brown2020fewshot" role="doc-biblioref">[2]</a></span>.</li>
 <li><strong>Reasoning is not one thing.</strong> A model can be a fluent essayist and a shaky accountant at once, strong at linguistic and social reasoning while weak at exact mathematical, logical, and causal reasoning, so “can it reason?” is the wrong question; “which kind, how reliably?” is the right one.</li>
@@ -783,18 +789,18 @@ Figure&nbsp;5.7: How a billing complaint becomes a grounded action. Reasoning pr
 <li>These failures are dangerous precisely because they are <strong>confident and silent</strong>, so building an agent means climbing a <strong>reliability ladder</strong>, grounding it (tools + retrieval), verifying its output (self-consistency, step checks, reflection), and keeping a human in the loop where a quiet mistake would be costly. Grounding supplies evidence, not correctness; verification is a separate step.</li>
 <li>Reasoning (“what follows?”) is not planning (“what next?”), and a good reasoner knows when to <strong>abstain</strong>, asking or escalating rather than guessing when the evidence will not support an answer.</li>
 </ul>
-<p>With the engine understood, its power and its cracks, we can start bolting on the parts that make it dependable. <a href="06-the-augmented-llm.html" class="quarto-xref"><span>Chapter 6</span></a> begins that work by giving the bare model its first real reach into the world: tools, retrieval, and memory.</p>
+<p>With the engine understood, its power and its cracks, we can start bolting on the parts that make it dependable. <a href="07-the-augmented-llm.html" class="quarto-xref"><span>Chapter 7</span></a> begins that work by giving the bare model its first real reach into the world: tools, retrieval, and memory.</p>
 </section>
-<section id="sec-ch5-exercises" class="level2" data-number="5.8">
-<h2 data-number="5.8" class="anchored" data-anchor-id="sec-ch5-exercises"><span class="header-section-number">5.8</span> Exercises</h2>
+<section id="sec-ch5-exercises" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="sec-ch5-exercises"><span class="header-section-number">6.8</span> Exercises</h2>
 <ol type="1">
 <li>In your own words, explain the puzzle at the heart of this chapter: how does an objective as simple as “predict the next word” give rise to behavior that resembles reasoning? What does that origin story tell you about how far to trust the result?</li>
-<li>Using <a href="#tbl-reasoning-types" class="quarto-xref">Table&nbsp;<span>5.1</span></a>, pick one billing ticket and name every <em>kind</em> of reasoning it secretly requires. Where would you expect the same model to be strong, and where would you expect it to be weak, and why does that unevenness matter for an agent?</li>
-<li>Chain-of-thought helps on multi-step problems but adds latency and cost on simple ones. Describe one task where you would <em>not</em> bother with it, and justify the trade-off using the token-feedback explanation from <a href="#sec-cot" class="quarto-xref"><span>Section 5.3</span></a>.</li>
+<li>Using <a href="#tbl-reasoning-types" class="quarto-xref">Table&nbsp;<span>6.1</span></a>, pick one billing ticket and name every <em>kind</em> of reasoning it secretly requires. Where would you expect the same model to be strong, and where would you expect it to be weak, and why does that unevenness matter for an agent?</li>
+<li>Chain-of-thought helps on multi-step problems but adds latency and cost on simple ones. Describe one task where you would <em>not</em> bother with it, and justify the trade-off using the token-feedback explanation from <a href="#sec-cot" class="quarto-xref"><span>Section 6.3</span></a>.</li>
 <li>The chapter argues a chain of thought is “a scaffold, not proof” <span class="citation" data-cites="arcuschin2025unfaithful"><a href="../../references.html#ref-arcuschin2025unfaithful" role="doc-biblioref">[7]</a></span>. Explain why a correct final answer reached by a broken process is still a bug, and describe one thing an agent should log so its <em>real</em> audit trail does not depend on the model’s narration.</li>
-<li>Sketch the <strong>reliability ladder</strong> from <a href="#fig-reliability-ladder" class="quarto-xref">Figure&nbsp;<span>5.6</span></a> for two tasks: drafting a suggested reply a human will review, and issuing a refund. How high up the ladder would you climb for each, and what does the cost of being wrong have to do with your choice?</li>
+<li>Sketch the <strong>reliability ladder</strong> from <a href="#fig-reliability-ladder" class="quarto-xref">Figure&nbsp;<span>6.6</span></a> for two tasks: drafting a suggested reply a human will review, and issuing a refund. How high up the ladder would you climb for each, and what does the cost of being wrong have to do with your choice?</li>
 <li>Design a <strong>perturbation test</strong> for one reasoning step your agent depends on. List the variations you would apply (names, numbers, an irrelevant clause, a reversal, repeated samples) and state the pass criterion in one sentence.</li>
-<li>Explain the difference between <strong>grounding</strong> and <strong>verification</strong> using the double-charge example from <a href="#sec-ch5-grounding-verify" class="quarto-xref"><span>Section 5.6.1</span></a>. Why does a tool returning two charges fail to prove a duplicate, and what extra checks turn evidence into a conclusion?</li>
+<li>Explain the difference between <strong>grounding</strong> and <strong>verification</strong> using the double-charge example from <a href="#sec-ch5-grounding-verify" class="quarto-xref"><span>Section 6.6.1</span></a>. Why does a tool returning two charges fail to prove a duplicate, and what extra checks turn evidence into a conclusion?</li>
 </ol>
 
 
@@ -1420,13 +1426,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../chapters/part1-foundations/04-environments-and-rationality.html" class="pagination-link" aria-label="Environments &amp; Rationality">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Environments &amp; Rationality</span></span>
+      <a href="../../chapters/part2-llm-agents/05-inside-the-language-model.html" class="pagination-link" aria-label="Inside the Language Model">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Inside the Language Model</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../chapters/part2-llm-agents/06-the-augmented-llm.html" class="pagination-link" aria-label="The Augmented LLM">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../chapters/part2-llm-agents/07-the-augmented-llm.html" class="pagination-link" aria-label="The Augmented LLM">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

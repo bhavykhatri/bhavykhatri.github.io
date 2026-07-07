@@ -2,110 +2,114 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.bhavykhatri.com/Agentic-AI-Book/index.html</loc>
-    <lastmod>2026-07-05T09:03:03.772Z</lastmod>
+    <lastmod>2026-07-07T02:47:23.801Z</lastmod>
   </url>
   <url>
     <loc>https://www.bhavykhatri.com/Agentic-AI-Book/preface.html</loc>
-    <lastmod>2026-07-04T10:28:16.690Z</lastmod>
+    <lastmod>2026-07-07T02:47:23.805Z</lastmod>
   </url>
   <url>
     <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part1-foundations/01-what-is-an-agent.html</loc>
-    <lastmod>2026-07-02T10:15:01.104Z</lastmod>
+    <lastmod>2026-07-07T02:47:23.711Z</lastmod>
   </url>
   <url>
     <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part1-foundations/02-history-and-theory.html</loc>
-    <lastmod>2026-07-02T09:02:32.637Z</lastmod>
+    <lastmod>2026-07-07T02:47:23.714Z</lastmod>
   </url>
   <url>
     <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part1-foundations/03-agent-architectures.html</loc>
-    <lastmod>2026-07-02T09:02:32.644Z</lastmod>
+    <lastmod>2026-07-07T02:47:23.717Z</lastmod>
   </url>
   <url>
     <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part1-foundations/04-environments-and-rationality.html</loc>
-    <lastmod>2026-07-02T10:15:01.106Z</lastmod>
+    <lastmod>2026-07-07T02:47:23.721Z</lastmod>
   </url>
   <url>
-    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part2-llm-agents/05-llms-as-reasoners.html</loc>
-    <lastmod>2026-07-02T16:22:29.803Z</lastmod>
+    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part2-llm-agents/05-inside-the-language-model.html</loc>
+    <lastmod>2026-07-07T03:52:05.955Z</lastmod>
   </url>
   <url>
-    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part2-llm-agents/06-the-augmented-llm.html</loc>
-    <lastmod>2026-07-02T16:22:29.804Z</lastmod>
+    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part2-llm-agents/06-llms-as-reasoners.html</loc>
+    <lastmod>2026-07-07T02:47:23.726Z</lastmod>
   </url>
   <url>
-    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part2-llm-agents/07-reasoning-and-planning.html</loc>
-    <lastmod>2026-07-02T16:22:29.807Z</lastmod>
+    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part2-llm-agents/07-the-augmented-llm.html</loc>
+    <lastmod>2026-07-07T02:47:23.748Z</lastmod>
   </url>
   <url>
-    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part3-building/08-workflows-vs-agents.html</loc>
-    <lastmod>2026-07-03T01:50:59.858Z</lastmod>
+    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part2-llm-agents/08-reasoning-and-planning.html</loc>
+    <lastmod>2026-07-07T02:47:23.751Z</lastmod>
   </url>
   <url>
-    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part3-building/09-agentic-patterns.html</loc>
-    <lastmod>2026-07-02T15:56:14.608Z</lastmod>
+    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part3-building/09-workflows-vs-agents.html</loc>
+    <lastmod>2026-07-07T02:47:23.755Z</lastmod>
   </url>
   <url>
-    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part3-building/10-tools-and-mcp.html</loc>
-    <lastmod>2026-07-03T09:52:50.916Z</lastmod>
+    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part3-building/10-agentic-patterns.html</loc>
+    <lastmod>2026-07-07T02:47:23.758Z</lastmod>
   </url>
   <url>
-    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part3-building/11-memory-systems.html</loc>
-    <lastmod>2026-07-02T12:25:33.578Z</lastmod>
+    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part3-building/11-tools-and-mcp.html</loc>
+    <lastmod>2026-07-07T02:47:23.761Z</lastmod>
   </url>
   <url>
-    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part3-building/12-orchestration-langgraph.html</loc>
-    <lastmod>2026-07-03T04:47:02.664Z</lastmod>
+    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part3-building/12-memory-systems.html</loc>
+    <lastmod>2026-07-07T02:47:23.764Z</lastmod>
   </url>
   <url>
-    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part3-building/13-openai-agents-sdk.html</loc>
-    <lastmod>2026-07-03T04:47:02.675Z</lastmod>
+    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part3-building/13-orchestration-langgraph.html</loc>
+    <lastmod>2026-07-07T02:47:23.767Z</lastmod>
   </url>
   <url>
-    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part3-building/14-multi-agent-systems.html</loc>
-    <lastmod>2026-07-03T04:47:02.665Z</lastmod>
+    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part3-building/14-openai-agents-sdk.html</loc>
+    <lastmod>2026-07-07T02:47:23.770Z</lastmod>
   </url>
   <url>
-    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part4-production/15-evaluation.html</loc>
-    <lastmod>2026-07-03T12:42:17.999Z</lastmod>
+    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part3-building/15-multi-agent-systems.html</loc>
+    <lastmod>2026-07-07T02:47:23.773Z</lastmod>
   </url>
   <url>
-    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part4-production/16-observability.html</loc>
-    <lastmod>2026-07-03T10:44:10.316Z</lastmod>
+    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part4-production/16-evaluation.html</loc>
+    <lastmod>2026-07-07T02:47:23.776Z</lastmod>
   </url>
   <url>
-    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part4-production/17-safety-and-guardrails.html</loc>
-    <lastmod>2026-07-03T12:42:17.978Z</lastmod>
+    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part4-production/17-observability.html</loc>
+    <lastmod>2026-07-07T02:47:23.779Z</lastmod>
   </url>
   <url>
-    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part4-production/18-deployment-and-cost.html</loc>
-    <lastmod>2026-07-04T10:28:16.690Z</lastmod>
+    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part4-production/18-safety-and-guardrails.html</loc>
+    <lastmod>2026-07-07T02:47:23.782Z</lastmod>
   </url>
   <url>
-    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part5-frontiers/19-computer-use-and-embodiment.html</loc>
-    <lastmod>2026-07-04T10:28:16.695Z</lastmod>
+    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part4-production/19-deployment-and-cost.html</loc>
+    <lastmod>2026-07-07T02:47:23.786Z</lastmod>
   </url>
   <url>
-    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part5-frontiers/20-frontiers-and-open-problems.html</loc>
-    <lastmod>2026-07-04T10:28:16.695Z</lastmod>
+    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part5-frontiers/20-computer-use-and-embodiment.html</loc>
+    <lastmod>2026-07-07T02:47:23.790Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/part5-frontiers/21-frontiers-and-open-problems.html</loc>
+    <lastmod>2026-07-07T02:47:23.793Z</lastmod>
   </url>
   <url>
     <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/appendices/a-environment-setup.html</loc>
-    <lastmod>2026-07-01T12:33:23.529Z</lastmod>
+    <lastmod>2026-07-07T02:47:23.698Z</lastmod>
   </url>
   <url>
     <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/appendices/b-glossary.html</loc>
-    <lastmod>2026-07-02T15:31:53.371Z</lastmod>
+    <lastmod>2026-07-07T02:47:23.703Z</lastmod>
   </url>
   <url>
     <loc>https://www.bhavykhatri.com/Agentic-AI-Book/chapters/appendices/c-further-reading.html</loc>
-    <lastmod>2026-07-01T12:33:23.563Z</lastmod>
+    <lastmod>2026-07-07T02:47:23.707Z</lastmod>
   </url>
   <url>
     <loc>https://www.bhavykhatri.com/Agentic-AI-Book/references.html</loc>
-    <lastmod>2026-07-01T12:33:23.491Z</lastmod>
+    <lastmod>2026-07-07T02:47:23.808Z</lastmod>
   </url>
   <url>
     <loc>https://www.bhavykhatri.com/Agentic-AI-Book/about-the-author.html</loc>
-    <lastmod>2026-07-05T09:03:03.776Z</lastmod>
+    <lastmod>2026-07-07T02:47:23.797Z</lastmod>
   </url>
 </urlset>

@@ -8,7 +8,7 @@
 
 <meta name="description" content="A practical, research-grounded guide that connects the classical theory of intelligent agents to the modern practice of building autonomous LLM agents with tools, memory, planning, and multi-agent orchestration.">
 
-<title>11&nbsp; Memory Systems – Agents: From Theory to Production</title>
+<title>12&nbsp; Memory Systems – Agents: From Theory to Production</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,8 +85,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../chapters/part3-building/12-orchestration-langgraph.html" rel="next">
-<link href="../../chapters/part3-building/10-tools-and-mcp.html" rel="prev">
+<link href="../../chapters/part3-building/13-orchestration-langgraph.html" rel="next">
+<link href="../../chapters/part3-building/11-tools-and-mcp.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -141,7 +141,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part3-building/08-workflows-vs-agents.html">Part III — Building Agents</a></li><li class="breadcrumb-item"><a href="../../chapters/part3-building/11-memory-systems.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Memory Systems</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part3-building/09-workflows-vs-agents.html">Part III — Building Agents</a></li><li class="breadcrumb-item"><a href="../../chapters/part3-building/12-memory-systems.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Memory Systems</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -228,20 +228,26 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part2-llm-agents/05-llms-as-reasoners.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></a>
+  <a href="../../chapters/part2-llm-agents/05-inside-the-language-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Inside the Language Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part2-llm-agents/06-the-augmented-llm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span></a>
+  <a href="../../chapters/part2-llm-agents/06-llms-as-reasoners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part2-llm-agents/07-reasoning-and-planning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span></a>
+  <a href="../../chapters/part2-llm-agents/07-the-augmented-llm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/08-reasoning-and-planning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span></a>
   </div>
 </li>
       </ul>
@@ -257,44 +263,44 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/08-workflows-vs-agents.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span></a>
+  <a href="../../chapters/part3-building/09-workflows-vs-agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/09-agentic-patterns.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span></a>
+  <a href="../../chapters/part3-building/10-agentic-patterns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/10-tools-and-mcp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span></a>
+  <a href="../../chapters/part3-building/11-tools-and-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/11-memory-systems.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></a>
+  <a href="../../chapters/part3-building/12-memory-systems.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/12-orchestration-langgraph.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></a>
+  <a href="../../chapters/part3-building/13-orchestration-langgraph.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/13-openai-agents-sdk.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></a>
+  <a href="../../chapters/part3-building/14-openai-agents-sdk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/14-multi-agent-systems.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></a>
+  <a href="../../chapters/part3-building/15-multi-agent-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></a>
   </div>
 </li>
       </ul>
@@ -310,26 +316,26 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/15-evaluation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
+  <a href="../../chapters/part4-production/16-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/16-observability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Observability</span></span></a>
+  <a href="../../chapters/part4-production/17-observability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Observability</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/17-safety-and-guardrails.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Safety &amp; Guardrails</span></span></a>
+  <a href="../../chapters/part4-production/18-safety-and-guardrails.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Safety &amp; Guardrails</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/18-deployment-and-cost.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></span></a>
+  <a href="../../chapters/part4-production/19-deployment-and-cost.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></span></a>
   </div>
 </li>
       </ul>
@@ -345,14 +351,14 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part5-frontiers/19-computer-use-and-embodiment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Computer Use &amp; Embodiment</span></span></a>
+  <a href="../../chapters/part5-frontiers/20-computer-use-and-embodiment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Computer Use &amp; Embodiment</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part5-frontiers/20-frontiers-and-open-problems.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Frontiers &amp; Open Problems</span></span></a>
+  <a href="../../chapters/part5-frontiers/21-frontiers-and-open-problems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Frontiers &amp; Open Problems</span></span></a>
   </div>
 </li>
       </ul>
@@ -369,19 +375,19 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../chapters/appendices/a-environment-setup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Appendix A — Environment Setup</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Appendix A — Environment Setup</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../chapters/appendices/b-glossary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Appendix B — Glossary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Appendix B — Glossary</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../chapters/appendices/c-further-reading.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Appendix C — Further Reading</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Appendix C — Further Reading</span></span></a>
   </div>
 </li>
       </ul>
@@ -408,49 +414,49 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-ch11-intuition" id="toc-sec-ch11-intuition" class="nav-link active" data-scroll-target="#sec-ch11-intuition"><span class="header-section-number">11.1</span> Opening intuition</a></li>
-  <li><a href="#sec-ch11-types" id="toc-sec-ch11-types" class="nav-link" data-scroll-target="#sec-ch11-types"><span class="header-section-number">11.2</span> Types of memory</a>
+  <li><a href="#sec-ch11-intuition" id="toc-sec-ch11-intuition" class="nav-link active" data-scroll-target="#sec-ch11-intuition"><span class="header-section-number">12.1</span> Opening intuition</a></li>
+  <li><a href="#sec-ch11-types" id="toc-sec-ch11-types" class="nav-link" data-scroll-target="#sec-ch11-types"><span class="header-section-number">12.2</span> Types of memory</a>
   <ul class="collapse">
-  <li><a href="#sec-ch11-working" id="toc-sec-ch11-working" class="nav-link" data-scroll-target="#sec-ch11-working"><span class="header-section-number">11.2.1</span> Working memory: the context window</a></li>
-  <li><a href="#sec-ch11-longterm-kinds" id="toc-sec-ch11-longterm-kinds" class="nav-link" data-scroll-target="#sec-ch11-longterm-kinds"><span class="header-section-number">11.2.2</span> Long-term memory: episodic, semantic, procedural</a></li>
-  <li><a href="#sec-ch11-procedural" id="toc-sec-ch11-procedural" class="nav-link" data-scroll-target="#sec-ch11-procedural"><span class="header-section-number">11.2.3</span> Procedural memory: a library of skills</a></li>
-  <li><a href="#sec-ch11-reflective" id="toc-sec-ch11-reflective" class="nav-link" data-scroll-target="#sec-ch11-reflective"><span class="header-section-number">11.2.4</span> Reflective memory: lessons learned</a></li>
-  <li><a href="#sec-ch11-research-view" id="toc-sec-ch11-research-view" class="nav-link" data-scroll-target="#sec-ch11-research-view"><span class="header-section-number">11.2.5</span> The research view: forms, functions, and dynamics</a></li>
-  <li><a href="#sec-ch11-inside-outside" id="toc-sec-ch11-inside-outside" class="nav-link" data-scroll-target="#sec-ch11-inside-outside"><span class="header-section-number">11.2.6</span> Inside the model, or outside it</a></li>
+  <li><a href="#sec-ch11-working" id="toc-sec-ch11-working" class="nav-link" data-scroll-target="#sec-ch11-working"><span class="header-section-number">12.2.1</span> Working memory: the context window</a></li>
+  <li><a href="#sec-ch11-longterm-kinds" id="toc-sec-ch11-longterm-kinds" class="nav-link" data-scroll-target="#sec-ch11-longterm-kinds"><span class="header-section-number">12.2.2</span> Long-term memory: episodic, semantic, procedural</a></li>
+  <li><a href="#sec-ch11-procedural" id="toc-sec-ch11-procedural" class="nav-link" data-scroll-target="#sec-ch11-procedural"><span class="header-section-number">12.2.3</span> Procedural memory: a library of skills</a></li>
+  <li><a href="#sec-ch11-reflective" id="toc-sec-ch11-reflective" class="nav-link" data-scroll-target="#sec-ch11-reflective"><span class="header-section-number">12.2.4</span> Reflective memory: lessons learned</a></li>
+  <li><a href="#sec-ch11-research-view" id="toc-sec-ch11-research-view" class="nav-link" data-scroll-target="#sec-ch11-research-view"><span class="header-section-number">12.2.5</span> The research view: forms, functions, and dynamics</a></li>
+  <li><a href="#sec-ch11-inside-outside" id="toc-sec-ch11-inside-outside" class="nav-link" data-scroll-target="#sec-ch11-inside-outside"><span class="header-section-number">12.2.6</span> Inside the model, or outside it</a></li>
   </ul></li>
-  <li><a href="#sec-ch11-vectors" id="toc-sec-ch11-vectors" class="nav-link" data-scroll-target="#sec-ch11-vectors"><span class="header-section-number">11.3</span> Long-term memory with vector stores</a>
+  <li><a href="#sec-ch11-vectors" id="toc-sec-ch11-vectors" class="nav-link" data-scroll-target="#sec-ch11-vectors"><span class="header-section-number">12.3</span> Long-term memory with vector stores</a>
   <ul class="collapse">
-  <li><a href="#sec-ch11-embeddings" id="toc-sec-ch11-embeddings" class="nav-link" data-scroll-target="#sec-ch11-embeddings"><span class="header-section-number">11.3.1</span> Embeddings: shelving by meaning</a></li>
-  <li><a href="#sec-ch11-read-write" id="toc-sec-ch11-read-write" class="nav-link" data-scroll-target="#sec-ch11-read-write"><span class="header-section-number">11.3.2</span> The write and read paths</a></li>
+  <li><a href="#sec-ch11-embeddings" id="toc-sec-ch11-embeddings" class="nav-link" data-scroll-target="#sec-ch11-embeddings"><span class="header-section-number">12.3.1</span> Embeddings: shelving by meaning</a></li>
+  <li><a href="#sec-ch11-read-write" id="toc-sec-ch11-read-write" class="nav-link" data-scroll-target="#sec-ch11-read-write"><span class="header-section-number">12.3.2</span> The write and read paths</a></li>
   </ul></li>
-  <li><a href="#sec-ch11-context-management" id="toc-sec-ch11-context-management" class="nav-link" data-scroll-target="#sec-ch11-context-management"><span class="header-section-number">11.4</span> Memory as context management</a></li>
-  <li><a href="#sec-ch11-management" id="toc-sec-ch11-management" class="nav-link" data-scroll-target="#sec-ch11-management"><span class="header-section-number">11.5</span> Memory management</a>
+  <li><a href="#sec-ch11-context-management" id="toc-sec-ch11-context-management" class="nav-link" data-scroll-target="#sec-ch11-context-management"><span class="header-section-number">12.4</span> Memory as context management</a></li>
+  <li><a href="#sec-ch11-management" id="toc-sec-ch11-management" class="nav-link" data-scroll-target="#sec-ch11-management"><span class="header-section-number">12.5</span> Memory management</a>
   <ul class="collapse">
-  <li><a href="#sec-ch11-summarization" id="toc-sec-ch11-summarization" class="nav-link" data-scroll-target="#sec-ch11-summarization"><span class="header-section-number">11.5.1</span> Managing working memory: summarization</a></li>
-  <li><a href="#sec-ch11-relevance" id="toc-sec-ch11-relevance" class="nav-link" data-scroll-target="#sec-ch11-relevance"><span class="header-section-number">11.5.2</span> Managing long-term memory: relevance, recency, importance</a></li>
-  <li><a href="#sec-ch11-signals" id="toc-sec-ch11-signals" class="nav-link" data-scroll-target="#sec-ch11-signals"><span class="header-section-number">11.5.3</span> Retrieval is more than similarity</a></li>
-  <li><a href="#sec-ch11-forgetting" id="toc-sec-ch11-forgetting" class="nav-link" data-scroll-target="#sec-ch11-forgetting"><span class="header-section-number">11.5.4</span> Forgetting is a design feature, not a bug</a></li>
+  <li><a href="#sec-ch11-summarization" id="toc-sec-ch11-summarization" class="nav-link" data-scroll-target="#sec-ch11-summarization"><span class="header-section-number">12.5.1</span> Managing working memory: summarization</a></li>
+  <li><a href="#sec-ch11-relevance" id="toc-sec-ch11-relevance" class="nav-link" data-scroll-target="#sec-ch11-relevance"><span class="header-section-number">12.5.2</span> Managing long-term memory: relevance, recency, importance</a></li>
+  <li><a href="#sec-ch11-signals" id="toc-sec-ch11-signals" class="nav-link" data-scroll-target="#sec-ch11-signals"><span class="header-section-number">12.5.3</span> Retrieval is more than similarity</a></li>
+  <li><a href="#sec-ch11-forgetting" id="toc-sec-ch11-forgetting" class="nav-link" data-scroll-target="#sec-ch11-forgetting"><span class="header-section-number">12.5.4</span> Forgetting is a design feature, not a bug</a></li>
   </ul></li>
-  <li><a href="#sec-ch11-worked" id="toc-sec-ch11-worked" class="nav-link" data-scroll-target="#sec-ch11-worked"><span class="header-section-number">11.6</span> A worked example: an assistant that remembers you</a></li>
-  <li><a href="#sec-ch11-lifecycle" id="toc-sec-ch11-lifecycle" class="nav-link" data-scroll-target="#sec-ch11-lifecycle"><span class="header-section-number">11.7</span> Memory is a lifecycle, not a database</a>
+  <li><a href="#sec-ch11-worked" id="toc-sec-ch11-worked" class="nav-link" data-scroll-target="#sec-ch11-worked"><span class="header-section-number">12.6</span> A worked example: an assistant that remembers you</a></li>
+  <li><a href="#sec-ch11-lifecycle" id="toc-sec-ch11-lifecycle" class="nav-link" data-scroll-target="#sec-ch11-lifecycle"><span class="header-section-number">12.7</span> Memory is a lifecycle, not a database</a>
   <ul class="collapse">
-  <li><a href="#sec-ch11-what-not" id="toc-sec-ch11-what-not" class="nav-link" data-scroll-target="#sec-ch11-what-not"><span class="header-section-number">11.7.1</span> What not to remember</a></li>
+  <li><a href="#sec-ch11-what-not" id="toc-sec-ch11-what-not" class="nav-link" data-scroll-target="#sec-ch11-what-not"><span class="header-section-number">12.7.1</span> What not to remember</a></li>
   </ul></li>
-  <li><a href="#sec-ch11-graph" id="toc-sec-ch11-graph" class="nav-link" data-scroll-target="#sec-ch11-graph"><span class="header-section-number">11.8</span> Memory as a graph, not just a list</a></li>
-  <li><a href="#sec-ch11-case" id="toc-sec-ch11-case" class="nav-link" data-scroll-target="#sec-ch11-case"><span class="header-section-number">11.9</span> Case study: the Ledgerly support agent</a></li>
-  <li><a href="#sec-ch11-evaluation" id="toc-sec-ch11-evaluation" class="nav-link" data-scroll-target="#sec-ch11-evaluation"><span class="header-section-number">11.10</span> How do we know memory works?</a></li>
-  <li><a href="#sec-ch11-frontier" id="toc-sec-ch11-frontier" class="nav-link" data-scroll-target="#sec-ch11-frontier"><span class="header-section-number">11.11</span> Where memory research is going</a></li>
-  <li><a href="#sec-ch11-summary" id="toc-sec-ch11-summary" class="nav-link" data-scroll-target="#sec-ch11-summary"><span class="header-section-number">11.12</span> Summary</a></li>
-  <li><a href="#sec-ch11-exercises" id="toc-sec-ch11-exercises" class="nav-link" data-scroll-target="#sec-ch11-exercises"><span class="header-section-number">11.13</span> Exercises</a></li>
+  <li><a href="#sec-ch11-graph" id="toc-sec-ch11-graph" class="nav-link" data-scroll-target="#sec-ch11-graph"><span class="header-section-number">12.8</span> Memory as a graph, not just a list</a></li>
+  <li><a href="#sec-ch11-case" id="toc-sec-ch11-case" class="nav-link" data-scroll-target="#sec-ch11-case"><span class="header-section-number">12.9</span> Case study: the Ledgerly support agent</a></li>
+  <li><a href="#sec-ch11-evaluation" id="toc-sec-ch11-evaluation" class="nav-link" data-scroll-target="#sec-ch11-evaluation"><span class="header-section-number">12.10</span> How do we know memory works?</a></li>
+  <li><a href="#sec-ch11-frontier" id="toc-sec-ch11-frontier" class="nav-link" data-scroll-target="#sec-ch11-frontier"><span class="header-section-number">12.11</span> Where memory research is going</a></li>
+  <li><a href="#sec-ch11-summary" id="toc-sec-ch11-summary" class="nav-link" data-scroll-target="#sec-ch11-summary"><span class="header-section-number">12.12</span> Summary</a></li>
+  <li><a href="#sec-ch11-exercises" id="toc-sec-ch11-exercises" class="nav-link" data-scroll-target="#sec-ch11-exercises"><span class="header-section-number">12.13</span> Exercises</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/bhavykhatri/bhavykhatri.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part3-building/08-workflows-vs-agents.html">Part III — Building Agents</a></li><li class="breadcrumb-item"><a href="../../chapters/part3-building/11-memory-systems.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Memory Systems</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part3-building/09-workflows-vs-agents.html">Part III — Building Agents</a></li><li class="breadcrumb-item"><a href="../../chapters/part3-building/12-memory-systems.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Memory Systems</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-memory-systems" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></h1>
+<h1 class="title"><span id="sec-memory-systems" class="quarto-section-identifier"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></h1>
 </div>
 
 
@@ -474,17 +480,17 @@ div.csl-indent {
 <blockquote class="blockquote">
 <p>After this chapter you will be able to design short- and long-term memory for agents and implement retrieval-backed memory.</p>
 </blockquote>
-<section id="sec-ch11-intuition" class="level2" data-number="11.1">
-<h2 data-number="11.1" class="anchored" data-anchor-id="sec-ch11-intuition"><span class="header-section-number">11.1</span> Opening intuition</h2>
-<p>The previous chapter left our agent with capable hands but a troubling flaw: it acts, and then it forgets. Every tool call, every clever bit of reasoning, every fact the user just told it lives only inside the current conversation and vanishes the moment that conversation ends. We flagged this gap once already, when we introduced memory as one of the augmented LLM’s three augmentations in <a href="../part2-llm-agents/06-the-augmented-llm.html#sec-ch6-memory" class="quarto-xref"><span>Section 6.5</span></a>. Now we make good on that promise and give the agent a past.</p>
-<p>To feel why this matters, imagine a brilliant colleague with a peculiar condition: every morning they arrive having forgotten everything from the day before. Their raw intelligence is intact, so they can still reason, write, and solve, but you must reintroduce yourself daily, re-explain the project from scratch, and re-teach every preference you have ever stated. You would never call such a person a good assistant, however smart they are, because <em>usefulness compounds through memory</em> and theirs never accumulates. A stateless LLM is exactly this colleague. The model’s weights hold vast general knowledge, but about <em>you</em>, <em>this task</em>, and <em>what just happened</em>, it knows only what fits in the context window in front of it, and when that window scrolls past or the session closes, it is morning again and everything is forgotten. <a href="#fig-no-memory" class="quarto-xref">Figure&nbsp;<span>11.1</span></a> shows the failure in miniature: within a single session the model happily greets the user by name, yet one session later it has no record of ever being told who they are.</p>
+<section id="sec-ch11-intuition" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="sec-ch11-intuition"><span class="header-section-number">12.1</span> Opening intuition</h2>
+<p>The previous chapter left our agent with capable hands but a troubling flaw: it acts, and then it forgets. Every tool call, every clever bit of reasoning, every fact the user just told it lives only inside the current conversation and vanishes the moment that conversation ends. We flagged this gap once already, when we introduced memory as one of the augmented LLM’s three augmentations in <a href="../part2-llm-agents/07-the-augmented-llm.html#sec-ch6-memory" class="quarto-xref"><span>Section 7.5</span></a>. Now we make good on that promise and give the agent a past.</p>
+<p>To feel why this matters, imagine a brilliant colleague with a peculiar condition: every morning they arrive having forgotten everything from the day before. Their raw intelligence is intact, so they can still reason, write, and solve, but you must reintroduce yourself daily, re-explain the project from scratch, and re-teach every preference you have ever stated. You would never call such a person a good assistant, however smart they are, because <em>usefulness compounds through memory</em> and theirs never accumulates. A stateless LLM is exactly this colleague. The model’s weights hold vast general knowledge, but about <em>you</em>, <em>this task</em>, and <em>what just happened</em>, it knows only what fits in the context window in front of it, and when that window scrolls past or the session closes, it is morning again and everything is forgotten. <a href="#fig-no-memory" class="quarto-xref">Figure&nbsp;<span>12.1</span></a> shows the failure in miniature: within a single session the model happily greets the user by name, yet one session later it has no record of ever being told who they are.</p>
 <div id="fig-no-memory" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-no-memory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch11/fig-no-memory.png" class="img-fluid figure-img">
+<img src="../..\images/ch12/fig-no-memory.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-no-memory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.1: Without memory, an LLM is stateless. It can use your name within a single session, but once a new session begins that context is gone, and asked for your name it has no record of ever being told. Closing this gap is the job of the rest of the chapter.
+Figure&nbsp;12.1: Without memory, an LLM is stateless. It can use your name within a single session, but once a new session begins that context is gone, and asked for your name it has no record of ever being told. Closing this gap is the job of the rest of the chapter.
 </figcaption>
 </figure>
 </div>
@@ -500,85 +506,85 @@ Figure&nbsp;11.1: Without memory, an LLM is stateless. It can use your name with
 </ul>
 <p>That is a demanding list, and no single trick satisfies it. But “memory” is not one thing either, and building it well means being precise about which <em>kind</em> of memory a situation calls for: the fleeting kind that holds the current conversation, or the durable kind that carries knowledge across weeks. Human minds solve this with several distinct memory systems working together, and that turns out to be a remarkably good blueprint for agents. So we begin by taking the human mind apart, gently, to see what kinds of memory there are.</p>
 </section>
-<section id="sec-ch11-types" class="level2" data-number="11.2">
-<h2 data-number="11.2" class="anchored" data-anchor-id="sec-ch11-types"><span class="header-section-number">11.2</span> Types of memory</h2>
+<section id="sec-ch11-types" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="sec-ch11-types"><span class="header-section-number">12.2</span> Types of memory</h2>
 <p>When psychologists talk about human memory, they do not treat it as a single bucket. They distinguish several systems that do different jobs, and borrowing their vocabulary is the clearest way to organize an agent’s memory too. Three distinctions matter for us: the fast, fleeting store that holds the present moment; the durable stores that divide by <em>what kind of thing</em> they remember; and the architectural line between what lives inside the model and what must live outside it. We take them in turn.</p>
-<section id="sec-ch11-working" class="level3" data-number="11.2.1">
-<h3 data-number="11.2.1" class="anchored" data-anchor-id="sec-ch11-working"><span class="header-section-number">11.2.1</span> Working memory: the context window</h3>
+<section id="sec-ch11-working" class="level3" data-number="12.2.1">
+<h3 data-number="12.2.1" class="anchored" data-anchor-id="sec-ch11-working"><span class="header-section-number">12.2.1</span> Working memory: the context window</h3>
 <p>The first and most immediate system is <strong>working memory</strong>, the handful of things you are actively holding in mind <em>right now</em>, like the digits of a phone number you are about to dial. It is fast, it is small, and it empties quickly. For an agent, working memory has an exact counterpart we have already been using all book long: the <strong>context window</strong>. Everything currently in the prompt (the system instructions, the conversation so far, the last tool result) is the agent’s working memory, and like yours it is strictly bounded and lost when attention moves on.</p>
 </section>
-<section id="sec-ch11-longterm-kinds" class="level3" data-number="11.2.2">
-<h3 data-number="11.2.2" class="anchored" data-anchor-id="sec-ch11-longterm-kinds"><span class="header-section-number">11.2.2</span> Long-term memory: episodic, semantic, procedural</h3>
-<p>The other three systems are all forms of <strong>long-term memory</strong>, the durable store that survives past the present moment, and they divide by <em>what kind of thing</em> they remember. <strong>Episodic memory</strong> holds specific past experiences, such as remembering <em>that you had coffee with Sam last Tuesday and she mentioned changing jobs</em>. <strong>Semantic memory</strong> holds general facts stripped of the occasion on which you learned them, like <em>knowing that Paris is the capital of France</em> without recalling when you first heard it. And <strong>procedural memory</strong> holds skills, the how-to knowledge of riding a bicycle that you can perform without being able to state in words. Each maps cleanly onto something an agent needs: a log of past interactions (episodic), a store of learned facts about the user and domain (semantic), and reusable routines or successful strategies (procedural). <a href="#fig-memory-types" class="quarto-xref">Figure&nbsp;<span>11.2</span></a> lays the family out.</p>
+<section id="sec-ch11-longterm-kinds" class="level3" data-number="12.2.2">
+<h3 data-number="12.2.2" class="anchored" data-anchor-id="sec-ch11-longterm-kinds"><span class="header-section-number">12.2.2</span> Long-term memory: episodic, semantic, procedural</h3>
+<p>The other three systems are all forms of <strong>long-term memory</strong>, the durable store that survives past the present moment, and they divide by <em>what kind of thing</em> they remember. <strong>Episodic memory</strong> holds specific past experiences, such as remembering <em>that you had coffee with Sam last Tuesday and she mentioned changing jobs</em>. <strong>Semantic memory</strong> holds general facts stripped of the occasion on which you learned them, like <em>knowing that Paris is the capital of France</em> without recalling when you first heard it. And <strong>procedural memory</strong> holds skills, the how-to knowledge of riding a bicycle that you can perform without being able to state in words. Each maps cleanly onto something an agent needs: a log of past interactions (episodic), a store of learned facts about the user and domain (semantic), and reusable routines or successful strategies (procedural). <a href="#fig-memory-types" class="quarto-xref">Figure&nbsp;<span>12.2</span></a> lays the family out.</p>
 <div id="fig-memory-types" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-memory-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch11/fig-memory-types.png" class="img-fluid figure-img">
+<img src="../..\images/ch12/fig-memory-types.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-memory-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.2: The memory systems, borrowed from human cognition. Working memory is the agent’s context window: fast, small, and transient. Long-term memory divides into episodic (past experiences), semantic (general facts), and procedural (skills), each persisted outside the model and retrieved when relevant.
+Figure&nbsp;12.2: The memory systems, borrowed from human cognition. Working memory is the agent’s context window: fast, small, and transient. Long-term memory divides into episodic (past experiences), semantic (general facts), and procedural (skills), each persisted outside the model and retrieved when relevant.
 </figcaption>
 </figure>
 </div>
 </section>
-<section id="sec-ch11-procedural" class="level3" data-number="11.2.3">
-<h3 data-number="11.2.3" class="anchored" data-anchor-id="sec-ch11-procedural"><span class="header-section-number">11.2.3</span> Procedural memory: a library of skills</h3>
+<section id="sec-ch11-procedural" class="level3" data-number="12.2.3">
+<h3 data-number="12.2.3" class="anchored" data-anchor-id="sec-ch11-procedural"><span class="header-section-number">12.2.3</span> Procedural memory: a library of skills</h3>
 <p>Two of those long-term stores deserve a closer look, because agents lean on them in ways the one-line definitions undersell, and the first is <strong>procedural memory</strong>. Semantic memory stores <em>facts</em> and episodic memory stores <em>events</em>, but procedural memory stores <em>reusable ways of acting</em>, the how-to knowledge you can perform without reciting. Think of a chef’s private binder of recipes. It is not a diary of dinners cooked (that would be episodic) nor a list of ingredient facts (that would be semantic). It is a growing collection of <em>procedures</em>, each one a reliable sequence the chef worked out once and now reaches for whenever the same dish is ordered.</p>
 <p>The Voyager agent turned this idea into a working system inside Minecraft <span class="citation" data-cites="wang2023voyager"><a href="../../references.html#ref-wang2023voyager" role="doc-biblioref">[1]</a></span>. As it explored, Voyager wrote successful behaviors, such as how to craft a tool or fight off a monster, into an ever-growing <strong>skill library</strong> of executable code, and it retrieved and reused those skills when a new task called for them, composing simple skills into complex ones over time <span class="citation" data-cites="wang2023voyager"><a href="../../references.html#ref-wang2023voyager" role="doc-biblioref">[1]</a></span>. The payoff is compounding competence: the agent does not re-derive how to do a thing it has already mastered, it looks the skill up and runs it. That is procedural memory doing exactly what your chef’s binder does, sparing you from reinventing a recipe you already perfected.</p>
 </section>
-<section id="sec-ch11-reflective" class="level3" data-number="11.2.4">
-<h3 data-number="11.2.4" class="anchored" data-anchor-id="sec-ch11-reflective"><span class="header-section-number">11.2.4</span> Reflective memory: lessons learned</h3>
+<section id="sec-ch11-reflective" class="level3" data-number="12.2.4">
+<h3 data-number="12.2.4" class="anchored" data-anchor-id="sec-ch11-reflective"><span class="header-section-number">12.2.4</span> Reflective memory: lessons learned</h3>
 <p>The second store worth adding is one the classic taxonomy leaves out, and it matters enough for agents to name on its own: <strong>reflective memory</strong>, the store of <em>lessons learned</em>. Episodic memory records <em>what happened</em>; reflective memory records <em>what the agent concluded from what happened</em>. The difference is the one between a diary entry (“the soufflé collapsed on Tuesday”) and the lesson you draw from it (“open the oven less near the end”). The event is raw experience; the reflection is distilled wisdom, and it is the reflection that changes how you act next time.</p>
 <p>Reflexion built agents around exactly this move <span class="citation" data-cites="shinn2023reflexion"><a href="../../references.html#ref-shinn2023reflexion" role="doc-biblioref">[2]</a></span>. After a failed attempt, the agent generates a short <em>verbal</em> self-critique of what went wrong and stores that reflective text in its memory, so that on the next attempt the lesson is retrieved and folded into context, steering the agent away from the mistake <span class="citation" data-cites="shinn2023reflexion"><a href="../../references.html#ref-shinn2023reflexion" role="doc-biblioref">[2]</a></span>. Crucially, nothing in the model’s weights changes; the improvement lives entirely in remembered words, a kind of learning by note-taking rather than retraining. Reflective memory is how an agent turns its failures into guidance instead of repeating them, and we will see it earn its place when Ledgerly learns from a refund it should never have issued.</p>
 </section>
-<section id="sec-ch11-research-view" class="level3" data-number="11.2.5">
-<h3 data-number="11.2.5" class="anchored" data-anchor-id="sec-ch11-research-view"><span class="header-section-number">11.2.5</span> The research view: forms, functions, and dynamics</h3>
+<section id="sec-ch11-research-view" class="level3" data-number="12.2.5">
+<h3 data-number="12.2.5" class="anchored" data-anchor-id="sec-ch11-research-view"><span class="header-section-number">12.2.5</span> The research view: forms, functions, and dynamics</h3>
 <p>The human taxonomy, working, episodic, semantic, procedural, reflective, is the intuitive on-ramp, and it will carry us through most of this chapter. But it is worth knowing that agent-memory research has outgrown the simple short-term-versus-long-term split and now describes memory along three richer axes <span class="citation" data-cites="memorysurvey2025"><a href="../../references.html#ref-memorysurvey2025" role="doc-biblioref">[3]</a></span>. The first is <strong>form</strong>, meaning what physically carries the memory: tokens in the context window, weights baked into the model’s parameters, latent internal state, or records in an external store. The second is <strong>function</strong>, meaning what the memory is <em>for</em>: factual knowledge, lived experience, or the working scratchpad of the current task. The third is <strong>dynamics</strong>, meaning how a memory <em>behaves over time</em>: how it forms, how it is updated, how it decays or is forgotten, and how it is retrieved <span class="citation" data-cites="memorysurvey2025"><a href="../../references.html#ref-memorysurvey2025" role="doc-biblioref">[3]</a></span>.</p>
 <p>The value of this lens is that it separates questions the human taxonomy tends to blur. “Is this memory episodic or semantic?” is a <em>function</em> question; “does it live in the prompt or in a database?” is a <em>form</em> question; “should it fade next month?” is a <em>dynamics</em> question. A production memory system has to answer all three for every memory it holds, and much of the rest of this chapter is really about form (where memories live) and dynamics (how they change), with the human functions as our familiar vocabulary. Keep this map in your back pocket; it explains why two systems that both claim to give an agent “memory” can be doing utterly different things.</p>
 </section>
-<section id="sec-ch11-inside-outside" class="level3" data-number="11.2.6">
-<h3 data-number="11.2.6" class="anchored" data-anchor-id="sec-ch11-inside-outside"><span class="header-section-number">11.2.6</span> Inside the model, or outside it</h3>
+<section id="sec-ch11-inside-outside" class="level3" data-number="12.2.6">
+<h3 data-number="12.2.6" class="anchored" data-anchor-id="sec-ch11-inside-outside"><span class="header-section-number">12.2.6</span> Inside the model, or outside it</h3>
 <p>The forms axis points straight at the crucial architectural fact, the one that drives the rest of the chapter. Working memory lives <em>inside</em> the model’s context window and is therefore small, fast, and free to read, yet fleeting and finite. Long-term memory must live <em>outside</em> the model, in some external store you control, precisely because it has to persist beyond a single context and can grow far larger than any window could hold. That immediately raises the defining challenge of agent memory: if the durable knowledge sits outside the model, how do you get the <em>right</em> piece of it back into the tiny working-memory window at the moment it is needed? You cannot pour a lifetime of memories into a single prompt. You need a way to reach into a vast store and pull out just the few memories relevant to right now, and that retrieval problem is exactly what vector stores were built to solve.</p>
 </section>
 </section>
-<section id="sec-ch11-vectors" class="level2" data-number="11.3">
-<h2 data-number="11.3" class="anchored" data-anchor-id="sec-ch11-vectors"><span class="header-section-number">11.3</span> Long-term memory with vector stores</h2>
-<p>The retrieval problem we just posed should feel familiar, because we met its twin in <a href="../part2-llm-agents/06-the-augmented-llm.html#sec-ch6-retrieval" class="quarto-xref"><span>Section 6.4</span></a> when we gave the augmented LLM an open book through retrieval-augmented generation <span class="citation" data-cites="lewis2020rag"><a href="../../references.html#ref-lewis2020rag" role="doc-biblioref">[4]</a></span>. Long-term memory is RAG pointed inward: instead of retrieving from a corpus of external documents, the agent retrieves from its own accumulated past. The machinery is the same, and it rests on one beautiful idea, the <strong>embedding</strong>, so it is worth building the intuition carefully.</p>
-<section id="sec-ch11-embeddings" class="level3" data-number="11.3.1">
-<h3 data-number="11.3.1" class="anchored" data-anchor-id="sec-ch11-embeddings"><span class="header-section-number">11.3.1</span> Embeddings: shelving by meaning</h3>
+<section id="sec-ch11-vectors" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="sec-ch11-vectors"><span class="header-section-number">12.3</span> Long-term memory with vector stores</h2>
+<p>The retrieval problem we just posed should feel familiar, because we met its twin in <a href="../part2-llm-agents/07-the-augmented-llm.html#sec-ch6-retrieval" class="quarto-xref"><span>Section 7.4</span></a> when we gave the augmented LLM an open book through retrieval-augmented generation <span class="citation" data-cites="lewis2020rag"><a href="../../references.html#ref-lewis2020rag" role="doc-biblioref">[4]</a></span>. Long-term memory is RAG pointed inward: instead of retrieving from a corpus of external documents, the agent retrieves from its own accumulated past. The machinery is the same, and it rests on one beautiful idea, the <strong>embedding</strong>, so it is worth building the intuition carefully.</p>
+<section id="sec-ch11-embeddings" class="level3" data-number="12.3.1">
+<h3 data-number="12.3.1" class="anchored" data-anchor-id="sec-ch11-embeddings"><span class="header-section-number">12.3.1</span> Embeddings: shelving by meaning</h3>
 <p>Imagine a librarian who does not shelve books by title or author but by <em>meaning</em>. Every book is placed in a vast hall so that books about similar ideas sit near one another, all the sailing books in one region and all the cooking books in another, regardless of the exact words on their spines. To find what you want, you do not need the precise title. You describe the idea, and the librarian walks to that region of the hall and hands you the nearest books. An <strong>embedding</strong> is how we build that hall for a computer. A model turns any piece of text into a list of numbers, a point in a high-dimensional space, positioned so that texts with similar <em>meaning</em> land close together. “I love my dog” and “my puppy is wonderful” end up as near neighbors even though they share almost no words, while “quarterly tax filing” lands far away. Closeness in this space <em>is</em> similarity of meaning.</p>
 </section>
-<section id="sec-ch11-read-write" class="level3" data-number="11.3.2">
-<h3 data-number="11.3.2" class="anchored" data-anchor-id="sec-ch11-read-write"><span class="header-section-number">11.3.2</span> The write and read paths</h3>
-<p>Once memories live as points in that space, retrieval becomes geometry, and it runs as two matching halves. On the <strong>write</strong> path, whenever something worth remembering happens, you embed it into a vector and store it, the vector alongside the original text, in a <strong>vector store</strong>, a database built to hold millions of these points and search them fast. On the <strong>read</strong> path, when the agent needs to remember, you embed the <em>current situation</em> into a query vector and ask the store for its <strong>nearest neighbors</strong>, the handful of stored memories whose points lie closest and are therefore the most semantically relevant. Those few memories, and only those, get pulled into the context window as working memory. <a href="#fig-vector-memory" class="quarto-xref">Figure&nbsp;<span>11.3</span></a> shows both halves.</p>
+<section id="sec-ch11-read-write" class="level3" data-number="12.3.2">
+<h3 data-number="12.3.2" class="anchored" data-anchor-id="sec-ch11-read-write"><span class="header-section-number">12.3.2</span> The write and read paths</h3>
+<p>Once memories live as points in that space, retrieval becomes geometry, and it runs as two matching halves. On the <strong>write</strong> path, whenever something worth remembering happens, you embed it into a vector and store it, the vector alongside the original text, in a <strong>vector store</strong>, a database built to hold millions of these points and search them fast. On the <strong>read</strong> path, when the agent needs to remember, you embed the <em>current situation</em> into a query vector and ask the store for its <strong>nearest neighbors</strong>, the handful of stored memories whose points lie closest and are therefore the most semantically relevant. Those few memories, and only those, get pulled into the context window as working memory. <a href="#fig-vector-memory" class="quarto-xref">Figure&nbsp;<span>12.3</span></a> shows both halves.</p>
 <div id="fig-vector-memory" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-vector-memory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch11/fig-vector-memory.png" class="img-fluid figure-img">
+<img src="../..\images/ch12/fig-vector-memory.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vector-memory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.3: Long-term memory as a vector store. On the write path, each memory is embedded and stored as a point in meaning-space. On the read path, the current situation is embedded and used to fetch its nearest neighbors, the most relevant memories, which are placed into the context window.
+Figure&nbsp;12.3: Long-term memory as a vector store. On the write path, each memory is embedded and stored as a point in meaning-space. On the read path, the current situation is embedded and used to fetch its nearest neighbors, the most relevant memories, which are placed into the context window.
 </figcaption>
 </figure>
 </div>
 <p>This is what lets an agent draw on far more than could ever fit in a prompt. It might hold months of conversations, thousands of learned facts, and a whole history of past tasks, all sitting quietly in the vector store, and yet each turn it pays only for the three or four memories that actually matter, fetched by meaning in milliseconds. The vast store stays outside the model; the tiny relevant slice comes inside. It is the librarian trick applied to the agent’s own life. But notice the quiet assumptions we just made: that we <em>knew</em> what was “worth remembering” on the write path, and that nearest-neighbor relevance is <em>all</em> that should decide what comes back. Both turn out to be too simple. Before we refine either one, though, there is a prior question hiding in plain sight: of everything sitting in that vast store, what should occupy the agent’s scarce working context <em>right now</em>?</p>
 </section>
 </section>
-<section id="sec-ch11-context-management" class="level2" data-number="11.4">
-<h2 data-number="11.4" class="anchored" data-anchor-id="sec-ch11-context-management"><span class="header-section-number">11.4</span> Memory as context management</h2>
+<section id="sec-ch11-context-management" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="sec-ch11-context-management"><span class="header-section-number">12.4</span> Memory as context management</h2>
 <p>That question has a beautiful precedent, and it comes from the operating system running the very computer you are reading this on. An OS faces the same predicament an agent does: it has a small amount of fast memory (RAM) and a large amount of slow storage (disk), and far more data than RAM can hold. Its trick is <strong>paging</strong>: keep the working set in RAM, leave everything else on disk, and page data in and out as the running program needs it, so the program <em>feels</em> like it has vast memory while only ever touching a small fast window at a time. The MemGPT project noticed that this is exactly the shape of the agent-memory problem and borrowed the OS design wholesale <span class="citation" data-cites="packer2023memgpt"><a href="../../references.html#ref-packer2023memgpt" role="doc-biblioref">[5]</a></span>.</p>
 <p>The mapping is clean and worth holding onto. The <strong>context window is RAM</strong>: small, fast, and where all real “thinking” happens. The <strong>external store is disk</strong>: large, slower to reach, effectively unbounded. <strong>Recall is paging in</strong>: fetching a memory from the store into the context so the model can use it. And <strong>summarization and eviction are memory management</strong>: when the context fills, compress or move older content back out to the store to make room, just as an OS evicts a page it does not currently need. MemGPT gives the agent explicit functions to move information across this boundary, letting it manage its own limited context and thereby hold conversations and documents far larger than the window could ever contain at once <span class="citation" data-cites="packer2023memgpt"><a href="../../references.html#ref-packer2023memgpt" role="doc-biblioref">[5]</a></span>.</p>
 <p>The reason this reframing matters is that it shifts the central question. We spent the last section asking <em>where</em> memories are stored, and vector search answered it. The OS view insists on a second, equally hard question: of everything in storage, <em>what gets paged into the limited working context this turn</em>? A perfect store is useless if the wrong three memories come into RAM. So memory design is really two disciplines working together, one that decides what to keep and where, and one that decides what to load right now, and the next section takes up the everyday techniques for both.</p>
 </section>
-<section id="sec-ch11-management" class="level2" data-number="11.5">
-<h2 data-number="11.5" class="anchored" data-anchor-id="sec-ch11-management"><span class="header-section-number">11.5</span> Memory management</h2>
+<section id="sec-ch11-management" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="sec-ch11-management"><span class="header-section-number">12.5</span> Memory management</h2>
 <p>A vector store solves <em>where</em> to keep memories, but it leaves open the harder, more human questions. What deserves to be remembered, what should fade, and how do you decide which memories matter <em>now</em>? These are the questions of memory management, and they exist for one unavoidable reason: the context window is finite, and every token in it costs money and attention. You cannot remember everything, surface everything, or keep everything forever. Good memory, for agents as for people, is as much about <em>forgetting well</em> as about storing.</p>
-<section id="sec-ch11-summarization" class="level3" data-number="11.5.1">
-<h3 data-number="11.5.1" class="anchored" data-anchor-id="sec-ch11-summarization"><span class="header-section-number">11.5.1</span> Managing working memory: summarization</h3>
+<section id="sec-ch11-summarization" class="level3" data-number="12.5.1">
+<h3 data-number="12.5.1" class="anchored" data-anchor-id="sec-ch11-summarization"><span class="header-section-number">12.5.1</span> Managing working memory: summarization</h3>
 <p>Start with the working-memory side, where the pressure is most acute. A long conversation will eventually overflow the context window, so you need a policy for what to do as it fills. The simplest is a sliding window that keeps the last <em>N</em> turns and drops the oldest, but that throws away potentially important early context. A better move is <strong>summarization</strong>: periodically compress the older parts of the conversation into a short synopsis and keep <em>that</em> in context instead of the raw transcript, trading fine detail for a durable gist. This is exactly what you do when recounting a long meeting. You do not replay it word for word; you say “we agreed to ship in March and Sam owns the launch.” Summarization is how an agent keeps the thread of a conversation far longer than its raw window could ever hold.</p>
 </section>
-<section id="sec-ch11-relevance" class="level3" data-number="11.5.2">
-<h3 data-number="11.5.2" class="anchored" data-anchor-id="sec-ch11-relevance"><span class="header-section-number">11.5.2</span> Managing long-term memory: relevance, recency, importance</h3>
+<section id="sec-ch11-relevance" class="level3" data-number="12.5.2">
+<h3 data-number="12.5.2" class="anchored" data-anchor-id="sec-ch11-relevance"><span class="header-section-number">12.5.2</span> Managing long-term memory: relevance, recency, importance</h3>
 <p>On the long-term side, the subtle problem is <strong>relevance</strong>, deciding which stored memories to pull back. Pure nearest-neighbor similarity, the tool from the last section, is necessary but not sufficient, and the Generative Agents project showed why with a memorable design <span class="citation" data-cites="park2023generative"><a href="../../references.html#ref-park2023generative" role="doc-biblioref">[6]</a></span>. Their simulated characters each kept a <em>memory stream</em> of everything they observed, and to decide what to recall they scored memories on three factors together rather than one: <strong>relevance</strong> (semantic similarity to the current situation, our vector search), <strong>recency</strong> (how long ago the memory formed, with older ones gently decaying), and <strong>importance</strong> (how significant the memory is, scored by the LLM itself, so that remembering a breakup outweighs remembering breakfast) <span class="citation" data-cites="park2023generative"><a href="../../references.html#ref-park2023generative" role="doc-biblioref">[6]</a></span>. Blending the three retrieves memories that are not merely <em>similar</em> but genuinely worth surfacing. The same project added a second idea worth stealing, <strong>reflection</strong>, in which the agent periodically reviews its recent memories and writes <em>new, higher-level</em> ones. It turns “Sam mentioned changing jobs” and “Sam asked about salaries” into the synthesized insight “Sam is job-hunting” <span class="citation" data-cites="park2023generative"><a href="../../references.html#ref-park2023generative" role="doc-biblioref">[6]</a></span>. Reflection is how episodic memories mature into semantic knowledge.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -594,8 +600,8 @@ Tip
 </div>
 </div>
 </section>
-<section id="sec-ch11-signals" class="level3" data-number="11.5.3">
-<h3 data-number="11.5.3" class="anchored" data-anchor-id="sec-ch11-signals"><span class="header-section-number">11.5.3</span> Retrieval is more than similarity</h3>
+<section id="sec-ch11-signals" class="level3" data-number="12.5.3">
+<h3 data-number="12.5.3" class="anchored" data-anchor-id="sec-ch11-signals"><span class="header-section-number">12.5.3</span> Retrieval is more than similarity</h3>
 <p>The Generative Agents trio, relevance, recency, and importance, already hints that similarity alone is the wrong master. In a real production agent the gap is wider still, because a memory can be a perfect semantic match and yet be exactly the one you must <em>not</em> surface. Picture a customer-support agent that pulls the most similar past note and confidently repeats it, only for the note to be a year old, about a different account, since overturned by a policy change, and belonging to a customer who asked to be forgotten. Every one of those is a reason to reject a memory that vector search would happily rank first.</p>
 <p>So a mature retrieval step blends several <strong>signals</strong>, not one, and weighs them against the current task:</p>
 <ul>
@@ -610,16 +616,16 @@ Tip
 </ul>
 <p>No agent needs all eight tuned to perfection, but every serious one blends more than raw similarity. The Ledgerly framing makes the stakes concrete: a memory can be semantically similar to the current ticket and still be <em>old</em>, <em>unauthorized</em>, <em>contradicted</em>, or <em>out of scope</em> for the customer in front of the agent, and surfacing it would be worse than surfacing nothing. Good retrieval is therefore an act of judgment across signals, not a single nearest-neighbor lookup.</p>
 </section>
-<section id="sec-ch11-forgetting" class="level3" data-number="11.5.4">
-<h3 data-number="11.5.4" class="anchored" data-anchor-id="sec-ch11-forgetting"><span class="header-section-number">11.5.4</span> Forgetting is a design feature, not a bug</h3>
+<section id="sec-ch11-forgetting" class="level3" data-number="12.5.4">
+<h3 data-number="12.5.4" class="anchored" data-anchor-id="sec-ch11-forgetting"><span class="header-section-number">12.5.4</span> Forgetting is a design feature, not a bug</h3>
 <p>The callout above called forgetting a feature; it is worth taking that seriously, because a store that only ever grows is a store that slowly poisons itself with stale and contradictory memories. Human memory solved this long ago, and MemoryBank built an agent memory around the solution <span class="citation" data-cites="zhong2024memorybank"><a href="../../references.html#ref-zhong2024memorybank" role="doc-biblioref">[7]</a></span>. Inspired by the Ebbinghaus forgetting curve, the psychological finding that we forget on a predictable decay unless a memory is reinforced by use, MemoryBank lets memories fade over time while frequently recalled ones are strengthened, and it continually updates what it knows about a user as new interactions arrive <span class="citation" data-cites="zhong2024memorybank"><a href="../../references.html#ref-zhong2024memorybank" role="doc-biblioref">[7]</a></span>. The result behaves less like a database and more like a mind that keeps what matters and quietly lets go of the rest.</p>
 <div id="fig-forgetting-curve" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-forgetting-curve-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch11/fig-forgetting-curve.png" class="img-fluid figure-img">
+<img src="../..\images/ch12/fig-forgetting-curve.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-forgetting-curve-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.4: The Ebbinghaus forgetting curve, and why decay is a feature rather than a flaw. A memory learned once fades fast (the steep black curves), but each active retrieval snaps retention back to full and, crucially, flattens the next decay, so a well-used memory lingers far longer than a neglected one. An agent’s memory store runs the same rule: reinforce what keeps proving useful, and let the unused quietly fade.
+Figure&nbsp;12.4: The Ebbinghaus forgetting curve, and why decay is a feature rather than a flaw. A memory learned once fades fast (the steep black curves), but each active retrieval snaps retention back to full and, crucially, flattens the next decay, so a well-used memory lingers far longer than a neglected one. An agent’s memory store runs the same rule: reinforce what keeps proving useful, and let the unused quietly fade.
 </figcaption>
 </figure>
 </div>
@@ -627,10 +633,10 @@ Figure&nbsp;11.4: The Ebbinghaus forgetting curve, and why decay is a feature ra
 <p>Taken together, these techniques turn a raw vector store into something that behaves like a mind: holding the current thread in working memory, distilling it when it grows long, remembering the significant while letting the trivial fade, and occasionally stepping back to form new understanding. That is a lot of moving parts, so let’s assemble them into one concrete agent and watch a single memory travel through the whole system.</p>
 </section>
 </section>
-<section id="sec-ch11-worked" class="level2" data-number="11.6">
-<h2 data-number="11.6" class="anchored" data-anchor-id="sec-ch11-worked"><span class="header-section-number">11.6</span> A worked example: an assistant that remembers you</h2>
+<section id="sec-ch11-worked" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="sec-ch11-worked"><span class="header-section-number">12.6</span> A worked example: an assistant that remembers you</h2>
 <p>Let’s make all of this concrete by building the very thing our amnesiac colleague could never be: a personal assistant that gets to know you across sessions. The goal is simple to state: when you come back next week and say “book me the usual,” it should know what “the usual” means. And it falls right out of the pieces we have assembled. Follow one preference as it is born, stored, and later recalled, and the whole system will click into place.</p>
-<p>The assistant wraps every turn in a <strong>read-act-write</strong> cycle, three beats around the model. On the <strong>read</strong> beat, before answering, it embeds what you just said and queries the vector store for the most relevant long-term memories, folding them into the context window alongside the recent conversation. This is the read path from <a href="#sec-ch11-vectors" class="quarto-xref"><span>Section 11.3</span></a>, run live. On the <strong>act</strong> beat, the model does its normal work with that enriched context, now aware of both the immediate thread and the relevant past. On the <strong>write</strong> beat, after responding, it decides whether anything in the exchange is worth keeping and, if so, embeds and stores it for next time. The spine is just this:</p>
+<p>The assistant wraps every turn in a <strong>read-act-write</strong> cycle, three beats around the model. On the <strong>read</strong> beat, before answering, it embeds what you just said and queries the vector store for the most relevant long-term memories, folding them into the context window alongside the recent conversation. This is the read path from <a href="#sec-ch11-vectors" class="quarto-xref"><span>Section 12.3</span></a>, run live. On the <strong>act</strong> beat, the model does its normal work with that enriched context, now aware of both the immediate thread and the relevant past. On the <strong>write</strong> beat, after responding, it decides whether anything in the exchange is worth keeping and, if so, embeds and stores it for next time. The spine is just this:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> handle_turn(user_message, conversation):</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    memories <span class="op">=</span> memory_store.search(embed(user_message), k<span class="op">=</span><span class="dv">4</span>)   <span class="co"># read: recall</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    context  <span class="op">=</span> build_context(conversation, memories)</span>
@@ -641,10 +647,10 @@ Figure&nbsp;11.4: The Ebbinghaus forgetting curve, and why decay is a feature ra
 <p>Now watch a single memory live its life. In week one you mention, in passing, “I always fly window seats, and I hate red-eyes.” The write beat notices this is a durable preference, not idle chatter, and stores it as an <em>episodic</em> memory of what you said. Weeks pass and dozens of other conversations pile into the store, but this one sits quietly among them, costing nothing. Then, next month, you say “book me a flight to Boston.” The read beat embeds that request, and because “book a flight” lands near “window seats” and “red-eyes” in meaning-space, nearest-neighbor search surfaces your preference and slips it into context. The model, now reminded, books a daytime window seat without your having to repeat yourself. To the user it feels like being <em>known</em>; under the hood it is nothing more than the read-act-write loop turning, with a vector store standing in for a past.</p>
 <p>Everything from the chapter shows up in that little story. Working memory held the live conversation; the vector store held the durable preference; nearest-neighbor retrieval fetched it by meaning rather than exact words; and a write-time judgment about what was “worth remembering” kept the store from filling with noise. Layer on the management techniques from the last section (summarize the conversation when it grows long, score recalls by importance and recency as well as relevance, and reflect occasionally to notice “this user values convenience over price”), and the same humble loop grows into a genuinely personal assistant. That is the payoff of memory: not a cleverer model, but a system that <em>compounds</em>, growing more useful with every interaction.</p>
 </section>
-<section id="sec-ch11-lifecycle" class="level2" data-number="11.7">
-<h2 data-number="11.7" class="anchored" data-anchor-id="sec-ch11-lifecycle"><span class="header-section-number">11.7</span> Memory is a lifecycle, not a database</h2>
+<section id="sec-ch11-lifecycle" class="level2" data-number="12.7">
+<h2 data-number="12.7" class="anchored" data-anchor-id="sec-ch11-lifecycle"><span class="header-section-number">12.7</span> Memory is a lifecycle, not a database</h2>
 <p>The worked example is a good place to confess something the word “store” has been quietly hiding. We keep saying an agent <em>stores</em> memories, as if memory were a database with a <code>write</code> and a <code>read</code>, but a database is a poor model for what we have actually been building. A database holds whatever you put in it, unchanged, forever, and hands it back exactly as given. Real memory does none of that. It selects what is worth keeping, reshapes it over time, promotes some records and quietly drops others, and answers questions the raw data never explicitly stored. Memory is less a container than a <strong>lifecycle</strong>, a loop that a piece of information travels through, and naming the stages of that loop is the single most useful mental model in this chapter.</p>
-<p>A useful memory system has to answer five questions in turn, one per stage, and <a href="#fig-memory-lifecycle" class="quarto-xref">Figure&nbsp;<span>11.5</span></a> draws them as the loop they form. <strong>Observe</strong>: what just happened that the agent might want to keep? <strong>Write</strong>: is it worth recording, and in what form? <strong>Consolidate</strong>: how do today’s raw records mature into durable, higher-level knowledge? <strong>Retrieve</strong>: which memories belong in the context for the situation at hand? <strong>Update or forget</strong>: what should change, decay, or be deleted as the world moves on? Answer those five well and you have a memory system; skip any one and you have a leaky container.</p>
+<p>A useful memory system has to answer five questions in turn, one per stage, and <a href="#fig-memory-lifecycle" class="quarto-xref">Figure&nbsp;<span>12.5</span></a> draws them as the loop they form. <strong>Observe</strong>: what just happened that the agent might want to keep? <strong>Write</strong>: is it worth recording, and in what form? <strong>Consolidate</strong>: how do today’s raw records mature into durable, higher-level knowledge? <strong>Retrieve</strong>: which memories belong in the context for the situation at hand? <strong>Update or forget</strong>: what should change, decay, or be deleted as the world moves on? Answer those five well and you have a memory system; skip any one and you have a leaky container.</p>
 <div class="cell" data-layout-align="default">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>flowchart LR</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  O[Observe&lt;br/&gt;raw events] --&gt; W[Write&lt;br/&gt;record if worth keeping]</span>
@@ -667,16 +673,16 @@ Figure&nbsp;11.4: The Ebbinghaus forgetting curve, and why decay is a feature ra
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-memory-lifecycle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.5: Memory as a lifecycle loop. Raw observations are written, consolidated into durable knowledge, retrieved when relevant, and continually updated or forgotten, and the cycle feeds itself as new observations arrive.
+Figure&nbsp;12.5: Memory as a lifecycle loop. Raw observations are written, consolidated into durable knowledge, retrieved when relevant, and continually updated or forgotten, and the cycle feeds itself as new observations arrive.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>The consolidate stage is where the memory <em>types</em> from earlier stop being a static list and start being a set of transformations, which is the loop’s real magic. Raw events become <strong>episodic</strong> memories of what happened. Repeated episodes distill into <strong>semantic</strong> facts, the way many “the user chose the window seat” observations become the belief “this user prefers window seats.” Successful action traces harden into <strong>procedural</strong> memories, reusable skills in the sense of <a href="#sec-ch11-procedural" class="quarto-xref"><span>Section 11.2.3</span></a>. Failed attempts turn into <strong>reflective</strong> lessons, in the sense of <a href="#sec-ch11-reflective" class="quarto-xref"><span>Section 11.2.4</span></a>. Meanwhile the update-or-forget stage keeps the whole thing honest: old and unused memories decay, contradicted memories are overwritten, and sensitive memories stay scoped, auditable, and deletable rather than lingering forever. Each verb from the last two sections lands on a stage of this loop.</p>
+<p>The consolidate stage is where the memory <em>types</em> from earlier stop being a static list and start being a set of transformations, which is the loop’s real magic. Raw events become <strong>episodic</strong> memories of what happened. Repeated episodes distill into <strong>semantic</strong> facts, the way many “the user chose the window seat” observations become the belief “this user prefers window seats.” Successful action traces harden into <strong>procedural</strong> memories, reusable skills in the sense of <a href="#sec-ch11-procedural" class="quarto-xref"><span>Section 12.2.3</span></a>. Failed attempts turn into <strong>reflective</strong> lessons, in the sense of <a href="#sec-ch11-reflective" class="quarto-xref"><span>Section 12.2.4</span></a>. Meanwhile the update-or-forget stage keeps the whole thing honest: old and unused memories decay, contradicted memories are overwritten, and sensitive memories stay scoped, auditable, and deletable rather than lingering forever. Each verb from the last two sections lands on a stage of this loop.</p>
 <p>Ledgerly runs the full lifecycle on every ticket, and tracing one complaint through it shows why the loop matters more than any single store. The agent <strong>observes</strong> a customer reporting a double charge. It <strong>writes</strong> an episodic note of the incident. Over many such tickets it <strong>consolidates</strong>: the repeated incidents become the semantic fact “duplicate charges spike right after plan migrations,” and the steps that reliably fixed them become a procedural runbook. On the next migration-related complaint it <strong>retrieves</strong> that fact and that runbook into context. And as the world changes it <strong>updates or forgets</strong>: a superseded refund policy is overwritten, a resolved one-off is allowed to decay, and a customer’s deletion request is honored end to end. The store never changed shape, but the memory <em>matured</em>, and that maturation is the whole point.</p>
-<section id="sec-ch11-what-not" class="level3" data-number="11.7.1">
-<h3 data-number="11.7.1" class="anchored" data-anchor-id="sec-ch11-what-not"><span class="header-section-number">11.7.1</span> What not to remember</h3>
+<section id="sec-ch11-what-not" class="level3" data-number="12.7.1">
+<h3 data-number="12.7.1" class="anchored" data-anchor-id="sec-ch11-what-not"><span class="header-section-number">12.7.1</span> What not to remember</h3>
 <p>The lifecycle has a quiet twin that production systems ignore at their peril: for every rule about what to keep, there is a rule about what to leave out, and the write stage is where discipline pays off most. A memory system is only as trustworthy as the things it refuses to store, so it is worth being explicit about what does <em>not</em> belong in long-term memory.</p>
 <ul>
 <li><strong>Trivial politeness.</strong> “Thanks!” and “no worries” carry no durable signal; storing them only dilutes recall and inflates cost.</li>
@@ -689,8 +695,8 @@ Figure&nbsp;11.5: Memory as a lifecycle loop. Raw observations are written, cons
 <p>Each of these is a small act of restraint, and together they are what separates a memory system you can put in front of real customers from one that quietly accumulates liability. This is also where memory design starts to shade into safety and governance, a thread we pick up in earnest in the safety chapter. For now the rule of thumb is simple: when in doubt about a memory, the safe default is not to store it.</p>
 </section>
 </section>
-<section id="sec-ch11-graph" class="level2" data-number="11.8">
-<h2 data-number="11.8" class="anchored" data-anchor-id="sec-ch11-graph"><span class="header-section-number">11.8</span> Memory as a graph, not just a list</h2>
+<section id="sec-ch11-graph" class="level2" data-number="12.8">
+<h2 data-number="12.8" class="anchored" data-anchor-id="sec-ch11-graph"><span class="header-section-number">12.8</span> Memory as a graph, not just a list</h2>
 <p>There is one more shape memory can take, and it addresses a blind spot in everything we have built so far. A vector store is, at heart, a <em>list</em> of memories that happens to be searchable by meaning. Ask it a question and it hands back the items that most resemble your query, each one considered in isolation. But some of the most valuable things an agent needs to know are not properties of any single memory; they are <em>relationships between</em> memories. A vector store can find the note about a customer’s refund and, separately, the note about their plan migration, yet it has no notion that the first was <em>caused by</em> the second. For that you need not a list but a <strong>graph</strong>.</p>
 <p>The intuition is the difference between a stack of index cards and a detective’s cork board. The cards each hold a fact, and you can flip through them for the one that matches. The cork board holds the same facts as pinned nodes, but it adds the <em>strings</em> between them: this invoice belongs to that subscription, which underwent that plan migration, which triggered these failed payments, which the refund policy governs, which a prior resolution already handled. When the question is “why does this customer keep getting double charged,” the strings are the answer, and no amount of similarity search over isolated cards will reconstruct them. A graph memory represents customers, subscriptions, invoices, plan migrations, failed payments, refund policies, and prior resolutions as connected entities, so the agent can follow the relationships instead of guessing at them.</p>
 <p>The honest caveat is that graphs are not free and not always worth it. They help precisely <em>when relationships carry the meaning</em>, as in Ledgerly’s tangle of billing entities, and add mostly overhead when memories are independent, as in a pile of unrelated user preferences. The Mem0 system is a useful reference point here: it dynamically extracts, consolidates, and retrieves the salient facts from a conversation, and it offers a <strong>graph variant</strong> that additionally captures the relational structure among those facts for cases where the connections matter <span class="citation" data-cites="mem0_2025"><a href="../../references.html#ref-mem0_2025" role="doc-biblioref">[8]</a></span>. It is one representative production approach, not the only one, and the right choice depends on whether your domain’s value lives in the nodes or in the edges between them.</p>
@@ -708,11 +714,11 @@ Figure&nbsp;11.5: Memory as a lifecycle loop. Raw observations are written, cons
 </div>
 </div>
 </section>
-<section id="sec-ch11-case" class="level2" data-number="11.9">
-<h2 data-number="11.9" class="anchored" data-anchor-id="sec-ch11-case"><span class="header-section-number">11.9</span> Case study: the Ledgerly support agent</h2>
-<p>Where we left off, <a href="../part2-llm-agents/06-the-augmented-llm.html#sec-ch06-case" class="quarto-xref"><span>Section 6.7</span></a> promised the Ledgerly agent a notebook, and the write beat that stored “this customer hit a billing bug” was its first note. This chapter’s taxonomy tells us that note was <em>episodic</em>, and Ledgerly benefits from every kind of memory from <a href="#sec-ch11-types" class="quarto-xref"><span>Section 11.2</span></a> working together, matured through the lifecycle of <a href="#sec-ch11-lifecycle" class="quarto-xref"><span>Section 11.7</span></a>.</p>
-<p><strong>Episodic</strong> memory is the log of past tickets: <em>this customer reported a double charge in March, and we refunded it.</em> When they write in again, the read beat surfaces that history so the agent never makes them re-explain, exactly the “feels known” effect from the worked example in <a href="#sec-ch11-worked" class="quarto-xref"><span>Section 11.6</span></a>. <strong>Semantic</strong> memory holds durable facts distilled from those episodes: <em>this customer is on the Pro plan, prefers email over chat, and has been with Ledgerly for two years.</em> <strong>Procedural</strong> memory holds the reliable runbooks the agent has learned for recurring jobs, in the sense of <a href="#sec-ch11-procedural" class="quarto-xref"><span>Section 11.2.3</span></a>: <em>how to investigate a duplicate charge after a plan migration</em>, <em>how to validate refund eligibility</em>, and <em>how to escalate a policy exception</em>, each a reusable sequence rather than a fact or an event.</p>
-<p><strong>Reflective</strong> memory is the newest and, for a support agent, the most valuable, because it is how Ledgerly stops repeating expensive mistakes. Suppose the agent once issued a refund <em>before</em> checking the migration logs and later discovered the charge had been legitimate. The lesson from that failure, in the sense of <a href="#sec-ch11-reflective" class="quarto-xref"><span>Section 11.2.4</span></a>, is not another fact about the customer; it is a note to itself: <em>for plan-migration complaints, check the migration logs before deciding refund eligibility.</em> Stored as a reflective memory and retrieved the next time a migration complaint arrives, that single sentence steers the agent away from the mistake it made before, with no retraining required.</p>
+<section id="sec-ch11-case" class="level2" data-number="12.9">
+<h2 data-number="12.9" class="anchored" data-anchor-id="sec-ch11-case"><span class="header-section-number">12.9</span> Case study: the Ledgerly support agent</h2>
+<p>Where we left off, <a href="../part2-llm-agents/07-the-augmented-llm.html#sec-ch06-case" class="quarto-xref"><span>Section 7.7</span></a> promised the Ledgerly agent a notebook, and the write beat that stored “this customer hit a billing bug” was its first note. This chapter’s taxonomy tells us that note was <em>episodic</em>, and Ledgerly benefits from every kind of memory from <a href="#sec-ch11-types" class="quarto-xref"><span>Section 12.2</span></a> working together, matured through the lifecycle of <a href="#sec-ch11-lifecycle" class="quarto-xref"><span>Section 12.7</span></a>.</p>
+<p><strong>Episodic</strong> memory is the log of past tickets: <em>this customer reported a double charge in March, and we refunded it.</em> When they write in again, the read beat surfaces that history so the agent never makes them re-explain, exactly the “feels known” effect from the worked example in <a href="#sec-ch11-worked" class="quarto-xref"><span>Section 12.6</span></a>. <strong>Semantic</strong> memory holds durable facts distilled from those episodes: <em>this customer is on the Pro plan, prefers email over chat, and has been with Ledgerly for two years.</em> <strong>Procedural</strong> memory holds the reliable runbooks the agent has learned for recurring jobs, in the sense of <a href="#sec-ch11-procedural" class="quarto-xref"><span>Section 12.2.3</span></a>: <em>how to investigate a duplicate charge after a plan migration</em>, <em>how to validate refund eligibility</em>, and <em>how to escalate a policy exception</em>, each a reusable sequence rather than a fact or an event.</p>
+<p><strong>Reflective</strong> memory is the newest and, for a support agent, the most valuable, because it is how Ledgerly stops repeating expensive mistakes. Suppose the agent once issued a refund <em>before</em> checking the migration logs and later discovered the charge had been legitimate. The lesson from that failure, in the sense of <a href="#sec-ch11-reflective" class="quarto-xref"><span>Section 12.2.4</span></a>, is not another fact about the customer; it is a note to itself: <em>for plan-migration complaints, check the migration logs before deciding refund eligibility.</em> Stored as a reflective memory and retrieved the next time a migration complaint arrives, that single sentence steers the agent away from the mistake it made before, with no retraining required.</p>
 <p>Those kinds, and Ledgerly’s policy for each, make a compact memory plan:</p>
 <table class="caption-top table">
 <colgroup>
@@ -755,19 +761,19 @@ Figure&nbsp;11.5: Memory as a lifecycle loop. Raw observations are written, cons
 </tr>
 </tbody>
 </table>
-<p>All of these live outside the model in Ledgerly’s memory store and reach the agent through the read-act-write loop from <a href="#sec-ch11-worked" class="quarto-xref"><span>Section 11.6</span></a>. On each ticket the agent embeds the incoming message, retrieves the customer’s most relevant memories by meaning (<a href="#sec-ch11-vectors" class="quarto-xref"><span>Section 11.3</span></a>) while weighing the other signals from <a href="#sec-ch11-signals" class="quarto-xref"><span>Section 11.5.3</span></a>, so a memory that is old, unauthorized, contradicted, or out of scope is not blindly surfaced, acts with that history in context, and writes back anything worth keeping. And because forgetting is a feature (<a href="#sec-ch11-forgetting" class="quarto-xref"><span>Section 11.5.4</span></a>), Ledgerly does not store every “thanks!”. It reinforces the durable preferences and significant incidents, lets the trivia decay, and updates a fact like “billing owner changed from Alex to Priya” rather than carrying both, so recall stays sharp and the bill stays low.</p>
-<p>On the system blueprint, this chapter switches on the memory store (<a href="#fig-ledgerly-memory" class="quarto-xref">Figure&nbsp;<span>11.6</span></a>), the one part every lane quietly leans on.</p>
+<p>All of these live outside the model in Ledgerly’s memory store and reach the agent through the read-act-write loop from <a href="#sec-ch11-worked" class="quarto-xref"><span>Section 12.6</span></a>. On each ticket the agent embeds the incoming message, retrieves the customer’s most relevant memories by meaning (<a href="#sec-ch11-vectors" class="quarto-xref"><span>Section 12.3</span></a>) while weighing the other signals from <a href="#sec-ch11-signals" class="quarto-xref"><span>Section 12.5.3</span></a>, so a memory that is old, unauthorized, contradicted, or out of scope is not blindly surfaced, acts with that history in context, and writes back anything worth keeping. And because forgetting is a feature (<a href="#sec-ch11-forgetting" class="quarto-xref"><span>Section 12.5.4</span></a>), Ledgerly does not store every “thanks!”. It reinforces the durable preferences and significant incidents, lets the trivia decay, and updates a fact like “billing owner changed from Alex to Priya” rather than carrying both, so recall stays sharp and the bill stays low.</p>
+<p>On the system blueprint, this chapter switches on the memory store (<a href="#fig-ledgerly-memory" class="quarto-xref">Figure&nbsp;<span>12.6</span></a>), the one part every lane quietly leans on.</p>
 <div id="fig-ledgerly-memory" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ledgerly-memory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch11/fig-ledgerly-memory.png" class="img-fluid figure-img">
+<img src="../..\images/ch12/fig-ledgerly-memory.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ledgerly-memory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.6: The same Ledgerly blueprint with its memory store lit: an external vector store the lanes read from and write back to on every ticket.
+Figure&nbsp;12.6: The same Ledgerly blueprint with its memory store lit: an external vector store the lanes read from and write back to on every ticket.
 </figcaption>
 </figure>
 </div>
-<p>Ledgerly now reasons, acts through bounded tools, and remembers its customers, yet it is still one loop improvised turn by turn. <a href="12-orchestration-langgraph.html#sec-ch12-case" class="quarto-xref"><span>Section 12.7</span></a> gives that loop a durable skeleton, modeling the whole agent as a graph with checkpoints and a human approval step before any refund goes out.</p>
+<p>Ledgerly now reasons, acts through bounded tools, and remembers its customers, yet it is still one loop improvised turn by turn. <a href="13-orchestration-langgraph.html#sec-ch12-case" class="quarto-xref"><span>Section 13.7</span></a> gives that loop a durable skeleton, modeling the whole agent as a graph with checkpoints and a human approval step before any refund goes out.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly so far">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -781,25 +787,25 @@ Figure&nbsp;11.6: The same Ledgerly blueprint with its memory store lit: an exte
 <p>The notebook grows into a real memory:</p>
 <ol type="1">
 <li>Router to three lanes; shared evaluator gate; MCP-served tools.</li>
-<li><strong>New this chapter:</strong> memory becomes a lifecycle over four stores, <strong>episodic</strong> (past tickets), <strong>semantic</strong> (durable facts), <strong>procedural</strong> (learned runbooks), and <strong>reflective</strong> (hard-won lessons), retrieved by blended signals and kept sharp by a reinforce/decay/update policy (<a href="#fig-ledgerly-memory" class="quarto-xref">Figure&nbsp;<span>11.6</span></a>).</li>
+<li><strong>New this chapter:</strong> memory becomes a lifecycle over four stores, <strong>episodic</strong> (past tickets), <strong>semantic</strong> (durable facts), <strong>procedural</strong> (learned runbooks), and <strong>reflective</strong> (hard-won lessons), retrieved by blended signals and kept sharp by a reinforce/decay/update policy (<a href="#fig-ledgerly-memory" class="quarto-xref">Figure&nbsp;<span>12.6</span></a>).</li>
 </ol>
 </div>
 </div>
 </section>
-<section id="sec-ch11-evaluation" class="level2" data-number="11.10">
-<h2 data-number="11.10" class="anchored" data-anchor-id="sec-ch11-evaluation"><span class="header-section-number">11.10</span> How do we know memory works?</h2>
+<section id="sec-ch11-evaluation" class="level2" data-number="12.10">
+<h2 data-number="12.10" class="anchored" data-anchor-id="sec-ch11-evaluation"><span class="header-section-number">12.10</span> How do we know memory works?</h2>
 <p>We have built a lot of machinery, and an honest engineer’s next question is uncomfortable: how would we <em>know</em> if any of it actually worked? It is tempting to assume that a bigger context window or a fancier store must mean better memory, but memory is a capability, not a component, and capabilities have to be measured. The trap to avoid is treating “the model has a huge context window” as a proof of good memory. It is not, and the benchmarks below exist precisely to tell the two apart.</p>
 <p>Start with what a memory test should actually probe, because “does it remember?” is too blunt. A thorough evaluation checks recall accuracy (does the right fact come back?), retrieval precision (does <em>only</em> the right fact come back, or a pile of noise with it?), latency and token cost (can you afford the memory on every turn?), update correctness (when a fact changes, does the new one win?), forgetting correctness (does stale or deleted information actually disappear?), conflict handling (when two memories disagree, does the agent resolve it?), privacy and permission enforcement (are scoped memories kept scoped?), robustness to false memories (does a planted or hallucinated “fact” get trusted?), and the ability to <strong>abstain</strong> (when the answer was never stored, does the agent say so instead of inventing one?). That last one matters more than it sounds: an agent that confidently fabricates a memory is worse than one that admits it does not know.</p>
 <p>Three recent benchmarks turn that wish list into concrete tests, and reading them together is the fastest way to calibrate your expectations. <strong>LongMemEval</strong> evaluates chat assistants on five core long-term abilities, information extraction, multi-session reasoning, temporal reasoning, knowledge updates, and abstention, and it frames memory design as three stages worth measuring separately: indexing, retrieval, and reading <span class="citation" data-cites="longmemeval2024"><a href="../../references.html#ref-longmemeval2024" role="doc-biblioref">[9]</a></span>. Its headline finding is a warning for anyone who trusts raw context length: commercial assistants and long-context models showed a sharp accuracy drop when they had to hold information across sustained, multi-session interactions <span class="citation" data-cites="longmemeval2024"><a href="../../references.html#ref-longmemeval2024" role="doc-biblioref">[9]</a></span>. <strong>LoCoMo</strong> pushes on sheer length, with conversations averaging around 300 turns across up to 35 sessions, and finds that both long-context models and retrieval-augmented approaches help but still lag well behind humans on long-range temporal and causal reasoning <span class="citation" data-cites="maharana2024locomo"><a href="../../references.html#ref-maharana2024locomo" role="doc-biblioref">[10]</a></span>. The lesson from both is the one to tattoo on the wall: <em>long context is not the same as good memory.</em> <strong>MemBench</strong> rounds out the picture by evaluating memory along multiple aspects, effectiveness, efficiency, and capacity, and by distinguishing <strong>factual</strong> memory from <strong>reflective</strong> memory as different levels to test, which is exactly the episodic-versus-reflective distinction we drew earlier <span class="citation" data-cites="membench2025"><a href="../../references.html#ref-membench2025" role="doc-biblioref">[11]</a></span>.</p>
-<p>For Ledgerly, this is the difference between a demo and a service you can trust with refunds. A memory that recalls a customer’s history but cannot abstain when it has none will invent a phantom prior ticket; a memory that cannot handle updates will keep refunding against a policy that changed last month; a memory that cannot enforce scope will leak one customer’s data into another’s conversation. Measuring those failure modes, rather than assuming a big context window rules them out, is the whole job, and it is the bridge into the evaluation chapter, where we make this discipline systematic in <a href="../part4-production/15-evaluation.html" class="quarto-xref"><span>Chapter 15</span></a>.</p>
+<p>For Ledgerly, this is the difference between a demo and a service you can trust with refunds. A memory that recalls a customer’s history but cannot abstain when it has none will invent a phantom prior ticket; a memory that cannot handle updates will keep refunding against a policy that changed last month; a memory that cannot enforce scope will leak one customer’s data into another’s conversation. Measuring those failure modes, rather than assuming a big context window rules them out, is the whole job, and it is the bridge into the evaluation chapter, where we make this discipline systematic in <a href="../part4-production/16-evaluation.html" class="quarto-xref"><span>Chapter 16</span></a>.</p>
 </section>
-<section id="sec-ch11-frontier" class="level2" data-number="11.11">
-<h2 data-number="11.11" class="anchored" data-anchor-id="sec-ch11-frontier"><span class="header-section-number">11.11</span> Where memory research is going</h2>
+<section id="sec-ch11-frontier" class="level2" data-number="12.11">
+<h2 data-number="12.11" class="anchored" data-anchor-id="sec-ch11-frontier"><span class="header-section-number">12.11</span> Where memory research is going</h2>
 <p>It is worth closing with a brief look over the horizon, clearly labelled as forward-looking rather than settled practice, because the direction of travel changes how you should build today. Almost everything in this chapter treats memory as a fairly <em>passive</em> store: the agent writes records, and retrieval later pulls the relevant ones back. The emerging frontier is <strong>active</strong> memory, memory that organizes and rewrites <em>itself</em> rather than waiting to be queried.</p>
 <p>The A-MEM system is a good marker of this shift <span class="citation" data-cites="xu2025amem"><a href="../../references.html#ref-xu2025amem" role="doc-biblioref">[12]</a></span>. Inspired by the Zettelkasten method of note-taking, in which every new note is deliberately linked to related existing notes to grow a web of knowledge, A-MEM builds richly annotated memories and dynamically forms links between them, and it allows <strong>memory evolution</strong>, where adding a new memory can update the descriptions of older, related ones <span class="citation" data-cites="xu2025amem"><a href="../../references.html#ref-xu2025amem" role="doc-biblioref">[12]</a></span>. The store stops being a flat list and becomes a self-organizing network that gets smarter as it grows. For Ledgerly, the promise is tangible: a new duplicate-billing complaint would not land as an isolated note but would link itself to the earlier plan-migration failures it resembles, and over time those links would let the system evolve from a scatter of individual tickets into a map of recurring billing-failure patterns, the kind of structural insight no single memory ever explicitly recorded. Whether or not any particular system wins, that trajectory, from passive storage to active organization, is the one to watch.</p>
 </section>
-<section id="sec-ch11-summary" class="level2" data-number="11.12">
-<h2 data-number="11.12" class="anchored" data-anchor-id="sec-ch11-summary"><span class="header-section-number">11.12</span> Summary</h2>
+<section id="sec-ch11-summary" class="level2" data-number="12.12">
+<h2 data-number="12.12" class="anchored" data-anchor-id="sec-ch11-summary"><span class="header-section-number">12.12</span> Summary</h2>
 <p>This chapter gave the agent a past, turning a stateless text generator into an assistant whose usefulness compounds over time.</p>
 <ul>
 <li><strong>Without memory, every turn starts from zero.</strong> A stateless LLM is a brilliant colleague with daily amnesia; memory is what lets usefulness accumulate.</li>
@@ -811,18 +817,18 @@ Figure&nbsp;11.6: The same Ledgerly blueprint with its memory store lit: an exte
 <li><strong>Memory is a lifecycle, not a database.</strong> Observe, write, consolidate, retrieve, and update-or-forget; a graph memory <span class="citation" data-cites="mem0_2025"><a href="../../references.html#ref-mem0_2025" role="doc-biblioref">[8]</a></span> adds the relationships a flat list cannot hold.</li>
 <li><strong>Measure it, do not assume it.</strong> Long context is not good memory; benchmarks like LongMemEval <span class="citation" data-cites="longmemeval2024"><a href="../../references.html#ref-longmemeval2024" role="doc-biblioref">[9]</a></span>, LoCoMo <span class="citation" data-cites="maharana2024locomo"><a href="../../references.html#ref-maharana2024locomo" role="doc-biblioref">[10]</a></span>, and MemBench <span class="citation" data-cites="membench2025"><a href="../../references.html#ref-membench2025" role="doc-biblioref">[11]</a></span> test recall, updates, abstention, and more.</li>
 </ul>
-<p>Our agent can now reason, act through well-designed tools, and remember across time. It has, in a sense, all the faculties of a capable individual. But so far it has always been a <em>single</em> agent running a <em>single</em> loop, and our worked examples have quietly grown more elaborate: read, act, write; route, retrieve, reflect. Coordinating all these moving parts reliably, with state that persists and steps that can branch and resume, is an engineering problem of its own. The next chapter picks up a framework built precisely for it: orchestrating agents as graphs, in <a href="12-orchestration-langgraph.html" class="quarto-xref"><span>Chapter 12</span></a>.</p>
+<p>Our agent can now reason, act through well-designed tools, and remember across time. It has, in a sense, all the faculties of a capable individual. But so far it has always been a <em>single</em> agent running a <em>single</em> loop, and our worked examples have quietly grown more elaborate: read, act, write; route, retrieve, reflect. Coordinating all these moving parts reliably, with state that persists and steps that can branch and resume, is an engineering problem of its own. The next chapter picks up a framework built precisely for it: orchestrating agents as graphs, in <a href="13-orchestration-langgraph.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
 </section>
-<section id="sec-ch11-exercises" class="level2" data-number="11.13">
-<h2 data-number="11.13" class="anchored" data-anchor-id="sec-ch11-exercises"><span class="header-section-number">11.13</span> Exercises</h2>
+<section id="sec-ch11-exercises" class="level2" data-number="12.13">
+<h2 data-number="12.13" class="anchored" data-anchor-id="sec-ch11-exercises"><span class="header-section-number">12.13</span> Exercises</h2>
 <ol type="1">
 <li><strong>Classify the memory.</strong> For each, name the type (working, episodic, semantic, procedural, or reflective): (a) the last five messages of the current chat; (b) “the user’s daughter is named Mia”; (c) “on March 3rd the user reported a login bug”; (d) “the reliable way to reset this account is steps X, Y, Z”; (e) “last time I refunded before checking the logs, I was wrong, so check the logs first.”</li>
 <li><strong>Episodic versus reflective.</strong> Explain, in your own words, the difference between an episodic memory and a reflective one, using an example from your own life. Why is it useful for an agent to store the two separately rather than collapsing them into one log?</li>
 <li><strong>Why embeddings, not keywords?</strong> Explain why a keyword search for “dog” would miss the memory “my puppy is wonderful,” and how embedding-based retrieval fixes it. Give another pair of texts that mean the same thing while sharing no words.</li>
-<li><strong>Beyond similarity.</strong> Pick three of the retrieval signals from <a href="#sec-ch11-signals" class="quarto-xref"><span>Section 11.5.3</span></a> (say, recency, scope, and conflict status) and, for each, describe a case where the <em>most semantically similar</em> memory is the wrong one to surface and that signal would catch the mistake.</li>
-<li><strong>Design a forgetting-and-update policy.</strong> For a customer-support agent, sketch rules for which memories to <em>reinforce</em>, which to <em>decay</em>, and which to <em>update or overwrite</em>. Justify each rule in terms of relevance, correctness, and cost, and name one memory you would refuse to store at all (<a href="#sec-ch11-what-not" class="quarto-xref"><span>Section 11.7.1</span></a>).</li>
-<li><strong>Walk the lifecycle.</strong> Using the five stages from <a href="#sec-ch11-lifecycle" class="quarto-xref"><span>Section 11.7</span></a> (observe, write, consolidate, retrieve, update-or-forget), trace what should happen to the fact “the user is vegetarian” from the moment they mention it, through several later dinner-recommendation sessions, to the day they say they have started eating fish.</li>
-<li><strong>Design a memory evaluation.</strong> You are handed two support agents and told one has “better memory.” Using the dimensions from <a href="#sec-ch11-evaluation" class="quarto-xref"><span>Section 11.10</span></a> (recall, update correctness, abstention, scope enforcement, cost), design three test cases that would reveal which agent is actually better, and explain why a larger context window alone would not settle the question.</li>
+<li><strong>Beyond similarity.</strong> Pick three of the retrieval signals from <a href="#sec-ch11-signals" class="quarto-xref"><span>Section 12.5.3</span></a> (say, recency, scope, and conflict status) and, for each, describe a case where the <em>most semantically similar</em> memory is the wrong one to surface and that signal would catch the mistake.</li>
+<li><strong>Design a forgetting-and-update policy.</strong> For a customer-support agent, sketch rules for which memories to <em>reinforce</em>, which to <em>decay</em>, and which to <em>update or overwrite</em>. Justify each rule in terms of relevance, correctness, and cost, and name one memory you would refuse to store at all (<a href="#sec-ch11-what-not" class="quarto-xref"><span>Section 12.7.1</span></a>).</li>
+<li><strong>Walk the lifecycle.</strong> Using the five stages from <a href="#sec-ch11-lifecycle" class="quarto-xref"><span>Section 12.7</span></a> (observe, write, consolidate, retrieve, update-or-forget), trace what should happen to the fact “the user is vegetarian” from the moment they mention it, through several later dinner-recommendation sessions, to the day they say they have started eating fish.</li>
+<li><strong>Design a memory evaluation.</strong> You are handed two support agents and told one has “better memory.” Using the dimensions from <a href="#sec-ch11-evaluation" class="quarto-xref"><span>Section 12.10</span></a> (recall, update correctness, abstention, scope enforcement, cost), design three test cases that would reveal which agent is actually better, and explain why a larger context window alone would not settle the question.</li>
 </ol>
 
 
@@ -1430,13 +1436,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../chapters/part3-building/10-tools-and-mcp.html" class="pagination-link" aria-label="Tools &amp; the Model Context Protocol (MCP)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span>
+      <a href="../../chapters/part3-building/11-tools-and-mcp.html" class="pagination-link" aria-label="Tools &amp; the Model Context Protocol (MCP)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../chapters/part3-building/12-orchestration-langgraph.html" class="pagination-link" aria-label="Orchestration with LangGraph">
-        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../chapters/part3-building/13-orchestration-langgraph.html" class="pagination-link" aria-label="Orchestration with LangGraph">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

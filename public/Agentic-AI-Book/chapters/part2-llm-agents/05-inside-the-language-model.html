@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A practical, research-grounded guide that connects the classical theory of intelligent agents to the modern practice of building autonomous LLM agents with tools, memory, planning, and multi-agent orchestration.">
+
+<title>5&nbsp; Inside the Language Model – Agents: From Theory to Production</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../chapters/part2-llm-agents/06-llms-as-reasoners.html" rel="next">
+<link href="../../chapters/part1-foundations/04-environments-and-rationality.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d166b450ba5a8e9f7a0ab969bf6592c1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9323ee001d31a54ee2476120b8c8bf56.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-20d87d490373df57c880857ccdca8cc5.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part2-llm-agents/05-inside-the-language-model.html">Part II — The LLM as an Agent</a></li><li class="breadcrumb-item"><a href="../../chapters/part2-llm-agents/05-inside-the-language-model.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Inside the Language Model</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Agents: From Theory to Production</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/bhavykhatri/bhavykhatri.github.io" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cover</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part I — Foundations of Agency</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/01-what-is-an-agent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What Is an Agent?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/02-history-and-theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A Short History &amp; the Theory of Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/03-agent-architectures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Agent Architectures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part1-foundations/04-environments-and-rationality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Environments &amp; Rationality</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part II — The LLM as an Agent</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/05-inside-the-language-model.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Inside the Language Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/06-llms-as-reasoners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/07-the-augmented-llm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/08-reasoning-and-planning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part III — Building Agents</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/09-workflows-vs-agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/10-agentic-patterns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/11-tools-and-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/12-memory-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/13-orchestration-langgraph.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/14-openai-agents-sdk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part3-building/15-multi-agent-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part IV — Production &amp; Trust</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/16-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/17-observability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Observability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/18-safety-and-guardrails.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Safety &amp; Guardrails</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part4-production/19-deployment-and-cost.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Part V — Frontiers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part5-frontiers/20-computer-use-and-embodiment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Computer Use &amp; Embodiment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part5-frontiers/21-frontiers-and-open-problems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Frontiers &amp; Open Problems</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendices/a-environment-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Appendix A — Environment Setup</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendices/b-glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Appendix B — Glossary</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendices/c-further-reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Appendix C — Further Reading</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../about-the-author.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the Author</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-ch5-open-engine" id="toc-sec-ch5-open-engine" class="nav-link active" data-scroll-target="#sec-ch5-open-engine"><span class="header-section-number">5.1</span> Opening the engine before we drive it</a></li>
+  <li><a href="#sec-ch5-tokens" id="toc-sec-ch5-tokens" class="nav-link" data-scroll-target="#sec-ch5-tokens"><span class="header-section-number">5.2</span> From words to numbers: tokens</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch5-tokenizer" id="toc-sec-ch5-tokenizer" class="nav-link" data-scroll-target="#sec-ch5-tokenizer"><span class="header-section-number">5.2.1</span> How a tokenizer splits text</a></li>
+  <li><a href="#sec-ch5-tokens-meter" id="toc-sec-ch5-tokens-meter" class="nav-link" data-scroll-target="#sec-ch5-tokens-meter"><span class="header-section-number">5.2.2</span> Why tokens are also the meter</a></li>
+  <li><a href="#sec-ch5-tokens-break" id="toc-sec-ch5-tokens-break" class="nav-link" data-scroll-target="#sec-ch5-tokens-break"><span class="header-section-number">5.2.3</span> Why this breaks exact reasoning</a></li>
+  </ul></li>
+  <li><a href="#sec-ch5-transformer" id="toc-sec-ch5-transformer" class="nav-link" data-scroll-target="#sec-ch5-transformer"><span class="header-section-number">5.3</span> The transformer, without the math</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch5-embeddings" id="toc-sec-ch5-embeddings" class="nav-link" data-scroll-target="#sec-ch5-embeddings"><span class="header-section-number">5.3.1</span> Meaning as coordinates</a></li>
+  <li><a href="#sec-ch5-attention" id="toc-sec-ch5-attention" class="nav-link" data-scroll-target="#sec-ch5-attention"><span class="header-section-number">5.3.2</span> Attention: letting words look at each other</a></li>
+  <li><a href="#sec-ch5-depth" id="toc-sec-ch5-depth" class="nav-link" data-scroll-target="#sec-ch5-depth"><span class="header-section-number">5.3.3</span> Depth: stacking the trick</a></li>
+  </ul></li>
+  <li><a href="#sec-ch5-autoregression" id="toc-sec-ch5-autoregression" class="nav-link" data-scroll-target="#sec-ch5-autoregression"><span class="header-section-number">5.4</span> Generating one token at a time</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch5-distribution" id="toc-sec-ch5-distribution" class="nav-link" data-scroll-target="#sec-ch5-distribution"><span class="header-section-number">5.4.1</span> A probability for every token</a></li>
+  <li><a href="#sec-ch5-sampling" id="toc-sec-ch5-sampling" class="nav-link" data-scroll-target="#sec-ch5-sampling"><span class="header-section-number">5.4.2</span> Sampling, and why answers vary</a></li>
+  <li><a href="#sec-ch5-loop" id="toc-sec-ch5-loop" class="nav-link" data-scroll-target="#sec-ch5-loop"><span class="header-section-number">5.4.3</span> The loop that writes paragraphs</a></li>
+  <li><a href="#sec-ch5-context-window" id="toc-sec-ch5-context-window" class="nav-link" data-scroll-target="#sec-ch5-context-window"><span class="header-section-number">5.4.4</span> The context window is all it has</a></li>
+  </ul></li>
+  <li><a href="#sec-ch5-training" id="toc-sec-ch5-training" class="nav-link" data-scroll-target="#sec-ch5-training"><span class="header-section-number">5.5</span> How a model is trained</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch5-pretraining" id="toc-sec-ch5-pretraining" class="nav-link" data-scroll-target="#sec-ch5-pretraining"><span class="header-section-number">5.5.1</span> Pretraining: reading almost everything</a></li>
+  <li><a href="#sec-ch5-sft" id="toc-sec-ch5-sft" class="nav-link" data-scroll-target="#sec-ch5-sft"><span class="header-section-number">5.5.2</span> Supervised fine-tuning: learning to answer</a></li>
+  <li><a href="#sec-ch5-rlhf" id="toc-sec-ch5-rlhf" class="nav-link" data-scroll-target="#sec-ch5-rlhf"><span class="header-section-number">5.5.3</span> Alignment: learning what people prefer</a></li>
+  <li><a href="#sec-ch5-rlvr" id="toc-sec-ch5-rlvr" class="nav-link" data-scroll-target="#sec-ch5-rlvr"><span class="header-section-number">5.5.4</span> Reasoning training: rewarding a right answer</a></li>
+  <li><a href="#sec-ch5-tooltraining" id="toc-sec-ch5-tooltraining" class="nav-link" data-scroll-target="#sec-ch5-tooltraining"><span class="header-section-number">5.5.5</span> Tool use is a trained behavior too</a></li>
+  </ul></li>
+  <li><a href="#sec-ch5-efficiency" id="toc-sec-ch5-efficiency" class="nav-link" data-scroll-target="#sec-ch5-efficiency"><span class="header-section-number">5.6</span> Making it fast and affordable</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch5-phases" id="toc-sec-ch5-phases" class="nav-link" data-scroll-target="#sec-ch5-phases"><span class="header-section-number">5.6.1</span> Two phases, and why writing is the slow part</a></li>
+  <li><a href="#sec-ch5-kvcache" id="toc-sec-ch5-kvcache" class="nav-link" data-scroll-target="#sec-ch5-kvcache"><span class="header-section-number">5.6.2</span> The KV cache: don’t redo the reading</a></li>
+  <li><a href="#sec-ch5-longprompts" id="toc-sec-ch5-longprompts" class="nav-link" data-scroll-target="#sec-ch5-longprompts"><span class="header-section-number">5.6.3</span> Why long prompts quietly cost you</a></li>
+  <li><a href="#sec-ch5-efficiency-patterns" id="toc-sec-ch5-efficiency-patterns" class="nav-link" data-scroll-target="#sec-ch5-efficiency-patterns"><span class="header-section-number">5.6.4</span> Patterns that make models cheaper</a></li>
+  </ul></li>
+  <li><a href="#sec-ch5-consequences" id="toc-sec-ch5-consequences" class="nav-link" data-scroll-target="#sec-ch5-consequences"><span class="header-section-number">5.7</span> What this means for building agents</a></li>
+  <li><a href="#sec-ch5-summary" id="toc-sec-ch5-summary" class="nav-link" data-scroll-target="#sec-ch5-summary"><span class="header-section-number">5.8</span> Summary</a></li>
+  <li><a href="#sec-ch5-exercises" id="toc-sec-ch5-exercises" class="nav-link" data-scroll-target="#sec-ch5-exercises"><span class="header-section-number">5.9</span> Exercises</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/bhavykhatri/bhavykhatri.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part2-llm-agents/05-inside-the-language-model.html">Part II — The LLM as an Agent</a></li><li class="breadcrumb-item"><a href="../../chapters/part2-llm-agents/05-inside-the-language-model.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Inside the Language Model</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-inside-the-language-model" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Inside the Language Model</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p><em>“What I cannot create, I do not understand.”</em></p>
+<p>— Richard Feynman, on his blackboard at the time of his death, 1988</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>After this chapter you will understand what a large language model actually is underneath the chat window: how it turns your words into numbers, how it generates a reply one piece at a time, how it was trained to be helpful, and why each of those facts quietly decides how you must build an agent around it.</p>
+</blockquote>
+<section id="sec-ch5-open-engine" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="sec-ch5-open-engine"><span class="header-section-number">5.1</span> Opening the engine before we drive it</h2>
+<p>Part I handed us a loop: sense the world, <em>decide</em> what to do, act, and repeat. We kept the middle box, the one labelled <strong>decide</strong>, deliberately shut. We drew it as a clean rectangle and promised that Part II would open it and look at the engine we put inside it today, the large language model. The next chapter will ask what that engine can and cannot <em>reason</em> about. But you cannot judge an engine you have never seen, so this chapter opens the casing first and looks at the machine itself.</p>
+<div id="fig-llm-heart" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-llm-heart-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch05/fig-llm-heart.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-llm-heart-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: The model sits at the center of the agent loop we drew in Part I. A request and the environment’s observations come in; the model reasons and decides in tokens; it acts, often by calling a tool; and the result feeds back to inform its next move. The strip along the bottom previews the machine this chapter opens up: the single generation step in which text becomes tokens, tokens flow through the network, and one next token is chosen and appended.
+</figcaption>
+</figure>
+</div>
+<p>The order matters. Almost every hard decision in the rest of this book, how much to trust an answer, how to shape a prompt, when to reach for a tool, how to keep costs down, is really a reaction to some concrete fact about how this machine is built. Why does the model miscount the letters in a word, give a different answer to the same question twice, or slow to a crawl on a long conversation, yet still follow instructions no one ever wrote down for it? None of these are mysteries once you have seen the parts. They are direct, almost mechanical consequences of four things: how text becomes numbers, how those numbers flow through the network, how the next word is chosen, and how the whole thing was trained. This chapter walks through those four things in plain language.</p>
+<p>Think of it the way you would think about hiring a brilliant new colleague whose work you will have to stake your own reputation on. Before you hand them the account, you want to know how they think: what they are astonishingly good at, where they cut corners, what makes them guess instead of check. You are not trying to become a neuroscientist. You just need a working model of the person, good enough to know which tasks to trust them with and which to double-check. That is exactly the goal here. We are not going to derive the mathematics of deep learning. We are going to build a mental model of the language model that is accurate enough to make good engineering decisions, and honest enough about the machine’s habits that those decisions hold up when real money and real users are on the line. Keep that new colleague in mind. We will check back in with them as each part of the machine comes into view, because every part we open up explains one more of their quirks.</p>
+<p>A quick word on what this chapter is not. It is not a machine-learning course, and you will not need one to follow it. Wherever there is a choice between a precise equation and a picture that carries the same intuition, we will draw the picture. The payoff comes at the very end, where a short list of practical consequences, the kind you can tape above your desk, falls straight out of the parts we assemble along the way. By then, “the model is limited,” “the output is probabilistic,” and “long prompts cost money” will not be slogans you have to memorize. They will be things you can see.</p>
+<p>The model itself starts with a problem so basic it is easy to miss: before it can do anything with your words, it has to turn them into numbers. How it does that, and what quietly goes missing in the translation, turns out to be the root of half the model’s strangest habits.</p>
+</section>
+<section id="sec-ch5-tokens" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="sec-ch5-tokens"><span class="header-section-number">5.2</span> From words to numbers: tokens</h2>
+<p>A neural network cannot read. It has no notion of letters, words, or spaces. It is, at heart, a machine that multiplies long lists of numbers together. So the very first thing that happens to your prompt, before any “intelligence” enters the picture, is a translation step: the text is chopped into pieces and each piece is swapped for a number. Those pieces are called <strong>tokens</strong>, and almost everything surprising about how a model handles spelling, arithmetic, and word counting traces back to this one quiet step.</p>
+<section id="sec-ch5-tokenizer" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="sec-ch5-tokenizer"><span class="header-section-number">5.2.1</span> How a tokenizer splits text</h3>
+<p>You might expect the model to split text into words, or maybe into single letters. It does neither. It uses something in between, a <strong>subword</strong> scheme, most commonly a method called byte-pair encoding <span class="citation" data-cites="sennrich2016bpe"><a href="../../references.html#ref-sennrich2016bpe" role="doc-biblioref">[1]</a></span>. The idea is delightfully simple. Start with raw characters, then repeatedly glue together the pair of symbols that appears most often in a huge pile of text. Do that tens of thousands of times and you end up with a fixed list of chunks, the model’s <strong>vocabulary</strong>, where common words like ” the” or ” and” become a single token, while rarer words get built from a few pieces. The word “tokenization” might split into <code>token</code> and <code>ization</code>; a name the tokenizer has never seen might shatter into five or six fragments.</p>
+<p>Each token in that vocabulary has a fixed slot number, its <strong>token ID</strong>. The tokenizer’s whole job is a lookup: it turns your sentence into a list of these integers, and turns the model’s output integers back into text. Nothing more. The model itself only ever sees the numbers.</p>
+<div id="fig-tokenization" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tokenization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch05/fig-tokenization.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tokenization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.2: Tokenization from every angle. The same sentence splits differently under word-level, character-level, and subword schemes; modern models use subword tokenization such as BPE or SentencePiece, built by repeatedly merging the most frequent pairs of symbols, so common words become single tokens and rarer ones are assembled from pieces. Because the model works over token IDs rather than letters, numbers, spelling, casing, symbols, and non-English text all fragment in ways that shape how it reasons. The model thinks in tokens, not words.
+</figcaption>
+</figure>
+</div>
+<p>Why chop words into subwords at all, rather than keeping a giant list of whole words? Because language is open-ended. New words, typos, product names, code identifiers, and other languages appear endlessly, and no fixed word list could ever hold them all. Subwords give the model a finite vocabulary, usually somewhere around fifty to a hundred thousand tokens, that can still spell out anything by combining pieces. It is the same trick the alphabet plays: twenty-six letters, infinite words. Subword tokens are a coarser alphabet, tuned so the common stuff is cheap and the rare stuff is still expressible.</p>
+</section>
+<section id="sec-ch5-tokens-meter" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="sec-ch5-tokens-meter"><span class="header-section-number">5.2.2</span> Why tokens are also the meter</h3>
+<p>Tokens are not just an internal detail. They are the unit the model is billed and bounded in. When a provider quotes a price “per thousand tokens,” or a model advertises a “128,000-token context window,” that is this exact currency. A rough rule of thumb for English is that a token is about four characters, or roughly three-quarters of a word, so a page of text is somewhere near five hundred tokens. Code, unusual names, and languages that do not use spaces tend to fracture into more tokens, which is why the same idea can cost more to process in one form than another. We will return to the money side of this later in the chapter, but hold on to the core fact: the model reads, writes, remembers, and charges in tokens, not words.</p>
+</section>
+<section id="sec-ch5-tokens-break" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="sec-ch5-tokens-break"><span class="header-section-number">5.2.3</span> Why this breaks exact reasoning</h3>
+<p>This is the moment tokenization stops being trivia. A famous party trick is to ask a capable model how many times the letter “r” appears in “strawberry” and watch it stumble. The reason is not stupidity. It is that the model never saw the letters. “strawberry” may have arrived as two or three tokens, and inside the model those tokens are single opaque symbols, not a sequence of characters it can count. Asking it to count letters is like asking someone to count the strokes in a word they only ever heard spoken. The information was thrown away at the door. It is our new colleague again: fluent, widely read, and yet unable to see the very letters you are pointing at.</p>
+<p>The same root cause explains a cluster of related weaknesses. Digits get grouped into tokens in irregular ways, so “1234” and “12345” may be split quite differently, which is part of why models are shakier at long multiplication than their fluency suggests <span class="citation" data-cites="mirzadeh2024gsmsymbolic"><a href="../../references.html#ref-mirzadeh2024gsmsymbolic" role="doc-biblioref">[2]</a></span>. Reversing a string, counting words, or manipulating text character by character all run against the same grain: the model reasons over tokens, not over the raw symbols you see. None of this makes the model useless at these tasks. It makes them tasks you should hand to a tool, a calculator or a few lines of code, rather than trust to the model’s intuition. That instinct, “let the model decide and a tool compute,” is one we will build on for the rest of the book, and it starts here, with a clear-eyed view of what the model literally cannot see.</p>
+<p>With the input now reduced to a list of numbers, we can follow those numbers inward and ask the central question: what actually happens between the tokens going in and a prediction coming out?</p>
+</section>
+</section>
+<section id="sec-ch5-transformer" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="sec-ch5-transformer"><span class="header-section-number">5.3</span> The transformer, without the math</h2>
+<p>Almost every model you will use is built on an architecture called the <strong>transformer</strong>, introduced in a 2017 paper with the fitting title “Attention Is All You Need” <span class="citation" data-cites="vaswani2017attention"><a href="../../references.html#ref-vaswani2017attention" role="doc-biblioref">[3]</a></span>. You do not need its equations to build agents, but you do need its central intuition, because that intuition explains why models are so good at context and so bad at a few stubborn things. That intuition arrives in three moves, each building on the one before: first tokens become meaning, then words learn to look at each other, then we stack the trick deep.</p>
+<section id="sec-ch5-embeddings" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="sec-ch5-embeddings"><span class="header-section-number">5.3.1</span> Meaning as coordinates</h3>
+<p>The token IDs from the last section are just arbitrary slot numbers. Token 4,912 is no closer in meaning to token 4,913 than to token 50,000. The first thing the model does is replace each ID with a long list of numbers called an <strong>embedding</strong>, a point in a space with hundreds or thousands of dimensions. Think of it as a very elaborate map. On an ordinary map, two dimensions place every city by latitude and longitude, and cities that are near each other on the ground are near each other on paper. An embedding does the same thing for meaning: it places every token in a space where “king” sits near “queen,” “Paris” sits near “France,” and “delighted” sits near “thrilled.” These coordinates are not hand-assigned. They are learned during training, squeezed out of the model’s one relentless task of predicting the next token, because words that behave alike in text end up needing similar coordinates to be predicted well.</p>
+</section>
+<section id="sec-ch5-attention" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="sec-ch5-attention"><span class="header-section-number">5.3.2</span> Attention: letting words look at each other</h3>
+<p>A pile of word-points is not yet understanding, because the meaning of a word depends on its neighbors. In “I sat by the river bank” and “I deposited it at the bank,” the word “bank” is identical on the page but means two different things, and the only way to tell them apart is to look at the surrounding words. This is the job of <strong>attention</strong>, the mechanism the transformer is named for.</p>
+<p>The idea, stripped to its core, is this: at every position, the model looks back over all the earlier words and decides which ones are relevant to the word it is currently processing, then pulls in information from those and largely ignores the rest. When it processes “it” in “the trophy did not fit in the suitcase because it was too big,” a well-trained model learns to attend from “it” back to “trophy” rather than “suitcase,” which is exactly the piece of context needed to resolve the pronoun. Attention is a learned spotlight: for each word, it brightens the handful of earlier words that matter and dims the rest, so every word’s representation gets updated in light of its real context rather than its dictionary definition.</p>
+</section>
+<section id="sec-ch5-depth" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="sec-ch5-depth"><span class="header-section-number">5.3.3</span> Depth: stacking the trick</h3>
+<p>One round of this look-and-update is not enough for anything subtle. So the transformer stacks the operation into many <strong>layers</strong>, dozens in a small model and far more in a large one. Each layer takes the context-enriched words from the layer below and refines them again, and the intuition is that meaning gets assembled in stages. Early layers tend to settle low-level matters like grammar and which word attaches to which; middle layers build up phrases and relationships; later layers work with more abstract meaning, the drift of an argument, the tone of a request, the intent behind a question. Nobody programmed this division of labor. It emerges because a deep stack, trained to predict the next token across a staggering amount of text, discovers that building understanding in layers is the way to do the job well.</p>
+<p>If you want to open the block itself and see that there is no magic inside, only attention and arithmetic repeated at scale, the full picture is worth one careful look.</p>
+<div id="fig-transformer-block" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-transformer-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch05/fig-transformer-block.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-transformer-block-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.3: One transformer block, opened up for readers who want the machinery behind the intuition. Tokens enter as vectors; masked multi-head self-attention lets each position gather from the tokens before it, never ahead; a position-wise feed-forward network then transforms each position on its own; and residual connections with normalization keep a deep stack trainable. A model is dozens to hundreds of these identical blocks stacked, and the causal mask is exactly what forces generation to run one token at a time. Note the efficiency add-ons in the corner, the KV cache and mixture-of-experts, which we return to at the end of the chapter.
+</figcaption>
+</figure>
+</div>
+<p>That is the whole engine, in intuition if not in arithmetic. Tokens become points in a meaning-space; attention lets each point absorb its relevant context; depth repeats that until the top of the stack holds a rich, context-aware representation of everything read so far. The output of that top layer is used for one thing above all, the thing the model was built to do: guess what comes next. How that single guess grows into whole paragraphs is where we turn now.</p>
+</section>
+</section>
+<section id="sec-ch5-autoregression" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="sec-ch5-autoregression"><span class="header-section-number">5.4</span> Generating one token at a time</h2>
+<p>So far we have described the model as something that predicts “the next word.” Take that literally, because the way a single prediction grows into a whole answer is the source of two facts you will design around constantly: its outputs are probabilistic, and its memory is nothing more than the text in front of it.</p>
+<section id="sec-ch5-distribution" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="sec-ch5-distribution"><span class="header-section-number">5.4.1</span> A probability for every token</h3>
+<p>When the model finishes processing your prompt, it does not produce a sentence. It produces a single thing: a <strong>probability</strong> for every token in its vocabulary, a score for how likely each one is to come next. Given “The capital of France is,” the token ” Paris” might get a very high probability, ” a” a modest one, and ” banana” a vanishingly small one. That entire distribution, tens of thousands of numbers, is the model’s raw output for one step. Everything the model “knows” at that moment is compressed into this one ranked list of guesses.</p>
+</section>
+<section id="sec-ch5-sampling" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="sec-ch5-sampling"><span class="header-section-number">5.4.2</span> Sampling, and why answers vary</h3>
+<p>To turn that distribution into an actual token, the system has to pick one. The simplest rule is to always take the highest-scoring token, which is called greedy decoding. But most systems instead <strong>sample</strong>: they roll a weighted die, so a token with probability 0.6 is chosen about sixty percent of the time and lower-ranked tokens occasionally win. This is why the same prompt can give different answers on different runs. Our new colleague, asked the same question on Monday and again on Friday, answers a little differently each time, not from indecision but because a weighted roll of the dice is simply how they think. It is not a bug or a sign of creativity in any mystical sense. It is a deliberate coin-flip baked into how text is produced.</p>
+<p>Two dials control that coin-flip. <strong>Temperature</strong> flattens or sharpens the distribution: low temperature makes the model almost always take its top guess, giving steady, repetitive, predictable text; high temperature spreads the odds, giving surprising and sometimes incoherent text. A related setting, top-p or nucleus sampling, keeps only the smallest set of top tokens whose probabilities add up to some threshold and samples from those, which trims off the long tail of absurd options while still allowing variety <span class="citation" data-cites="holtzman2020nucleus"><a href="../../references.html#ref-holtzman2020nucleus" role="doc-biblioref">[4]</a></span>. The practical upshot is a knob you will reach for often: turn it down when you need reliable, near-deterministic output, such as producing structured data or following a strict format, and turn it up when you want range and are willing to tolerate the occasional odd turn.</p>
+<div id="fig-autoregression-practice" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-autoregression-practice-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch05/fig-autoregression-practice.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-autoregression-practice-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.4: Autoregressive generation, start to finish. In a single step the model reads the current tokens, runs them through the decoder, and produces a probability over the whole vocabulary; a decoding strategy, greedy or sampling with temperature, top-k, or top-p, picks one token, which is appended and fed back in. Follow the worked example and the point lands: the same simple loop that appends ‘Paris,’ then ‘France,’ then a period is all it takes to turn a next-token predictor into a system that writes arbitrary text, which is also why more tokens mean more compute, latency, and cost.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="sec-ch5-loop" class="level3" data-number="5.4.3">
+<h3 data-number="5.4.3" class="anchored" data-anchor-id="sec-ch5-loop"><span class="header-section-number">5.4.3</span> The loop that writes paragraphs</h3>
+<p>A single token is not much of an answer, so generation is a loop. The model predicts one token, the system appends it to the text, and then the whole, now slightly longer, text is fed back in to predict the next token. Predict, append, feed back, repeat, until a special stop token is produced or a length limit is hit. This is what <strong>autoregressive</strong> means: each new token is generated in the context of every token before it, including the ones the model itself just wrote. The reply you read was not planned as a whole and then typed out. It was grown one token at a time, each choice committing the model a little further down a path.</p>
+<p>This detail has a subtle consequence worth naming now, because the next chapter leans on it. Because each token is conditioned on the words already written, the act of writing intermediate steps genuinely changes what the model predicts next. Getting the model to “think out loud” before answering is not decoration; it literally feeds its own reasoning back in as context for the final answer. That is the mechanical seed of chain-of-thought prompting <span class="citation" data-cites="wei2022cot"><a href="../../references.html#ref-wei2022cot" role="doc-biblioref">[5]</a></span>, which the next chapter treats in full.</p>
+</section>
+<section id="sec-ch5-context-window" class="level3" data-number="5.4.4">
+<h3 data-number="5.4.4" class="anchored" data-anchor-id="sec-ch5-context-window"><span class="header-section-number">5.4.4</span> The context window is all it has</h3>
+<p>There is a hard limit on how much text the model can be fed at once, its <strong>context window</strong>, measured, of course, in tokens. Everything the model can use to answer, the system instructions, the conversation history, any documents you pasted, the tool results, and its own reply so far, has to fit inside that window. The surprise is what happens between requests: the model remembers nothing. It does not carry a running memory of your conversation. The illusion of memory is created by resending the whole transcript on every turn, so it fits back inside the window and the model can read what was said before.</p>
+<p>That single fact drives an enormous amount of agent design. It is why long conversations eventually forget their own beginnings, why important instructions can get lost in the middle of a huge prompt <span class="citation" data-cites="liu2024lostmiddle"><a href="../../references.html#ref-liu2024lostmiddle" role="doc-biblioref">[6]</a></span>, and why the entire discipline of memory systems, which gets its own chapter later, exists at all. The model’s working memory is a fixed-size scratchpad that gets wiped and rewritten on every call. Everything durable has to be stored outside it and fed back in. Keep that picture close: it is the reason so much of building agents is really the craft of deciding what to put in the window, and what to leave out.</p>
+<p>So the model reads, thinks, and writes. What we have not asked is where any of its competence, its grammar, its facts, its manners, its willingness to follow instructions, actually came from. That is a story about training, and it is the key to predicting how a model will behave.</p>
+</section>
+</section>
+<section id="sec-ch5-training" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="sec-ch5-training"><span class="header-section-number">5.5</span> How a model is trained</h2>
+<p>A useful model is not built in one step. It is raised in stages, and each stage installs a different kind of competence. This matters to you as a builder because a model’s habits, what it is good at, what it refuses, how it phrases things, how hard it tries to be correct versus merely agreeable, are not random personality quirks. They are the direct fingerprints of how it was trained. If the earlier sections introduced our new colleague, this one is their upbringing and their work history, the record that explains every habit you will later rely on or work around. Learn the four stages and you can usually predict, and sometimes fix, why a model behaves the way it does.</p>
+<div id="fig-training-pipeline" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-training-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch05/fig-training-pipeline.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-training-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.5: How a raw predictor becomes a helpful, careful reasoner, one training stage at a time. Pretraining reads the world to build broad competence; supervised fine-tuning teaches it to answer rather than merely continue; preference and reward modeling capture what people actually like; alignment tunes the model toward those preferences to be helpful, honest, and safe; and reasoning training rewards getting verifiable problems actually right. Each stage installs a capability the one before it lacks.
+</figcaption>
+</figure>
+</div>
+<section id="sec-ch5-pretraining" class="level3" data-number="5.5.1">
+<h3 data-number="5.5.1" class="anchored" data-anchor-id="sec-ch5-pretraining"><span class="header-section-number">5.5.1</span> Pretraining: reading almost everything</h3>
+<p>The first and by far the largest stage is <strong>pretraining</strong>. The model is shown an enormous corpus of text, much of the public internet, a large slice of digitized books, code, and more, and set to the single task from the last sections: predict the next token, over and over, trillions of times. Every time it guesses wrong, its internal numbers are nudged a little to make the right token more likely next time. That is the entire learning signal. No labels, no human grading the answers, just an endless stream of “what comes next” drawn from real text <span class="citation" data-cites="radford2019gpt2"><a href="../../references.html#ref-radford2019gpt2" role="doc-biblioref">[7]</a></span>.</p>
+<p>The astonishing thing, the puzzle the next chapter unpacks, is that this humble objective forces the model to absorb an enormous amount about the world, because you cannot predict text well without it. To guess the next word in a physics explanation you must pick up some physics; to finish a line of code you must learn to program; to complete a story you must track characters and motives. Grammar, facts, styles, and a rough working knowledge of how the world tends to go all get squeezed in as a side effect of the prediction game. And it scales in a strikingly regular way: bigger models trained on more data with more computation get predictably better, a relationship smooth enough that researchers charted it as <strong>scaling laws</strong> <span class="citation" data-cites="kaplan2020scaling"><a href="../../references.html#ref-kaplan2020scaling" role="doc-biblioref">[8]</a></span> and later refined the recipe to balance model size against data so the compute is not wasted <span class="citation" data-cites="hoffmann2022chinchilla"><a href="../../references.html#ref-hoffmann2022chinchilla" role="doc-biblioref">[9]</a></span>. Some abilities seem to switch on only past a certain scale <span class="citation" data-cites="wei2022emergent"><a href="../../references.html#ref-wei2022emergent" role="doc-biblioref">[10]</a></span>, which is part of why the last few years have felt like a series of sudden jumps.</p>
+<p>What comes out of pretraining, though, is not an assistant. It is a raw text continuer. Ask a purely pretrained model “What is the capital of France?” and a perfectly valid completion is another question, because that is the kind of text that often follows a question on the internet: “What is the largest city? What language do they speak?” It has knowledge but no notion that it is supposed to <em>answer you</em>. Fixing that is the next stage.</p>
+</section>
+<section id="sec-ch5-sft" class="level3" data-number="5.5.2">
+<h3 data-number="5.5.2" class="anchored" data-anchor-id="sec-ch5-sft"><span class="header-section-number">5.5.2</span> Supervised fine-tuning: learning to answer</h3>
+<p>To turn a text continuer into something that responds to requests, the model goes through <strong>supervised fine-tuning</strong>, often called instruction tuning. Here it is trained on a curated set of example conversations: a prompt, and a high-quality response of the kind we want the model to produce, many thousands of them, written or vetted by people. The learning signal is the same next-token prediction as before, but now the text it practices on is example after example of an instruction being followed well <span class="citation" data-cites="ouyang2022instructgpt"><a href="../../references.html#ref-ouyang2022instructgpt" role="doc-biblioref">[11]</a></span>.</p>
+<p>The effect is like the difference between someone who has read the entire library and someone who has also been shown how a good assistant actually behaves. The knowledge was already there from pretraining; supervised fine-tuning teaches the model the <em>format</em> and <em>intent</em> of being helpful: when you ask a question, give an answer; when asked for a list, produce a list; when given an instruction, carry it out rather than continue it. This stage is where the raw model first starts to feel like the chat assistants you know.</p>
+</section>
+<section id="sec-ch5-rlhf" class="level3" data-number="5.5.3">
+<h3 data-number="5.5.3" class="anchored" data-anchor-id="sec-ch5-rlhf"><span class="header-section-number">5.5.3</span> Alignment: learning what people prefer</h3>
+<p>Supervised fine-tuning teaches the model to answer, but “an answer” is a low bar. Of two truthful, on-topic replies, one might be clear and well-organized and the other rambling or subtly rude, and it is hard to capture that difference by writing more example answers. So a third stage tunes the model against human <em>preferences</em> rather than fixed targets.</p>
+<p>The classic recipe is <strong>reinforcement learning from human feedback</strong>, or RLHF. People are shown several of the model’s responses to the same prompt and asked which they prefer. Those comparisons train a second model, a <strong>reward model</strong>, to predict how much a human would like any given response <span class="citation" data-cites="christiano2017preferences"><a href="../../references.html#ref-christiano2017preferences" role="doc-biblioref">[12]</a></span>. The language model is then optimized to produce responses the reward model scores highly, effectively practicing against an automated stand-in for human taste <span class="citation" data-cites="ouyang2022instructgpt"><a href="../../references.html#ref-ouyang2022instructgpt" role="doc-biblioref">[11]</a></span>. This alignment stage is where much of a model’s felt personality comes from: its politeness, its habit of adding caveats, its refusals, its house style. A newer family of methods, of which direct preference optimization is the best known, reaches a similar result more simply, by optimizing the model directly on the preference comparisons without training a separate reward model first <span class="citation" data-cites="rafailov2023dpo"><a href="../../references.html#ref-rafailov2023dpo" role="doc-biblioref">[13]</a></span>.</p>
+<p>It is worth naming the double edge here, because it shapes real behavior. Training a model to produce responses people <em>rate highly</em> is not the same as training it to produce responses that are <em>true</em>. A confident, agreeable, well-formatted answer can win the preference even when it is wrong, which is one of the pressures behind a model’s tendency to sound sure of itself and to tell you what you seem to want to hear. Alignment makes models pleasant and usable; it does not, by itself, make them honest. The next chapter takes that limitation as one of its central themes.</p>
+</section>
+<section id="sec-ch5-rlvr" class="level3" data-number="5.5.4">
+<h3 data-number="5.5.4" class="anchored" data-anchor-id="sec-ch5-rlvr"><span class="header-section-number">5.5.4</span> Reasoning training: rewarding a right answer</h3>
+<p>The most recent stage to become standard targets a specific weakness: on hard problems in math, code, and logic, a model that was only ever rewarded for <em>sounding</em> good has no particular reason to be <em>correct</em>. The fix is to train it on problems where the answer can be checked automatically, and to reward it for actually getting them right. Because the reward comes from a verifier, a test suite that passes or a math answer that matches, rather than from human ratings, this is often called reinforcement learning from verifiable rewards.</p>
+<p>The striking recent finding is how far this can go. The DeepSeek team showed that letting a model attempt verifiable problems and rewarding only correct final answers, using an efficient method they call Group Relative Policy Optimization <span class="citation" data-cites="shao2024grpo"><a href="../../references.html#ref-shao2024grpo" role="doc-biblioref">[14]</a></span>, caused sophisticated reasoning behavior to emerge on its own: the model learned to work through long chains of steps, check itself, and change strategy mid-solution, without ever being shown human examples of how to reason <span class="citation" data-cites="guo2025deepseekr1"><a href="../../references.html#ref-guo2025deepseekr1" role="doc-biblioref">[15]</a></span>. This is the training stage behind the “reasoning models” that pause to think before answering. It also sharpens the distinction the next chapter draws: a model tuned this way is genuinely better at problems with a checkable answer, and no better, sometimes worse, at open-ended judgment where nothing can be verified.</p>
+</section>
+<section id="sec-ch5-tooltraining" class="level3" data-number="5.5.5">
+<h3 data-number="5.5.5" class="anchored" data-anchor-id="sec-ch5-tooltraining"><span class="header-section-number">5.5.5</span> Tool use is a trained behavior too</h3>
+<p>One last point closes the loop between this chapter and the rest of the book. A model’s ability to call a tool, to emit a neatly structured request for a calculator, a search, or a database, is not a separate faculty bolted on at runtime. It is a behavior installed by training, taught with examples of when and how to call functions and reinforced when the calls are well-formed and useful <span class="citation" data-cites="schick2023toolformer"><a href="../../references.html#ref-schick2023toolformer" role="doc-biblioref">[16]</a></span>. This is why “tool calling” is best understood as <em>learned behavior plus orchestration</em>: the model has been trained to recognize when a tool is needed and to produce the request, while your surrounding code does the actual calling and feeds the result back. Chapters ahead build whole systems on this handshake. For now, simply notice that even the model’s agentic instincts trace back to how it was raised.</p>
+<p>Training explains what the model can do. The last piece of the machine is more mundane but just as consequential for anyone shipping a real system: what it costs, in time and money, to run.</p>
+</section>
+</section>
+<section id="sec-ch5-efficiency" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="sec-ch5-efficiency"><span class="header-section-number">5.6</span> Making it fast and affordable</h2>
+<p>Everything so far has been about what the model computes. This section is about what that computation costs, because in a real agent the bill and the wait are not afterthoughts. They decide which designs are viable. The good news is that the cost model falls straight out of the machine we have already built, so it takes only a little more to see it clearly.</p>
+<section id="sec-ch5-phases" class="level3" data-number="5.6.1">
+<h3 data-number="5.6.1" class="anchored" data-anchor-id="sec-ch5-phases"><span class="header-section-number">5.6.1</span> Two phases, and why writing is the slow part</h3>
+<p>Running the model on a request happens in two phases. First it reads your whole prompt and builds up its internal representation of it. This is fast, because all of your prompt tokens can be processed together in parallel. Then it <em>writes</em> the answer, and writing is where the time goes, because generation is that strict one-token-at-a-time loop from earlier: the model cannot produce the tenth token of its reply until it has produced the ninth. Reading is a group activity; writing is a queue. That asymmetry is why a long answer feels slower to stream out than a long prompt felt to send in, and why cutting the length of what you <em>generate</em> usually saves more time than cutting what you <em>send</em>.</p>
+</section>
+<section id="sec-ch5-kvcache" class="level3" data-number="5.6.2">
+<h3 data-number="5.6.2" class="anchored" data-anchor-id="sec-ch5-kvcache"><span class="header-section-number">5.6.2</span> The KV cache: don’t redo the reading</h3>
+<p>Now recall a detail that should bother you. To produce each new token, the model feeds the entire text so far, prompt plus everything generated, back through all its layers. Taken literally, that means when writing the hundredth token it would reprocess the previous ninety-nine from scratch, and the token after that would reprocess a hundred, and so on. A staggering amount of repeated work.</p>
+<p>The fix is a piece of bookkeeping called the <strong>KV cache</strong>. As the model processes each token, the intermediate results that attention needs from it, its “keys” and “values,” are computed once and then stored. When the next token is generated, the model reuses those saved results for all the earlier tokens and only does fresh work for the new one. The cache turns an impossibly repetitive process into a practical one, and it is the single biggest reason models can generate long outputs at usable speed <span class="citation" data-cites="kwon2023pagedattention"><a href="../../references.html#ref-kwon2023pagedattention" role="doc-biblioref">[17]</a></span>.</p>
+<div id="fig-kv-cache" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-kv-cache-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../..\images/ch05/fig-kv-cache.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kv-cache-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.6: The context window and the KV cache together. A model can only attend to the tokens inside its fixed context window; older tokens fall out and have to be brought back by memory or retrieval. The KV cache stores each earlier token’s key and value states so that during generation only the new token is computed rather than the whole history recomputed, which cuts latency and cost and makes long-context use practical. The cache still grows with the window, so context stays a scarce resource: shorten where possible, retrieve what matters, summarize the rest, and cache and reuse.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="sec-ch5-longprompts" class="level3" data-number="5.6.3">
+<h3 data-number="5.6.3" class="anchored" data-anchor-id="sec-ch5-longprompts"><span class="header-section-number">5.6.3</span> Why long prompts quietly cost you</h3>
+<p>The cache is a huge win, but it also explains why context is not free. That stored cache grows with every token in the window, so a longer prompt takes more memory to hold and makes every subsequent generated token do a little more work, since attention now has more history to look across. This is the mechanical reason behind a fact you will feel in the bill: providers charge for the input tokens on every single turn, not just the output. In a long agent conversation, where the entire growing transcript is resent each turn, those input tokens are often the dominant cost, quietly accumulating turn after turn even when each individual reply is short. An agent that stuffs everything it might need into a giant prompt is not just slower; it is more expensive on every step it takes afterward. Managing what lives in the context window is therefore not housekeeping. It is one of the main levers on both latency and cost, which is why later chapters return to it again and again.</p>
+</section>
+<section id="sec-ch5-efficiency-patterns" class="level3" data-number="5.6.4">
+<h3 data-number="5.6.4" class="anchored" data-anchor-id="sec-ch5-efficiency-patterns"><span class="header-section-number">5.6.4</span> Patterns that make models cheaper</h3>
+<p>Because these costs are so central, a whole toolkit of efficiency techniques has grown up around them, and it helps to recognize the names even before the deployment chapter uses them in earnest.</p>
+<ul>
+<li><strong>Mixture of experts.</strong> Instead of running every one of a model’s parameters on every token, the network is split into many “expert” sub-networks and a router sends each token to just a few of them. The model can hold a huge number of parameters, and so a lot of knowledge, while only paying to run a fraction of them per token <span class="citation" data-cites="fedus2022switch"><a href="../../references.html#ref-fedus2022switch" role="doc-biblioref">[18]</a></span>. It is how several of the largest models stay affordable to serve.</li>
+<li><strong>Quantization.</strong> The model’s numbers are stored at lower precision, for instance eight or four bits instead of sixteen, which shrinks its memory footprint and speeds it up, usually with only a small loss in quality. This is what lets sizable models run on modest hardware.</li>
+<li><strong>Distillation.</strong> A large, capable “teacher” model is used to train a smaller “student” that mimics it, yielding a compact model that keeps much of the teacher’s skill at a fraction of the cost. Many of the small, fast models you will reach for are distilled.</li>
+<li><strong>Speculative decoding.</strong> A small, cheap model drafts several tokens ahead and the large model checks them in one parallel pass, accepting the run when it agrees, which produces the same output faster <span class="citation" data-cites="xia2024speculative"><a href="../../references.html#ref-xia2024speculative" role="doc-biblioref">[19]</a></span>.</li>
+<li><strong>Prompt caching.</strong> When many requests share a long, unchanging prefix, such as a big system prompt or a fixed document, the provider can cache the processed form of that prefix and skip recomputing it each time, cutting both latency and the input bill for the repeated part <span class="citation" data-cites="anthropic2024promptcaching"><a href="../../references.html#ref-anthropic2024promptcaching" role="doc-biblioref">[20]</a></span>.</li>
+</ul>
+<p>You do not need to implement any of these to build an agent, and most are handled for you by the model provider or serving stack. What matters here is the mental model they share: every one is a way of buying back the time or money that the token-by-token machine would otherwise charge you. Keep that framing and the deployment chapter will feel like applying tools you already understand rather than learning a new subject.</p>
+<p>We have now walked the whole machine, from a word entering as a token to an answer leaving as one, through the training that shaped it and the economics of running it. It is time to collect the consequences, because the payoff of all this is a short, practical list of things the machine’s design forces to be true.</p>
+</section>
+</section>
+<section id="sec-ch5-consequences" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="sec-ch5-consequences"><span class="header-section-number">5.7</span> What this means for building agents</h2>
+<p>We opened this chapter with a promise: that a handful of slogans about language models would stop being things to memorize and become things you could see. This is where it pays off. Every practical rule below is not advice we are asking you to trust. It is a direct consequence of a part of the machine we just assembled, and you can trace each one back to its cause.</p>
+<ul>
+<li><strong>Context is limited, and it is the only memory there is.</strong> The model reads a fixed-size window and remembers nothing between calls (<a href="#sec-ch5-context-window" class="quarto-xref"><span>Section 5.4.4</span></a>). So an agent’s real skill is deciding what to put in front of the model on each turn. This is why memory systems and retrieval exist, and why “just give it more context” eventually stops working.</li>
+<li><strong>Generation is probabilistic, by design.</strong> A reply is sampled token by token from a distribution (<a href="#sec-ch5-sampling" class="quarto-xref"><span>Section 5.4.2</span></a>), so the same prompt can give different answers. Turn the temperature down when you need reliable, structured output; do not expect bit-for-bit repeatability; and test your agent as the statistical system it is, over many runs rather than one.</li>
+<li><strong>Training shapes behavior, including its blind spots.</strong> A model’s manners, refusals, confidence, and honesty are fingerprints of how it was raised (<a href="#sec-ch5-training" class="quarto-xref"><span>Section 5.5</span></a>). Alignment optimizes for answers people <em>like</em>, which is not the same as answers that are <em>true</em>, so plan for a fluent, agreeable engine that will sometimes be confidently wrong.</li>
+<li><strong>Tool calling is learned behavior plus orchestration.</strong> The model was trained to emit structured requests for tools (<a href="#sec-ch5-tooltraining" class="quarto-xref"><span>Section 5.5.5</span></a>), but your code does the calling and feeds the result back. Treat tool use as a handshake you design, not a capability you can assume works perfectly.</li>
+<li><strong>Exact symbol work belongs in tools, not the model.</strong> Because the model reasons over tokens, not letters or digits (<a href="#sec-ch5-tokens-break" class="quarto-xref"><span>Section 5.2.3</span></a>), counting, spelling, and precise arithmetic are exactly the tasks to hand to a calculator or a few lines of code rather than trust to the model’s intuition.</li>
+<li><strong>Long prompts cost money and time on every turn.</strong> Input tokens are billed each turn and inflate the KV cache (<a href="#sec-ch5-longprompts" class="quarto-xref"><span>Section 5.6.3</span></a>), so in a long conversation the growing transcript, not the short replies, is often the dominant cost. Fast, affordable agents come from careful context management, not from stuffing the window.</li>
+<li><strong>Model choice is an engineering decision.</strong> Reasoning-trained, quantized, distilled, and mixture-of-experts models trade accuracy, latency, and price differently (<a href="#sec-ch5-efficiency-patterns" class="quarto-xref"><span>Section 5.6.4</span></a>). Picking a model is a trade-off to measure against your task, not a search for the single “best” one.</li>
+</ul>
+<p>Notice that none of these are really about the model in isolation. Each one is a statement about the <em>system you build around it</em>: what you feed it, what you check, what you hand to a tool, what you store outside the window, and which model you point at which job. That is the quiet thesis of this whole book, arriving early: an agent is not a language model. It is everything you wrap around a language model to turn a brilliant, unreliable next-token machine into something you can depend on. That is the new colleague we met on the first page, finally seen clearly: brilliant, fast, widely read, and unreliable in ways you can now name, predict, and design around.</p>
+<p>Which raises the obvious next question. We can see what the machine <em>is</em>. But how far can we actually trust it to <em>reason</em>, to hold an argument together, to plan, to know the edge of its own knowledge? That is exactly where the next chapter goes. Having opened the engine, we are finally ready to ask what it can and cannot think.</p>
+</section>
+<section id="sec-ch5-summary" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="sec-ch5-summary"><span class="header-section-number">5.8</span> Summary</h2>
+<ul>
+<li>A language model does not read text; it reads <strong>tokens</strong>, subword chunks from a fixed vocabulary that each map to a number. This is why it struggles to count letters, spell precisely, or do exact arithmetic, and why those jobs belong in tools.</li>
+<li>The <strong>transformer</strong> turns tokens into points in a meaning-space, uses <strong>attention</strong> to let each word absorb its relevant context, and stacks that operation deep so understanding is assembled in layers.</li>
+<li>Text is generated <strong>autoregressively</strong>: at each step the model outputs a probability for every token, the system samples one, appends it, and feeds the longer text back in. Sampling is why outputs vary, and <strong>temperature</strong> is the knob that controls it.</li>
+<li>The model’s only memory is its <strong>context window</strong>. It remembers nothing between calls; the illusion of memory comes from resending the transcript, which is why context management is central to agent design.</li>
+<li>Models are raised in stages: <strong>pretraining</strong> builds broad competence, <strong>supervised fine-tuning</strong> teaches it to answer, <strong>alignment</strong> (RLHF and its successors) shapes it toward preferred responses, and <strong>reasoning training</strong> with verifiable rewards makes it better at checkable problems. Training, not magic, explains a model’s habits.</li>
+<li>Aligning to human preference optimizes for answers people <em>like</em>, not answers that are <em>true</em>, which is a root cause of confident, agreeable errors.</li>
+<li>The <strong>KV cache</strong> makes token-by-token generation practical but grows with context, so long prompts cost more memory, money, and latency on every turn. Mixture-of-experts, quantization, distillation, speculative decoding, and prompt caching all buy that cost back in different ways.</li>
+<li>Every practical rule for building agents, limited context, probabilistic output, tools for exact work, careful context management, model choice as a trade-off, follows directly from how the machine is built.</li>
+</ul>
+</section>
+<section id="sec-ch5-exercises" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="sec-ch5-exercises"><span class="header-section-number">5.9</span> Exercises</h2>
+<ol type="1">
+<li><strong>See the tokens.</strong> Take a paragraph of your own writing, a line of code, and a long product name or URL, and estimate how many tokens each becomes using the rule of thumb of about four characters per token. Which fragments most, and what does that predict about where the model will be most and least reliable?</li>
+<li><strong>Explain the party trick.</strong> In your own words, explain to a non-technical colleague why a capable model can miscount the letters in “strawberry” yet write a flawless essay about strawberries. Which part of the machine is responsible?</li>
+<li><strong>Turn the knob.</strong> Describe two features of an agent you would build, one where you would set temperature near zero and one where you would set it high, and justify each choice in terms of how sampling works.</li>
+<li><strong>Follow the money.</strong> A support agent holds a twenty-turn conversation, resending the full transcript each turn. Explain, using the KV cache and per-turn input billing, why the cost of turn twenty is much higher than the cost of turn one, even if both replies are the same length. Name one design change that would reduce it.</li>
+<li><strong>Match the stage to the behavior.</strong> For each of these, name the training stage most responsible and say why: (a) the model knows the boiling point of water, (b) it answers a question instead of continuing it, (c) it politely refuses a harmful request, (d) it works step by step through a competition math problem and checks itself.</li>
+<li><strong>Model as a decision.</strong> Pick a task you would want an agent to do and argue for a specific trade-off along one axis, a smaller and cheaper model versus a larger and more accurate one, or a reasoning model versus a fast one, framing it as an engineering choice with a measurable consequence rather than a search for the “best” model.</li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-sennrich2016bpe" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R. Sennrich, B. Haddow, and A. Birch, <span>“Neural machine translation of rare words with subword units,”</span> in <em>Proceedings of the 54th annual meeting of the association for computational linguistics (ACL)</em>, 2016. Available: <a href="https://arxiv.org/abs/1508.07909">https://arxiv.org/abs/1508.07909</a></div>
+</div>
+<div id="ref-mirzadeh2024gsmsymbolic" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">I. Mirzadeh, K. Alizadeh, H. Shahrokhi, O. Tuzel, S. Bengio, and M. Farajtabar, <span>“<span>GSM-Symbolic</span>: Understanding the limitations of mathematical reasoning in large language models,”</span> <em>arXiv preprint arXiv:2410.05229</em>, 2024.</div>
+</div>
+<div id="ref-vaswani2017attention" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">A. Vaswani <em>et al.</em>, <span>“Attention is all you need,”</span> in <em>Advances in neural information processing systems (NeurIPS)</em>, 2017. Available: <a href="https://arxiv.org/abs/1706.03762">https://arxiv.org/abs/1706.03762</a></div>
+</div>
+<div id="ref-holtzman2020nucleus" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">A. Holtzman, J. Buys, L. Du, M. Forbes, and Y. Choi, <span>“The curious case of neural text degeneration,”</span> in <em>International conference on learning representations (ICLR)</em>, 2020. Available: <a href="https://arxiv.org/abs/1904.09751">https://arxiv.org/abs/1904.09751</a></div>
+</div>
+<div id="ref-wei2022cot" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">J. Wei <em>et al.</em>, <span>“Chain-of-thought prompting elicits reasoning in large language models,”</span> in <em>Advances in neural information processing systems (NeurIPS)</em>, 2022.</div>
+</div>
+<div id="ref-liu2024lostmiddle" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">N. F. Liu <em>et al.</em>, <span>“Lost in the middle: How language models use long contexts,”</span> <em>Transactions of the Association for Computational Linguistics (TACL)</em>, vol. 12, 2024.</div>
+</div>
+<div id="ref-radford2019gpt2" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">A. Radford, J. Wu, R. Child, D. Luan, D. Amodei, and I. Sutskever, <span>“Language models are unsupervised multitask learners,”</span> OpenAI, 2019. Available: <a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf</a></div>
+</div>
+<div id="ref-kaplan2020scaling" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">J. Kaplan <em>et al.</em>, <span>“Scaling laws for neural language models,”</span> <em>arXiv preprint arXiv:2001.08361</em>, 2020, Available: <a href="https://arxiv.org/abs/2001.08361">https://arxiv.org/abs/2001.08361</a></div>
+</div>
+<div id="ref-hoffmann2022chinchilla" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">J. Hoffmann <em>et al.</em>, <span>“Training compute-optimal large language models,”</span> in <em>Advances in neural information processing systems (NeurIPS)</em>, 2022. Available: <a href="https://arxiv.org/abs/2203.15556">https://arxiv.org/abs/2203.15556</a></div>
+</div>
+<div id="ref-wei2022emergent" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[10] </div><div class="csl-right-inline">J. Wei <em>et al.</em>, <span>“Emergent abilities of large language models,”</span> <em>Transactions on Machine Learning Research (TMLR)</em>, 2022.</div>
+</div>
+<div id="ref-ouyang2022instructgpt" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[11] </div><div class="csl-right-inline">L. Ouyang <em>et al.</em>, <span>“Training language models to follow instructions with human feedback,”</span> in <em>Advances in neural information processing systems (NeurIPS)</em>, 2022.</div>
+</div>
+<div id="ref-christiano2017preferences" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[12] </div><div class="csl-right-inline">P. F. Christiano, J. Leike, T. B. Brown, M. Martic, S. Legg, and D. Amodei, <span>“Deep reinforcement learning from human preferences,”</span> in <em>Advances in neural information processing systems (NeurIPS)</em>, 2017. Available: <a href="https://arxiv.org/abs/1706.03741">https://arxiv.org/abs/1706.03741</a></div>
+</div>
+<div id="ref-rafailov2023dpo" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[13] </div><div class="csl-right-inline">R. Rafailov, A. Sharma, E. Mitchell, S. Ermon, C. D. Manning, and C. Finn, <span>“Direct preference optimization: Your language model is secretly a reward model,”</span> in <em>Advances in neural information processing systems (NeurIPS)</em>, 2023. Available: <a href="https://arxiv.org/abs/2305.18290">https://arxiv.org/abs/2305.18290</a></div>
+</div>
+<div id="ref-shao2024grpo" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[14] </div><div class="csl-right-inline">Z. Shao <em>et al.</em>, <span>“<span>DeepSeekMath</span>: Pushing the limits of mathematical reasoning in open language models,”</span> <em>arXiv preprint arXiv:2402.03300</em>, 2024, Available: <a href="https://arxiv.org/abs/2402.03300">https://arxiv.org/abs/2402.03300</a></div>
+</div>
+<div id="ref-guo2025deepseekr1" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[15] </div><div class="csl-right-inline">D. Guo <em>et al.</em>, <span>“<span>DeepSeek-R1</span>: Incentivizing reasoning capability in <span>LLMs</span> via reinforcement learning,”</span> <em>Nature</em>, vol. 645, pp. 633–638, 2025, doi: <a href="https://doi.org/10.1038/s41586-025-09422-z">10.1038/s41586-025-09422-z</a>.</div>
+</div>
+<div id="ref-schick2023toolformer" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[16] </div><div class="csl-right-inline">T. Schick <em>et al.</em>, <span>“Toolformer: Language models can teach themselves to use tools,”</span> in <em>Advances in neural information processing systems (NeurIPS)</em>, 2023.</div>
+</div>
+<div id="ref-kwon2023pagedattention" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[17] </div><div class="csl-right-inline">W. Kwon <em>et al.</em>, <span>“Efficient memory management for large language model serving with <span>PagedAttention</span>,”</span> in <em>Proceedings of the 29th symposium on operating systems principles (SOSP)</em>, 2023. Available: <a href="https://arxiv.org/abs/2309.06180">https://arxiv.org/abs/2309.06180</a></div>
+</div>
+<div id="ref-fedus2022switch" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[18] </div><div class="csl-right-inline">W. Fedus, B. Zoph, and N. Shazeer, <span>“Switch transformers: Scaling to trillion parameter models with simple and efficient sparsity,”</span> <em>Journal of Machine Learning Research</em>, vol. 23, no. 120, pp. 1–39, 2022, Available: <a href="https://arxiv.org/abs/2101.03961">https://arxiv.org/abs/2101.03961</a></div>
+</div>
+<div id="ref-xia2024speculative" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[19] </div><div class="csl-right-inline">H. Xia <em>et al.</em>, <span>“Unlocking efficiency in large language model inference: A comprehensive survey of speculative decoding,”</span> in <em>Findings of the association for computational linguistics: ACL 2024</em>, Bangkok, Thailand: Association for Computational Linguistics, 2024, pp. 7655–7671.</div>
+</div>
+<div id="ref-anthropic2024promptcaching" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[20] </div><div class="csl-right-inline">Anthropic, <span>“Prompt caching with claude.”</span> <a href="https://www.anthropic.com/news/prompt-caching" class="uri">https://www.anthropic.com/news/prompt-caching</a>, Aug. 2024.</div>
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.bhavykhatri\.com\/Agentic-AI-Book\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../chapters/part1-foundations/04-environments-and-rationality.html" class="pagination-link" aria-label="Environments &amp; Rationality">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Environments &amp; Rationality</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../chapters/part2-llm-agents/06-llms-as-reasoners.html" class="pagination-link" aria-label="LLMs as Reasoners">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/bhavykhatri/bhavykhatri.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

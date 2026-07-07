@@ -8,7 +8,7 @@
 
 <meta name="description" content="A practical, research-grounded guide that connects the classical theory of intelligent agents to the modern practice of building autonomous LLM agents with tools, memory, planning, and multi-agent orchestration.">
 
-<title>14&nbsp; Multi-Agent Systems – Agents: From Theory to Production</title>
+<title>15&nbsp; Multi-Agent Systems – Agents: From Theory to Production</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,8 +85,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../chapters/part4-production/15-evaluation.html" rel="next">
-<link href="../../chapters/part3-building/13-openai-agents-sdk.html" rel="prev">
+<link href="../../chapters/part4-production/16-evaluation.html" rel="next">
+<link href="../../chapters/part3-building/14-openai-agents-sdk.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -138,7 +138,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part3-building/08-workflows-vs-agents.html">Part III — Building Agents</a></li><li class="breadcrumb-item"><a href="../../chapters/part3-building/14-multi-agent-systems.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part3-building/09-workflows-vs-agents.html">Part III — Building Agents</a></li><li class="breadcrumb-item"><a href="../../chapters/part3-building/15-multi-agent-systems.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -225,20 +225,26 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part2-llm-agents/05-llms-as-reasoners.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></a>
+  <a href="../../chapters/part2-llm-agents/05-inside-the-language-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Inside the Language Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part2-llm-agents/06-the-augmented-llm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span></a>
+  <a href="../../chapters/part2-llm-agents/06-llms-as-reasoners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part2-llm-agents/07-reasoning-and-planning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span></a>
+  <a href="../../chapters/part2-llm-agents/07-the-augmented-llm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/08-reasoning-and-planning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span></a>
   </div>
 </li>
       </ul>
@@ -254,44 +260,44 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/08-workflows-vs-agents.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span></a>
+  <a href="../../chapters/part3-building/09-workflows-vs-agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/09-agentic-patterns.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span></a>
+  <a href="../../chapters/part3-building/10-agentic-patterns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/10-tools-and-mcp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span></a>
+  <a href="../../chapters/part3-building/11-tools-and-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/11-memory-systems.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></a>
+  <a href="../../chapters/part3-building/12-memory-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/12-orchestration-langgraph.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></a>
+  <a href="../../chapters/part3-building/13-orchestration-langgraph.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/13-openai-agents-sdk.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></a>
+  <a href="../../chapters/part3-building/14-openai-agents-sdk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/14-multi-agent-systems.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></a>
+  <a href="../../chapters/part3-building/15-multi-agent-systems.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></a>
   </div>
 </li>
       </ul>
@@ -307,26 +313,26 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/15-evaluation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
+  <a href="../../chapters/part4-production/16-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/16-observability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Observability</span></span></a>
+  <a href="../../chapters/part4-production/17-observability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Observability</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/17-safety-and-guardrails.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Safety &amp; Guardrails</span></span></a>
+  <a href="../../chapters/part4-production/18-safety-and-guardrails.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Safety &amp; Guardrails</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/18-deployment-and-cost.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></span></a>
+  <a href="../../chapters/part4-production/19-deployment-and-cost.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></span></a>
   </div>
 </li>
       </ul>
@@ -342,14 +348,14 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part5-frontiers/19-computer-use-and-embodiment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Computer Use &amp; Embodiment</span></span></a>
+  <a href="../../chapters/part5-frontiers/20-computer-use-and-embodiment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Computer Use &amp; Embodiment</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part5-frontiers/20-frontiers-and-open-problems.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Frontiers &amp; Open Problems</span></span></a>
+  <a href="../../chapters/part5-frontiers/21-frontiers-and-open-problems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Frontiers &amp; Open Problems</span></span></a>
   </div>
 </li>
       </ul>
@@ -366,19 +372,19 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../chapters/appendices/a-environment-setup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Appendix A — Environment Setup</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Appendix A — Environment Setup</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../chapters/appendices/b-glossary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Appendix B — Glossary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Appendix B — Glossary</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../chapters/appendices/c-further-reading.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Appendix C — Further Reading</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Appendix C — Further Reading</span></span></a>
   </div>
 </li>
       </ul>
@@ -405,30 +411,30 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-ch14-intuition" id="toc-sec-ch14-intuition" class="nav-link active" data-scroll-target="#sec-ch14-intuition"><span class="header-section-number">14.1</span> When one agent isn’t enough</a></li>
-  <li><a href="#sec-ch14-topologies" id="toc-sec-ch14-topologies" class="nav-link" data-scroll-target="#sec-ch14-topologies"><span class="header-section-number">14.2</span> How to arrange the team</a></li>
-  <li><a href="#sec-ch14-communication" id="toc-sec-ch14-communication" class="nav-link" data-scroll-target="#sec-ch14-communication"><span class="header-section-number">14.3</span> How the agents talk</a>
+  <li><a href="#sec-ch14-intuition" id="toc-sec-ch14-intuition" class="nav-link active" data-scroll-target="#sec-ch14-intuition"><span class="header-section-number">15.1</span> When one agent isn’t enough</a></li>
+  <li><a href="#sec-ch14-topologies" id="toc-sec-ch14-topologies" class="nav-link" data-scroll-target="#sec-ch14-topologies"><span class="header-section-number">15.2</span> How to arrange the team</a></li>
+  <li><a href="#sec-ch14-communication" id="toc-sec-ch14-communication" class="nav-link" data-scroll-target="#sec-ch14-communication"><span class="header-section-number">15.3</span> How the agents talk</a>
   <ul class="collapse">
-  <li><a href="#sec-ch14-chat-vs-workflow" id="toc-sec-ch14-chat-vs-workflow" class="nav-link" data-scroll-target="#sec-ch14-chat-vs-workflow"><span class="header-section-number">14.3.1</span> Conversation or structured workflow?</a></li>
-  <li><a href="#sec-ch14-telephone" id="toc-sec-ch14-telephone" class="nav-link" data-scroll-target="#sec-ch14-telephone"><span class="header-section-number">14.3.2</span> Passing context, not just messages</a></li>
+  <li><a href="#sec-ch14-chat-vs-workflow" id="toc-sec-ch14-chat-vs-workflow" class="nav-link" data-scroll-target="#sec-ch14-chat-vs-workflow"><span class="header-section-number">15.3.1</span> Conversation or structured workflow?</a></li>
+  <li><a href="#sec-ch14-telephone" id="toc-sec-ch14-telephone" class="nav-link" data-scroll-target="#sec-ch14-telephone"><span class="header-section-number">15.3.2</span> Passing context, not just messages</a></li>
   </ul></li>
-  <li><a href="#sec-ch14-emergence" id="toc-sec-ch14-emergence" class="nav-link" data-scroll-target="#sec-ch14-emergence"><span class="header-section-number">14.4</span> When the whole exceeds the parts</a></li>
-  <li><a href="#sec-ch14-failures" id="toc-sec-ch14-failures" class="nav-link" data-scroll-target="#sec-ch14-failures"><span class="header-section-number">14.5</span> The ways teams go wrong</a>
+  <li><a href="#sec-ch14-emergence" id="toc-sec-ch14-emergence" class="nav-link" data-scroll-target="#sec-ch14-emergence"><span class="header-section-number">15.4</span> When the whole exceeds the parts</a></li>
+  <li><a href="#sec-ch14-failures" id="toc-sec-ch14-failures" class="nav-link" data-scroll-target="#sec-ch14-failures"><span class="header-section-number">15.5</span> The ways teams go wrong</a>
   <ul class="collapse">
-  <li><a href="#sec-ch14-mast" id="toc-sec-ch14-mast" class="nav-link" data-scroll-target="#sec-ch14-mast"><span class="header-section-number">14.5.1</span> A taxonomy of team failures</a></li>
+  <li><a href="#sec-ch14-mast" id="toc-sec-ch14-mast" class="nav-link" data-scroll-target="#sec-ch14-mast"><span class="header-section-number">15.5.1</span> A taxonomy of team failures</a></li>
   </ul></li>
-  <li><a href="#sec-ch14-worked" id="toc-sec-ch14-worked" class="nav-link" data-scroll-target="#sec-ch14-worked"><span class="header-section-number">14.6</span> A worked example: a supervisor and two workers</a></li>
-  <li><a href="#sec-ch14-summary" id="toc-sec-ch14-summary" class="nav-link" data-scroll-target="#sec-ch14-summary"><span class="header-section-number">14.7</span> Summary</a></li>
-  <li><a href="#sec-ch14-exercises" id="toc-sec-ch14-exercises" class="nav-link" data-scroll-target="#sec-ch14-exercises"><span class="header-section-number">14.8</span> Exercises</a></li>
+  <li><a href="#sec-ch14-worked" id="toc-sec-ch14-worked" class="nav-link" data-scroll-target="#sec-ch14-worked"><span class="header-section-number">15.6</span> A worked example: a supervisor and two workers</a></li>
+  <li><a href="#sec-ch14-summary" id="toc-sec-ch14-summary" class="nav-link" data-scroll-target="#sec-ch14-summary"><span class="header-section-number">15.7</span> Summary</a></li>
+  <li><a href="#sec-ch14-exercises" id="toc-sec-ch14-exercises" class="nav-link" data-scroll-target="#sec-ch14-exercises"><span class="header-section-number">15.8</span> Exercises</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/bhavykhatri/bhavykhatri.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part3-building/08-workflows-vs-agents.html">Part III — Building Agents</a></li><li class="breadcrumb-item"><a href="../../chapters/part3-building/14-multi-agent-systems.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part3-building/09-workflows-vs-agents.html">Part III — Building Agents</a></li><li class="breadcrumb-item"><a href="../../chapters/part3-building/15-multi-agent-systems.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-multi-agent-systems" class="quarto-section-identifier"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></h1>
+<h1 class="title"><span id="sec-multi-agent-systems" class="quarto-section-identifier"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></h1>
 </div>
 
 
@@ -452,54 +458,54 @@ div.csl-indent {
 <blockquote class="blockquote">
 <p>After this chapter you will be able to design systems of collaborating agents and anticipate their failure modes.</p>
 </blockquote>
-<section id="sec-ch14-intuition" class="level2" data-number="14.1">
-<h2 data-number="14.1" class="anchored" data-anchor-id="sec-ch14-intuition"><span class="header-section-number">14.1</span> When one agent isn’t enough</h2>
+<section id="sec-ch14-intuition" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="sec-ch14-intuition"><span class="header-section-number">15.1</span> When one agent isn’t enough</h2>
 <p>At the end of the last chapter we quietly crossed a line. To answer a single support request we used a triage agent <em>and</em> two specialists, three agents cooperating where before we had built only one. That was our first <strong>multi-agent system</strong>, and it raises the question this chapter is about: when is a <em>team</em> of agents actually better than a single capable one, and when is it just a more expensive way to get a worse answer?</p>
-<p>The honest answer starts with an everyday observation about people. A great home cook can make you dinner alone, moving between chopping, searing, and plating as needed. A restaurant on a busy night cannot work that way, so a professional kitchen splits into a <em>brigade</em>: one cook works the grill, another the sauces, another plating, and an expediter at the pass calls out tickets and assembles the final dish. The brigade wins because the work genuinely decomposes into parts that can run <em>in parallel</em> and reward <em>specialization</em>. But push the same idea onto a task that does not decompose (ask ten people to jointly write a single sentence) and the coordination overhead swamps any benefit; the committee is slower and worse than one good writer. Multi-agent systems live on exactly that knife’s edge. <a href="#fig-one-vs-many" class="quarto-xref">Figure&nbsp;<span>14.1</span></a> draws the two shapes side by side.</p>
+<p>The honest answer starts with an everyday observation about people. A great home cook can make you dinner alone, moving between chopping, searing, and plating as needed. A restaurant on a busy night cannot work that way, so a professional kitchen splits into a <em>brigade</em>: one cook works the grill, another the sauces, another plating, and an expediter at the pass calls out tickets and assembles the final dish. The brigade wins because the work genuinely decomposes into parts that can run <em>in parallel</em> and reward <em>specialization</em>. But push the same idea onto a task that does not decompose (ask ten people to jointly write a single sentence) and the coordination overhead swamps any benefit; the committee is slower and worse than one good writer. Multi-agent systems live on exactly that knife’s edge. <a href="#fig-one-vs-many" class="quarto-xref">Figure&nbsp;<span>15.1</span></a> draws the two shapes side by side.</p>
 <div id="fig-one-vs-many" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-one-vs-many-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch14/fig-one-vs-many.png" class="img-fluid figure-img">
+<img src="../..\images/ch15/fig-one-vs-many.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-one-vs-many-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.1: The trade at the heart of the chapter: a single generalist agent handles a whole task in one loop, while a team splits it among specialists, a win only when the task decomposes and the coordination cost stays below the benefit.
+Figure&nbsp;15.1: The trade at the heart of the chapter: a single generalist agent handles a whole task in one loop, while a team splits it among specialists, a win only when the task decomposes and the coordination cost stays below the benefit.
 </figcaption>
 </figure>
 </div>
-<p>So the guiding principle mirrors the “simplest thing that works” rule from <a href="08-workflows-vs-agents.html" class="quarto-xref"><span>Chapter 8</span></a>, raised one level: reach for multiple agents only when a single agent, even a well-equipped one, genuinely struggles: because the task splits into independent parts, because it benefits from distinct <em>perspectives</em> that a single context would blur together, or because different sub-jobs need genuinely different tools and instructions <span class="citation" data-cites="xi2023rise"><a href="../../references.html#ref-xi2023rise" role="doc-biblioref">[1]</a></span>. When those conditions hold, a team can outrun any soloist. When they do not, you have simply bought yourself more latency, more cost, and more ways to fail. The rest of the chapter is about building teams for the cases where they win.</p>
+<p>So the guiding principle mirrors the “simplest thing that works” rule from <a href="09-workflows-vs-agents.html" class="quarto-xref"><span>Chapter 9</span></a>, raised one level: reach for multiple agents only when a single agent, even a well-equipped one, genuinely struggles: because the task splits into independent parts, because it benefits from distinct <em>perspectives</em> that a single context would blur together, or because different sub-jobs need genuinely different tools and instructions <span class="citation" data-cites="xi2023rise"><a href="../../references.html#ref-xi2023rise" role="doc-biblioref">[1]</a></span>. When those conditions hold, a team can outrun any soloist. When they do not, you have simply bought yourself more latency, more cost, and more ways to fail. The rest of the chapter is about building teams for the cases where they win.</p>
 <p>How much can a team actually win by, and how much does it cost? A candid field report from Anthropic puts numbers on both. Building a research system in which a lead agent spawns several subagents that search in parallel, each with its own context window, they found the multi-agent version outperformed a strong single agent by 90.2 percent on their internal research evaluation <span class="citation" data-cites="anthropic2025multiagent"><a href="../../references.html#ref-anthropic2025multiagent" role="doc-biblioref">[2]</a></span>. The reason was almost mechanical: on a hard browsing benchmark, sheer token budget explained about 80 percent of the variance in performance, and a multi-agent system is a way to spend far more tokens on a problem by giving each agent a fresh context to fill. When a task is broad and its parts can be explored independently, more parallel effort simply buys better coverage.</p>
 <p>That power is not free, and the same report is the first to say so. Agents already burn roughly four times the tokens of an ordinary chat, and a multi-agent system burns about fifteen times as many <span class="citation" data-cites="anthropic2025multiagent"><a href="../../references.html#ref-anthropic2025multiagent" role="doc-biblioref">[2]</a></span>. A team only makes economic sense when the task is valuable enough to justify that bill, which is why the pattern shines for open-ended research and rarely for routine questions. A prominent counter-camp argues the danger runs deeper than cost. Engineers at Cognition, reflecting on long-running coding agents, concluded that parallel subagents are still too fragile to trust in production, because the pieces cannot share enough context to stay consistent with one another <span class="citation" data-cites="cognition2025multiagent"><a href="../../references.html#ref-cognition2025multiagent" role="doc-biblioref">[3]</a></span>. Their advice is blunt: prefer a single-threaded agent that keeps one continuous thread of context, and add extra agents only when you truly must.</p>
-<p>Read together, the two reports are less a contradiction than a map. A team pays off when the work breaks into parts that can run in parallel, when breadth matters more than tight coordination, and when the job is large enough to overflow a single context window. A single agent stays the wiser choice when the steps depend on one another, when the agents would need to share a great deal of context to agree, or when the output is one coherent artifact, such as a body of code, that many hands would render inconsistent. <a href="#fig-when-multi-agent" class="quarto-xref">Figure&nbsp;<span>14.2</span></a> lays the two cases side by side; the rest of this chapter builds the machinery for the left column while respecting the warnings from the right.</p>
+<p>Read together, the two reports are less a contradiction than a map. A team pays off when the work breaks into parts that can run in parallel, when breadth matters more than tight coordination, and when the job is large enough to overflow a single context window. A single agent stays the wiser choice when the steps depend on one another, when the agents would need to share a great deal of context to agree, or when the output is one coherent artifact, such as a body of code, that many hands would render inconsistent. <a href="#fig-when-multi-agent" class="quarto-xref">Figure&nbsp;<span>15.2</span></a> lays the two cases side by side; the rest of this chapter builds the machinery for the left column while respecting the warnings from the right.</p>
 <div id="fig-when-multi-agent" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-when-multi-agent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch14/fig-when-multi-agent.png" class="img-fluid figure-img">
+<img src="../..\images/ch15/fig-when-multi-agent.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-when-multi-agent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.2: When a team of agents earns its keep and when a single agent is the wiser choice. The left-hand conditions favor parallel effort and breadth; the right-hand conditions demand the shared context and coherence that one continuous agent preserves more reliably.
+Figure&nbsp;15.2: When a team of agents earns its keep and when a single agent is the wiser choice. The left-hand conditions favor parallel effort and breadth; the right-hand conditions demand the shared context and coherence that one continuous agent preserves more reliably.
 </figcaption>
 </figure>
 </div>
 </section>
-<section id="sec-ch14-topologies" class="level2" data-number="14.2">
-<h2 data-number="14.2" class="anchored" data-anchor-id="sec-ch14-topologies"><span class="header-section-number">14.2</span> How to arrange the team</h2>
+<section id="sec-ch14-topologies" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="sec-ch14-topologies"><span class="header-section-number">15.2</span> How to arrange the team</h2>
 <p>Once you have decided a task deserves a team, the next decision is <em>shape</em>: how the agents are wired to one another. This is the multi-agent version of the org chart, and, as in a company, the shape you choose determines how work flows, who decides what, and where things jam up. Three shapes cover the great majority of real systems, and each has a familiar human counterpart.</p>
-<p>The first is the <strong>supervisor–workers</strong> shape, the direct descendant of the orchestrator-workers pattern from <a href="09-agentic-patterns.html#sec-ch9-orchestrator" class="quarto-xref"><span>Section 9.5</span></a>. One agent acts as a manager: it holds the overall goal, breaks it into subtasks, hands each to a worker agent, and assembles their results. The workers do not talk to each other; they report up. This is the org chart of a project manager with a team, and it is the most common and most predictable shape because control stays in one place. The second is the <strong>handoff</strong> shape we just built in <a href="13-openai-agents-sdk.html#sec-ch13-worked" class="quarto-xref"><span>Section 13.5</span></a>, a <em>chain of custody</em> rather than a hierarchy. Control passes from one agent to another like a customer walking from the front desk to the right department; whoever holds the conversation owns it until they pass it on. The third is the <strong>peer network</strong>, a set of agents that talk to one another as equals, debating, critiquing, or negotiating toward an answer with no single boss. This is a roundtable of experts, and it is the most powerful and the least predictable of the three. <a href="#fig-topologies" class="quarto-xref">Figure&nbsp;<span>14.3</span></a> places the three side by side.</p>
+<p>The first is the <strong>supervisor–workers</strong> shape, the direct descendant of the orchestrator-workers pattern from <a href="10-agentic-patterns.html#sec-ch9-orchestrator" class="quarto-xref"><span>Section 10.5</span></a>. One agent acts as a manager: it holds the overall goal, breaks it into subtasks, hands each to a worker agent, and assembles their results. The workers do not talk to each other; they report up. This is the org chart of a project manager with a team, and it is the most common and most predictable shape because control stays in one place. The second is the <strong>handoff</strong> shape we just built in <a href="14-openai-agents-sdk.html#sec-ch13-worked" class="quarto-xref"><span>Section 14.5</span></a>, a <em>chain of custody</em> rather than a hierarchy. Control passes from one agent to another like a customer walking from the front desk to the right department; whoever holds the conversation owns it until they pass it on. The third is the <strong>peer network</strong>, a set of agents that talk to one another as equals, debating, critiquing, or negotiating toward an answer with no single boss. This is a roundtable of experts, and it is the most powerful and the least predictable of the three. <a href="#fig-topologies" class="quarto-xref">Figure&nbsp;<span>15.3</span></a> places the three side by side.</p>
 <div id="fig-topologies" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-topologies-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch14/fig-topologies.png" class="img-fluid figure-img">
+<img src="../..\images/ch15/fig-topologies.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-topologies-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.3: Three common multi-agent topologies: a supervisor that delegates to and collects from workers, a handoff chain that passes control along, and a peer network whose agents converse as equals.
+Figure&nbsp;15.3: Three common multi-agent topologies: a supervisor that delegates to and collects from workers, a handoff chain that passes control along, and a peer network whose agents converse as equals.
 </figcaption>
 </figure>
 </div>
-<p>The right choice follows the same instinct we have applied all book long: prefer the most constrained shape that still solves the problem. A supervisor is the safest default because a single agent stays accountable for the outcome and the flow is easy to trace. Handoffs suit problems that move through clear stages, where each stage has a natural owner. A peer network earns its keep only when the value genuinely comes from <em>interaction</em> (agents catching each other’s mistakes or combining viewpoints) and you are willing to pay for the unpredictability that open conversation brings. <a href="#tbl-ch14-topologies" class="quarto-xref">Table&nbsp;<span>14.1</span></a> gathers those trade-offs in one view.</p>
+<p>The right choice follows the same instinct we have applied all book long: prefer the most constrained shape that still solves the problem. A supervisor is the safest default because a single agent stays accountable for the outcome and the flow is easy to trace. Handoffs suit problems that move through clear stages, where each stage has a natural owner. A peer network earns its keep only when the value genuinely comes from <em>interaction</em> (agents catching each other’s mistakes or combining viewpoints) and you are willing to pay for the unpredictability that open conversation brings. <a href="#tbl-ch14-topologies" class="quarto-xref">Table&nbsp;<span>15.1</span></a> gathers those trade-offs in one view.</p>
 <div id="tbl-ch14-topologies" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ch14-topologies-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;14.1: Choosing a topology. Prefer the most constrained shape that still solves the problem.
+Table&nbsp;15.1: Choosing a topology. Prefer the most constrained shape that still solves the problem.
 </figcaption>
 <div aria-describedby="tbl-ch14-topologies-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -541,14 +547,14 @@ Table&nbsp;14.1: Choosing a topology. Prefer the most constrained shape that sti
 </div>
 </figure>
 </div>
-<p>These three shapes are the ones you will reach for most, but they are points in a much larger space. A recent survey of multi-agent LLM systems maps that space along a handful of dials <span class="citation" data-cites="tran2025collaboration"><a href="../../references.html#ref-tran2025collaboration" role="doc-biblioref">[4]</a></span>: what the agents <em>want</em> (do they cooperate toward a shared goal, compete, or do a bit of both), how the team is <em>structured</em> (a central lead, direct peer-to-peer links, or a fully distributed group with no global view), how roles are <em>decided</em> (fixed in advance or chosen by a learned policy), and what <em>protocol</em> governs their messages. <a href="#fig-collaboration-dimensions" class="quarto-xref">Figure&nbsp;<span>14.4</span></a> lays out those dials. Reading the design space this way is useful because it turns a vague question (“should this be multi-agent?”) into a set of concrete, separable choices, and it shows that the supervisor, handoff, and peer patterns are just three well-worn combinations among many.</p>
+<p>These three shapes are the ones you will reach for most, but they are points in a much larger space. A recent survey of multi-agent LLM systems maps that space along a handful of dials <span class="citation" data-cites="tran2025collaboration"><a href="../../references.html#ref-tran2025collaboration" role="doc-biblioref">[4]</a></span>: what the agents <em>want</em> (do they cooperate toward a shared goal, compete, or do a bit of both), how the team is <em>structured</em> (a central lead, direct peer-to-peer links, or a fully distributed group with no global view), how roles are <em>decided</em> (fixed in advance or chosen by a learned policy), and what <em>protocol</em> governs their messages. <a href="#fig-collaboration-dimensions" class="quarto-xref">Figure&nbsp;<span>15.4</span></a> lays out those dials. Reading the design space this way is useful because it turns a vague question (“should this be multi-agent?”) into a set of concrete, separable choices, and it shows that the supervisor, handoff, and peer patterns are just three well-worn combinations among many.</p>
 <div id="fig-collaboration-dimensions" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-collaboration-dimensions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch14/fig-collaboration-dimensions.png" class="img-fluid figure-img">
+<img src="../..\images/ch15/fig-collaboration-dimensions.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-collaboration-dimensions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.4: The design space of multi-agent collaboration, drawn as a set of dials. Any one system is a single choice on each row: what the agents want, how the team is structured, how roles are decided, and how messages are exchanged.
+Figure&nbsp;15.4: The design space of multi-agent collaboration, drawn as a set of dials. Any one system is a single choice on each row: what the agents want, how the team is structured, how roles are decided, and how messages are exchanged.
 </figcaption>
 </figure>
 </div>
@@ -556,31 +562,31 @@ Figure&nbsp;14.4: The design space of multi-agent collaboration, drawn as a set 
 <p>That evidence is real, but it comes with a caveat worth taking to heart: more agents and more rounds do not reliably mean better answers. Smit and colleagues benchmarked a range of debate and prompting strategies across accuracy, cost, and time, and found that multi-agent debate, in its current form, often fails to beat simpler and cheaper baselines such as self-consistency or ensembling, and that its results swing sharply with hyperparameters that are hard to tune <span class="citation" data-cites="smit2024mad"><a href="../../references.html#ref-smit2024mad" role="doc-biblioref">[6]</a></span>. The lesson is not that debate never helps, but that a bigger crowd is a hypothesis to test on your own task, never a guarantee to assume.</p>
 <p>Whichever shape you pick, though, the agents now have to exchange information, and <em>how</em> they pass it turns out to matter as much as the org chart itself.</p>
 </section>
-<section id="sec-ch14-communication" class="level2" data-number="14.3">
-<h2 data-number="14.3" class="anchored" data-anchor-id="sec-ch14-communication"><span class="header-section-number">14.3</span> How the agents talk</h2>
+<section id="sec-ch14-communication" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="sec-ch14-communication"><span class="header-section-number">15.3</span> How the agents talk</h2>
 <p>An org chart only says who reports to whom; it does not say how information actually moves. In a multi-agent system that second question is where much of the difficulty hides, because agents communicate in natural language, and the same medium that makes them flexible also makes their messages ambiguous, lossy, and easy to misread. There are two broad ways to move information between agents, and they mirror how human teams coordinate.</p>
-<p>The first is <strong>direct messaging</strong>: one agent passes a message straight to another, the way you send a colleague an email. This is simple and easy to trace (every exchange has a clear sender and receiver) and it is exactly what a handoff does under the hood. Its weakness is that information is private to the two parties; a third agent that could have used the same fact never sees it. The second way fixes that with a <strong>blackboard</strong> (sometimes called shared state or a shared scratchpad), a classic idea from early AI: instead of messaging each other, agents read from and write to a common workspace, like a team gathered around a shared whiteboard in a war room. Anyone can post a finding, and anyone can build on what others have posted. This is the multi-agent extension of the shared state we designed in <a href="11-memory-systems.html" class="quarto-xref"><span>Chapter 11</span></a>, now written and read by several agents at once. <a href="#fig-blackboard" class="quarto-xref">Figure&nbsp;<span>14.5</span></a> contrasts the two.</p>
+<p>The first is <strong>direct messaging</strong>: one agent passes a message straight to another, the way you send a colleague an email. This is simple and easy to trace (every exchange has a clear sender and receiver) and it is exactly what a handoff does under the hood. Its weakness is that information is private to the two parties; a third agent that could have used the same fact never sees it. The second way fixes that with a <strong>blackboard</strong> (sometimes called shared state or a shared scratchpad), a classic idea from early AI: instead of messaging each other, agents read from and write to a common workspace, like a team gathered around a shared whiteboard in a war room. Anyone can post a finding, and anyone can build on what others have posted. This is the multi-agent extension of the shared state we designed in <a href="12-memory-systems.html" class="quarto-xref"><span>Chapter 12</span></a>, now written and read by several agents at once. <a href="#fig-blackboard" class="quarto-xref">Figure&nbsp;<span>15.5</span></a> contrasts the two.</p>
 <div id="fig-blackboard" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-blackboard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch14/fig-blackboard.png" class="img-fluid figure-img">
+<img src="../..\images/ch15/fig-blackboard.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-blackboard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.5: Two ways for agents to coordinate: direct messages travel privately between pairs, while a blackboard is a shared workspace every agent can read from and write to.
+Figure&nbsp;15.5: Two ways for agents to coordinate: direct messages travel privately between pairs, while a blackboard is a shared workspace every agent can read from and write to.
 </figcaption>
 </figure>
 </div>
-<p>Because the medium is language, the thing that keeps either style from descending into noise is a <strong>protocol</strong>: an agreed structure for messages, just as engineers agree on the fields of an API request. When an agent’s output must be <em>read by another agent</em> rather than by a person, it pays to constrain that output: a fixed shape (“here is my finding, here is my confidence, here is what I still need”) so the receiver can parse it reliably instead of guessing. Some multi-agent frameworks formalize this with typed messages or even dedicated agent-to-agent protocols; the underlying idea is always the same discipline we met with tool schemas in <a href="10-tools-and-mcp.html" class="quarto-xref"><span>Chapter 10</span></a>: turn a free-form conversation into something structured enough to build on.</p>
-<section id="sec-ch14-chat-vs-workflow" class="level3" data-number="14.3.1">
-<h3 data-number="14.3.1" class="anchored" data-anchor-id="sec-ch14-chat-vs-workflow"><span class="header-section-number">14.3.1</span> Conversation or structured workflow?</h3>
-<p>A protocol settles the shape of a single message, but a team also needs a style for the exchange as a whole, and here two philosophies have emerged, each carried by an influential framework. <a href="#fig-coordination-styles" class="quarto-xref">Figure&nbsp;<span>14.6</span></a> places them side by side.</p>
+<p>Because the medium is language, the thing that keeps either style from descending into noise is a <strong>protocol</strong>: an agreed structure for messages, just as engineers agree on the fields of an API request. When an agent’s output must be <em>read by another agent</em> rather than by a person, it pays to constrain that output: a fixed shape (“here is my finding, here is my confidence, here is what I still need”) so the receiver can parse it reliably instead of guessing. Some multi-agent frameworks formalize this with typed messages or even dedicated agent-to-agent protocols; the underlying idea is always the same discipline we met with tool schemas in <a href="11-tools-and-mcp.html" class="quarto-xref"><span>Chapter 11</span></a>: turn a free-form conversation into something structured enough to build on.</p>
+<section id="sec-ch14-chat-vs-workflow" class="level3" data-number="15.3.1">
+<h3 data-number="15.3.1" class="anchored" data-anchor-id="sec-ch14-chat-vs-workflow"><span class="header-section-number">15.3.1</span> Conversation or structured workflow?</h3>
+<p>A protocol settles the shape of a single message, but a team also needs a style for the exchange as a whole, and here two philosophies have emerged, each carried by an influential framework. <a href="#fig-coordination-styles" class="quarto-xref">Figure&nbsp;<span>15.6</span></a> places them side by side.</p>
 <div id="fig-coordination-styles" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-coordination-styles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch14/fig-coordination-styles.png" class="img-fluid figure-img">
+<img src="../..\images/ch15/fig-coordination-styles.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coordination-styles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.6: Three styles for organizing the exchange: a flexible conversation where agents message back and forth (AutoGen), a role-play dialogue where an instructing agent and an acting agent cooperate (CAMEL), and a structured workflow where each role hands a standardized document to the next (MetaGPT).
+Figure&nbsp;15.6: Three styles for organizing the exchange: a flexible conversation where agents message back and forth (AutoGen), a role-play dialogue where an instructing agent and an acting agent cooperate (CAMEL), and a structured workflow where each role hands a standardized document to the next (MetaGPT).
 </figcaption>
 </figure>
 </div>
@@ -588,51 +594,51 @@ Figure&nbsp;14.6: Three styles for organizing the exchange: a flexible conversat
 <p>The second philosophy treats the interaction as a <strong>structured workflow</strong>. MetaGPT argues that chat alone is too loose for serious engineering, and instead encodes human <strong>standard operating procedures</strong> into the agents’ prompts: roles such as product manager, architect, and engineer work an assembly line, each producing a standardized artifact (a spec, a design, a module of code) that the next role consumes <span class="citation" data-cites="hong2023metagpt"><a href="../../references.html#ref-hong2023metagpt" role="doc-biblioref">[9]</a></span>. Because every hand-off is a checkable document rather than an offhand remark, intermediate results can be verified and mistakes caught before they compound, which is exactly the cascading-hallucination failure that naively chaining language models tends to produce. The trade is rigidity for reliability: you give up some of the conversation’s adaptability in return for outputs that are far easier to trust.</p>
 <p>Neither style is universally right. Conversation shines when the path to a solution is unknown and exploration pays for itself; a structured workflow shines when the process is well understood and correctness matters more than creativity. Most production systems borrow from both, wrapping a bounded conversation inside the stages of an otherwise structured pipeline.</p>
 </section>
-<section id="sec-ch14-telephone" class="level3" data-number="14.3.2">
-<h3 data-number="14.3.2" class="anchored" data-anchor-id="sec-ch14-telephone"><span class="header-section-number">14.3.2</span> Passing context, not just messages</h3>
+<section id="sec-ch14-telephone" class="level3" data-number="15.3.2">
+<h3 data-number="15.3.2" class="anchored" data-anchor-id="sec-ch14-telephone"><span class="header-section-number">15.3.2</span> Passing context, not just messages</h3>
 <p>A protocol makes each message well-formed, but it does not guarantee the receiver has enough <em>context</em> to act well, and that gap is where multi-agent systems most often break. The team at Cognition, after building long-running coding agents, distilled the problem into two principles worth memorizing. The first: share context, and share full agent traces, not just individual messages. An agent handed only a one-line summary of a subtask, rather than the history that produced it, will fill the gaps with its own assumptions <span class="citation" data-cites="cognition2025multiagent"><a href="../../references.html#ref-cognition2025multiagent" role="doc-biblioref">[3]</a></span>. Their example is vivid: split “build a Flappy Bird clone” into two subtasks and one subagent may return a Super Mario background while the other returns a bird that moves nothing like the game, each result locally reasonable and jointly useless.</p>
 <p>The second principle explains why even sharing context is not always enough: actions carry implicit decisions, and conflicting decisions carry bad results. When two agents each make a defensible choice in isolation, an art style here, a data format there, their outputs can still clash because neither saw the other’s decision. This is the <em>game of telephone</em> that Anthropic’s team named from the other side of the debate: information degrades a little each time it is retold from one agent to the next <span class="citation" data-cites="anthropic2025multiagent"><a href="../../references.html#ref-anthropic2025multiagent" role="doc-biblioref">[2]</a></span>. Their remedy is a pattern worth stealing. Rather than pass a large result through the conversation, where every hop can distort it, have the subagent write its output to a shared store (a file, a database row, a blackboard entry) and pass only a lightweight reference. The receiver then reads the artifact straight from the source, so nothing is garbled in the retelling. It is the blackboard instinct again, aimed squarely at protecting fidelity across handoffs.</p>
 <p>Get the wiring, the protocol, and the context-passing right and something remarkable becomes possible: behavior that no single agent was programmed to produce.</p>
 </section>
 </section>
-<section id="sec-ch14-emergence" class="level2" data-number="14.4">
-<h2 data-number="14.4" class="anchored" data-anchor-id="sec-ch14-emergence"><span class="header-section-number">14.4</span> When the whole exceeds the parts</h2>
+<section id="sec-ch14-emergence" class="level2" data-number="15.4">
+<h2 data-number="15.4" class="anchored" data-anchor-id="sec-ch14-emergence"><span class="header-section-number">15.4</span> When the whole exceeds the parts</h2>
 <p>The most striking thing about a well-connected group is that it can produce behavior none of its members were individually designed for. A single ant follows simple local rules, yet a colony builds bridges and farms fungus; no ant holds the plan. This is <strong>emergence</strong>, global patterns that arise from local interactions, and multi-agent systems of language models turn out to be a vivid place to watch it happen.</p>
-<p>The clearest demonstration is the <em>Generative Agents</em> study, in which researchers populated a small simulated town, “Smallville,” with twenty-five agents, each given a memory of its experiences, the ability to reflect on them, and the freedom to plan its own day <span class="citation" data-cites="park2023generative"><a href="../../references.html#ref-park2023generative" role="doc-biblioref">[10]</a></span>. Nobody scripted a plot. Yet when one agent was seeded with the intention to throw a Valentine’s Day party, something lifelike unfolded on its own: the agent invited a few others, <em>those</em> agents told their friends, the invitation spread through the town by word of mouth, some agents asked each other to go as dates, and, most tellingly, a group of them remembered the time and place and actually showed up at the right house at the right hour. The coordination, the information diffusion, and the budding relationships were never programmed; they <em>emerged</em> from many agents each following simple, memory- driven rules while talking to their neighbors. <a href="#fig-emergence" class="quarto-xref">Figure&nbsp;<span>14.7</span></a> sketches that spread.</p>
+<p>The clearest demonstration is the <em>Generative Agents</em> study, in which researchers populated a small simulated town, “Smallville,” with twenty-five agents, each given a memory of its experiences, the ability to reflect on them, and the freedom to plan its own day <span class="citation" data-cites="park2023generative"><a href="../../references.html#ref-park2023generative" role="doc-biblioref">[10]</a></span>. Nobody scripted a plot. Yet when one agent was seeded with the intention to throw a Valentine’s Day party, something lifelike unfolded on its own: the agent invited a few others, <em>those</em> agents told their friends, the invitation spread through the town by word of mouth, some agents asked each other to go as dates, and, most tellingly, a group of them remembered the time and place and actually showed up at the right house at the right hour. The coordination, the information diffusion, and the budding relationships were never programmed; they <em>emerged</em> from many agents each following simple, memory- driven rules while talking to their neighbors. <a href="#fig-emergence" class="quarto-xref">Figure&nbsp;<span>15.7</span></a> sketches that spread.</p>
 <div id="fig-emergence" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-emergence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch14/fig-emergence.png" class="img-fluid figure-img">
+<img src="../..\images/ch15/fig-emergence.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-emergence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.7: Emergence in a multi-agent simulation: a single seeded intention (a party) propagates agent-to-agent into town-wide coordination that no one agent was programmed to orchestrate.
+Figure&nbsp;15.7: Emergence in a multi-agent simulation: a single seeded intention (a party) propagates agent-to-agent into town-wide coordination that no one agent was programmed to orchestrate.
 </figcaption>
 </figure>
 </div>
 <p>Emergence is a double-edged gift, and holding both edges is the mature way to think about multi-agent systems. On the bright edge, it is the source of their real magic: capabilities and solutions that a single, centrally planned agent would never reach, whether that is a richer simulation of a social world or a research team of agents that collectively covers ground no soloist could. On the dark edge, the same openness that lets <em>good</em> surprises appear lets <em>bad</em> ones appear too: behaviors you did not intend and cannot easily predict from any single agent’s instructions. An emergent party is charming; an emergent failure, where a stray message cascades into every agent chasing the wrong goal, is not. Which is exactly why we now have to look, clear-eyed, at the ways these systems go wrong.</p>
 </section>
-<section id="sec-ch14-failures" class="level2" data-number="14.5">
-<h2 data-number="14.5" class="anchored" data-anchor-id="sec-ch14-failures"><span class="header-section-number">14.5</span> The ways teams go wrong</h2>
+<section id="sec-ch14-failures" class="level2" data-number="15.5">
+<h2 data-number="15.5" class="anchored" data-anchor-id="sec-ch14-failures"><span class="header-section-number">15.5</span> The ways teams go wrong</h2>
 <p>Every strength of a multi-agent system has a matching weakness, and a designer who sees only the upside is setting a trap. The same properties that make teams powerful (many agents, much talking, open interaction) are exactly the properties that make them fail in ways a single agent never could. Three failure modes recur often enough to name and guard against.</p>
-<p>The first is <strong>miscoordination</strong>: agents working at cross-purposes because their picture of the goal has drifted apart. It is the group project where two students write the same section and nobody writes the conclusion, each sure someone else had it. Because agents coordinate through fallible natural-language messages, small misunderstandings compound into duplicated work, gaps, or outright deadlock. The second is <strong>cost and latency blow-up</strong>. A single agent’s run costs one stream of model calls; a team multiplies that by the number of agents and again by every round of conversation between them. A peer network left to debate can burn tokens for many turns to reach an answer a lone agent would have produced in one: you have bought a committee, with a committee’s bills. The third, and most insidious, is <strong>error propagation</strong>, the compounding-error problem from <a href="08-workflows-vs-agents.html" class="quarto-xref"><span>Chapter 8</span></a> raised to the group level: one agent’s mistake becomes another agent’s trusted input, which becomes a third agent’s premise, until a single early slip has poisoned the whole system’s output. <a href="#fig-cascade" class="quarto-xref">Figure&nbsp;<span>14.8</span></a> traces that cascade.</p>
+<p>The first is <strong>miscoordination</strong>: agents working at cross-purposes because their picture of the goal has drifted apart. It is the group project where two students write the same section and nobody writes the conclusion, each sure someone else had it. Because agents coordinate through fallible natural-language messages, small misunderstandings compound into duplicated work, gaps, or outright deadlock. The second is <strong>cost and latency blow-up</strong>. A single agent’s run costs one stream of model calls; a team multiplies that by the number of agents and again by every round of conversation between them. A peer network left to debate can burn tokens for many turns to reach an answer a lone agent would have produced in one: you have bought a committee, with a committee’s bills. The third, and most insidious, is <strong>error propagation</strong>, the compounding-error problem from <a href="09-workflows-vs-agents.html" class="quarto-xref"><span>Chapter 9</span></a> raised to the group level: one agent’s mistake becomes another agent’s trusted input, which becomes a third agent’s premise, until a single early slip has poisoned the whole system’s output. <a href="#fig-cascade" class="quarto-xref">Figure&nbsp;<span>15.8</span></a> traces that cascade.</p>
 <div id="fig-cascade" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cascade-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch14/fig-cascade.png" class="img-fluid figure-img">
+<img src="../..\images/ch15/fig-cascade.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cascade-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.8: Error propagation in a team: one agent’s early mistake is accepted as fact by the next, and the next, so a small initial error compounds into a confidently wrong final answer.
+Figure&nbsp;15.8: Error propagation in a team: one agent’s early mistake is accepted as fact by the next, and the next, so a small initial error compounds into a confidently wrong final answer.
 </figcaption>
 </figure>
 </div>
 <p>None of these are reasons never to build multi-agent systems; they are reasons to build them <em>deliberately</em>, and they explain why the field’s most experienced practitioners keep returning to the same counsel we have followed all book long: start with the simplest design that works and add agents only when a single one demonstrably cannot cope <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[11]</a></span>. The practical defenses are the ones the rest of the book equips you with: keep a single agent accountable where you can (the supervisor shape), give agents structured protocols so messages drift less, cap the rounds of conversation to bound cost, and, above all, instrument the system so you can <em>see</em> these failures when they start, which is the subject of Part 4.</p>
-<section id="sec-ch14-mast" class="level3" data-number="14.5.1">
-<h3 data-number="14.5.1" class="anchored" data-anchor-id="sec-ch14-mast"><span class="header-section-number">14.5.1</span> A taxonomy of team failures</h3>
+<section id="sec-ch14-mast" class="level3" data-number="15.5.1">
+<h3 data-number="15.5.1" class="anchored" data-anchor-id="sec-ch14-mast"><span class="header-section-number">15.5.1</span> A taxonomy of team failures</h3>
 <p>Naming three failure modes is a useful start, but how common are they really, and are there more? A 2025 study set out to answer that empirically, collecting more than 1,600 execution traces from seven popular multi-agent frameworks and having expert annotators catalog everything that went wrong <span class="citation" data-cites="cemri2025why"><a href="../../references.html#ref-cemri2025why" role="doc-biblioref">[12]</a></span>. The result, the Multi-Agent System Failure Taxonomy, or MAST, is the closest thing the field has to a field guide of failure. It sorts fourteen distinct failure modes into three families, and those families map cleanly onto the design decisions of this chapter.</p>
 <div id="tbl-ch14-mast" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ch14-mast-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;14.2: The three families of the Multi-Agent System Failure Taxonomy (MAST), which sorts fourteen observed failure modes and lines up with the design choices in this chapter.
+Table&nbsp;15.2: The three families of the Multi-Agent System Failure Taxonomy (MAST), which sorts fourteen observed failure modes and lines up with the design choices in this chapter.
 </figcaption>
 <div aria-describedby="tbl-ch14-mast-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -652,12 +658,12 @@ Table&nbsp;14.2: The three families of the Multi-Agent System Failure Taxonomy (
 <tr class="odd">
 <td>Specification and design</td>
 <td>Vague roles, unclear objectives, or a topology that does not fit the task</td>
-<td>Choosing the shape (<a href="#sec-ch14-topologies" class="quarto-xref"><span>Section 14.2</span></a>) and briefing each agent</td>
+<td>Choosing the shape (<a href="#sec-ch14-topologies" class="quarto-xref"><span>Section 15.2</span></a>) and briefing each agent</td>
 </tr>
 <tr class="even">
 <td>Inter-agent misalignment</td>
 <td>Agents talk past one another: withheld context, conflicting assumptions, derailed conversations</td>
-<td>How the agents talk (<a href="#sec-ch14-communication" class="quarto-xref"><span>Section 14.3</span></a>) and the telephone problem</td>
+<td>How the agents talk (<a href="#sec-ch14-communication" class="quarto-xref"><span>Section 15.3</span></a>) and the telephone problem</td>
 </tr>
 <tr class="odd">
 <td>Task verification</td>
@@ -673,10 +679,10 @@ Table&nbsp;14.2: The three families of the Multi-Agent System Failure Taxonomy (
 <p>With those failure modes mapped and the defenses in hand, we can assemble a small, well-behaved team and watch the pieces work together.</p>
 </section>
 </section>
-<section id="sec-ch14-worked" class="level2" data-number="14.6">
-<h2 data-number="14.6" class="anchored" data-anchor-id="sec-ch14-worked"><span class="header-section-number">14.6</span> A worked example: a supervisor and two workers</h2>
+<section id="sec-ch14-worked" class="level2" data-number="15.6">
+<h2 data-number="15.6" class="anchored" data-anchor-id="sec-ch14-worked"><span class="header-section-number">15.6</span> A worked example: a supervisor and two workers</h2>
 <p>Let us make the safest, most common shape concrete by building a small research assistant as a <strong>supervisor with two workers</strong>. The job is to answer a question that has two independent halves: say, <em>“How does our product’s pricing compare to competitors, and what are customers saying about it?”</em> One half is a market-research task, the other a review-analysis task, and they do not depend on each other, which is exactly the decomposition that makes a team worthwhile. We give each half its own specialist and put a supervisor in charge of splitting the work and stitching the answers back together.</p>
-<p>The cleanest way to keep the supervisor accountable, the lesson from <a href="#sec-ch14-failures" class="quarto-xref"><span>Section 14.5</span></a>, is to expose each worker to it <em>as a tool</em> rather than handing off control, so the supervisor always regains the floor after a worker reports. This is the orchestrator-workers pattern from <a href="09-agentic-patterns.html#sec-ch9-orchestrator" class="quarto-xref"><span>Section 9.5</span></a> expressed with the SDK primitives from <a href="13-openai-agents-sdk.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
+<p>The cleanest way to keep the supervisor accountable, the lesson from <a href="#sec-ch14-failures" class="quarto-xref"><span>Section 15.5</span></a>, is to expose each worker to it <em>as a tool</em> rather than handing off control, so the supervisor always regains the floor after a worker reports. This is the orchestrator-workers pattern from <a href="10-agentic-patterns.html#sec-ch9-orchestrator" class="quarto-xref"><span>Section 10.5</span></a> expressed with the SDK primitives from <a href="14-openai-agents-sdk.html" class="quarto-xref"><span>Chapter 14</span></a>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> agents <span class="im">import</span> Agent, Runner</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>market <span class="op">=</span> Agent(name<span class="op">=</span><span class="st">"Market"</span>,</span>
@@ -700,21 +706,21 @@ Table&nbsp;14.2: The three families of the Multi-Agent System Failure Taxonomy (
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> Runner.run_sync(supervisor,</span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"How does our pricing compare, and what do customers say?"</span>)</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result.final_output)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Follow the run and every idea in the chapter appears at once. The supervisor reads the question, recognizes its two independent halves, and calls each worker, potentially <em>in parallel</em>, since neither depends on the other, echoing the parallelization pattern from earlier. Each worker does its narrow job and reports a structured summary back up; the supervisor, holding both results on its own scratchpad, composes the final answer. <a href="#fig-supervisor-run" class="quarto-xref">Figure&nbsp;<span>14.9</span></a> traces the flow. Because control returns to the supervisor after every worker call, one agent stays accountable for the outcome, coordination is easy to follow, and the blast radius of any single worker’s mistake is contained: the disciplined version of a team, rather than a free-for-all.</p>
+<p>Follow the run and every idea in the chapter appears at once. The supervisor reads the question, recognizes its two independent halves, and calls each worker, potentially <em>in parallel</em>, since neither depends on the other, echoing the parallelization pattern from earlier. Each worker does its narrow job and reports a structured summary back up; the supervisor, holding both results on its own scratchpad, composes the final answer. <a href="#fig-supervisor-run" class="quarto-xref">Figure&nbsp;<span>15.9</span></a> traces the flow. Because control returns to the supervisor after every worker call, one agent stays accountable for the outcome, coordination is easy to follow, and the blast radius of any single worker’s mistake is contained: the disciplined version of a team, rather than a free-for-all.</p>
 <div id="fig-supervisor-run" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-supervisor-run-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch14/fig-supervisor-run.png" class="img-fluid figure-img">
+<img src="../..\images/ch15/fig-supervisor-run.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-supervisor-run-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.9: One run of the supervisor–workers assistant: the supervisor splits the question, calls each worker as a tool, and combines their reports into a single answer while staying in control throughout.
+Figure&nbsp;15.9: One run of the supervisor–workers assistant: the supervisor splits the question, calls each worker as a tool, and combines their reports into a single answer while staying in control throughout.
 </figcaption>
 </figure>
 </div>
 <p>That small, well-behaved team is a fitting place to close Part 3. We have gone from a single augmented model all the way to a coordinated group of agents, always adding structure only when the problem earned it. But every system we have built so far, from the first tool call to this supervisor, shares an unanswered question: how do we actually know it <em>works</em>? We have been trusting that the agents do their jobs. Part 4 stops trusting and starts measuring, beginning with evaluation.</p>
 </section>
-<section id="sec-ch14-summary" class="level2" data-number="14.7">
-<h2 data-number="14.7" class="anchored" data-anchor-id="sec-ch14-summary"><span class="header-section-number">14.7</span> Summary</h2>
+<section id="sec-ch14-summary" class="level2" data-number="15.7">
+<h2 data-number="15.7" class="anchored" data-anchor-id="sec-ch14-summary"><span class="header-section-number">15.7</span> Summary</h2>
 <p>This chapter moved from single agents to teams of them, and the throughline was restraint: a team is a powerful tool that must earn its complexity.</p>
 <ul>
 <li><strong>Use many agents only when one genuinely can’t cope</strong>, because the task decomposes into independent parts, benefits from distinct perspectives, or needs different tools per sub-job. When those conditions fail, a team just adds cost, latency, and failure modes <span class="citation" data-cites="xi2023rise"><a href="../../references.html#ref-xi2023rise" role="doc-biblioref">[1]</a></span>.</li>
@@ -727,10 +733,10 @@ Figure&nbsp;14.9: One run of the supervisor–workers assistant: the supervisor 
 <li><strong>Well-connected teams show emergence:</strong> behavior no single agent was programmed for, as the Smallville simulation’s self-organized party showed. Emergence brings both the magic and the unpredictability <span class="citation" data-cites="park2023generative"><a href="../../references.html#ref-park2023generative" role="doc-biblioref">[10]</a></span>.</li>
 <li><strong>Guard against the failure modes:</strong> miscoordination, cost/latency blow-up, and error propagation. A study of 1,600+ traces (the MAST taxonomy) sorts the observed failures into specification and design, inter-agent misalignment, and verification, and finds multi-agent gains are often minimal, so build a team deliberately <span class="citation" data-cites="cemri2025why"><a href="../../references.html#ref-cemri2025why" role="doc-biblioref">[12]</a></span>. The defenses are a single accountable agent where possible, structured protocols, bounded conversation, and, most of all, observability.</li>
 </ul>
-<p>Part 3 has taken us from one augmented model to a coordinated team, always adding structure only when the problem demanded it. What we have never done is <em>measure</em> whether any of it works. That gap, trusting rather than verifying, is where Part 4 begins, with the discipline of evaluating agents: <a href="../part4-production/15-evaluation.html" class="quarto-xref"><span>Chapter 15</span></a>.</p>
+<p>Part 3 has taken us from one augmented model to a coordinated team, always adding structure only when the problem demanded it. What we have never done is <em>measure</em> whether any of it works. That gap, trusting rather than verifying, is where Part 4 begins, with the discipline of evaluating agents: <a href="../part4-production/16-evaluation.html" class="quarto-xref"><span>Chapter 16</span></a>.</p>
 </section>
-<section id="sec-ch14-exercises" class="level2" data-number="14.8">
-<h2 data-number="14.8" class="anchored" data-anchor-id="sec-ch14-exercises"><span class="header-section-number">14.8</span> Exercises</h2>
+<section id="sec-ch14-exercises" class="level2" data-number="15.8">
+<h2 data-number="15.8" class="anchored" data-anchor-id="sec-ch14-exercises"><span class="header-section-number">15.8</span> Exercises</h2>
 <ol type="1">
 <li><strong>One or many?</strong> Give one task you would solve with a single agent and one you would solve with a team, and justify each using the decomposition-and-perspective test from the opening.</li>
 <li><strong>Pick a topology.</strong> For a system that drafts, fact-checks, and publishes an article, choose supervisor, handoff, or peer network, and explain why that shape fits.</li>
@@ -1349,13 +1355,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../chapters/part3-building/13-openai-agents-sdk.html" class="pagination-link" aria-label="The OpenAI Agents SDK">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span>
+      <a href="../../chapters/part3-building/14-openai-agents-sdk.html" class="pagination-link" aria-label="The OpenAI Agents SDK">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../chapters/part4-production/15-evaluation.html" class="pagination-link" aria-label="Evaluation">
-        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../chapters/part4-production/16-evaluation.html" class="pagination-link" aria-label="Evaluation">
+        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

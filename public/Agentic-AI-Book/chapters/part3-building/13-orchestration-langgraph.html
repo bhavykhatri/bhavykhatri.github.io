@@ -8,7 +8,7 @@
 
 <meta name="description" content="A practical, research-grounded guide that connects the classical theory of intelligent agents to the modern practice of building autonomous LLM agents with tools, memory, planning, and multi-agent orchestration.">
 
-<title>12&nbsp; Orchestration with LangGraph – Agents: From Theory to Production</title>
+<title>13&nbsp; Orchestration with LangGraph – Agents: From Theory to Production</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,8 +85,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../chapters/part3-building/13-openai-agents-sdk.html" rel="next">
-<link href="../../chapters/part3-building/11-memory-systems.html" rel="prev">
+<link href="../../chapters/part3-building/14-openai-agents-sdk.html" rel="next">
+<link href="../../chapters/part3-building/12-memory-systems.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -138,7 +138,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part3-building/08-workflows-vs-agents.html">Part III — Building Agents</a></li><li class="breadcrumb-item"><a href="../../chapters/part3-building/12-orchestration-langgraph.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part3-building/09-workflows-vs-agents.html">Part III — Building Agents</a></li><li class="breadcrumb-item"><a href="../../chapters/part3-building/13-orchestration-langgraph.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -225,20 +225,26 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part2-llm-agents/05-llms-as-reasoners.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></a>
+  <a href="../../chapters/part2-llm-agents/05-inside-the-language-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Inside the Language Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part2-llm-agents/06-the-augmented-llm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span></a>
+  <a href="../../chapters/part2-llm-agents/06-llms-as-reasoners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part2-llm-agents/07-reasoning-and-planning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span></a>
+  <a href="../../chapters/part2-llm-agents/07-the-augmented-llm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/08-reasoning-and-planning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span></a>
   </div>
 </li>
       </ul>
@@ -254,44 +260,44 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/08-workflows-vs-agents.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span></a>
+  <a href="../../chapters/part3-building/09-workflows-vs-agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/09-agentic-patterns.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span></a>
+  <a href="../../chapters/part3-building/10-agentic-patterns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/10-tools-and-mcp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span></a>
+  <a href="../../chapters/part3-building/11-tools-and-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/11-memory-systems.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></a>
+  <a href="../../chapters/part3-building/12-memory-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/12-orchestration-langgraph.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></a>
+  <a href="../../chapters/part3-building/13-orchestration-langgraph.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/13-openai-agents-sdk.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></a>
+  <a href="../../chapters/part3-building/14-openai-agents-sdk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/14-multi-agent-systems.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></a>
+  <a href="../../chapters/part3-building/15-multi-agent-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></a>
   </div>
 </li>
       </ul>
@@ -307,26 +313,26 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/15-evaluation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
+  <a href="../../chapters/part4-production/16-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/16-observability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Observability</span></span></a>
+  <a href="../../chapters/part4-production/17-observability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Observability</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/17-safety-and-guardrails.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Safety &amp; Guardrails</span></span></a>
+  <a href="../../chapters/part4-production/18-safety-and-guardrails.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Safety &amp; Guardrails</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/18-deployment-and-cost.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></span></a>
+  <a href="../../chapters/part4-production/19-deployment-and-cost.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></span></a>
   </div>
 </li>
       </ul>
@@ -342,14 +348,14 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part5-frontiers/19-computer-use-and-embodiment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Computer Use &amp; Embodiment</span></span></a>
+  <a href="../../chapters/part5-frontiers/20-computer-use-and-embodiment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Computer Use &amp; Embodiment</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part5-frontiers/20-frontiers-and-open-problems.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Frontiers &amp; Open Problems</span></span></a>
+  <a href="../../chapters/part5-frontiers/21-frontiers-and-open-problems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Frontiers &amp; Open Problems</span></span></a>
   </div>
 </li>
       </ul>
@@ -366,19 +372,19 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../chapters/appendices/a-environment-setup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Appendix A — Environment Setup</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Appendix A — Environment Setup</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../chapters/appendices/b-glossary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Appendix B — Glossary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Appendix B — Glossary</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../chapters/appendices/c-further-reading.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Appendix C — Further Reading</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Appendix C — Further Reading</span></span></a>
   </div>
 </li>
       </ul>
@@ -405,43 +411,43 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-ch12-intuition" id="toc-sec-ch12-intuition" class="nav-link active" data-scroll-target="#sec-ch12-intuition"><span class="header-section-number">12.1</span> Opening intuition</a></li>
-  <li><a href="#sec-ch12-concepts" id="toc-sec-ch12-concepts" class="nav-link" data-scroll-target="#sec-ch12-concepts"><span class="header-section-number">12.2</span> Core concepts</a>
+  <li><a href="#sec-ch12-intuition" id="toc-sec-ch12-intuition" class="nav-link active" data-scroll-target="#sec-ch12-intuition"><span class="header-section-number">13.1</span> Opening intuition</a></li>
+  <li><a href="#sec-ch12-concepts" id="toc-sec-ch12-concepts" class="nav-link" data-scroll-target="#sec-ch12-concepts"><span class="header-section-number">13.2</span> Core concepts</a>
   <ul class="collapse">
-  <li><a href="#sec-ch12-state" id="toc-sec-ch12-state" class="nav-link" data-scroll-target="#sec-ch12-state"><span class="header-section-number">12.2.1</span> State is the contract</a></li>
-  <li><a href="#sec-ch12-nodes" id="toc-sec-ch12-nodes" class="nav-link" data-scroll-target="#sec-ch12-nodes"><span class="header-section-number">12.2.2</span> Nodes stay small and single-purpose</a></li>
-  <li><a href="#sec-ch12-edges" id="toc-sec-ch12-edges" class="nav-link" data-scroll-target="#sec-ch12-edges"><span class="header-section-number">12.2.3</span> Edges are where control policy lives</a></li>
-  <li><a href="#sec-ch12-cycles" id="toc-sec-ch12-cycles" class="nav-link" data-scroll-target="#sec-ch12-cycles"><span class="header-section-number">12.2.4</span> Cycles need limits</a></li>
+  <li><a href="#sec-ch12-state" id="toc-sec-ch12-state" class="nav-link" data-scroll-target="#sec-ch12-state"><span class="header-section-number">13.2.1</span> State is the contract</a></li>
+  <li><a href="#sec-ch12-nodes" id="toc-sec-ch12-nodes" class="nav-link" data-scroll-target="#sec-ch12-nodes"><span class="header-section-number">13.2.2</span> Nodes stay small and single-purpose</a></li>
+  <li><a href="#sec-ch12-edges" id="toc-sec-ch12-edges" class="nav-link" data-scroll-target="#sec-ch12-edges"><span class="header-section-number">13.2.3</span> Edges are where control policy lives</a></li>
+  <li><a href="#sec-ch12-cycles" id="toc-sec-ch12-cycles" class="nav-link" data-scroll-target="#sec-ch12-cycles"><span class="header-section-number">13.2.4</span> Cycles need limits</a></li>
   </ul></li>
-  <li><a href="#sec-ch12-persistence" id="toc-sec-ch12-persistence" class="nav-link" data-scroll-target="#sec-ch12-persistence"><span class="header-section-number">12.3</span> Persistence &amp; checkpoints</a>
+  <li><a href="#sec-ch12-persistence" id="toc-sec-ch12-persistence" class="nav-link" data-scroll-target="#sec-ch12-persistence"><span class="header-section-number">13.3</span> Persistence &amp; checkpoints</a>
   <ul class="collapse">
-  <li><a href="#sec-ch12-checkpoint-vs-memory" id="toc-sec-ch12-checkpoint-vs-memory" class="nav-link" data-scroll-target="#sec-ch12-checkpoint-vs-memory"><span class="header-section-number">12.3.1</span> Checkpoints are not long-term memory</a></li>
+  <li><a href="#sec-ch12-checkpoint-vs-memory" id="toc-sec-ch12-checkpoint-vs-memory" class="nav-link" data-scroll-target="#sec-ch12-checkpoint-vs-memory"><span class="header-section-number">13.3.1</span> Checkpoints are not long-term memory</a></li>
   </ul></li>
-  <li><a href="#sec-ch12-hitl" id="toc-sec-ch12-hitl" class="nav-link" data-scroll-target="#sec-ch12-hitl"><span class="header-section-number">12.4</span> Human-in-the-loop</a>
+  <li><a href="#sec-ch12-hitl" id="toc-sec-ch12-hitl" class="nav-link" data-scroll-target="#sec-ch12-hitl"><span class="header-section-number">13.4</span> Human-in-the-loop</a>
   <ul class="collapse">
-  <li><a href="#sec-ch12-interrupt-placement" id="toc-sec-ch12-interrupt-placement" class="nav-link" data-scroll-target="#sec-ch12-interrupt-placement"><span class="header-section-number">12.4.1</span> Interrupt before side effects</a></li>
-  <li><a href="#sec-ch12-decisions" id="toc-sec-ch12-decisions" class="nav-link" data-scroll-target="#sec-ch12-decisions"><span class="header-section-number">12.4.2</span> Four decisions: approve, edit, reject, respond</a></li>
+  <li><a href="#sec-ch12-interrupt-placement" id="toc-sec-ch12-interrupt-placement" class="nav-link" data-scroll-target="#sec-ch12-interrupt-placement"><span class="header-section-number">13.4.1</span> Interrupt before side effects</a></li>
+  <li><a href="#sec-ch12-decisions" id="toc-sec-ch12-decisions" class="nav-link" data-scroll-target="#sec-ch12-decisions"><span class="header-section-number">13.4.2</span> Four decisions: approve, edit, reject, respond</a></li>
   </ul></li>
-  <li><a href="#sec-ch12-worked" id="toc-sec-ch12-worked" class="nav-link" data-scroll-target="#sec-ch12-worked"><span class="header-section-number">12.5</span> A worked example: the ReAct loop as a graph</a></li>
-  <li><a href="#sec-ch12-production" id="toc-sec-ch12-production" class="nav-link" data-scroll-target="#sec-ch12-production"><span class="header-section-number">12.6</span> Designing graphs for production</a>
+  <li><a href="#sec-ch12-worked" id="toc-sec-ch12-worked" class="nav-link" data-scroll-target="#sec-ch12-worked"><span class="header-section-number">13.5</span> A worked example: the ReAct loop as a graph</a></li>
+  <li><a href="#sec-ch12-production" id="toc-sec-ch12-production" class="nav-link" data-scroll-target="#sec-ch12-production"><span class="header-section-number">13.6</span> Designing graphs for production</a>
   <ul class="collapse">
-  <li><a href="#sec-ch12-observability" id="toc-sec-ch12-observability" class="nav-link" data-scroll-target="#sec-ch12-observability"><span class="header-section-number">12.6.1</span> Observability: the trace is the recorded run</a></li>
-  <li><a href="#sec-ch12-testing" id="toc-sec-ch12-testing" class="nav-link" data-scroll-target="#sec-ch12-testing"><span class="header-section-number">12.6.2</span> Test the graph, not just the nodes</a></li>
-  <li><a href="#sec-ch12-idempotency" id="toc-sec-ch12-idempotency" class="nav-link" data-scroll-target="#sec-ch12-idempotency"><span class="header-section-number">12.6.3</span> Idempotency for resumed actions</a></li>
-  <li><a href="#sec-ch12-overkill" id="toc-sec-ch12-overkill" class="nav-link" data-scroll-target="#sec-ch12-overkill"><span class="header-section-number">12.6.4</span> When LangGraph is overkill</a></li>
+  <li><a href="#sec-ch12-observability" id="toc-sec-ch12-observability" class="nav-link" data-scroll-target="#sec-ch12-observability"><span class="header-section-number">13.6.1</span> Observability: the trace is the recorded run</a></li>
+  <li><a href="#sec-ch12-testing" id="toc-sec-ch12-testing" class="nav-link" data-scroll-target="#sec-ch12-testing"><span class="header-section-number">13.6.2</span> Test the graph, not just the nodes</a></li>
+  <li><a href="#sec-ch12-idempotency" id="toc-sec-ch12-idempotency" class="nav-link" data-scroll-target="#sec-ch12-idempotency"><span class="header-section-number">13.6.3</span> Idempotency for resumed actions</a></li>
+  <li><a href="#sec-ch12-overkill" id="toc-sec-ch12-overkill" class="nav-link" data-scroll-target="#sec-ch12-overkill"><span class="header-section-number">13.6.4</span> When LangGraph is overkill</a></li>
   </ul></li>
-  <li><a href="#sec-ch12-case" id="toc-sec-ch12-case" class="nav-link" data-scroll-target="#sec-ch12-case"><span class="header-section-number">12.7</span> Case study: the Ledgerly support agent</a></li>
-  <li><a href="#sec-ch12-summary" id="toc-sec-ch12-summary" class="nav-link" data-scroll-target="#sec-ch12-summary"><span class="header-section-number">12.8</span> Summary</a></li>
-  <li><a href="#sec-ch12-exercises" id="toc-sec-ch12-exercises" class="nav-link" data-scroll-target="#sec-ch12-exercises"><span class="header-section-number">12.9</span> Exercises</a></li>
+  <li><a href="#sec-ch12-case" id="toc-sec-ch12-case" class="nav-link" data-scroll-target="#sec-ch12-case"><span class="header-section-number">13.7</span> Case study: the Ledgerly support agent</a></li>
+  <li><a href="#sec-ch12-summary" id="toc-sec-ch12-summary" class="nav-link" data-scroll-target="#sec-ch12-summary"><span class="header-section-number">13.8</span> Summary</a></li>
+  <li><a href="#sec-ch12-exercises" id="toc-sec-ch12-exercises" class="nav-link" data-scroll-target="#sec-ch12-exercises"><span class="header-section-number">13.9</span> Exercises</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/bhavykhatri/bhavykhatri.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part3-building/08-workflows-vs-agents.html">Part III — Building Agents</a></li><li class="breadcrumb-item"><a href="../../chapters/part3-building/12-orchestration-langgraph.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part3-building/09-workflows-vs-agents.html">Part III — Building Agents</a></li><li class="breadcrumb-item"><a href="../../chapters/part3-building/13-orchestration-langgraph.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-orchestration-langgraph" class="quarto-section-identifier"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></h1>
+<h1 class="title"><span id="sec-orchestration-langgraph" class="quarto-section-identifier"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></h1>
 </div>
 
 
@@ -465,47 +471,47 @@ div.csl-indent {
 <blockquote class="blockquote">
 <p>After this chapter you will be able to build stateful, controllable agents as graphs with LangGraph, including checkpoints and human-in-the-loop.</p>
 </blockquote>
-<section id="sec-ch12-intuition" class="level2" data-number="12.1">
-<h2 data-number="12.1" class="anchored" data-anchor-id="sec-ch12-intuition"><span class="header-section-number">12.1</span> Opening intuition</h2>
-<p>Look back over the last several chapters and you will notice we have been drawing the same kind of picture again and again: the decision guide in <a href="08-workflows-vs-agents.html#sec-ch8-decision" class="quarto-xref"><span>Section 8.7</span></a>, the five patterns in <a href="09-agentic-patterns.html" class="quarto-xref"><span>Chapter 9</span></a>, the reason–act loop in <a href="../part2-llm-agents/07-reasoning-and-planning.html#sec-ch7-react" class="quarto-xref"><span>Section 7.5</span></a>. Every one was a diagram of <em>boxes and arrows</em>, the steps and the paths between them. Those diagrams were meant as explanations, but here is the idea that opens this chapter: what if the diagram <em>were</em> the program? What if, instead of translating a flowchart into a tangle of <code>if</code> statements and <code>while</code> loops by hand, you could hand the flowchart itself to the computer and say “run this”? That is precisely what a graph orchestration framework lets you do, and <strong>LangGraph</strong> is the one we will use to make it concrete <span class="citation" data-cites="langgraph2024"><a href="../../references.html#ref-langgraph2024" role="doc-biblioref">[1]</a></span>.</p>
+<section id="sec-ch12-intuition" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="sec-ch12-intuition"><span class="header-section-number">13.1</span> Opening intuition</h2>
+<p>Look back over the last several chapters and you will notice we have been drawing the same kind of picture again and again: the decision guide in <a href="09-workflows-vs-agents.html#sec-ch8-decision" class="quarto-xref"><span>Section 9.7</span></a>, the five patterns in <a href="10-agentic-patterns.html" class="quarto-xref"><span>Chapter 10</span></a>, the reason–act loop in <a href="../part2-llm-agents/08-reasoning-and-planning.html#sec-ch7-react" class="quarto-xref"><span>Section 8.5</span></a>. Every one was a diagram of <em>boxes and arrows</em>, the steps and the paths between them. Those diagrams were meant as explanations, but here is the idea that opens this chapter: what if the diagram <em>were</em> the program? What if, instead of translating a flowchart into a tangle of <code>if</code> statements and <code>while</code> loops by hand, you could hand the flowchart itself to the computer and say “run this”? That is precisely what a graph orchestration framework lets you do, and <strong>LangGraph</strong> is the one we will use to make it concrete <span class="citation" data-cites="langgraph2024"><a href="../../references.html#ref-langgraph2024" role="doc-biblioref">[1]</a></span>.</p>
 <p>The durable concept underneath, the part worth remembering long after any particular framework fades, is that an agent is naturally a <strong>graph of steps operating over shared state</strong>. Picture a board game. There is a <em>board</em> with spaces connected by paths (that is the graph), a <em>game piece</em> sitting on one space at a time (that is where control currently is), and a shared <em>scoreboard</em> every move reads from and writes to (that is the state). A turn consists of doing what the current space says, updating the scoreboard, and following an arrow to the next space, sometimes a fixed arrow, sometimes a choice that depends on the scoreboard. An agent is exactly this: nodes that do work, a shared state they all read and update, and edges that decide where to go next. Modeling it this way is old and battle-tested; engineers call it a <em>state machine</em>, and it has run everything from traffic lights to spacecraft.</p>
-<p>Why reach for a framework at all, when we hand-rolled a perfectly good <code>while</code> loop back in <a href="../part2-llm-agents/06-the-augmented-llm.html#sec-ch6-together" class="quarto-xref"><span>Section 6.6</span></a>? Because that loop was the simplest possible agent, and real systems outgrow it fast. Once you need branching, retries, loops that can pause and resume, human approvals, and state that survives a crash, a hand-written control flow curdles into a knot that is hard to follow and harder to debug. A graph framework gives you that structure explicitly: the shape of the agent becomes a thing you can see, inspect, and reason about, rather than behavior buried in nested conditionals. That clarity is the payoff, though, as we will keep in mind, a framework is a tool with costs as well as benefits. Let’s start by laying out the board: the handful of core concepts from which every LangGraph agent is built.</p>
+<p>Why reach for a framework at all, when we hand-rolled a perfectly good <code>while</code> loop back in <a href="../part2-llm-agents/07-the-augmented-llm.html#sec-ch6-together" class="quarto-xref"><span>Section 7.6</span></a>? Because that loop was the simplest possible agent, and real systems outgrow it fast. Once you need branching, retries, loops that can pause and resume, human approvals, and state that survives a crash, a hand-written control flow curdles into a knot that is hard to follow and harder to debug. A graph framework gives you that structure explicitly: the shape of the agent becomes a thing you can see, inspect, and reason about, rather than behavior buried in nested conditionals. That clarity is the payoff, though, as we will keep in mind, a framework is a tool with costs as well as benefits. Let’s start by laying out the board: the handful of core concepts from which every LangGraph agent is built.</p>
 </section>
-<section id="sec-ch12-concepts" class="level2" data-number="12.2">
-<h2 data-number="12.2" class="anchored" data-anchor-id="sec-ch12-concepts"><span class="header-section-number">12.2</span> Core concepts</h2>
+<section id="sec-ch12-concepts" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="sec-ch12-concepts"><span class="header-section-number">13.2</span> Core concepts</h2>
 <p>LangGraph builds every agent from four ideas, and they line up one-to-one with the board-game picture, so you already have the intuition for all of them <span class="citation" data-cites="langgraph2024"><a href="../../references.html#ref-langgraph2024" role="doc-biblioref">[1]</a></span>. The first is <strong>state</strong>: a single shared object, in Python usually a typed dictionary, that holds everything the agent knows right now. It is the scoreboard, and for a chat agent it typically carries at least the running list of messages. Every step reads from it and writes back to it; the state <em>is</em> the agent’s working memory made explicit.</p>
-<p>The second idea is <strong>nodes</strong>, which are simply the spaces on the board where work happens. A node is an ordinary function that receives the current state and returns an update to it. One node might call the LLM; another might run a tool; another might query the vector store from <a href="11-memory-systems.html" class="quarto-xref"><span>Chapter 11</span></a>. Nodes are deliberately dumb about the big picture; each just does its one job and reports what changed. The third idea, <strong>edges</strong>, is what wires the nodes together and decides what runs next. Some edges are <strong>fixed</strong>, after node A always go to node B, and some are <strong>conditional</strong>: instead of a fixed destination, a small routing function looks at the current state and <em>chooses</em> the next node. Conditional edges are where the intelligence of the control flow lives; they are the board-game rule “if your score is over 20, take the shortcut.” <a href="#fig-langgraph-anatomy" class="quarto-xref">Figure&nbsp;<span>12.1</span></a> assembles the four pieces.</p>
+<p>The second idea is <strong>nodes</strong>, which are simply the spaces on the board where work happens. A node is an ordinary function that receives the current state and returns an update to it. One node might call the LLM; another might run a tool; another might query the vector store from <a href="12-memory-systems.html" class="quarto-xref"><span>Chapter 12</span></a>. Nodes are deliberately dumb about the big picture; each just does its one job and reports what changed. The third idea, <strong>edges</strong>, is what wires the nodes together and decides what runs next. Some edges are <strong>fixed</strong>, after node A always go to node B, and some are <strong>conditional</strong>: instead of a fixed destination, a small routing function looks at the current state and <em>chooses</em> the next node. Conditional edges are where the intelligence of the control flow lives; they are the board-game rule “if your score is over 20, take the shortcut.” <a href="#fig-langgraph-anatomy" class="quarto-xref">Figure&nbsp;<span>13.1</span></a> assembles the four pieces.</p>
 <div id="fig-langgraph-anatomy" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-langgraph-anatomy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch12/fig-langgraph-anatomy.png" class="img-fluid figure-img">
+<img src="../..\images/ch13/fig-langgraph-anatomy.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-langgraph-anatomy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12.1: The anatomy of a LangGraph agent. Nodes (functions) do work and update a shared state object; fixed edges always lead to the same next node, while a conditional edge inspects the state to choose among several. A cycle, an edge that loops back, is what turns a pipeline into an agent.
+Figure&nbsp;13.1: The anatomy of a LangGraph agent. Nodes (functions) do work and update a shared state object; fixed edges always lead to the same next node, while a conditional edge inspects the state to choose among several. A cycle, an edge that loops back, is what turns a pipeline into an agent.
 </figcaption>
 </figure>
 </div>
-<p>That loop from the tool node back to the model node is the fourth and most important idea: <strong>cycles</strong>. A plain data pipeline is a one-way street, a directed <em>acyclic</em> graph, steps flowing forward and never back. But an agent is not a pipeline; it is a loop that thinks, acts, observes, and thinks again, exactly the shape we drew for ReAct in <a href="../part2-llm-agents/07-reasoning-and-planning.html#sec-ch7-react" class="quarto-xref"><span>Section 7.5</span></a>. LangGraph’s defining feature is that its edges are <em>allowed to cycle</em>, so the graph can send control back to an earlier node and go around as many times as the task demands. That is what makes it a framework for <em>agents</em> rather than merely for workflows. Everything else, persistence and human oversight, is built on top of this small, sturdy foundation of state, nodes, edges, and cycles.</p>
+<p>That loop from the tool node back to the model node is the fourth and most important idea: <strong>cycles</strong>. A plain data pipeline is a one-way street, a directed <em>acyclic</em> graph, steps flowing forward and never back. But an agent is not a pipeline; it is a loop that thinks, acts, observes, and thinks again, exactly the shape we drew for ReAct in <a href="../part2-llm-agents/08-reasoning-and-planning.html#sec-ch7-react" class="quarto-xref"><span>Section 8.5</span></a>. LangGraph’s defining feature is that its edges are <em>allowed to cycle</em>, so the graph can send control back to an earlier node and go around as many times as the task demands. That is what makes it a framework for <em>agents</em> rather than merely for workflows. Everything else, persistence and human oversight, is built on top of this small, sturdy foundation of state, nodes, edges, and cycles.</p>
 <p>Knowing the four pieces is not the same as designing them well, and this is where most graph agents are quietly won or lost. Each piece carries a design rule worth stating plainly, so the next four subsections take them one at a time: state as a contract, nodes as small units of work, edges as control policy, and cycles as loops that must be bounded.</p>
-<section id="sec-ch12-state" class="level3" data-number="12.2.1">
-<h3 data-number="12.2.1" class="anchored" data-anchor-id="sec-ch12-state"><span class="header-section-number">12.2.1</span> State is the contract</h3>
+<section id="sec-ch12-state" class="level3" data-number="13.2.1">
+<h3 data-number="13.2.1" class="anchored" data-anchor-id="sec-ch12-state"><span class="header-section-number">13.2.1</span> State is the contract</h3>
 <p>It is tempting to treat state as a junk drawer, a bag of variables that nodes reach into as needed. In a real agent, state is something far more important: it is the <strong>contract</strong> between every node in the system. Each node reads the current state, does one piece of work, and returns an update. If the state is clear, the graph is clear. If the state is a muddle of raw messages and half-named scratch values, every node becomes a guessing game, and debugging turns into archaeology.</p>
-<p>The discipline that keeps state legible is to <em>separate the kinds of information the agent is carrying</em> rather than piling them together. The conversation belongs in one place, tool and retrieval output in another, the agent’s current interpretation in a third, its failures in a fourth, the human-approval status in a fifth, and the final user-visible answer in its own field. Keeping these apart is what makes the graph testable, debuggable, and safe to pause and resume, because any node, and any human reading a checkpoint, can see at a glance what is known and what is still open. <a href="#fig-state-contract" class="quarto-xref">Figure&nbsp;<span>12.2</span></a> shows the shape.</p>
+<p>The discipline that keeps state legible is to <em>separate the kinds of information the agent is carrying</em> rather than piling them together. The conversation belongs in one place, tool and retrieval output in another, the agent’s current interpretation in a third, its failures in a fourth, the human-approval status in a fifth, and the final user-visible answer in its own field. Keeping these apart is what makes the graph testable, debuggable, and safe to pause and resume, because any node, and any human reading a checkpoint, can see at a glance what is known and what is still open. <a href="#fig-state-contract" class="quarto-xref">Figure&nbsp;<span>13.2</span></a> shows the shape.</p>
 <div id="fig-state-contract" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-state-contract-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch12/fig-state-contract.png" class="img-fluid figure-img">
+<img src="../..\images/ch13/fig-state-contract.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-state-contract-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12.2: State is the contract every node signs. A good state separates the kinds of information the agent carries (conversation, account, evidence, diagnosis, plan, errors, approval, and the final answer) so every node can read what it needs and write a clean update, rather than re-deriving context from raw messages.
+Figure&nbsp;13.2: State is the contract every node signs. A good state separates the kinds of information the agent carries (conversation, account, evidence, diagnosis, plan, errors, approval, and the final answer) so every node can read what it needs and write a clean update, rather than re-deriving context from raw messages.
 </figcaption>
 </figure>
 </div>
-<p>For Ledgerly, this separation is the difference between a graph you can reason about and one you cannot. A billing-support graph should not force every node to reread the whole conversation and re-infer what happened. The charge-lookup node writes structured <code>charges</code>; the policy-retrieval node writes the relevant <code>refund_policy</code> passage; the diagnosis node writes whether the issue looks like duplicate billing, proration, or something unresolved; the approval node writes whether a refund is pending, approved, edited, or rejected. Then the graph can route on <em>state</em>, not on vibes. <a href="#tbl-agent-state" class="quarto-xref">Table&nbsp;<span>12.1</span></a> lays out a state schema for exactly that.</p>
+<p>For Ledgerly, this separation is the difference between a graph you can reason about and one you cannot. A billing-support graph should not force every node to reread the whole conversation and re-infer what happened. The charge-lookup node writes structured <code>charges</code>; the policy-retrieval node writes the relevant <code>refund_policy</code> passage; the diagnosis node writes whether the issue looks like duplicate billing, proration, or something unresolved; the approval node writes whether a refund is pending, approved, edited, or rejected. Then the graph can route on <em>state</em>, not on vibes. <a href="#tbl-agent-state" class="quarto-xref">Table&nbsp;<span>13.1</span></a> lays out a state schema for exactly that.</p>
 <div id="tbl-agent-state" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-agent-state-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;12.1: A state schema for the Ledgerly refund agent. Separating the kinds of information keeps every node’s job small and every checkpoint readable.
+Table&nbsp;13.1: A state schema for the Ledgerly refund agent. Separating the kinds of information keeps every node’s job small and every checkpoint readable.
 </figcaption>
 <div aria-describedby="tbl-agent-state-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -568,27 +574,27 @@ Table&nbsp;12.1: A state schema for the Ledgerly refund agent. Separating the ki
 </figure>
 </div>
 </section>
-<section id="sec-ch12-nodes" class="level3" data-number="12.2.2">
-<h3 data-number="12.2.2" class="anchored" data-anchor-id="sec-ch12-nodes"><span class="header-section-number">12.2.2</span> Nodes stay small and single-purpose</h3>
+<section id="sec-ch12-nodes" class="level3" data-number="13.2.2">
+<h3 data-number="13.2.2" class="anchored" data-anchor-id="sec-ch12-nodes"><span class="header-section-number">13.2.2</span> Nodes stay small and single-purpose</h3>
 <p>If state is the contract, nodes are the parties that honor it, and the rule for a good node is the plainest one in this chapter: <strong>a node should do one job</strong>. Classify the issue. Retrieve the billing record. Retrieve the policy. Validate the action. Draft the reply. Ask for approval. Execute the tool. Each is a single, nameable step that reads some of the state and writes a clean update to it.</p>
 <p>The temptation, especially when a single prompt <em>feels</em> capable of doing everything, is to write one giant node that classifies, retrieves, reasons, validates, and acts all at once. Resist it. A giant node erases the entire benefit of graph orchestration, because there is nothing left to inspect, test, reroute, or checkpoint between its start and its end. When that node misbehaves, you are back to staring at a black box, which is exactly the situation the graph was supposed to rescue you from. Small nodes keep the seams visible, and visible seams are where debugging, evaluation, and human oversight get their grip.</p>
 </section>
-<section id="sec-ch12-edges" class="level3" data-number="12.2.3">
-<h3 data-number="12.2.3" class="anchored" data-anchor-id="sec-ch12-edges"><span class="header-section-number">12.2.3</span> Edges are where control policy lives</h3>
+<section id="sec-ch12-edges" class="level3" data-number="13.2.3">
+<h3 data-number="13.2.3" class="anchored" data-anchor-id="sec-ch12-edges"><span class="header-section-number">13.2.3</span> Edges are where control policy lives</h3>
 <p>Nodes do work; edges decide what happens next. That sounds like a small distinction, but it is the heart of the graph. A fixed edge says the next step is always known. A <strong>conditional edge</strong> says the graph must inspect the state before it moves, which makes conditional edges the place where control <em>policy</em> becomes explicit rather than buried inside a prompt.</p>
 <p>Read a few of Ledgerly’s edges as policy and the point lands. If the account is missing, route to ask for more information. If the policy check fails, route to an explanation instead of a refund. If the refund is above the approval threshold, route to human review. If the billing tool has failed twice, route to escalation. If the model has requested another tool, route back to the tool node. Each of these could be a line tangled inside a large prompt, invisible and untestable. Put it on an edge instead and it becomes something you can see, test, and review. That is the real value of graph orchestration: it does not take judgment away from the model, it puts a visible, governable structure <em>around</em> that judgment.</p>
 </section>
-<section id="sec-ch12-cycles" class="level3" data-number="12.2.4">
-<h3 data-number="12.2.4" class="anchored" data-anchor-id="sec-ch12-cycles"><span class="header-section-number">12.2.4</span> Cycles need limits</h3>
+<section id="sec-ch12-cycles" class="level3" data-number="13.2.4">
+<h3 data-number="13.2.4" class="anchored" data-anchor-id="sec-ch12-cycles"><span class="header-section-number">13.2.4</span> Cycles need limits</h3>
 <p>Cycles are what make a graph an agent, but a cycle without a brake is a liability. A loop that can return to an earlier node can also return <em>forever</em>: retrying a tool that will never succeed, re-reasoning over the same evidence, burning tokens and money without converging. The same feature that gives an agent its persistence gives it the capacity to spin.</p>
 <p>So every cycle needs stopping rules, and they are worth deciding on purpose rather than discovering in production. A <strong>maximum iteration count</strong> caps how many times the loop may go around. A <strong>retry limit</strong> stops it from hammering a failing tool. <strong>Budget and time ceilings</strong> bound cost and latency. A <strong>progress check</strong> breaks the loop when the state stops changing in a meaningful way, and an <strong>escalation rule</strong> hands off after repeated failure instead of trying again. For Ledgerly, the concrete version is simple: if a billing lookup fails twice, do not keep retrying; route to <code>ask_user</code> or <code>escalate</code>. Bounded cycles are what let you trust an agent to loop without fearing it will loop away your afternoon and your API bill.</p>
 <p>With the four pieces designed rather than merely named, the foundation is solid. And the first thing that solid foundation makes almost free is something our hand-rolled loop could never do easily: remember where it was.</p>
 </section>
 </section>
-<section id="sec-ch12-persistence" class="level2" data-number="12.3">
-<h2 data-number="12.3" class="anchored" data-anchor-id="sec-ch12-persistence"><span class="header-section-number">12.3</span> Persistence &amp; checkpoints</h2>
+<section id="sec-ch12-persistence" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="sec-ch12-persistence"><span class="header-section-number">13.3</span> Persistence &amp; checkpoints</h2>
 <p>Because the entire state of a LangGraph agent lives in that one shared object, something powerful becomes almost trivial: you can <em>save it</em>. Attach a <strong>checkpointer</strong> when you build the graph, and LangGraph automatically writes a snapshot of the state after every step <span class="citation" data-cites="langgraph2024"><a href="../../references.html#ref-langgraph2024" role="doc-biblioref">[1]</a></span>. Think of the save points in a video game. At each checkpoint the game records exactly where you are and what you have; if the power cuts out, you reload the last save and continue as if nothing happened, rather than starting the whole game over. A checkpointer does this for your agent, and it quietly solves three problems at once.</p>
-<p>The first is <strong>durability</strong>. A long-running agent that crashes halfway, a network blip or a server restart, does not have to redo everything. Its state was checkpointed, so it resumes from the last save point, mid-task, with its work intact. The second is <strong>memory across sessions</strong>, which ties directly back to <a href="11-memory-systems.html" class="quarto-xref"><span>Chapter 11</span></a>. Checkpoints are grouped by a <strong>thread</strong>, an identifier for a single conversation. Give a returning user the same thread, and the agent reloads their entire prior state and picks up exactly where you left off; this is how the durable-memory idea of the last chapter becomes concrete plumbing rather than something you hand-build. The third, and most striking, is <strong>time travel</strong>: because every past checkpoint is saved, you can rewind to an earlier one to inspect what the agent knew at that moment, or even resume from the past along a different path, an extraordinary gift when you are debugging why an agent went wrong three steps ago.</p>
+<p>The first is <strong>durability</strong>. A long-running agent that crashes halfway, a network blip or a server restart, does not have to redo everything. Its state was checkpointed, so it resumes from the last save point, mid-task, with its work intact. The second is <strong>memory across sessions</strong>, which ties directly back to <a href="12-memory-systems.html" class="quarto-xref"><span>Chapter 12</span></a>. Checkpoints are grouped by a <strong>thread</strong>, an identifier for a single conversation. Give a returning user the same thread, and the agent reloads their entire prior state and picks up exactly where you left off; this is how the durable-memory idea of the last chapter becomes concrete plumbing rather than something you hand-build. The third, and most striking, is <strong>time travel</strong>: because every past checkpoint is saved, you can rewind to an earlier one to inspect what the agent knew at that moment, or even resume from the past along a different path, an extraordinary gift when you are debugging why an agent went wrong three steps ago.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -602,53 +608,53 @@ Tip
 <p>Persistence is what separates a toy agent from a production one. A demo that runs start-to-finish in a single process can get away with holding state in memory and losing it at the end. A real system must survive restarts, span multiple user sessions, and let you inspect what happened after the fact, and all three fall out of checkpointing state you were already keeping. Design for durable state early; retrofitting it later is painful.</p>
 </div>
 </div>
-<section id="sec-ch12-checkpoint-vs-memory" class="level3" data-number="12.3.1">
-<h3 data-number="12.3.1" class="anchored" data-anchor-id="sec-ch12-checkpoint-vs-memory"><span class="header-section-number">12.3.1</span> Checkpoints are not long-term memory</h3>
+<section id="sec-ch12-checkpoint-vs-memory" class="level3" data-number="13.3.1">
+<h3 data-number="13.3.1" class="anchored" data-anchor-id="sec-ch12-checkpoint-vs-memory"><span class="header-section-number">13.3.1</span> Checkpoints are not long-term memory</h3>
 <p>Because both a checkpoint and a memory “remember” something, it is easy to blur them, and the blur causes real bugs. They answer two different questions. A <strong>checkpoint</strong> answers <em>where was this run when it paused?</em> It is a thread-scoped snapshot of the graph’s execution state, the machinery that lets a single conversation resume mid-task. <strong>Long-term memory</strong> answers a different question: <em>what should future runs know?</em> It is durable, application-defined knowledge that outlives any one thread. LangGraph draws exactly this line, separating checkpointers that persist thread-scoped state snapshots from stores that persist knowledge across threads <span class="citation" data-cites="langchain2025persistence"><a href="../../references.html#ref-langchain2025persistence" role="doc-biblioref">[2]</a></span>.</p>
-<p>Ledgerly needs both, and needs them kept apart. A pending refund approval on invoice #4471 belongs in <strong>checkpointed graph state</strong>: it is about <em>this</em> run, and it exists so the conversation can pause for a human and resume. The fact that this customer had a confirmed duplicate-charge problem last quarter belongs in <strong>long-term memory</strong>: it is a durable pattern that should inform <em>future</em> tickets, on new threads the current run knows nothing about. Store the pending approval in memory and you leak run mechanics into permanent knowledge; store the durable pattern only in a checkpoint and it vanishes the moment the thread ends. <a href="#fig-checkpoint-vs-memory" class="quarto-xref">Figure&nbsp;<span>12.3</span></a> keeps the two straight.</p>
+<p>Ledgerly needs both, and needs them kept apart. A pending refund approval on invoice #4471 belongs in <strong>checkpointed graph state</strong>: it is about <em>this</em> run, and it exists so the conversation can pause for a human and resume. The fact that this customer had a confirmed duplicate-charge problem last quarter belongs in <strong>long-term memory</strong>: it is a durable pattern that should inform <em>future</em> tickets, on new threads the current run knows nothing about. Store the pending approval in memory and you leak run mechanics into permanent knowledge; store the durable pattern only in a checkpoint and it vanishes the moment the thread ends. <a href="#fig-checkpoint-vs-memory" class="quarto-xref">Figure&nbsp;<span>13.3</span></a> keeps the two straight.</p>
 <div id="fig-checkpoint-vs-memory" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-checkpoint-vs-memory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch12/fig-checkpoint-vs-memory.png" class="img-fluid figure-img">
+<img src="../..\images/ch13/fig-checkpoint-vs-memory.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-checkpoint-vs-memory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12.3: Checkpoints and long-term memory answer different questions. A checkpoint is thread-scoped and records where a single run paused, so it can resume; long-term memory is cross-thread and records what future runs should know. Serious systems need both, kept apart.
+Figure&nbsp;13.3: Checkpoints and long-term memory answer different questions. A checkpoint is thread-scoped and records where a single run paused, so it can resume; long-term memory is cross-thread and records what future runs should know. Serious systems need both, kept apart.
 </figcaption>
 </figure>
 </div>
 <p>There is one more thing checkpoints unlock, and it is important enough to deserve its own section. If the agent can pause and its state is safely saved, then a human can step in <em>during</em> a run, inspecting what the agent is about to do, approving it, editing it, or stopping it, and the agent can resume from exactly that spot. That capability, human-in-the-loop control, is where we turn next.</p>
 </section>
 </section>
-<section id="sec-ch12-hitl" class="level2" data-number="12.4">
-<h2 data-number="12.4" class="anchored" data-anchor-id="sec-ch12-hitl"><span class="header-section-number">12.4</span> Human-in-the-loop</h2>
-<p>We have argued more than once, first in <a href="../part2-llm-agents/05-llms-as-reasoners.html#sec-ch5-implications" class="quarto-xref"><span>Section 5.6</span></a>, again when weighing agent autonomy in <a href="08-workflows-vs-agents.html" class="quarto-xref"><span>Chapter 8</span></a>, that some actions are too consequential to let an agent take unsupervised. Sending money, deleting records, emailing a customer: for these you want a human to glance at the plan and say “yes, go” before anything irreversible happens. The trouble, with a plain <code>while</code> loop, is that there is no natural place to <em>stop</em>. Checkpointing changes that completely. Because the agent’s state is saved at every step and can be reloaded at will, LangGraph can <strong>interrupt</strong> a run at a chosen point, hand control to a person, and later resume from the exact same spot as if the pause had never happened <span class="citation" data-cites="langgraph2024"><a href="../../references.html#ref-langgraph2024" role="doc-biblioref">[1]</a></span>.</p>
-<p>The pattern is easiest to feel through an example. Imagine an agent that drafts and sends refunds. You place an interrupt right <em>before</em> the “issue refund” node, so the graph runs up to that point, looking up the order, deciding an amount, preparing the action, and then halts, its state frozen at the checkpoint, surfacing to a human: “About to refund $80 to order #1234. Approve?” A person reviews it and responds. If they approve, the graph resumes and the refund node fires; if they reject or edit the amount, that decision is written into the state and the agent continues accordingly. <a href="#fig-hitl" class="quarto-xref">Figure&nbsp;<span>12.4</span></a> shows the pause-and-resume.</p>
+<section id="sec-ch12-hitl" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="sec-ch12-hitl"><span class="header-section-number">13.4</span> Human-in-the-loop</h2>
+<p>We have argued more than once, first in <a href="../part2-llm-agents/06-llms-as-reasoners.html#sec-ch5-implications" class="quarto-xref"><span>Section 6.6</span></a>, again when weighing agent autonomy in <a href="09-workflows-vs-agents.html" class="quarto-xref"><span>Chapter 9</span></a>, that some actions are too consequential to let an agent take unsupervised. Sending money, deleting records, emailing a customer: for these you want a human to glance at the plan and say “yes, go” before anything irreversible happens. The trouble, with a plain <code>while</code> loop, is that there is no natural place to <em>stop</em>. Checkpointing changes that completely. Because the agent’s state is saved at every step and can be reloaded at will, LangGraph can <strong>interrupt</strong> a run at a chosen point, hand control to a person, and later resume from the exact same spot as if the pause had never happened <span class="citation" data-cites="langgraph2024"><a href="../../references.html#ref-langgraph2024" role="doc-biblioref">[1]</a></span>.</p>
+<p>The pattern is easiest to feel through an example. Imagine an agent that drafts and sends refunds. You place an interrupt right <em>before</em> the “issue refund” node, so the graph runs up to that point, looking up the order, deciding an amount, preparing the action, and then halts, its state frozen at the checkpoint, surfacing to a human: “About to refund $80 to order #1234. Approve?” A person reviews it and responds. If they approve, the graph resumes and the refund node fires; if they reject or edit the amount, that decision is written into the state and the agent continues accordingly. <a href="#fig-hitl" class="quarto-xref">Figure&nbsp;<span>13.4</span></a> shows the pause-and-resume.</p>
 <div id="fig-hitl" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-hitl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch12/fig-hitl.png" class="img-fluid figure-img">
+<img src="../..\images/ch13/fig-hitl.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hitl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12.4: Human-in-the-loop via an interrupt. The graph runs up to a checkpoint before a sensitive action, then pauses with its state saved. A human approves, edits, or rejects; the decision is written into the state and the graph resumes from exactly where it stopped.
+Figure&nbsp;13.4: Human-in-the-loop via an interrupt. The graph runs up to a checkpoint before a sensitive action, then pauses with its state saved. A human approves, edits, or rejects; the decision is written into the state and the graph resumes from exactly where it stopped.
 </figcaption>
 </figure>
 </div>
-<p>This is a genuinely different safety posture from “hope the agent behaves.” Instead of trusting an autonomous system with an irreversible action, you insert a deliberate gate at exactly the risky step, and the human’s judgment becomes part of the control flow rather than an afterthought bolted on outside it. It is the <em>ground-and-verify</em> instinct from Chapter 5 and the <em>guardrails</em> caution from Chapter 8, now realized as a concrete mechanism you get almost for free once state is durable. We will treat guardrails and oversight in full in <a href="../part4-production/17-safety-and-guardrails.html" class="quarto-xref"><span>Chapter 17</span></a>; for now the point is that the graph model makes human oversight a first-class feature.</p>
-<section id="sec-ch12-interrupt-placement" class="level3" data-number="12.4.1">
-<h3 data-number="12.4.1" class="anchored" data-anchor-id="sec-ch12-interrupt-placement"><span class="header-section-number">12.4.1</span> Interrupt before side effects</h3>
+<p>This is a genuinely different safety posture from “hope the agent behaves.” Instead of trusting an autonomous system with an irreversible action, you insert a deliberate gate at exactly the risky step, and the human’s judgment becomes part of the control flow rather than an afterthought bolted on outside it. It is the <em>ground-and-verify</em> instinct from Chapter 6 and the <em>guardrails</em> caution from Chapter 9, now realized as a concrete mechanism you get almost for free once state is durable. We will treat guardrails and oversight in full in <a href="../part4-production/18-safety-and-guardrails.html" class="quarto-xref"><span>Chapter 18</span></a>; for now the point is that the graph model makes human oversight a first-class feature.</p>
+<section id="sec-ch12-interrupt-placement" class="level3" data-number="13.4.1">
+<h3 data-number="13.4.1" class="anchored" data-anchor-id="sec-ch12-interrupt-placement"><span class="header-section-number">13.4.1</span> Interrupt before side effects</h3>
 <p><em>Where</em> you place the interrupt matters as much as having one, and the rule is short: put the human review <em>before</em> the side effect, never after it. A review that fires after the refund has already been issued is an audit trail, not a control. The money has moved; the email has gone; the record is already deleted. All the human can do at that point is discover the mistake, not prevent it.</p>
 <p>So the interrupt belongs immediately upstream of any node that touches the world irreversibly: sending an email, issuing a refund, changing an account plan, deleting data, escalating to an outside party, modifying a record, or creating a commitment that cannot be quietly undone. For Ledgerly the placement is unambiguous: interrupt <em>before</em> <code>issue_refund</code>, so the graph runs right up to the edge of paying out and then pauses. Put the same gate after the refund and you have built an expensive way to apologize.</p>
 </section>
-<section id="sec-ch12-decisions" class="level3" data-number="12.4.2">
-<h3 data-number="12.4.2" class="anchored" data-anchor-id="sec-ch12-decisions"><span class="header-section-number">12.4.2</span> Four decisions: approve, edit, reject, respond</h3>
+<section id="sec-ch12-decisions" class="level3" data-number="13.4.2">
+<h3 data-number="13.4.2" class="anchored" data-anchor-id="sec-ch12-decisions"><span class="header-section-number">13.4.2</span> Four decisions: approve, edit, reject, respond</h3>
 <p>An interrupt is not a vague “someone should look at this later.” It is a controlled pause that waits for a <em>specific decision</em>, and it helps to name the decisions on offer. LangChain’s human-in-the-loop middleware settles on four <span class="citation" data-cites="langchain2025hitl"><a href="../../references.html#ref-langchain2025hitl" role="doc-biblioref">[3]</a></span>. <strong>Approve</strong> lets the action run exactly as the model proposed it. <strong>Edit</strong> changes the arguments first, so a reviewer can trim an $80 refund to $40 before it executes. <strong>Reject</strong> blocks the action and hands feedback back to the agent, which then has to find another path. <strong>Respond</strong> covers the case where the agent paused to <em>ask</em> rather than to act, letting a human supply the missing answer so the run can continue.</p>
 <p>The practical discipline is to have each sensitive tool declare which of these decisions it allows. For Ledgerly, <code>lookup_charge</code> and <code>draft_refund_response</code> are read-only and can run automatically with no interrupt at all. <code>issue_refund</code> must interrupt for approval once the amount crosses a threshold. <code>send_customer_email</code> may require approval depending on policy. And <code>delete_customer_data</code> is either fully human-gated or simply not exposed to the agent. Matching the decision type to the risk of the tool is how oversight stays proportionate: automatic where it is safe, gated where it is not.</p>
 <p>We have covered a lot of machinery, state, nodes, edges, cycles, checkpoints, and interrupts, so let’s assemble it all into one small, complete agent and watch the concepts work together.</p>
 </section>
 </section>
-<section id="sec-ch12-worked" class="level2" data-number="12.5">
-<h2 data-number="12.5" class="anchored" data-anchor-id="sec-ch12-worked"><span class="header-section-number">12.5</span> A worked example: the ReAct loop as a graph</h2>
-<p>The best way to see the pieces lock together is to build the agent we have been describing since Chapter 7, the reason–act loop, as an actual LangGraph. What was an abstract diagram in <a href="../part2-llm-agents/07-reasoning-and-planning.html#sec-ch7-react" class="quarto-xref"><span>Section 7.5</span></a> becomes a runnable program here, and the mapping is almost one-to-one, which is the whole point of the graph model. We need just three ingredients: a state, two nodes, and one conditional edge.</p>
+<section id="sec-ch12-worked" class="level2" data-number="13.5">
+<h2 data-number="13.5" class="anchored" data-anchor-id="sec-ch12-worked"><span class="header-section-number">13.5</span> A worked example: the ReAct loop as a graph</h2>
+<p>The best way to see the pieces lock together is to build the agent we have been describing since Chapter 8, the reason–act loop, as an actual LangGraph. What was an abstract diagram in <a href="../part2-llm-agents/08-reasoning-and-planning.html#sec-ch7-react" class="quarto-xref"><span>Section 8.5</span></a> becomes a runnable program here, and the mapping is almost one-to-one, which is the whole point of the graph model. We need just three ingredients: a state, two nodes, and one conditional edge.</p>
 <p>The <strong>state</strong> is the shared scoreboard, and for a tool-using chat agent it is delightfully small, essentially the running list of messages. New messages are <em>appended</em> rather than overwritten, which LangGraph expresses with a small annotation on the state field. The two <strong>nodes</strong> are the two things the agent alternates between: a <code>call_model</code> node that sends the current messages to the LLM and appends its reply, and a <code>run_tools</code> node that executes any tool the model asked for and appends the result as an observation. The one <strong>conditional edge</strong> is the agent’s entire control logic: after the model speaks, look at its last message. If it requested a tool, route to <code>run_tools</code>; if not, the agent is done, so route to <code>END</code>. In the listing below, <code>llm_with_tools</code> and <code>execute_last_tool_call()</code> are simplified stand-ins for the model call and tool execution we built in earlier chapters, kept short here so the graph structure stays in focus rather than copied verbatim as real API calls.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langgraph.graph <span class="im">import</span> StateGraph, START, END</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langgraph.checkpoint.memory <span class="im">import</span> MemorySaver</span>
@@ -670,49 +676,49 @@ Figure&nbsp;12.4: Human-in-the-loop via an interrupt. The graph runs up to a che
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>graph.add_edge(<span class="st">"run_tools"</span>, <span class="st">"call_model"</span>)     <span class="co"># the cycle</span></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>agent <span class="op">=</span> graph.<span class="bu">compile</span>(checkpointer<span class="op">=</span>MemorySaver())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Read the wiring at the bottom and the earlier sections come alive. <code>add_edge(START, "call_model")</code> says every run begins by thinking. <code>add_conditional_edges("call_model", should_continue)</code> is the branch, act or finish. And <code>add_edge("run_tools", "call_model")</code> is <em>the cycle</em>, the loop back from acting to thinking that makes this an agent rather than a pipeline; it is the same arrow we drew in <a href="#fig-langgraph-anatomy" class="quarto-xref">Figure&nbsp;<span>12.1</span></a>. Compiling with a <code>MemorySaver</code> checkpointer means the whole thing is persistent for free: run it with a thread id and the conversation survives across calls, exactly the memory-across-sessions we described. To add the human approval from the last section, you would drop an interrupt before a sensitive tool, no restructuring required, because the graph already knows how to pause and resume.</p>
-<p>Step back and notice what the framework did for us. We described the agent as a picture, nodes, edges, a loop, and that picture <em>is</em> the program, with durability and human oversight available as switches rather than rewrites. That is the case <em>for</em> a framework like LangGraph. The case for restraint is the one Anthropic pressed in <a href="10-tools-and-mcp.html" class="quarto-xref"><span>Chapter 10</span></a>: frameworks add layers of abstraction that can hide what the model actually sees, and they make it tempting to reach for machinery a simpler design would not need. The honest guidance is to understand the plain <code>while</code> loop underneath <em>first</em>, which you now do, and adopt a framework when its structure, persistence, and oversight genuinely earn their keep. Used with that judgment, the graph model is a powerful way to give a single agent shape. Making it <em>run</em> is only half the job, though: before a graph like this is trusted with real customers, it has to be observable, testable, and safe to resume, and it has to be worth its abstraction in the first place. Those are the questions we take up next.</p>
+<p>Read the wiring at the bottom and the earlier sections come alive. <code>add_edge(START, "call_model")</code> says every run begins by thinking. <code>add_conditional_edges("call_model", should_continue)</code> is the branch, act or finish. And <code>add_edge("run_tools", "call_model")</code> is <em>the cycle</em>, the loop back from acting to thinking that makes this an agent rather than a pipeline; it is the same arrow we drew in <a href="#fig-langgraph-anatomy" class="quarto-xref">Figure&nbsp;<span>13.1</span></a>. Compiling with a <code>MemorySaver</code> checkpointer means the whole thing is persistent for free: run it with a thread id and the conversation survives across calls, exactly the memory-across-sessions we described. To add the human approval from the last section, you would drop an interrupt before a sensitive tool, no restructuring required, because the graph already knows how to pause and resume.</p>
+<p>Step back and notice what the framework did for us. We described the agent as a picture, nodes, edges, a loop, and that picture <em>is</em> the program, with durability and human oversight available as switches rather than rewrites. That is the case <em>for</em> a framework like LangGraph. The case for restraint is the one Anthropic pressed in <a href="11-tools-and-mcp.html" class="quarto-xref"><span>Chapter 11</span></a>: frameworks add layers of abstraction that can hide what the model actually sees, and they make it tempting to reach for machinery a simpler design would not need. The honest guidance is to understand the plain <code>while</code> loop underneath <em>first</em>, which you now do, and adopt a framework when its structure, persistence, and oversight genuinely earn their keep. Used with that judgment, the graph model is a powerful way to give a single agent shape. Making it <em>run</em> is only half the job, though: before a graph like this is trusted with real customers, it has to be observable, testable, and safe to resume, and it has to be worth its abstraction in the first place. Those are the questions we take up next.</p>
 </section>
-<section id="sec-ch12-production" class="level2" data-number="12.6">
-<h2 data-number="12.6" class="anchored" data-anchor-id="sec-ch12-production"><span class="header-section-number">12.6</span> Designing graphs for production</h2>
+<section id="sec-ch12-production" class="level2" data-number="13.6">
+<h2 data-number="13.6" class="anchored" data-anchor-id="sec-ch12-production"><span class="header-section-number">13.6</span> Designing graphs for production</h2>
 <p>A graph that runs on your laptop and a graph you would put in front of paying customers are not the same artifact. The gap between them is a handful of production concerns that the graph model happens to make unusually tractable: you can watch it, test it, resume it safely, and decide honestly whether it earns its keep. Each deserves a short, practical treatment.</p>
-<section id="sec-ch12-observability" class="level3" data-number="12.6.1">
-<h3 data-number="12.6.1" class="anchored" data-anchor-id="sec-ch12-observability"><span class="header-section-number">12.6.1</span> Observability: the trace is the recorded run</h3>
+<section id="sec-ch12-observability" class="level3" data-number="13.6.1">
+<h3 data-number="13.6.1" class="anchored" data-anchor-id="sec-ch12-observability"><span class="header-section-number">13.6.1</span> Observability: the trace is the recorded run</h3>
 <p>If the graph is the program, then a <strong>trace</strong> is the recorded execution of that program. This turns out to be the single most useful thing you can have when an agent misbehaves, because agent behavior is nondeterministic and a failure may never reproduce on demand. Observability lets you open a specific bad run and watch it unfold step by step, turning an opaque answer into an inspectable workflow: how the prompt became a plan, which tools were invoked, what intermediate results came back, and how the final response was composed.</p>
-<p>The graph gives you natural seams to instrument. Each node should be traceable, each edge decision logged, each tool call recorded with its inputs, outputs, latency, and errors, and each interrupt stamped with the proposed action and the human’s decision. Conveniently, graph structure and trace structure line up almost one to one: a node maps to a span, a model call to a model span, a tool call to a tool span, and a whole run to a trace. The ecosystem is standardizing exactly this shape through OpenTelemetry’s GenAI semantic conventions, so you can lean on a common format rather than inventing a private one <span class="citation" data-cites="otel2026genai"><a href="../../references.html#ref-otel2026genai" role="doc-biblioref">[4]</a></span>. For Ledgerly, this is what makes a wrong refund debuggable after the fact: the team can open the run and see which node classified the issue, which edge routed the flow, which documents were retrieved, whether the payout paused for approval, and what the state held at the checkpoint just before the decision. We give observability its own full chapter in <a href="../part4-production/16-observability.html" class="quarto-xref"><span>Chapter 16</span></a>; here the point is simply that the graph model makes it natural.</p>
+<p>The graph gives you natural seams to instrument. Each node should be traceable, each edge decision logged, each tool call recorded with its inputs, outputs, latency, and errors, and each interrupt stamped with the proposed action and the human’s decision. Conveniently, graph structure and trace structure line up almost one to one: a node maps to a span, a model call to a model span, a tool call to a tool span, and a whole run to a trace. The ecosystem is standardizing exactly this shape through OpenTelemetry’s GenAI semantic conventions, so you can lean on a common format rather than inventing a private one <span class="citation" data-cites="otel2026genai"><a href="../../references.html#ref-otel2026genai" role="doc-biblioref">[4]</a></span>. For Ledgerly, this is what makes a wrong refund debuggable after the fact: the team can open the run and see which node classified the issue, which edge routed the flow, which documents were retrieved, whether the payout paused for approval, and what the state held at the checkpoint just before the decision. We give observability its own full chapter in <a href="../part4-production/17-observability.html" class="quarto-xref"><span>Chapter 17</span></a>; here the point is simply that the graph model makes it natural.</p>
 </section>
-<section id="sec-ch12-testing" class="level3" data-number="12.6.2">
-<h3 data-number="12.6.2" class="anchored" data-anchor-id="sec-ch12-testing"><span class="header-section-number">12.6.2</span> Test the graph, not just the nodes</h3>
+<section id="sec-ch12-testing" class="level3" data-number="13.6.2">
+<h3 data-number="13.6.2" class="anchored" data-anchor-id="sec-ch12-testing"><span class="header-section-number">13.6.2</span> Test the graph, not just the nodes</h3>
 <p>It is tempting to test a graph the way you test ordinary code, one function at a time, and node-level tests are indeed worth writing. But they miss the failures that only appear at the level of the whole graph, which is where the interesting bugs live. The questions worth testing are about <em>behavior in motion</em>: does the graph reliably terminate, or can it spin? Does the right edge fire for each shape of state? Does a failed tool route to a retry or an escalation rather than a dead end? Does a high-risk action actually trigger the interrupt? Does a resumed run pick up at the correct node? Does a human edit really change the action before it executes, and does the state stay valid after every node writes to it? None of these can be answered by inspecting a single node in isolation, because each is a property of how the pieces move together. Testing the graph means asserting on those properties, not just on individual outputs.</p>
 </section>
-<section id="sec-ch12-idempotency" class="level3" data-number="12.6.3">
-<h3 data-number="12.6.3" class="anchored" data-anchor-id="sec-ch12-idempotency"><span class="header-section-number">12.6.3</span> Idempotency for resumed actions</h3>
+<section id="sec-ch12-idempotency" class="level3" data-number="13.6.3">
+<h3 data-number="13.6.3" class="anchored" data-anchor-id="sec-ch12-idempotency"><span class="header-section-number">13.6.3</span> Idempotency for resumed actions</h3>
 <p>The most subtle of these behaviors deserves its own note, because it is easy to miss until it costs a customer money. When a graph resumes, after a crash or after a human approval, it must not accidentally <em>repeat</em> a side effect it already performed. Picture a refund that succeeded, then a server restart, then a resume from a checkpoint taken just before the payout: without a guard, the graph happily issues the refund a second time. The fix is <strong>idempotency</strong>. Give each side-effecting action a stable key, an action ID carried in the state, so a resumed run can recognize “this already happened” and skip it rather than redo it. For Ledgerly, <code>issue_refund</code> should carry such a key and check it, so that resuming from a stale checkpoint reconciles to the refund that already fired instead of paying the customer twice. This is a design recommendation rather than a framework feature: the graph makes resume easy, and idempotency is what makes resume <em>safe</em>.</p>
 </section>
-<section id="sec-ch12-overkill" class="level3" data-number="12.6.4">
-<h3 data-number="12.6.4" class="anchored" data-anchor-id="sec-ch12-overkill"><span class="header-section-number">12.6.4</span> When LangGraph is overkill</h3>
+<section id="sec-ch12-overkill" class="level3" data-number="13.6.4">
+<h3 data-number="13.6.4" class="anchored" data-anchor-id="sec-ch12-overkill"><span class="header-section-number">13.6.4</span> When LangGraph is overkill</h3>
 <p>All of this machinery is worth something only when the problem calls for it, and the honest answer is that plenty of problems do not. Reach for LangGraph when the shape of the work genuinely needs it: when there is real branching, when there are cycles, when a human must approve an action, when state has to survive across sessions, when there are retries and failure paths to route, when you need to pause and resume, or when you want time-travel debugging over an explicit control flow. Those are the conditions its structure, persistence, and oversight were built to serve.</p>
 <p>Skip it, just as deliberately, when none of that is in play. If a single LLM call answers the request, make the call. If a fixed, linear workflow does the job, write the workflow. When there is no branching, no persistence, and no oversight to manage, a graph framework adds abstraction that hides more than it reveals, which is the opposite of what this chapter has been praising it for. The rule that has run through the whole book holds here too: reach for the simplest thing that works, and let the problem, not the framework’s ambition, decide when to climb. Ledgerly’s refund flow clears that bar on nearly every count, which makes it the ideal place to watch the entire chapter operate at once.</p>
 </section>
 </section>
-<section id="sec-ch12-case" class="level2" data-number="12.7">
-<h2 data-number="12.7" class="anchored" data-anchor-id="sec-ch12-case"><span class="header-section-number">12.7</span> Case study: the Ledgerly support agent</h2>
-<p>Where we left off, <a href="11-memory-systems.html#sec-ch11-case" class="quarto-xref"><span>Section 11.9</span></a> gave Ledgerly memory but left its agentic lane as a loop improvised turn by turn. This chapter’s graph model gives that loop a durable skeleton. The complex lane from <a href="09-agentic-patterns.html#sec-ch09-case" class="quarto-xref"><span>Section 9.10</span></a> is precisely the reason–act loop we just built in <a href="#sec-ch12-worked" class="quarto-xref"><span>Section 12.5</span></a>: a <code>call_model</code> node that decides, a <code>run_tools</code> node that runs the billing tools from <a href="10-tools-and-mcp.html#sec-ch10-case" class="quarto-xref"><span>Section 10.9</span></a>, and the cycle between them. Ledgerly’s whole agentic lane <em>is</em> that graph.</p>
-<p>Two of this chapter’s features matter most for a system that touches money. <strong>Checkpointing</strong> makes the conversation durable and gives it memory across sessions for free (<a href="#sec-ch12-persistence" class="quarto-xref"><span>Section 12.3</span></a>), so a customer who replies a day later resumes exactly where they left off instead of starting over. And <strong>human-in-the-loop</strong> is the safeguard the refund example in <a href="#sec-ch12-hitl" class="quarto-xref"><span>Section 12.4</span></a> was written for: we drop an interrupt immediately before the <code>issue_refund</code> node, so the graph runs right up to the point of paying out and then pauses, surfacing “About to refund $80 to invoice #4471. Approve?” to a human. If they approve, the graph resumes and the refund fires; if not, it takes a different branch. Oversight becomes a switch in the graph rather than a rewrite.</p>
-<p>Spelled out as an explicit graph, the refund flow is this whole chapter on a single page. <a href="#fig-ledgerly-graph" class="quarto-xref">Figure&nbsp;<span>12.5</span></a> draws it. Control enters at <code>classify_request</code> and <code>load_account</code>, fans out to three parallel fetches, <code>fetch_charges</code>, <code>retrieve_policy</code>, and <code>fetch_plan_history</code>, that join at <code>diagnose_billing_issue</code>, and arrives at <code>validate_refund</code>, the conditional edge that decides everything downstream. Every node reads and writes the state schema from <a href="#tbl-agent-state" class="quarto-xref">Table&nbsp;<span>12.1</span></a>, so no node has to re-infer context from raw messages; the diagnosis node writes a <code>diagnosis</code>, the validator reads it, and the approval node writes an <code>approval</code>.</p>
+<section id="sec-ch12-case" class="level2" data-number="13.7">
+<h2 data-number="13.7" class="anchored" data-anchor-id="sec-ch12-case"><span class="header-section-number">13.7</span> Case study: the Ledgerly support agent</h2>
+<p>Where we left off, <a href="12-memory-systems.html#sec-ch11-case" class="quarto-xref"><span>Section 12.9</span></a> gave Ledgerly memory but left its agentic lane as a loop improvised turn by turn. This chapter’s graph model gives that loop a durable skeleton. The complex lane from <a href="10-agentic-patterns.html#sec-ch09-case" class="quarto-xref"><span>Section 10.10</span></a> is precisely the reason–act loop we just built in <a href="#sec-ch12-worked" class="quarto-xref"><span>Section 13.5</span></a>: a <code>call_model</code> node that decides, a <code>run_tools</code> node that runs the billing tools from <a href="11-tools-and-mcp.html#sec-ch10-case" class="quarto-xref"><span>Section 11.9</span></a>, and the cycle between them. Ledgerly’s whole agentic lane <em>is</em> that graph.</p>
+<p>Two of this chapter’s features matter most for a system that touches money. <strong>Checkpointing</strong> makes the conversation durable and gives it memory across sessions for free (<a href="#sec-ch12-persistence" class="quarto-xref"><span>Section 13.3</span></a>), so a customer who replies a day later resumes exactly where they left off instead of starting over. And <strong>human-in-the-loop</strong> is the safeguard the refund example in <a href="#sec-ch12-hitl" class="quarto-xref"><span>Section 13.4</span></a> was written for: we drop an interrupt immediately before the <code>issue_refund</code> node, so the graph runs right up to the point of paying out and then pauses, surfacing “About to refund $80 to invoice #4471. Approve?” to a human. If they approve, the graph resumes and the refund fires; if not, it takes a different branch. Oversight becomes a switch in the graph rather than a rewrite.</p>
+<p>Spelled out as an explicit graph, the refund flow is this whole chapter on a single page. <a href="#fig-ledgerly-graph" class="quarto-xref">Figure&nbsp;<span>13.5</span></a> draws it. Control enters at <code>classify_request</code> and <code>load_account</code>, fans out to three parallel fetches, <code>fetch_charges</code>, <code>retrieve_policy</code>, and <code>fetch_plan_history</code>, that join at <code>diagnose_billing_issue</code>, and arrives at <code>validate_refund</code>, the conditional edge that decides everything downstream. Every node reads and writes the state schema from <a href="#tbl-agent-state" class="quarto-xref">Table&nbsp;<span>13.1</span></a>, so no node has to re-infer context from raw messages; the diagnosis node writes a <code>diagnosis</code>, the validator reads it, and the approval node writes an <code>approval</code>.</p>
 <div id="fig-ledgerly-graph" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ledgerly-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch12/fig-ledgerly-graph.png" class="img-fluid figure-img">
+<img src="../..\images/ch13/fig-ledgerly-graph.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ledgerly-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12.5: Ledgerly’s refund graph, the whole chapter on one page. Parallel fetches join at a diagnosis; a <code>validate_refund</code> edge routes the flow to human review, an explanation, or an escalation; a human interrupt fences the one irreversible node (<code>issue_refund</code>); and both branches converge on a drafted response. State is the contract every node signs.
+Figure&nbsp;13.5: Ledgerly’s refund graph, the whole chapter on one page. Parallel fetches join at a diagnosis; a <code>validate_refund</code> edge routes the flow to human review, an explanation, or an escalation; a human interrupt fences the one irreversible node (<code>issue_refund</code>); and both branches converge on a drafted response. State is the contract every node signs.
 </figcaption>
 </figure>
 </div>
-<p>The edges are where the policy lives. If the refund is eligible, <code>validate_refund</code> routes to <code>human_review</code>, the interrupt placed <em>before</em> the payout; if it is ineligible, it routes to <code>explain_no_refund</code>; if the records conflict, it escalates. Only a human approval passes control on to <code>issue_refund</code>, the single side-effecting node, which carries an idempotency key so a resumed run can never pay twice. Both branches then converge on <code>draft_response</code> and <code>close_ticket</code>. Meanwhile the <code>approval</code> field lives in checkpointed graph state, because it is about <em>this</em> run, while a durable pattern such as a customer’s history of duplicate charges belongs in long-term memory that informs <em>future</em> tickets, exactly the split we drew in <a href="#sec-ch12-checkpoint-vs-memory" class="quarto-xref"><span>Section 12.3.1</span></a>.</p>
-<p>This is the “expensive freedom” from <a href="../part1-foundations/01-what-is-an-agent.html#sec-ch01-case" class="quarto-xref"><span>Section 1.8</span></a> spent carefully: the agent plans and acts on its own, but the single irreversible action is fenced behind a checkpoint and a person. We build that fence out fully when we reach guardrails in <a href="../part4-production/17-safety-and-guardrails.html#sec-ch17-case" class="quarto-xref"><span>Section 17.6</span></a>.</p>
-<p>The same agent can be expressed in a lighter-weight framework, too. The next chapter’s triage-and-handoff example (<a href="13-openai-agents-sdk.html#sec-ch13-worked" class="quarto-xref"><span>Section 13.5</span></a>) is Ledgerly again: a triage agent that hands billing questions to a specialist, the very routing from <a href="09-agentic-patterns.html#sec-ch09-case" class="quarto-xref"><span>Section 9.10</span></a> wearing the OpenAI Agents SDK’s clothes. Either way, before Ledgerly ships we have to answer a harder question than “does it run?”, namely “does it <em>work</em>?”. <a href="../part4-production/15-evaluation.html#sec-ch15-case" class="quarto-xref"><span>Section 15.8</span></a> builds the evaluation set that decides.</p>
+<p>The edges are where the policy lives. If the refund is eligible, <code>validate_refund</code> routes to <code>human_review</code>, the interrupt placed <em>before</em> the payout; if it is ineligible, it routes to <code>explain_no_refund</code>; if the records conflict, it escalates. Only a human approval passes control on to <code>issue_refund</code>, the single side-effecting node, which carries an idempotency key so a resumed run can never pay twice. Both branches then converge on <code>draft_response</code> and <code>close_ticket</code>. Meanwhile the <code>approval</code> field lives in checkpointed graph state, because it is about <em>this</em> run, while a durable pattern such as a customer’s history of duplicate charges belongs in long-term memory that informs <em>future</em> tickets, exactly the split we drew in <a href="#sec-ch12-checkpoint-vs-memory" class="quarto-xref"><span>Section 13.3.1</span></a>.</p>
+<p>This is the “expensive freedom” from <a href="../part1-foundations/01-what-is-an-agent.html#sec-ch01-case" class="quarto-xref"><span>Section 1.8</span></a> spent carefully: the agent plans and acts on its own, but the single irreversible action is fenced behind a checkpoint and a person. We build that fence out fully when we reach guardrails in <a href="../part4-production/18-safety-and-guardrails.html#sec-ch17-case" class="quarto-xref"><span>Section 18.6</span></a>.</p>
+<p>The same agent can be expressed in a lighter-weight framework, too. The next chapter’s triage-and-handoff example (<a href="14-openai-agents-sdk.html#sec-ch13-worked" class="quarto-xref"><span>Section 14.5</span></a>) is Ledgerly again: a triage agent that hands billing questions to a specialist, the very routing from <a href="10-agentic-patterns.html#sec-ch09-case" class="quarto-xref"><span>Section 10.10</span></a> wearing the OpenAI Agents SDK’s clothes. Either way, before Ledgerly ships we have to answer a harder question than “does it run?”, namely “does it <em>work</em>?”. <a href="../part4-production/16-evaluation.html#sec-ch15-case" class="quarto-xref"><span>Section 16.8</span></a> builds the evaluation set that decides.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly so far">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -731,23 +737,23 @@ Figure&nbsp;12.5: Ledgerly’s refund graph, the whole chapter on one page. Para
 </div>
 </div>
 </section>
-<section id="sec-ch12-summary" class="level2" data-number="12.8">
-<h2 data-number="12.8" class="anchored" data-anchor-id="sec-ch12-summary"><span class="header-section-number">12.8</span> Summary</h2>
+<section id="sec-ch12-summary" class="level2" data-number="13.8">
+<h2 data-number="13.8" class="anchored" data-anchor-id="sec-ch12-summary"><span class="header-section-number">13.8</span> Summary</h2>
 <p>This chapter turned the flowcharts we had been drawing for explanation into flowcharts you can actually run, using LangGraph as a concrete instance of a durable idea.</p>
 <ul>
 <li><strong>An agent is a graph of steps over shared state</strong>, a state machine. The diagrams we drew for explanation can <em>be</em> the program, instead of being hand-translated into tangled control flow.</li>
 <li><strong>Four core concepts build any LangGraph agent:</strong> a shared <strong>state</strong> object, <strong>nodes</strong> that do work and update it, <strong>edges</strong> (fixed or conditional) that decide what runs next, and, crucially, <strong>cycles</strong>, the loops that make it an agent rather than a one-way pipeline <span class="citation" data-cites="langgraph2024"><a href="../../references.html#ref-langgraph2024" role="doc-biblioref">[1]</a></span>.</li>
 <li><strong>Design the four pieces, do not just name them.</strong> State is the <strong>contract</strong> between nodes, so separate its kinds of information; nodes stay <strong>small and single-purpose</strong>; edges are where <strong>control policy</strong> lives; and cycles need <strong>limits</strong> so a loop cannot run forever.</li>
-<li><strong>Checkpointing state gives you three things at once:</strong> durability (resume after a crash), memory across sessions (via threads, realizing <a href="11-memory-systems.html" class="quarto-xref"><span>Chapter 11</span></a>), and time travel for debugging.</li>
+<li><strong>Checkpointing state gives you three things at once:</strong> durability (resume after a crash), memory across sessions (via threads, realizing <a href="12-memory-systems.html" class="quarto-xref"><span>Chapter 12</span></a>), and time travel for debugging.</li>
 <li><strong>A checkpoint is not long-term memory.</strong> A checkpoint records where a run paused (thread-scoped); memory records what future runs should know (cross-thread). Serious systems need both, kept apart <span class="citation" data-cites="langchain2025persistence"><a href="../../references.html#ref-langchain2025persistence" role="doc-biblioref">[2]</a></span>.</li>
 <li><strong>Human-in-the-loop falls out of checkpoints.</strong> Interrupt <em>before</em> a side effect, never after, and offer a specific decision: approve, edit, reject, or respond <span class="citation" data-cites="langchain2025hitl"><a href="../../references.html#ref-langchain2025hitl" role="doc-biblioref">[3]</a></span>.</li>
 <li><strong>Design graphs for production.</strong> Make each node and edge traceable so a bad run is inspectable <span class="citation" data-cites="otel2026genai"><a href="../../references.html#ref-otel2026genai" role="doc-biblioref">[4]</a></span>, test graph <em>behavior</em> rather than only node outputs, and give side-effecting actions an <strong>idempotency</strong> key so a resumed run never repeats them.</li>
 <li><strong>A framework is a tool with costs.</strong> Understand the plain loop underneath first; adopt LangGraph when branching, cycles, persistence, and oversight genuinely earn their keep, and skip it when the simplest thing works.</li>
 </ul>
-<p>We have now given a <em>single</em> agent real shape and staying power. But the same graph-and-state thinking scales to a different question: what if one agent is not enough, and a problem is best solved by <em>several</em> specialized agents cooperating? Before we get there, the next chapter looks at a second, lighter-weight way to build agents, the OpenAI Agents SDK, which trades some of LangGraph’s explicit control for a simpler surface: <a href="13-openai-agents-sdk.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
+<p>We have now given a <em>single</em> agent real shape and staying power. But the same graph-and-state thinking scales to a different question: what if one agent is not enough, and a problem is best solved by <em>several</em> specialized agents cooperating? Before we get there, the next chapter looks at a second, lighter-weight way to build agents, the OpenAI Agents SDK, which trades some of LangGraph’s explicit control for a simpler surface: <a href="14-openai-agents-sdk.html" class="quarto-xref"><span>Chapter 14</span></a>.</p>
 </section>
-<section id="sec-ch12-exercises" class="level2" data-number="12.9">
-<h2 data-number="12.9" class="anchored" data-anchor-id="sec-ch12-exercises"><span class="header-section-number">12.9</span> Exercises</h2>
+<section id="sec-ch12-exercises" class="level2" data-number="13.9">
+<h2 data-number="13.9" class="anchored" data-anchor-id="sec-ch12-exercises"><span class="header-section-number">13.9</span> Exercises</h2>
 <ol type="1">
 <li><strong>Map the board game.</strong> In your own words, match each board-game part (the board, the game piece, the scoreboard, and the rule “if your score is over 20, take the shortcut”) to a LangGraph concept.</li>
 <li><strong>Design the state.</strong> For a support agent of your choosing, list the state fields you would define and what each one holds. Then explain what breaks if you instead let every node reread the raw message history and re-infer context for itself.</li>
@@ -1340,13 +1346,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../chapters/part3-building/11-memory-systems.html" class="pagination-link" aria-label="Memory Systems">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Memory Systems</span></span>
+      <a href="../../chapters/part3-building/12-memory-systems.html" class="pagination-link" aria-label="Memory Systems">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Memory Systems</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../chapters/part3-building/13-openai-agents-sdk.html" class="pagination-link" aria-label="The OpenAI Agents SDK">
-        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../chapters/part3-building/14-openai-agents-sdk.html" class="pagination-link" aria-label="The OpenAI Agents SDK">
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

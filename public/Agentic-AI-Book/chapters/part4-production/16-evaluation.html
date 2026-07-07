@@ -8,7 +8,7 @@
 
 <meta name="description" content="A practical, research-grounded guide that connects the classical theory of intelligent agents to the modern practice of building autonomous LLM agents with tools, memory, planning, and multi-agent orchestration.">
 
-<title>15&nbsp; Evaluation – Agents: From Theory to Production</title>
+<title>16&nbsp; Evaluation – Agents: From Theory to Production</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,8 +85,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../chapters/part4-production/16-observability.html" rel="next">
-<link href="../../chapters/part3-building/14-multi-agent-systems.html" rel="prev">
+<link href="../../chapters/part4-production/17-observability.html" rel="next">
+<link href="../../chapters/part3-building/15-multi-agent-systems.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -167,7 +167,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part4-production/15-evaluation.html">Part IV — Production &amp; Trust</a></li><li class="breadcrumb-item"><a href="../../chapters/part4-production/15-evaluation.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part4-production/16-evaluation.html">Part IV — Production &amp; Trust</a></li><li class="breadcrumb-item"><a href="../../chapters/part4-production/16-evaluation.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -254,20 +254,26 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part2-llm-agents/05-llms-as-reasoners.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></a>
+  <a href="../../chapters/part2-llm-agents/05-inside-the-language-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Inside the Language Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part2-llm-agents/06-the-augmented-llm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span></a>
+  <a href="../../chapters/part2-llm-agents/06-llms-as-reasoners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LLMs as Reasoners</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part2-llm-agents/07-reasoning-and-planning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span></a>
+  <a href="../../chapters/part2-llm-agents/07-the-augmented-llm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The Augmented LLM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/part2-llm-agents/08-reasoning-and-planning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reasoning &amp; Planning</span></span></a>
   </div>
 </li>
       </ul>
@@ -283,44 +289,44 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/08-workflows-vs-agents.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span></a>
+  <a href="../../chapters/part3-building/09-workflows-vs-agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Workflows vs.&nbsp;Agents</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/09-agentic-patterns.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span></a>
+  <a href="../../chapters/part3-building/10-agentic-patterns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Agentic Patterns</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/10-tools-and-mcp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span></a>
+  <a href="../../chapters/part3-building/11-tools-and-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Tools &amp; the Model Context Protocol (MCP)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/11-memory-systems.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></a>
+  <a href="../../chapters/part3-building/12-memory-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Memory Systems</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/12-orchestration-langgraph.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></a>
+  <a href="../../chapters/part3-building/13-orchestration-langgraph.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Orchestration with LangGraph</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/13-openai-agents-sdk.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></a>
+  <a href="../../chapters/part3-building/14-openai-agents-sdk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The OpenAI Agents SDK</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part3-building/14-multi-agent-systems.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></a>
+  <a href="../../chapters/part3-building/15-multi-agent-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span></a>
   </div>
 </li>
       </ul>
@@ -336,26 +342,26 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/15-evaluation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
+  <a href="../../chapters/part4-production/16-evaluation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/16-observability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Observability</span></span></a>
+  <a href="../../chapters/part4-production/17-observability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Observability</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/17-safety-and-guardrails.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Safety &amp; Guardrails</span></span></a>
+  <a href="../../chapters/part4-production/18-safety-and-guardrails.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Safety &amp; Guardrails</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part4-production/18-deployment-and-cost.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></span></a>
+  <a href="../../chapters/part4-production/19-deployment-and-cost.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Deployment &amp; Cost</span></span></a>
   </div>
 </li>
       </ul>
@@ -371,14 +377,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part5-frontiers/19-computer-use-and-embodiment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Computer Use &amp; Embodiment</span></span></a>
+  <a href="../../chapters/part5-frontiers/20-computer-use-and-embodiment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Computer Use &amp; Embodiment</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/part5-frontiers/20-frontiers-and-open-problems.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Frontiers &amp; Open Problems</span></span></a>
+  <a href="../../chapters/part5-frontiers/21-frontiers-and-open-problems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Frontiers &amp; Open Problems</span></span></a>
   </div>
 </li>
       </ul>
@@ -395,19 +401,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../chapters/appendices/a-environment-setup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Appendix A — Environment Setup</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Appendix A — Environment Setup</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../chapters/appendices/b-glossary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Appendix B — Glossary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Appendix B — Glossary</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../chapters/appendices/c-further-reading.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Appendix C — Further Reading</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Appendix C — Further Reading</span></span></a>
   </div>
 </li>
       </ul>
@@ -434,43 +440,43 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-ch15-intuition" id="toc-sec-ch15-intuition" class="nav-link active" data-scroll-target="#sec-ch15-intuition"><span class="header-section-number">15.1</span> You can’t ship what you can’t measure</a></li>
-  <li><a href="#sec-ch15-different" id="toc-sec-ch15-different" class="nav-link" data-scroll-target="#sec-ch15-different"><span class="header-section-number">15.2</span> Why agent evaluation is different</a>
+  <li><a href="#sec-ch15-intuition" id="toc-sec-ch15-intuition" class="nav-link active" data-scroll-target="#sec-ch15-intuition"><span class="header-section-number">16.1</span> You can’t ship what you can’t measure</a></li>
+  <li><a href="#sec-ch15-different" id="toc-sec-ch15-different" class="nav-link" data-scroll-target="#sec-ch15-different"><span class="header-section-number">16.2</span> Why agent evaluation is different</a>
   <ul class="collapse">
-  <li><a href="#sec-ch15-output-outcome" id="toc-sec-ch15-output-outcome" class="nav-link" data-scroll-target="#sec-ch15-output-outcome"><span class="header-section-number">15.2.1</span> Trajectory and outcome</a></li>
-  <li><a href="#sec-ch15-vocab" id="toc-sec-ch15-vocab" class="nav-link" data-scroll-target="#sec-ch15-vocab"><span class="header-section-number">15.2.2</span> The vocabulary of an eval</a></li>
-  <li><a href="#sec-ch15-trials" id="toc-sec-ch15-trials" class="nav-link" data-scroll-target="#sec-ch15-trials"><span class="header-section-number">15.2.3</span> Why one good run proves nothing</a></li>
+  <li><a href="#sec-ch15-output-outcome" id="toc-sec-ch15-output-outcome" class="nav-link" data-scroll-target="#sec-ch15-output-outcome"><span class="header-section-number">16.2.1</span> Trajectory and outcome</a></li>
+  <li><a href="#sec-ch15-vocab" id="toc-sec-ch15-vocab" class="nav-link" data-scroll-target="#sec-ch15-vocab"><span class="header-section-number">16.2.2</span> The vocabulary of an eval</a></li>
+  <li><a href="#sec-ch15-trials" id="toc-sec-ch15-trials" class="nav-link" data-scroll-target="#sec-ch15-trials"><span class="header-section-number">16.2.3</span> Why one good run proves nothing</a></li>
   </ul></li>
-  <li><a href="#sec-ch15-what" id="toc-sec-ch15-what" class="nav-link" data-scroll-target="#sec-ch15-what"><span class="header-section-number">15.3</span> What to put on the scoreboard</a>
+  <li><a href="#sec-ch15-what" id="toc-sec-ch15-what" class="nav-link" data-scroll-target="#sec-ch15-what"><span class="header-section-number">16.3</span> What to put on the scoreboard</a>
   <ul class="collapse">
-  <li><a href="#sec-ch15-map" id="toc-sec-ch15-map" class="nav-link" data-scroll-target="#sec-ch15-map"><span class="header-section-number">15.3.1</span> The fuller measurement map</a></li>
+  <li><a href="#sec-ch15-map" id="toc-sec-ch15-map" class="nav-link" data-scroll-target="#sec-ch15-map"><span class="header-section-number">16.3.1</span> The fuller measurement map</a></li>
   </ul></li>
-  <li><a href="#sec-ch15-methods" id="toc-sec-ch15-methods" class="nav-link" data-scroll-target="#sec-ch15-methods"><span class="header-section-number">15.4</span> How to measure it</a>
+  <li><a href="#sec-ch15-methods" id="toc-sec-ch15-methods" class="nav-link" data-scroll-target="#sec-ch15-methods"><span class="header-section-number">16.4</span> How to measure it</a>
   <ul class="collapse">
-  <li><a href="#sec-ch15-coverage" id="toc-sec-ch15-coverage" class="nav-link" data-scroll-target="#sec-ch15-coverage"><span class="header-section-number">15.4.1</span> Golden datasets need coverage</a></li>
-  <li><a href="#sec-ch15-capability-regression" id="toc-sec-ch15-capability-regression" class="nav-link" data-scroll-target="#sec-ch15-capability-regression"><span class="header-section-number">15.4.2</span> Capability evals versus regression evals</a></li>
+  <li><a href="#sec-ch15-coverage" id="toc-sec-ch15-coverage" class="nav-link" data-scroll-target="#sec-ch15-coverage"><span class="header-section-number">16.4.1</span> Golden datasets need coverage</a></li>
+  <li><a href="#sec-ch15-capability-regression" id="toc-sec-ch15-capability-regression" class="nav-link" data-scroll-target="#sec-ch15-capability-regression"><span class="header-section-number">16.4.2</span> Capability evals versus regression evals</a></li>
   </ul></li>
-  <li><a href="#sec-ch15-hard" id="toc-sec-ch15-hard" class="nav-link" data-scroll-target="#sec-ch15-hard"><span class="header-section-number">15.5</span> Grading what a score can hide</a>
+  <li><a href="#sec-ch15-hard" id="toc-sec-ch15-hard" class="nav-link" data-scroll-target="#sec-ch15-hard"><span class="header-section-number">16.5</span> Grading what a score can hide</a>
   <ul class="collapse">
-  <li><a href="#sec-ch15-judge-calibration" id="toc-sec-ch15-judge-calibration" class="nav-link" data-scroll-target="#sec-ch15-judge-calibration"><span class="header-section-number">15.5.1</span> Judges must be judged</a></li>
-  <li><a href="#sec-ch15-trajectory" id="toc-sec-ch15-trajectory" class="nav-link" data-scroll-target="#sec-ch15-trajectory"><span class="header-section-number">15.5.2</span> Grading the path, not just the answer</a></li>
-  <li><a href="#sec-ch15-component-e2e" id="toc-sec-ch15-component-e2e" class="nav-link" data-scroll-target="#sec-ch15-component-e2e"><span class="header-section-number">15.5.3</span> Component evals versus end-to-end evals</a></li>
-  <li><a href="#sec-ch15-rag" id="toc-sec-ch15-rag" class="nav-link" data-scroll-target="#sec-ch15-rag"><span class="header-section-number">15.5.4</span> Evaluating the evidence: retrieval</a></li>
+  <li><a href="#sec-ch15-judge-calibration" id="toc-sec-ch15-judge-calibration" class="nav-link" data-scroll-target="#sec-ch15-judge-calibration"><span class="header-section-number">16.5.1</span> Judges must be judged</a></li>
+  <li><a href="#sec-ch15-trajectory" id="toc-sec-ch15-trajectory" class="nav-link" data-scroll-target="#sec-ch15-trajectory"><span class="header-section-number">16.5.2</span> Grading the path, not just the answer</a></li>
+  <li><a href="#sec-ch15-component-e2e" id="toc-sec-ch15-component-e2e" class="nav-link" data-scroll-target="#sec-ch15-component-e2e"><span class="header-section-number">16.5.3</span> Component evals versus end-to-end evals</a></li>
+  <li><a href="#sec-ch15-rag" id="toc-sec-ch15-rag" class="nav-link" data-scroll-target="#sec-ch15-rag"><span class="header-section-number">16.5.4</span> Evaluating the evidence: retrieval</a></li>
   </ul></li>
-  <li><a href="#sec-ch15-benchmarks" id="toc-sec-ch15-benchmarks" class="nav-link" data-scroll-target="#sec-ch15-benchmarks"><span class="header-section-number">15.6</span> Shared benchmarks and their limits</a></li>
-  <li><a href="#sec-ch15-worked" id="toc-sec-ch15-worked" class="nav-link" data-scroll-target="#sec-ch15-worked"><span class="header-section-number">15.7</span> A worked example: a minimal eval harness</a></li>
-  <li><a href="#sec-ch15-case" id="toc-sec-ch15-case" class="nav-link" data-scroll-target="#sec-ch15-case"><span class="header-section-number">15.8</span> Case study: the Ledgerly support agent</a></li>
-  <li><a href="#sec-ch15-summary" id="toc-sec-ch15-summary" class="nav-link" data-scroll-target="#sec-ch15-summary"><span class="header-section-number">15.9</span> Summary</a></li>
-  <li><a href="#sec-ch15-exercises" id="toc-sec-ch15-exercises" class="nav-link" data-scroll-target="#sec-ch15-exercises"><span class="header-section-number">15.10</span> Exercises</a></li>
+  <li><a href="#sec-ch15-benchmarks" id="toc-sec-ch15-benchmarks" class="nav-link" data-scroll-target="#sec-ch15-benchmarks"><span class="header-section-number">16.6</span> Shared benchmarks and their limits</a></li>
+  <li><a href="#sec-ch15-worked" id="toc-sec-ch15-worked" class="nav-link" data-scroll-target="#sec-ch15-worked"><span class="header-section-number">16.7</span> A worked example: a minimal eval harness</a></li>
+  <li><a href="#sec-ch15-case" id="toc-sec-ch15-case" class="nav-link" data-scroll-target="#sec-ch15-case"><span class="header-section-number">16.8</span> Case study: the Ledgerly support agent</a></li>
+  <li><a href="#sec-ch15-summary" id="toc-sec-ch15-summary" class="nav-link" data-scroll-target="#sec-ch15-summary"><span class="header-section-number">16.9</span> Summary</a></li>
+  <li><a href="#sec-ch15-exercises" id="toc-sec-ch15-exercises" class="nav-link" data-scroll-target="#sec-ch15-exercises"><span class="header-section-number">16.10</span> Exercises</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/bhavykhatri/bhavykhatri.github.io/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part4-production/15-evaluation.html">Part IV — Production &amp; Trust</a></li><li class="breadcrumb-item"><a href="../../chapters/part4-production/15-evaluation.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/part4-production/16-evaluation.html">Part IV — Production &amp; Trust</a></li><li class="breadcrumb-item"><a href="../../chapters/part4-production/16-evaluation.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluation</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-evaluation" class="quarto-section-identifier"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluation</span></span></h1>
+<h1 class="title"><span id="sec-evaluation" class="quarto-section-identifier"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluation</span></span></h1>
 </div>
 
 
@@ -494,72 +500,72 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p>After this chapter you will be able to measure whether an agent actually works, using task-level, trajectory-level, and judge-based methods.</p>
 </blockquote>
-<section id="sec-ch15-intuition" class="level2" data-number="15.1">
-<h2 data-number="15.1" class="anchored" data-anchor-id="sec-ch15-intuition"><span class="header-section-number">15.1</span> You can’t ship what you can’t measure</h2>
+<section id="sec-ch15-intuition" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="sec-ch15-intuition"><span class="header-section-number">16.1</span> You can’t ship what you can’t measure</h2>
 <p>Part 3 left us with a pointed question. We built agents of steadily rising ambition, a single augmented model, then a tool-using loop, a memory system, a coordinated team, and at every step we simply <em>trusted</em> that they did their jobs. Part 4 stops trusting and starts measuring, and it has to, because an agent you cannot measure is an agent you cannot responsibly ship, improve, or even claim works. This chapter is about how you put a number on “works.”</p>
-<p>The trouble is that agents break the kind of testing software engineers are used to. Traditional tests are like grading a <em>math</em> exam: the answer to <code>2 + 2</code> is exactly <code>4</code>, so you check for an exact match and you are done. Evaluating an agent is like grading an <em>essay</em>. Ask an agent to “summarize this contract” or “book me a flight” and there is no single correct string to match against; many different outputs are good, many others are subtly wrong, and the same prompt can produce a different answer each time it runs. The agent is non-deterministic, its work unfolds over multiple steps, and its task is often open-ended. Exact-match testing, the bedrock of ordinary software, simply dissolves. <a href="#fig-eval-gap" class="quarto-xref">Figure&nbsp;<span>15.1</span></a> draws the gap.</p>
+<p>The trouble is that agents break the kind of testing software engineers are used to. Traditional tests are like grading a <em>math</em> exam: the answer to <code>2 + 2</code> is exactly <code>4</code>, so you check for an exact match and you are done. Evaluating an agent is like grading an <em>essay</em>. Ask an agent to “summarize this contract” or “book me a flight” and there is no single correct string to match against; many different outputs are good, many others are subtly wrong, and the same prompt can produce a different answer each time it runs. The agent is non-deterministic, its work unfolds over multiple steps, and its task is often open-ended. Exact-match testing, the bedrock of ordinary software, simply dissolves. <a href="#fig-eval-gap" class="quarto-xref">Figure&nbsp;<span>16.1</span></a> draws the gap.</p>
 <div id="fig-eval-gap" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-eval-gap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch15/fig-eval-gap.png" class="img-fluid figure-img">
+<img src="../..\images/ch16/fig-eval-gap.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eval-gap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.1: Why ordinary testing breaks for agents: a deterministic function has one correct output you can match exactly, while an agent maps one input to many possible outputs that must be judged, not matched.
+Figure&nbsp;16.1: Why ordinary testing breaks for agents: a deterministic function has one correct output you can match exactly, while an agent maps one input to many possible outputs that must be judged, not matched.
 </figcaption>
 </figure>
 </div>
 <p>Because matching fails, evaluation becomes a discipline of <em>judgment at scale</em>: deciding what “good” means for a fuzzy task and then applying that decision consistently across hundreds of runs. That is harder than writing unit tests, which is exactly why so many agents are shipped on vibes and demos rather than evidence. The rest of this chapter builds the discipline in four moves: first seeing <em>why</em> an agent resists ordinary testing more deeply than non-determinism alone suggests, then deciding <em>what</em> to measure, then <em>how</em> to measure it, and finally where the field’s shared <strong>benchmarks</strong> help and where they mislead. We begin with what makes an agent so much harder to grade than a single answer.</p>
 </section>
-<section id="sec-ch15-different" class="level2" data-number="15.2">
-<h2 data-number="15.2" class="anchored" data-anchor-id="sec-ch15-different"><span class="header-section-number">15.2</span> Why agent evaluation is different</h2>
+<section id="sec-ch15-different" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="sec-ch15-different"><span class="header-section-number">16.2</span> Why agent evaluation is different</h2>
 <p>The last section blamed non-determinism, the fact that one input can map to many outputs, but that is only the first reason an agent resists testing, and not the deepest. The deeper trouble is that an agent is not a function that returns a string; it is an actor that takes many turns, calls tools, and changes the world as it goes <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>. A calculator either returns <code>4</code> or it does not. A support agent reads a ticket, looks up an account, decides whether a refund is allowed, calls a refund tool, and writes a reply, and a slip at any one of those steps can quietly poison everything after it. Because the agent modifies state across turns, its mistakes do not stay put: they propagate and compound <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>.</p>
 <p>That is why the most dangerous failure in agent evaluation is the one that looks like success. An agent can produce a warm, fluent, entirely convincing final answer while, underneath, it called the wrong tool, ignored the error that tool returned, leaned on a stale document, looped three times before answering, blew past the moment it should have stopped, or cheerfully announced that it finished a job the environment never actually recorded. The benchmark τ-bench makes the gap vivid: it has simulated users converse with tool-using agents in retail and airline domains, and it grades not the words the agent produces but the database state at the end of the conversation, where even strong function-calling models resolve fewer than half of its tasks <span class="citation" data-cites="yao2024taubench"><a href="../../references.html#ref-yao2024taubench" role="doc-biblioref">[2]</a></span>. Judging such a system by its final sentence alone is like grading a surgeon on how confidently they say “the operation went well.” You have to look at the patient. This section unpacks what that means: the two things every run gives you to grade, the vocabulary that turns evaluation into engineering, and why a single good run tells you almost nothing.</p>
-<section id="sec-ch15-output-outcome" class="level3" data-number="15.2.1">
-<h3 data-number="15.2.1" class="anchored" data-anchor-id="sec-ch15-output-outcome"><span class="header-section-number">15.2.1</span> Trajectory and outcome</h3>
+<section id="sec-ch15-output-outcome" class="level3" data-number="16.2.1">
+<h3 data-number="16.2.1" class="anchored" data-anchor-id="sec-ch15-output-outcome"><span class="header-section-number">16.2.1</span> Trajectory and outcome</h3>
 <p>Start with an analogy from hiring a contractor to remodel a kitchen. Two very different things tell you whether you got your money’s worth, and a smooth-talking contractor is skilled at blurring them. There is the <em>story</em> of the job, what the contractor told you and how they worked (“all finished, did it all by the book”), and there is the <em>result</em>, what actually got built: does the plumbing hold, are the cabinets level? A cheerful status update is no substitute for opening the cabinet doors and running the water.</p>
-<p>An agent gives you the same two things, and confusing them is the most common mistake in agent testing. <a href="#fig-output-outcome-path" class="quarto-xref">Figure&nbsp;<span>15.2</span></a> lays them side by side. The first is the <strong>trajectory</strong>, also called the transcript or trace: the complete record of the run, every message the agent produced, every tool it called, and the reasoning it showed along the way <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>. The agent’s final reply lives <em>inside</em> this record; it is one line of the story, not a separate thing to grade. The second is the <strong>outcome</strong>: the final state of the environment when the run ends, what actually changed in the world <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>. A grader reads one or the other, the trajectory or the outcome, and the sharpest evaluations read both <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>.</p>
+<p>An agent gives you the same two things, and confusing them is the most common mistake in agent testing. <a href="#fig-output-outcome-path" class="quarto-xref">Figure&nbsp;<span>16.2</span></a> lays them side by side. The first is the <strong>trajectory</strong>, also called the transcript or trace: the complete record of the run, every message the agent produced, every tool it called, and the reasoning it showed along the way <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>. The agent’s final reply lives <em>inside</em> this record; it is one line of the story, not a separate thing to grade. The second is the <strong>outcome</strong>: the final state of the environment when the run ends, what actually changed in the world <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>. A grader reads one or the other, the trajectory or the outcome, and the sharpest evaluations read both <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>.</p>
 <p>The refund case makes the split impossible to forget, and it is why the agent’s own words are the thing you must trust least. Suppose Ledgerly’s agent ends its transcript with, “Done, I’ve issued your $80 refund.” As a sentence it is flawless, polite and specific, exactly what a satisfied customer wants to read. But if the refund API timed out and no row was ever written to the billing database, the outcome is a failure the agent does not know it produced. An evaluator that grades only the reply scores the run a success; an evaluator that checks the refunds table catches the problem before it becomes an angry follow-up. Anthropic’s own example has exactly this shape: a flight-booking agent may say “Your flight has been booked,” while the outcome that matters is whether a reservation actually exists in the database <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>. And the outcome is not the whole story either, because even when the money does move, the trajectory can still be wrong: if the agent issued the refund <em>before</em> it confirmed the charge was a genuine duplicate, it reached a passable outcome by a reckless route that will over-refund the next customer whose charge only looked like one. So “did it work?” is at least two questions, the trajectory and the outcome, never just “what did it say?”</p>
 <div id="fig-output-outcome-path" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-output-outcome-path-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch15/fig-output-outcome-path.png" class="img-fluid figure-img">
+<img src="../..\images/ch16/fig-output-outcome-path.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-output-outcome-path-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.2: The two things a grader reads from one agent run: the trajectory (the transcript of what the agent said and did) and the outcome (what actually changed in the environment). A refund reply can read as success while the billing database shows no refund, and even a correct refund can be reached by a path that skipped validation.
+Figure&nbsp;16.2: The two things a grader reads from one agent run: the trajectory (the transcript of what the agent said and did) and the outcome (what actually changed in the environment). A refund reply can read as success while the billing database shows no refund, and even a correct refund can be reached by a path that skipped validation.
 </figcaption>
 </figure>
 </div>
 </section>
-<section id="sec-ch15-vocab" class="level3" data-number="15.2.2">
-<h3 data-number="15.2.2" class="anchored" data-anchor-id="sec-ch15-vocab"><span class="header-section-number">15.2.2</span> The vocabulary of an eval</h3>
+<section id="sec-ch15-vocab" class="level3" data-number="16.2.2">
+<h3 data-number="16.2.2" class="anchored" data-anchor-id="sec-ch15-vocab"><span class="header-section-number">16.2.2</span> The vocabulary of an eval</h3>
 <p>Naming those three objects is the first step; the next is naming the machinery that measures them, because a shared vocabulary is what turns evaluation from a party trick into engineering. A demo is a magic trick you perform once for an audience; an eval is a laboratory you can rerun a thousand times and trust the readings. The teams that ship agents with confidence treat their evals like a test suite, and they lean on a small, precise vocabulary to do it <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>.</p>
 <p>A <strong>task</strong> is one test case: an input paired with a definition of what success means, such as “refund me $500 for an $80 charge” together with the rule “refund at most $80, or decline.” Each attempt at a task is a <strong>trial</strong>, and because the agent is non-deterministic you run several trials rather than one. A <strong>grader</strong> is the logic that scores one aspect of a trial, and a single task usually has several graders, each checking a different thing <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>. A <strong>transcript</strong> (also called a trace) is the complete record of a trial: every output, tool call, intermediate result, and reasoning step. The <strong>outcome</strong>, as before, is the final state of the environment. And a <strong>suite</strong> is a collection of related tasks that together measure a capability, the way a support suite might bundle refunds, cancellations, and escalations <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>.</p>
-<p><a href="#fig-eval-loop" class="quarto-xref">Figure&nbsp;<span>15.3</span></a> draws the loop this vocabulary describes. You take a task, run it as several trials, collect everything each trial produced (its transcript of replies, tool calls, and reasoning, plus the final state of the environment), hand all of it to your graders, aggregate the grades into a scoreboard, then read the failing transcripts to learn what broke and turn each genuine failure into a permanent new task. Built once, that loop becomes the highest-bandwidth channel between the people who decide what “good” means and the people trying to make the agent better <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>.</p>
+<p><a href="#fig-eval-loop" class="quarto-xref">Figure&nbsp;<span>16.3</span></a> draws the loop this vocabulary describes. You take a task, run it as several trials, collect everything each trial produced (its transcript of replies, tool calls, and reasoning, plus the final state of the environment), hand all of it to your graders, aggregate the grades into a scoreboard, then read the failing transcripts to learn what broke and turn each genuine failure into a permanent new task. Built once, that loop becomes the highest-bandwidth channel between the people who decide what “good” means and the people trying to make the agent better <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>.</p>
 <div id="fig-eval-loop" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-eval-loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch15/fig-eval-loop.png" class="img-fluid figure-img">
+<img src="../..\images/ch16/fig-eval-loop.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eval-loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.3: The evaluation loop and its vocabulary: a task is run as several trials, each producing a transcript and a final outcome; graders score them, the scores aggregate into a scoreboard, and every failure you read becomes a new regression task.
+Figure&nbsp;16.3: The evaluation loop and its vocabulary: a task is run as several trials, each producing a transcript and a final outcome; graders score them, the scores aggregate into a scoreboard, and every failure you read becomes a new regression task.
 </figcaption>
 </figure>
 </div>
 </section>
-<section id="sec-ch15-trials" class="level3" data-number="15.2.3">
-<h3 data-number="15.2.3" class="anchored" data-anchor-id="sec-ch15-trials"><span class="header-section-number">15.2.3</span> Why one good run proves nothing</h3>
+<section id="sec-ch15-trials" class="level3" data-number="16.2.3">
+<h3 data-number="16.2.3" class="anchored" data-anchor-id="sec-ch15-trials"><span class="header-section-number">16.2.3</span> Why one good run proves nothing</h3>
 <p>The loop runs each task as several trials, and that innocent word “several” carries one of the most important ideas in agent evaluation. A basketball player who sinks a single free throw has not proven they are a reliable shooter; you make them shoot a hundred and count. A single green test run is a single free throw.</p>
 <p>Because the agent is non-deterministic, the same task can pass today and fail tomorrow with nothing changed but the roll of the dice, so one passing run tells you the agent <em>can</em> succeed, not that it <em>will</em>. To measure reliability you run many trials of the same task and read the whole distribution: how often it passes, how the failures vary, which cases are flaky, how many distinct ways it goes wrong, and whether a change that helped the average actually made the agent more consistent. τ-bench turns that instinct into a metric it calls pass^k, the probability that an agent succeeds on every one of several independent trials of a task rather than merely on one <span class="citation" data-cites="yao2024taubench"><a href="../../references.html#ref-yao2024taubench" role="doc-biblioref">[2]</a></span>. The arithmetic is sobering: an agent that handles a task correctly 75% of the time gets it right three times running only about 42% of the time, and τ-bench reports that even strong agents stay under 25% on pass^8 for its retail tasks <span class="citation" data-cites="yao2024taubench"><a href="../../references.html#ref-yao2024taubench" role="doc-biblioref">[2]</a></span>. For a customer-facing agent, where every user expects the right answer every time, pass^k is the honest bar, and a single lucky pass@1 flatters.</p>
 <p>Ledgerly shows why this matters in practice. Imagine its agent handles one duplicate-billing ticket correctly, then on two reruns refunds a charge that was actually a valid mid-cycle proration. Averaged as “one of three,” that reads like respectable partial credit. Read as reliability, it is a failing grade, because two of three real customers got the wrong outcome. Only by running the case many times do you see the truth: the agent has not learned the rule, it has learned to guess. Knowing how consistently an agent works, though, still does not tell you <em>what</em> “works” should measure, and that scoreboard is where we turn next.</p>
 </section>
 </section>
-<section id="sec-ch15-what" class="level2" data-number="15.3">
-<h2 data-number="15.3" class="anchored" data-anchor-id="sec-ch15-what"><span class="header-section-number">15.3</span> What to put on the scoreboard</h2>
+<section id="sec-ch15-what" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="sec-ch15-what"><span class="header-section-number">16.3</span> What to put on the scoreboard</h2>
 <p>Before you can measure an agent you have to decide what “good” even means, and the beginner’s mistake is to measure only one thing: did it get the right final answer? That matters, but it is half the story. The fuller picture comes from an everyday analogy, judging a road trip. You care whether the travelers <em>arrived</em> at the right city, of course. But you also care <em>how</em> they got there: a trip that reaches the destination by looping the same roundabout ten times and burning a full tank of gas is not a good trip, even though the endpoint is correct. Agents are judged the same way, along two families of measure, the outcome and the journey, plus the practical costs of running them at all.</p>
 <p>The starter scoreboard has five dimensions, and they read more clearly as a list than as a paragraph. The first two are the outcome and the journey; the last three are the practical costs of running the agent at all.</p>
 <ul>
 <li><strong>Task success</strong> (the outcome): did the agent actually accomplish what it was asked, judged against whatever “done” means for that task? For Ledgerly, a “double-charge” ticket succeeds only when the duplicate charge is genuinely refunded and the customer is told why, not when the agent politely promises to look into it.</li>
-<li><strong>Trajectory quality</strong> (the journey): was the <em>path</em> sensible, with the right tools called in a reasonable order, no needless loops, and reasoning that moves forward rather than flailing? This is where the reason–act traces from <a href="../part2-llm-agents/07-reasoning-and-planning.html#sec-ch7-react" class="quarto-xref"><span>Section 7.5</span></a> become the object of evaluation, not just a runtime convenience; two agents can both reach the right refund while one took three clean steps and the other thirty wasteful ones. For Ledgerly, refunding <em>before</em> confirming the charge was a real duplicate is a bad trajectory even when the final amount happens to be right.</li>
+<li><strong>Trajectory quality</strong> (the journey): was the <em>path</em> sensible, with the right tools called in a reasonable order, no needless loops, and reasoning that moves forward rather than flailing? This is where the reason–act traces from <a href="../part2-llm-agents/08-reasoning-and-planning.html#sec-ch7-react" class="quarto-xref"><span>Section 8.5</span></a> become the object of evaluation, not just a runtime convenience; two agents can both reach the right refund while one took three clean steps and the other thirty wasteful ones. For Ledgerly, refunding <em>before</em> confirming the charge was a real duplicate is a bad trajectory even when the final amount happens to be right.</li>
 <li><strong>Cost</strong>: the tokens and tool calls the run burns, the blow-up we worried about in
 <ol class="example" type="1">
 <li>A Ledgerly ticket that loops the model twenty times to close one refund may be correct and still too expensive to ship.</li>
@@ -567,21 +573,21 @@ Figure&nbsp;15.3: The evaluation loop and its vocabulary: a task is run as sever
 <li><strong>Latency</strong>: how long the user waits. A support reply that is accurate but arrives after a two-minute silence has still failed the customer.</li>
 <li><strong>Safety</strong>: whether the agent stays inside its guardrails and refuses what it should. For Ledgerly, stopping before it refunds above the approval threshold is a safety line, not a nicety.</li>
 </ul>
-<p><a href="#fig-eval-dimensions" class="quarto-xref">Figure&nbsp;<span>15.4</span></a> gathers the five.</p>
+<p><a href="#fig-eval-dimensions" class="quarto-xref">Figure&nbsp;<span>16.4</span></a> gathers the five.</p>
 <div id="fig-eval-dimensions" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-eval-dimensions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch15/fig-eval-dimensions.png" class="img-fluid figure-img">
+<img src="../..\images/ch16/fig-eval-dimensions.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eval-dimensions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.4: The dimensions of agent evaluation: task success asks whether it arrived, trajectory quality asks whether the path was sensible, and cost, latency, and safety decide whether a working agent is shippable.
+Figure&nbsp;16.4: The dimensions of agent evaluation: task success asks whether it arrived, trajectory quality asks whether the path was sensible, and cost, latency, and safety decide whether a working agent is shippable.
 </figcaption>
 </figure>
 </div>
 <p>Which of these you weight most heavily depends entirely on the job. A research assistant lives or dies on task success and trajectory quality; a high-volume customer-support bot may be gated first by cost and latency; anything with real-world authority is gated first by safety. The essential discipline is to choose your scoreboard <em>deliberately and in advance</em>, rather than discovering after launch that you optimized the one number that did not matter.</p>
-<section id="sec-ch15-map" class="level3" data-number="15.3.1">
-<h3 data-number="15.3.1" class="anchored" data-anchor-id="sec-ch15-map"><span class="header-section-number">15.3.1</span> The fuller measurement map</h3>
-<p>Those five dimensions are the right place to start, but a production agent gives you more surfaces to grade than a road trip does, and it helps to see the whole map at once. Think of it as a stack, drawn in <a href="#fig-eval-levels" class="quarto-xref">Figure&nbsp;<span>15.5</span></a>, that runs from the surface the user sees down through the layers only an evaluator ever inspects. At the top is the answer; underneath it are the outcome, the tools, the path, the bill, and the guardrails, each a place an agent can fail while the layer above it still looks fine.</p>
+<section id="sec-ch15-map" class="level3" data-number="16.3.1">
+<h3 data-number="16.3.1" class="anchored" data-anchor-id="sec-ch15-map"><span class="header-section-number">16.3.1</span> The fuller measurement map</h3>
+<p>Those five dimensions are the right place to start, but a production agent gives you more surfaces to grade than a road trip does, and it helps to see the whole map at once. Think of it as a stack, drawn in <a href="#fig-eval-levels" class="quarto-xref">Figure&nbsp;<span>16.5</span></a>, that runs from the surface the user sees down through the layers only an evaluator ever inspects. At the top is the answer; underneath it are the outcome, the tools, the path, the bill, and the guardrails, each a place an agent can fail while the layer above it still looks fine.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -652,74 +658,74 @@ Figure&nbsp;15.4: The dimensions of agent evaluation: task success asks whether 
 <div id="fig-eval-levels" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-eval-levels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch15/fig-eval-levels.png" class="img-fluid figure-img">
+<img src="../..\images/ch16/fig-eval-levels.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eval-levels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.5: What a thorough agent eval judges, from the surface downward: the final answer the user sees, the outcome in the environment, the tools and their arguments, the trajectory, the cost and latency, and the safety and policy limits. Each layer past the first is one an answer-only test never checks.
+Figure&nbsp;16.5: What a thorough agent eval judges, from the surface downward: the final answer the user sees, the outcome in the environment, the tools and their arguments, the trajectory, the cost and latency, and the safety and policy limits. Each layer past the first is one an answer-only test never checks.
 </figcaption>
 </figure>
 </div>
 </section>
 </section>
-<section id="sec-ch15-methods" class="level2" data-number="15.4">
-<h2 data-number="15.4" class="anchored" data-anchor-id="sec-ch15-methods"><span class="header-section-number">15.4</span> How to measure it</h2>
+<section id="sec-ch15-methods" class="level2" data-number="16.4">
+<h2 data-number="16.4" class="anchored" data-anchor-id="sec-ch15-methods"><span class="header-section-number">16.4</span> How to measure it</h2>
 <p>Knowing <em>what</em> to measure still leaves the practical problem of <em>how</em> to turn a fuzzy judgment into a repeatable number. Three methods do most of the work, and they form a natural ladder from the most objective to the most flexible.</p>
-<p>The first rung is a <strong>golden dataset</strong>: a curated set of test cases, each paired with a known-good answer, an answer key. You run the agent over every case and check its output against the reference. This is the closest agents get to ordinary testing, and where it applies (tasks with a checkable right answer, like extracting a total from an invoice) it is objective, cheap to rerun, and the foundation of any serious eval. Its limit is obvious from the last section: for open-ended tasks there <em>is</em> no single reference string to match. The second rung climbs over that wall with <strong>LLM-as-judge</strong>: you enlist a strong language model to <em>grade</em> the agent’s output against a written rubric, exactly the way a teaching assistant grades essays with a scoring guide. This is the evaluator from <a href="../part3-building/09-agentic-patterns.html#sec-ch9-evaluator" class="quarto-xref"><span>Section 9.6</span></a> turned toward measurement, and it is what makes evaluating open-ended work tractable at scale. The third rung shifts the object of judgment from the answer to the <em>path</em>, <strong>trajectory evaluation</strong>, by feeding the agent’s whole reason–act trace to a judge and asking whether the steps were sensible, the tools well chosen, the loops avoided. <a href="#fig-judge" class="quarto-xref">Figure&nbsp;<span>15.6</span></a> draws the LLM-as-judge pipeline that powers the top two rungs.</p>
+<p>The first rung is a <strong>golden dataset</strong>: a curated set of test cases, each paired with a known-good answer, an answer key. You run the agent over every case and check its output against the reference. This is the closest agents get to ordinary testing, and where it applies (tasks with a checkable right answer, like extracting a total from an invoice) it is objective, cheap to rerun, and the foundation of any serious eval. Its limit is obvious from the last section: for open-ended tasks there <em>is</em> no single reference string to match. The second rung climbs over that wall with <strong>LLM-as-judge</strong>: you enlist a strong language model to <em>grade</em> the agent’s output against a written rubric, exactly the way a teaching assistant grades essays with a scoring guide. This is the evaluator from <a href="../part3-building/10-agentic-patterns.html#sec-ch9-evaluator" class="quarto-xref"><span>Section 10.6</span></a> turned toward measurement, and it is what makes evaluating open-ended work tractable at scale. The third rung shifts the object of judgment from the answer to the <em>path</em>, <strong>trajectory evaluation</strong>, by feeding the agent’s whole reason–act trace to a judge and asking whether the steps were sensible, the tools well chosen, the loops avoided. <a href="#fig-judge" class="quarto-xref">Figure&nbsp;<span>16.6</span></a> draws the LLM-as-judge pipeline that powers the top two rungs.</p>
 <div id="fig-judge" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-judge-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch15/fig-judge.png" class="img-fluid figure-img">
+<img src="../..\images/ch16/fig-judge.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-judge-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.6: The LLM-as-judge pipeline: the agent’s output (or full trajectory) is handed to a judge model along with a written rubric, which returns a score and a rationale that can be aggregated across many cases.
+Figure&nbsp;16.6: The LLM-as-judge pipeline: the agent’s output (or full trajectory) is handed to a judge model along with a written rubric, which returns a score and a rationale that can be aggregated across many cases.
 </figcaption>
 </figure>
 </div>
 <p>The power of an LLM judge comes with a warning that must travel alongside it: <em>a judge is itself a fallible model.</em> It can be biased toward longer answers, toward its own writing style, or toward the first option it sees; it can be confidently wrong. So a judge is not something you trust blindly; you <em>validate</em> it, by checking its scores against a sample of careful human judgments until you believe it agrees with people, and only then let it grade at scale. Used with that discipline, the three methods stack: a golden set for what can be checked exactly, a validated judge for what needs grading, and trajectory evaluation for how the agent got there. But a method is only as good as the cases you feed it, and as the way you use the results, so two questions deserve their own treatment before we go further: what belongs in the dataset, and what you are trying to learn from it.</p>
-<section id="sec-ch15-coverage" class="level3" data-number="15.4.1">
-<h3 data-number="15.4.1" class="anchored" data-anchor-id="sec-ch15-coverage"><span class="header-section-number">15.4.1</span> Golden datasets need coverage</h3>
+<section id="sec-ch15-coverage" class="level3" data-number="16.4.1">
+<h3 data-number="16.4.1" class="anchored" data-anchor-id="sec-ch15-coverage"><span class="header-section-number">16.4.1</span> Golden datasets need coverage</h3>
 <p>The first question is what goes into the golden set, and here the beginner’s instinct fails again: they fill it with the happy path, the tickets that go right, and end up with a suite that certifies the agent is good at the cases that were never going to break. A golden set earns its name only when it has <strong>coverage</strong>, meaning it deliberately includes the situations that expose weakness rather than the ones that flatter <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>. A strong set reaches across common requests, edge cases, ambiguous inputs, missing information, tool errors, policy conflicts, adversarial or misleading user claims, high-risk actions, multi-turn updates where the user changes their mind, and regression cases drawn from real past failures.</p>
 <p>For Ledgerly, coverage means far more than “refund a duplicate charge.” It means a true duplicate the agent must catch and a valid proration it must <em>not</em> mistake for one; a refund that was already issued; a ticket with no account identity attached; a policy-version conflict where an old rule and a current rule disagree; a refund above the approval threshold; a tool that times out mid-refund; a wrong charge id; and a customer who insists, wrongly, that a previous ticket promised them a refund. Each of those is a case the agent can fail in a way no happy-path test would ever reveal, and each one you add is a trap you have set for the next regression before it reaches a user. To keep the agent from becoming one-sided, the set should also test where a behavior should <em>not</em> fire, not only where it should <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>.</p>
 </section>
-<section id="sec-ch15-capability-regression" class="level3" data-number="15.4.2">
-<h3 data-number="15.4.2" class="anchored" data-anchor-id="sec-ch15-capability-regression"><span class="header-section-number">15.4.2</span> Capability evals versus regression evals</h3>
+<section id="sec-ch15-capability-regression" class="level3" data-number="16.4.2">
+<h3 data-number="16.4.2" class="anchored" data-anchor-id="sec-ch15-capability-regression"><span class="header-section-number">16.4.2</span> Capability evals versus regression evals</h3>
 <p>Coverage tells you which cases to include; the second question is what you expect from them, and the answer splits your suite cleanly in two. A <strong>capability eval</strong> asks “what can this agent do well?” and is meant to be hard, starting at a low pass rate and giving the team a hill to climb during development. A <strong>regression eval</strong> asks “does the agent still do everything it used to?” and is meant to sit near a perfect pass rate, protecting the behaviors that already work so a well-meaning change cannot quietly break them <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>.</p>
 <p>The distinction is liberating, because it means a hard case the agent fails today should not block a release; it belongs in the capability suite as a target, not a gate. But the moment the agent learns to handle that case reliably, it graduates: the same task moves into the regression suite, where its job is no longer to ask “can we do this at all?” but “can we still do this?” <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>. For Ledgerly, the gnarly policy-version conflict might live in the capability suite for weeks while the team works out how the agent should reconcile old and new rules. Once it does, that ticket becomes a permanent regression test, a line the agent must never again fall below. Splitting the suite this way keeps development honest without letting yesterday’s hard-won wins slip away, which is exactly the kind of quiet backsliding a single averaged score can hide.</p>
 </section>
 </section>
-<section id="sec-ch15-hard" class="level2" data-number="15.5">
-<h2 data-number="15.5" class="anchored" data-anchor-id="sec-ch15-hard"><span class="header-section-number">15.5</span> Grading what a score can hide</h2>
+<section id="sec-ch15-hard" class="level2" data-number="16.5">
+<h2 data-number="16.5" class="anchored" data-anchor-id="sec-ch15-hard"><span class="header-section-number">16.5</span> Grading what a score can hide</h2>
 <p>That last idea is the whole point of this section. A single score is satisfying to watch, because you can see it go up or down at a glance. But an average is a coarse tool. An agent can hold its overall score steady while one specific and dangerous behavior slowly gets worse, and the average simply hides it. The graders in this section are built to catch what the average misses. They do it by looking more closely at four things: the judge that hands out the scores, the path the agent took to reach its answer, the individual parts the agent is built from, and the evidence the agent actually used to back up what it said.</p>
-<section id="sec-ch15-judge-calibration" class="level3" data-number="15.5.1">
-<h3 data-number="15.5.1" class="anchored" data-anchor-id="sec-ch15-judge-calibration"><span class="header-section-number">15.5.1</span> Judges must be judged</h3>
+<section id="sec-ch15-judge-calibration" class="level3" data-number="16.5.1">
+<h3 data-number="16.5.1" class="anchored" data-anchor-id="sec-ch15-judge-calibration"><span class="header-section-number">16.5.1</span> Judges must be judged</h3>
 <p>Start with the judge, because a validated judge is the workhorse of open-ended evaluation and an unvalidated one is a liability wearing a lab coat. We already met the warning that a judge is a fallible model; the fix is to treat the judge the way you would treat a new human grader you did not fully trust yet. You give it a clear rubric, show it a few example outputs already graded by people, and then check its verdicts against a held-out sample of careful human judgments before you let it grade at scale <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>. The stakes are real: studies of LLM judges find they can favor the first option they are shown, prefer longer answers, and lean toward text in their own style, biases with names (position, verbosity, and self-enhancement) that a strong judge still exhibits even as it reaches over 80% agreement with human raters, about the level at which humans agree with each other <span class="citation" data-cites="zheng2023judge"><a href="../../references.html#ref-zheng2023judge" role="doc-biblioref">[3]</a></span>.</p>
 <p>Three habits keep a judge honest. Ask it for a numeric score <em>and</em> a written rationale, so you can audit its reasoning instead of trusting a bare number. Run periodic spot checks and a failure analysis wherever the judge and a human disagree, because those disagreements are where your rubric is vague. And never ask the judge to grade a fact it cannot see: for Ledgerly, a judge can fairly score whether a reply is clear and empathetic, but it should not be asked to decide whether a refund was <em>correct</em> unless you hand it the policy, the billing evidence, and the expected result to grade against. A judge asked to rule on hidden facts does not measure the agent, it invents a verdict.</p>
 </section>
-<section id="sec-ch15-trajectory" class="level3" data-number="15.5.2">
-<h3 data-number="15.5.2" class="anchored" data-anchor-id="sec-ch15-trajectory"><span class="header-section-number">15.5.2</span> Grading the path, not just the answer</h3>
-<p>A judge that reads only the final answer, however well calibrated, is still blind to the whole middle of the run, and that is where an agent’s most expensive failures hide. Grading the trajectory means handing the evaluator the entire transcript, every reasoning step and tool call, and asking not “is the answer good?” but “was the way it got there sound?” This is the layer that catches the failures <a href="#sec-ch15-output-outcome" class="quarto-xref"><span>Section 15.2.1</span></a> warned about: the right answer reached after the wrong tool call, the refund attempted before validation, the three wasted loops, the handoff that dropped the customer’s context on the floor.</p>
+<section id="sec-ch15-trajectory" class="level3" data-number="16.5.2">
+<h3 data-number="16.5.2" class="anchored" data-anchor-id="sec-ch15-trajectory"><span class="header-section-number">16.5.2</span> Grading the path, not just the answer</h3>
+<p>A judge that reads only the final answer, however well calibrated, is still blind to the whole middle of the run, and that is where an agent’s most expensive failures hide. Grading the trajectory means handing the evaluator the entire transcript, every reasoning step and tool call, and asking not “is the answer good?” but “was the way it got there sound?” This is the layer that catches the failures <a href="#sec-ch15-output-outcome" class="quarto-xref"><span>Section 16.2.1</span></a> warned about: the right answer reached after the wrong tool call, the refund attempted before validation, the three wasted loops, the handoff that dropped the customer’s context on the floor.</p>
 <p>A trajectory grader inspects a checklist an answer-only test cannot. Did the agent pick a sensible strategy, call the right tools with valid arguments, read each observation correctly, avoid needless loops, and stop at the right moment rather than pressing on? Did it escalate when it should have, hold off on any irreversible action until it had validated the situation, recover gracefully when a tool failed instead of pretending it had not, and preserve accountability when it handed off to a teammate or a human? A word of restraint belongs here: grading a rigid, exact sequence of steps is usually a mistake, because capable agents keep finding valid routes their designers never imagined, so it is better to grade whether the path honored the <em>constraints</em> that matter than to demand one blessed script <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>.</p>
 </section>
-<section id="sec-ch15-component-e2e" class="level3" data-number="15.5.3">
-<h3 data-number="15.5.3" class="anchored" data-anchor-id="sec-ch15-component-e2e"><span class="header-section-number">15.5.3</span> Component evals versus end-to-end evals</h3>
+<section id="sec-ch15-component-e2e" class="level3" data-number="16.5.3">
+<h3 data-number="16.5.3" class="anchored" data-anchor-id="sec-ch15-component-e2e"><span class="header-section-number">16.5.3</span> Component evals versus end-to-end evals</h3>
 <p>Trajectory grading judges the whole run as a story; sometimes, though, you need to know which character fumbled a line. That is the difference between an <strong>end-to-end eval</strong>, which grades the entire run and its final outcome, and a <strong>component eval</strong>, which isolates one part of the system and tests it alone. The two answer different questions. End-to-end tells you <em>whether</em> the system works; component tells you <em>where</em> to fix it when it does not.</p>
 <p>Ledgerly is built from parts that each deserve their own bench test. You can evaluate the router’s classification in isolation (does “I was double-charged” land in the billing lane?), the retriever’s relevance (does a refund question fetch the current refund policy?), the tool-argument generation (is <code>process_refund</code> called with the right charge id and a capped amount?), the policy validator (does it block a refund on a valid proration?), the response generator (is the reply clear and grounded?), and the handoff decision (does a conflicting-records ticket get escalated?). When the end-to-end score drops, it is the component evals that turn a vague “the agent got worse” into a precise “the retriever started returning the stale policy,” which is the difference between a fix and a guess.</p>
 </section>
-<section id="sec-ch15-rag" class="level3" data-number="15.5.4">
-<h3 data-number="15.5.4" class="anchored" data-anchor-id="sec-ch15-rag"><span class="header-section-number">15.5.4</span> Evaluating the evidence: retrieval</h3>
+<section id="sec-ch15-rag" class="level3" data-number="16.5.4">
+<h3 data-number="16.5.4" class="anchored" data-anchor-id="sec-ch15-rag"><span class="header-section-number">16.5.4</span> Evaluating the evidence: retrieval</h3>
 <p>That retriever deserves a closer look, because when an agent grounds its answers in a knowledge base, the evidence it stands on becomes its own thing to grade. An agent can reason flawlessly and still be confidently wrong if the passage it retrieved was the <em>old</em> refund policy, and no amount of judging the final answer will reveal that the rot started at retrieval. This is why retrieval-augmented systems earn a dedicated set of evals, the kind formalized by frameworks like RAGAS, which grades a RAG pipeline without needing a human-written reference answer <span class="citation" data-cites="es2023ragas"><a href="../../references.html#ref-es2023ragas" role="doc-biblioref">[4]</a></span>.</p>
 <p>The measures split neatly across the two halves of a retrieval system. On the retrieval side, the question is <strong>context relevance</strong>: are the passages fetched actually relevant and focused rather than padding, and did the ones the answer needed all make it into the context? On the generation side, <strong>faithfulness</strong> asks whether the answer’s claims are genuinely supported by those passages rather than invented, and <strong>answer relevance</strong> asks whether the answer actually addresses the question <span class="citation" data-cites="es2023ragas"><a href="../../references.html#ref-es2023ragas" role="doc-biblioref">[4]</a></span>. (Popular RAGAS implementations split the retrieval side further into <em>context precision</em> and <em>context recall</em>, the familiar precision–recall trade-off applied to fetched passages.) For Ledgerly, a retrieval eval is what separates “the agent gave a wrong refund answer because it reasoned badly” from “it reasoned fine over the wrong document,” two failures with completely different fixes. Grading the model, the path, the parts, and the evidence covers your own agent thoroughly; the field also offers shared yardsticks for comparing agents against each other, and those come with their own fine print.</p>
 </section>
 </section>
-<section id="sec-ch15-benchmarks" class="level2" data-number="15.6">
-<h2 data-number="15.6" class="anchored" data-anchor-id="sec-ch15-benchmarks"><span class="header-section-number">15.6</span> Shared benchmarks and their limits</h2>
+<section id="sec-ch15-benchmarks" class="level2" data-number="16.6">
+<h2 data-number="16.6" class="anchored" data-anchor-id="sec-ch15-benchmarks"><span class="header-section-number">16.6</span> Shared benchmarks and their limits</h2>
 <p>Your own golden set measures your agent on your task, but the field also needs <em>common yardsticks</em>, standardized tests that let everyone compare approaches on the same problems, the way the SAT lets colleges compare students who never sat in the same classroom. These shared benchmarks have driven much of the visible progress in agents, and two are worth knowing by name because they represent two different philosophies of what to test.</p>
 <p><strong>AgentBench</strong> takes the breadth approach: it evaluates a language model <em>as an agent</em> across a suite of distinct interactive environments (operating a database, navigating an operating system, playing a text game, and more) precisely because a system that is agentic should be able to act across many kinds of world, not just one <span class="citation" data-cites="liu2023agentbench"><a href="../../references.html#ref-liu2023agentbench" role="doc-biblioref">[5]</a></span>. <strong>SWE-bench</strong> takes the depth approach, and it has become the headline test for coding agents. It draws on thousands of <em>real</em> GitHub issues from popular open-source Python projects; the agent is handed the repository and the issue and must produce a code patch that actually resolves it, graded not by a judge’s opinion but by running the project’s own unit tests <span class="citation" data-cites="jimenez2024swebench"><a href="../../references.html#ref-jimenez2024swebench" role="doc-biblioref">[6]</a></span>. That grounding in real bug reports and executable tests is what makes SWE-bench so respected: it is hard to game a suite of passing tests. Even a benchmark this careful, though, turned out to contain ambiguous issues and brittle tests, which is why a human-validated subset of 500 problems, <strong>SWE-bench Verified</strong>, was later curated with professional developers to measure coding agents more reliably <span class="citation" data-cites="openai2024swebenchverified"><a href="../../references.html#ref-openai2024swebenchverified" role="doc-biblioref">[7]</a></span>. A third yardstick narrows the focus further still: the Berkeley Function-Calling Leaderboard scores the mechanics of tool use itself, whether an agent picks the right function, fills its arguments correctly, and knows when <em>not</em> to call anything at all <span class="citation" data-cites="bfcl2024"><a href="../../references.html#ref-bfcl2024" role="doc-biblioref">[8]</a></span>.</p>
 <p>But every benchmark carries a warning label, and treating a leaderboard number as the truth is one of the easiest ways to fool yourself. Three limits matter most. The first is <strong>contamination</strong>: because these benchmarks are public, their problems can leak into a model’s training data, so a high score may reflect memorization rather than capability. The second is <strong>overfitting to the benchmark</strong>, Goodhart’s law, that a measure which becomes a target stops being a good measure; teams that tune relentlessly for SWE-bench may win the leaderboard without building agents that are better at the messy bugs <em>not</em> in it. The third and deepest is the <strong>construct gap</strong>: passing curated GitHub issues is not the same as being a good engineering teammate, just as a high SAT score is not the same as being educated. Benchmarks are indispensable for comparison and for tracking the field, but they are a proxy, and the only evaluation that ultimately matters is on <em>your</em> task, with <em>your</em> users, using the golden sets and judges of the previous sections. Put plainly: use public benchmarks to choose a model and gauge broad capability, but never mistake a leaderboard rank for a production verdict. The eval that decides whether <em>your</em> agent ships is a private, domain-specific one built over your real tasks, tools, policies, and failure modes <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>. To make that concrete, let us sketch what a minimal evaluation of your own actually looks like.</p>
 </section>
-<section id="sec-ch15-worked" class="level2" data-number="15.7">
-<h2 data-number="15.7" class="anchored" data-anchor-id="sec-ch15-worked"><span class="header-section-number">15.7</span> A worked example: a minimal eval harness</h2>
-<p>An evaluation does not need a research team or a fancy platform to be real. At its heart it is a loop: a set of cases, a way to run the agent on each, a way to score the result, and a report that aggregates the scores. Building that loop once, even a tiny version, changes how you work: you stop guessing whether a change helped and start <em>seeing</em> it. Let us sketch the smallest harness that still does something useful, combining the two cheapest methods from <a href="#sec-ch15-methods" class="quarto-xref"><span>Section 15.4</span></a>: exact match for the cases that have a checkable answer, and an LLM judge for the ones that do not.</p>
+<section id="sec-ch15-worked" class="level2" data-number="16.7">
+<h2 data-number="16.7" class="anchored" data-anchor-id="sec-ch15-worked"><span class="header-section-number">16.7</span> A worked example: a minimal eval harness</h2>
+<p>An evaluation does not need a research team or a fancy platform to be real. At its heart it is a loop: a set of cases, a way to run the agent on each, a way to score the result, and a report that aggregates the scores. Building that loop once, even a tiny version, changes how you work: you stop guessing whether a change helped and start <em>seeing</em> it. Let us sketch the smallest harness that still does something useful, combining the two cheapest methods from <a href="#sec-ch15-methods" class="quarto-xref"><span>Section 16.4</span></a>: exact match for the cases that have a checkable answer, and an LLM judge for the ones that do not.</p>
 <p>The harness is just three moving parts around your agent: a list of cases with references, a scorer, and an average.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cases <span class="op">=</span> [</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"input"</span>: <span class="st">"What is 15</span><span class="sc">% o</span><span class="st">f 240?"</span>, <span class="st">"reference"</span>: <span class="st">"36"</span>, <span class="st">"type"</span>: <span class="st">"exact"</span>},</span>
@@ -735,23 +741,23 @@ Figure&nbsp;15.6: The LLM-as-judge pipeline: the agent’s output (or full traje
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> [score(c, run_agent(c[<span class="st">"input"</span>])) <span class="cf">for</span> c <span class="kw">in</span> cases]</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"average score:"</span>, <span class="bu">sum</span>(results) <span class="op">/</span> <span class="bu">len</span>(results))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Trace the loop and every idea from the chapter has a home. The <code>cases</code> list is your <strong>golden dataset</strong>, curated deliberately to cover the behaviors you decided mattered in <a href="#sec-ch15-what" class="quarto-xref"><span>Section 15.3</span></a>. The <code>score</code> function is the two-rung ladder from <a href="#sec-ch15-methods" class="quarto-xref"><span>Section 15.4</span></a>: exact match where an answer is checkable, a validated <strong>LLM judge</strong> where it is not. And the final average is your <strong>scoreboard</strong>, a single number you can watch move as you change a prompt, swap a model, or add a tool. <a href="#fig-eval-harness" class="quarto-xref">Figure&nbsp;<span>15.7</span></a> shows the cycle that turns this from a one-off script into a habit.</p>
+<p>Trace the loop and every idea from the chapter has a home. The <code>cases</code> list is your <strong>golden dataset</strong>, curated deliberately to cover the behaviors you decided mattered in <a href="#sec-ch15-what" class="quarto-xref"><span>Section 16.3</span></a>. The <code>score</code> function is the two-rung ladder from <a href="#sec-ch15-methods" class="quarto-xref"><span>Section 16.4</span></a>: exact match where an answer is checkable, a validated <strong>LLM judge</strong> where it is not. And the final average is your <strong>scoreboard</strong>, a single number you can watch move as you change a prompt, swap a model, or add a tool. <a href="#fig-eval-harness" class="quarto-xref">Figure&nbsp;<span>16.7</span></a> shows the cycle that turns this from a one-off script into a habit.</p>
 <div id="fig-eval-harness" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-eval-harness-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch15/fig-eval-harness.png" class="img-fluid figure-img">
+<img src="../..\images/ch16/fig-eval-harness.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eval-harness-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.7: The evaluation loop as a habit: run the agent over a curated dataset, score each result by exact match or judge, aggregate into a scoreboard, then change the agent and rerun to see whether the number moved.
+Figure&nbsp;16.7: The evaluation loop as a habit: run the agent over a curated dataset, score each result by exact match or judge, aggregate into a scoreboard, then change the agent and rerun to see whether the number moved.
 </figcaption>
 </figure>
 </div>
-<p>Two small extensions turn this toy into something closer to real, and they are the whole argument of this chapter in a few extra lines of scoring. First, add a grader that checks the <em>outcome</em> rather than the text: for a refund case, query the billing database and score whether a refund row of the right amount actually exists, so the agent cannot pass by merely <em>claiming</em> success (<a href="#sec-ch15-output-outcome" class="quarto-xref"><span>Section 15.2.1</span></a>). Second, capture each run’s transcript and hand it to a trajectory judge (<a href="#sec-ch15-trajectory" class="quarto-xref"><span>Section 15.5.2</span></a>) that scores whether the path honored the rules, for instance that validation happened before any refund. The shape of the loop never changes; you are simply grading the outcome and the route alongside the output.</p>
+<p>Two small extensions turn this toy into something closer to real, and they are the whole argument of this chapter in a few extra lines of scoring. First, add a grader that checks the <em>outcome</em> rather than the text: for a refund case, query the billing database and score whether a refund row of the right amount actually exists, so the agent cannot pass by merely <em>claiming</em> success (<a href="#sec-ch15-output-outcome" class="quarto-xref"><span>Section 16.2.1</span></a>). Second, capture each run’s transcript and hand it to a trajectory judge (<a href="#sec-ch15-trajectory" class="quarto-xref"><span>Section 16.5.2</span></a>) that scores whether the path honored the rules, for instance that validation happened before any refund. The shape of the loop never changes; you are simply grading the outcome and the route alongside the output.</p>
 <p>The value is not the number itself but the <em>feedback loop</em> it creates: with a harness in place, every proposed improvement becomes a testable hypothesis instead of a hopeful guess, and regressions get caught before your users find them. This is the discipline that separates an agent shipped on evidence from one shipped on vibes. But a score tells you <em>that</em> something got worse without telling you <em>why</em>; for that you need to see inside a single run, step by step. Turning the aggregate scoreboard into an X-ray of individual runs is the job of observability, and the next chapter.</p>
 </section>
-<section id="sec-ch15-case" class="level2" data-number="15.8">
-<h2 data-number="15.8" class="anchored" data-anchor-id="sec-ch15-case"><span class="header-section-number">15.8</span> Case study: the Ledgerly support agent</h2>
-<p>Where we left off, <a href="../part3-building/12-orchestration-langgraph.html#sec-ch12-case" class="quarto-xref"><span>Section 12.7</span></a> asked the question that gates every launch: does Ledgerly <em>work</em>? This chapter’s answer is to build a scoreboard, so let us assemble Ledgerly’s golden dataset, the curated cases from <a href="#sec-ch15-what" class="quarto-xref"><span>Section 15.3</span></a> that cover the behaviors we actually care about.</p>
+<section id="sec-ch15-case" class="level2" data-number="16.8">
+<h2 data-number="16.8" class="anchored" data-anchor-id="sec-ch15-case"><span class="header-section-number">16.8</span> Case study: the Ledgerly support agent</h2>
+<p>Where we left off, <a href="../part3-building/13-orchestration-langgraph.html#sec-ch12-case" class="quarto-xref"><span>Section 13.7</span></a> asked the question that gates every launch: does Ledgerly <em>work</em>? This chapter’s answer is to build a scoreboard, so let us assemble Ledgerly’s golden dataset, the curated cases from <a href="#sec-ch15-what" class="quarto-xref"><span>Section 16.3</span></a> that cover the behaviors we actually care about.</p>
 <p>A good eval set mixes the easy, checkable tickets with the ones that need judgment, and it deliberately includes the cases that could go wrong:</p>
 <table class="caption-top table">
 <colgroup>
@@ -789,20 +795,20 @@ Figure&nbsp;15.7: The evaluation loop as a habit: run the agent over a curated d
 </tr>
 </tbody>
 </table>
-<p>Each row exercises a dimension from <a href="#sec-ch15-what" class="quarto-xref"><span>Section 15.3</span></a>. The first checks plain <strong>task success</strong>. The refund-cap row checks <strong>safety</strong>, because over-refunding is the failure that costs Ledgerly money, so it earns its own case, exactly the kind of adversarial ticket a serious eval set must contain. The double-charge row checks <strong>trajectory quality</strong>, because arriving at the right refund by a reckless path, say by refunding before diagnosing, is not good enough. Run the harness from <a href="#sec-ch15-worked" class="quarto-xref"><span>Section 15.7</span></a> over this set and the single averaged number becomes Ledgerly’s release gate: change a prompt or swap a model, rerun, and <em>see</em> whether the agent improved or quietly regressed, the loop <a href="#fig-eval-harness" class="quarto-xref">Figure&nbsp;<span>15.7</span></a> makes a habit.</p>
-<p>That four-row table is a teaching sketch; Ledgerly’s real eval suite is larger and has a definite anatomy, drawn in <a href="#fig-ledgerly-eval-anatomy" class="quarto-xref">Figure&nbsp;<span>15.8</span></a>. It is organized along three axes. The <strong>task categories</strong> span the coverage list from <a href="#sec-ch15-coverage" class="quarto-xref"><span>Section 15.4.1</span></a>: billing lookups, refund requests, policy questions, ambiguous tickets, and tool errors. The <strong>graders</strong> are chosen to fit each category: exact match for the router’s classification, a rule-based check that the required tool call was made, an environment check that a refund row was created or correctly withheld, an LLM judge for the clarity of the reply, and a trajectory judge that confirms policy was checked before any action. And the <strong>metrics</strong> roll those grades up into the numbers leadership actually watches: resolution accuracy, correct-escalation rate, refund-policy compliance, tool-call accuracy, evidence coverage, unauthorized-action rate, average turns, cost per resolved case, latency, and the regression pass rate.</p>
+<p>Each row exercises a dimension from <a href="#sec-ch15-what" class="quarto-xref"><span>Section 16.3</span></a>. The first checks plain <strong>task success</strong>. The refund-cap row checks <strong>safety</strong>, because over-refunding is the failure that costs Ledgerly money, so it earns its own case, exactly the kind of adversarial ticket a serious eval set must contain. The double-charge row checks <strong>trajectory quality</strong>, because arriving at the right refund by a reckless path, say by refunding before diagnosing, is not good enough. Run the harness from <a href="#sec-ch15-worked" class="quarto-xref"><span>Section 16.7</span></a> over this set and the single averaged number becomes Ledgerly’s release gate: change a prompt or swap a model, rerun, and <em>see</em> whether the agent improved or quietly regressed, the loop <a href="#fig-eval-harness" class="quarto-xref">Figure&nbsp;<span>16.7</span></a> makes a habit.</p>
+<p>That four-row table is a teaching sketch; Ledgerly’s real eval suite is larger and has a definite anatomy, drawn in <a href="#fig-ledgerly-eval-anatomy" class="quarto-xref">Figure&nbsp;<span>16.8</span></a>. It is organized along three axes. The <strong>task categories</strong> span the coverage list from <a href="#sec-ch15-coverage" class="quarto-xref"><span>Section 16.4.1</span></a>: billing lookups, refund requests, policy questions, ambiguous tickets, and tool errors. The <strong>graders</strong> are chosen to fit each category: exact match for the router’s classification, a rule-based check that the required tool call was made, an environment check that a refund row was created or correctly withheld, an LLM judge for the clarity of the reply, and a trajectory judge that confirms policy was checked before any action. And the <strong>metrics</strong> roll those grades up into the numbers leadership actually watches: resolution accuracy, correct-escalation rate, refund-policy compliance, tool-call accuracy, evidence coverage, unauthorized-action rate, average turns, cost per resolved case, latency, and the regression pass rate.</p>
 <p>Resting above all of it is a short list of <strong>must-pass cases</strong>, the non-negotiables that gate every release no matter how high the average climbs. Ledgerly must not refund a valid proration; it must ask for missing account information rather than guess; it must stop before refunding above the approval threshold; it must never claim a refund that a failed tool never actually made; it must escalate when records conflict; and it must answer from the current policy, not from the model’s stale memory. Each is drawn from a real way the agent can hurt a customer or the business, and any one of them failing turns the whole release red.</p>
 <div id="fig-ledgerly-eval-anatomy" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ledgerly-eval-anatomy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../..\images/ch15/fig-ledgerly-eval-anatomy.png" class="img-fluid figure-img">
+<img src="../..\images/ch16/fig-ledgerly-eval-anatomy.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ledgerly-eval-anatomy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.8: Ledgerly’s evaluation suite has three axes, task categories by graders by metrics, resting on a small set of must-pass cases that gate every release regardless of the average score.
+Figure&nbsp;16.8: Ledgerly’s evaluation suite has three axes, task categories by graders by metrics, resting on a small set of must-pass cases that gate every release regardless of the average score.
 </figcaption>
 </figure>
 </div>
-<p>A scoreboard tells us <em>that</em> Ledgerly regressed but not <em>why</em>. <a href="16-observability.html#sec-ch16-case" class="quarto-xref"><span>Section 16.7</span></a> wires in the traces and metrics that let us open a single bad ticket and watch exactly where it went wrong.</p>
+<p>A scoreboard tells us <em>that</em> Ledgerly regressed but not <em>why</em>. <a href="17-observability.html#sec-ch16-case" class="quarto-xref"><span>Section 17.7</span></a> wires in the traces and metrics that let us open a single bad ticket and watch exactly where it went wrong.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly so far">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -821,8 +827,8 @@ Figure&nbsp;15.8: Ledgerly’s evaluation suite has three axes, task categories 
 </div>
 </div>
 </section>
-<section id="sec-ch15-summary" class="level2" data-number="15.9">
-<h2 data-number="15.9" class="anchored" data-anchor-id="sec-ch15-summary"><span class="header-section-number">15.9</span> Summary</h2>
+<section id="sec-ch15-summary" class="level2" data-number="16.9">
+<h2 data-number="16.9" class="anchored" data-anchor-id="sec-ch15-summary"><span class="header-section-number">16.9</span> Summary</h2>
 <p>This chapter turned trust into measurement. An agent you cannot evaluate is one you cannot responsibly ship, and evaluation is a real discipline because agents break ordinary testing.</p>
 <ul>
 <li><strong>Agents aren’t graded like a function.</strong> They are multi-turn actors that call tools and change state, so a fluent final answer can hide a wrong tool call or an outcome that never happened. Grade the <strong>trajectory</strong> (what it said and did) and the <strong>outcome</strong> (what actually changed) as two separate things, and never mistake the agent’s final reply for either <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[1]</a></span>.</li>
@@ -832,10 +838,10 @@ Figure&nbsp;15.8: Ledgerly’s evaluation suite has three axes, task categories 
 <li><strong>Validate the judge, grade the path, check the evidence.</strong> A judge is a fallible model with real biases, so calibrate it against humans <span class="citation" data-cites="zheng2023judge"><a href="../../references.html#ref-zheng2023judge" role="doc-biblioref">[3]</a></span>; trajectory and component evals find where a run went wrong; retrieval needs its own metrics <span class="citation" data-cites="es2023ragas"><a href="../../references.html#ref-es2023ragas" role="doc-biblioref">[4]</a></span>.</li>
 <li><strong>Benchmarks compare models; private evals decide launches.</strong> AgentBench, SWE-bench and its Verified subset, and the Berkeley Function-Calling Leaderboard are shared yardsticks, but beware contamination, Goodhart’s law, and the construct gap; the eval that ships your agent is your own <span class="citation" data-cites="liu2023agentbench jimenez2024swebench openai2024swebenchverified bfcl2024"><a href="../../references.html#ref-liu2023agentbench" role="doc-biblioref">[5]</a>, <a href="../../references.html#ref-jimenez2024swebench" role="doc-biblioref">[6]</a>, <a href="../../references.html#ref-openai2024swebenchverified" role="doc-biblioref">[7]</a>, <a href="../../references.html#ref-bfcl2024" role="doc-biblioref">[8]</a></span>.</li>
 </ul>
-<p>Evaluation gives you the aggregate verdict: <em>how good is the agent, overall?</em> What it does not give you is the reason behind a single bad run, the specific step where a tool call failed or the model wandered off. Seeing inside one run, step by step, is a different capability, and it is where the next chapter goes: <a href="16-observability.html" class="quarto-xref"><span>Chapter 16</span></a>.</p>
+<p>Evaluation gives you the aggregate verdict: <em>how good is the agent, overall?</em> What it does not give you is the reason behind a single bad run, the specific step where a tool call failed or the model wandered off. Seeing inside one run, step by step, is a different capability, and it is where the next chapter goes: <a href="17-observability.html" class="quarto-xref"><span>Chapter 17</span></a>.</p>
 </section>
-<section id="sec-ch15-exercises" class="level2" data-number="15.10">
-<h2 data-number="15.10" class="anchored" data-anchor-id="sec-ch15-exercises"><span class="header-section-number">15.10</span> Exercises</h2>
+<section id="sec-ch15-exercises" class="level2" data-number="16.10">
+<h2 data-number="16.10" class="anchored" data-anchor-id="sec-ch15-exercises"><span class="header-section-number">16.10</span> Exercises</h2>
 <ol type="1">
 <li><strong>Math or essay?</strong> Classify three agent tasks of your choosing as exact-match-testable or judgment-based, and explain what makes each one fall where it does.</li>
 <li><strong>Fill the scoreboard.</strong> For a customer-support agent, rank the five evaluation dimensions by importance and justify your ordering.</li>
@@ -1439,13 +1445,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../chapters/part3-building/14-multi-agent-systems.html" class="pagination-link" aria-label="Multi-Agent Systems">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span>
+      <a href="../../chapters/part3-building/15-multi-agent-systems.html" class="pagination-link" aria-label="Multi-Agent Systems">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Multi-Agent Systems</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../chapters/part4-production/16-observability.html" class="pagination-link" aria-label="Observability">
-        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Observability</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../chapters/part4-production/17-observability.html" class="pagination-link" aria-label="Observability">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Observability</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
