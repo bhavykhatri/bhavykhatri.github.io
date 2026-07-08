@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://www.bhavykhatri.com/sitemap-index.xml
+Sitemap: https://www.bhavykhatri.com/Agentic-AI-Book/sitemap.xml
