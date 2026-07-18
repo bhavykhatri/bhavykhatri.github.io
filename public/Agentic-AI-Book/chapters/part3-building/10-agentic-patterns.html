@@ -470,7 +470,7 @@ div.csl-indent {
 <section id="sec-ch9-intuition" class="level2" data-number="10.1">
 <h2 data-number="10.1" class="anchored" data-anchor-id="sec-ch9-intuition"><span class="header-section-number">10.1</span> Opening intuition</h2>
 <p>The previous chapter left us at a satisfying but incomplete place. We decided <em>that</em> a given task wants a workflow, an agent, or a hybrid, but “build a workflow” is not yet a design. It is like deciding to build a house out of brick rather than timber: a real and important choice, but it does not tell you where the walls go. This chapter hands you the floor plans. It turns out that the vast majority of production LLM systems, however elaborate they look from the outside, are built from a small handful of recurring shapes, combined and nested like rooms in a house. Learn the handful, and you can read almost any system, and design your own.</p>
-<p>Here is the reassuring part, and the reason this chapter is shorter on new theory than you might expect: there are only about five of these shapes, and you have already met the ideas behind several of them. When Anthropic studied dozens of teams building LLM systems in production, the lesson that came back again and again was that the most successful ones did not reach for complex frameworks; they composed <em>simple, reusable patterns</em> <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. Think of them as the standard joints a carpenter knows: the dovetail, the mortise and tenon. None is complicated on its own. The craft is in knowing which joint a given problem calls for, and how to combine a few of them into something sturdy.</p>
+<p>Here is the reassuring part, and the reason this chapter is shorter on new theory than you might expect: there are only about five of these shapes, and you have already met the ideas behind several of them. When Anthropic studied dozens of teams building LLM systems in production, the lesson that came back again and again was that the most successful ones did not reach for complex frameworks; they composed <em>simple, reusable patterns</em> <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. Other people who spend their days building these systems land in the same neighbourhood: LangChain’s team writes about “cognitive architectures” that boil down to the same handful of arrangements <span class="citation" data-cites="chase2024cognitive"><a href="../../references.html#ref-chase2024cognitive" role="doc-biblioref">[2]</a></span>, and CrewAI ships “flows” that pin down predictable, code-driven sequences alongside its more autonomous “crews,” an almost verbatim workflow/agent split under different names <span class="citation" data-cites="crewai2025flows"><a href="../../references.html#ref-crewai2025flows" role="doc-biblioref">[3]</a></span>. The patterns are industry vocabulary, not one vendor’s product line. Think of them as the standard joints a carpenter knows: the dovetail, the mortise and tenon. None is complicated on its own. The craft is in knowing which joint a given problem calls for, and how to combine a few of them into something sturdy.</p>
 <p>We will walk through the five workflow patterns in order of increasing flexibility, exactly the way complexity tends to grow in a real project. <strong>Prompt chaining</strong> runs steps in a fixed line. <strong>Routing</strong> picks which line to run. <strong>Parallelization</strong> runs several lines at once and combines the results. <strong>Orchestrator–workers</strong> lets a lead model <em>invent</em> the lines on the fly. And <strong>evaluator–optimizer</strong> loops a maker against a critic until the work is good, a shape you will recognize from the reflection idea in <a href="../part2-llm-agents/08-reasoning-and-planning.html#sec-ch7-reflection" class="quarto-xref"><span>Section 8.6</span></a>. <a href="#fig-patterns-overview" class="quarto-xref">Figure&nbsp;<span>10.1</span></a> lays the five out side by side so you can see the progression before we take them one at a time. Each is a way of arranging augmented-LLM calls, from the most rigid to the most adaptive; where the arranging finally passes entirely to the model, the workflow has become an agent.</p>
 <div id="fig-patterns-overview" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -675,7 +675,7 @@ Figure&nbsp;10.7: Each workflow pattern is enabled by one assumption about the t
 <li><strong>Orchestrator–workers:</strong> did the orchestrator create a sensible number of subtasks, neither over-splitting nor missing a critical one, and does each carry a reason?</li>
 <li><strong>Evaluator–optimizer:</strong> did the evaluator apply the rubric consistently, and did we stop at the iteration cap instead of looping forever?</li>
 </ul>
-<p>In production these gates rarely stand alone. They pair with <strong>durable execution</strong>: checkpointing so a long run can resume after a failure, retry policies so a transient error does not sink the whole workflow, and human-in-the-loop steps for the decisions a machine should not make by itself <span class="citation" data-cites="mslearn2026agentic"><a href="../../references.html#ref-mslearn2026agentic" role="doc-biblioref">[2]</a></span>. The gate is not an afterthought bolted on at the end; it is part of the shape of the workflow, designed in from the start.</p>
+<p>In production these gates rarely stand alone. They pair with <strong>durable execution</strong>: checkpointing so a long run can resume after a failure, retry policies so a transient error does not sink the whole workflow, and human-in-the-loop steps for the decisions a machine should not make by itself <span class="citation" data-cites="mslearn2026agentic"><a href="../../references.html#ref-mslearn2026agentic" role="doc-biblioref">[4]</a></span>. The gate is not an afterthought bolted on at the end; it is part of the shape of the workflow, designed in from the start.</p>
 </section>
 <section id="sec-ch9-selection" class="level3" data-number="10.7.3">
 <h3 data-number="10.7.3" class="anchored" data-anchor-id="sec-ch9-selection"><span class="header-section-number">10.7.3</span> Choose the pattern whose assumptions your cases support</h3>
@@ -759,7 +759,7 @@ Tip
 </div>
 <section id="sec-ch9-observability" class="level3" data-number="10.8.1">
 <h3 data-number="10.8.1" class="anchored" data-anchor-id="sec-ch9-observability"><span class="header-section-number">10.8.1</span> If patterns compose, traces must compose</h3>
-<p>There is a hidden cost to all this stacking that the diagrams do not show, and it is worth naming before we build anything. A composed system is only as debuggable as its trace. When a router feeds a chain that contains an evaluator loop, a wrong final answer could have come from a misroute, a bad intermediate, or an evaluator that gave up too early, and if all you logged was the final reply you cannot tell which. Composed systems act over many steps, and mistakes in early steps propagate and compound downstream, so you have to be able to see the whole trajectory, not just the answer at the end <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[3]</a></span>.</p>
+<p>There is a hidden cost to all this stacking that the diagrams do not show, and it is worth naming before we build anything. A composed system is only as debuggable as its trace. When a router feeds a chain that contains an evaluator loop, a wrong final answer could have come from a misroute, a bad intermediate, or an evaluator that gave up too early, and if all you logged was the final reply you cannot tell which. Composed systems act over many steps, and mistakes in early steps propagate and compound downstream, so you have to be able to see the whole trajectory, not just the answer at the end <span class="citation" data-cites="anthropic2026evals"><a href="../../references.html#ref-anthropic2026evals" role="doc-biblioref">[5]</a></span>.</p>
 <p>Concretely, log something at every pattern boundary:</p>
 <ul>
 <li>the <strong>input</strong> to the step, so you can reproduce it;</li>
@@ -771,7 +771,7 @@ Tip
 <li>any <strong>errors</strong>, and the <strong>iteration counts</strong> for loops;</li>
 <li>the <strong>final decision</strong>, and any <strong>human handoff</strong> that occurred.</li>
 </ul>
-<p>This is exactly the payoff of expressing a workflow as an explicit graph: when the control flow is a structure your code can see rather than logic buried in prompts, tracing and debugging become possible, because every node and edge is a place you can instrument <span class="citation" data-cites="langgraph2024"><a href="../../references.html#ref-langgraph2024" role="doc-biblioref">[4]</a></span>. The later implementation chapters make these graphs concrete; for now, the rule to carry is that a system you cannot trace is a system you cannot trust, so design the trace at the same time as the patterns.</p>
+<p>This is exactly the payoff of expressing a workflow as an explicit graph: when the control flow is a structure your code can see rather than logic buried in prompts, tracing and debugging become possible, because every node and edge is a place you can instrument <span class="citation" data-cites="langgraph2024"><a href="../../references.html#ref-langgraph2024" role="doc-biblioref">[6]</a></span>. The later implementation chapters make these graphs concrete; for now, the rule to carry is that a system you cannot trace is a system you cannot trust, so design the trace at the same time as the patterns.</p>
 <div id="fig-complexity-cost" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-complexity-cost-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1048,6 +1048,19 @@ Figure&nbsp;10.10: The Ledgerly blueprint: one coherent system, completed over t
 
 Score: 6/6 checks passed</code></pre>
 <p>Read the three traces together and the chapter’s whole argument is visible in one run. The same desk gave one ticket a single call, another a fixed chain, and the third a run-time decomposition, and it spent that escalating machinery only where the ticket demanded it. The model chose the lane, the diagnosis, the workers, and the words; the code owned the lane set, the money, the worker budget, and the loop bound. That division, model proposes and code disposes, is what keeps a system this composable from also becoming uncontrollable.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="🎛️ How agentic is this orchestrator, really?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🎛️ How agentic is this orchestrator, really?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Look at the third trace again and notice that the orchestrator picked its workers from a <em>fixed roster</em> of three (<code>billing_analyst</code>, <code>policy_worker</code>, <code>history_worker</code>). That is enough to make the pattern’s point (the orchestrator matches workers to the ticket at run time), but it is deliberately toward the low-orchestration-autonomy end of the <a href="09-workflows-vs-agents.html#sec-ch8-two-knobs" class="quarto-xref"><span>Section 9.4.3</span></a> dial. A fully model-driven orchestrator would go one step further and let the model <em>name</em> the sub-tasks it needs from a specification of the case, not a menu, and would spawn a fresh worker for each with an on-the-fly prompt. Both designs share the same effect-authority stance (the code still owns the refund path, the worker budget, and the loop bound), which is what makes it safe to turn the orchestration knob further up. The fixed roster shown here is the smallest illustration of the pattern; the production choice is how open a menu you can afford to hand the model without losing debuggability.</p>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly after Chapter 10">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1109,14 +1122,20 @@ Score: 6/6 checks passed</code></pre>
 <div id="ref-anthropic2024effective" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[1] </div><div class="csl-right-inline">Anthropic, E. Schluntz, and B. Zhang, <span>“Building effective agents.”</span> <a href="https://www.anthropic.com/engineering/building-effective-agents" class="uri">https://www.anthropic.com/engineering/building-effective-agents</a>, Dec. 2024.</div>
 </div>
+<div id="ref-chase2024cognitive" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">H. Chase, <span>“What is a "cognitive architecture"?”</span> <a href="https://blog.langchain.com/what-is-a-cognitive-architecture/" class="uri">https://blog.langchain.com/what-is-a-cognitive-architecture/</a>, 2024.</div>
+</div>
+<div id="ref-crewai2025flows" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">crewAI Inc., <span>“<span>CrewAI</span> flows.”</span> <a href="https://docs.crewai.com/en/concepts/flows" class="uri">https://docs.crewai.com/en/concepts/flows</a>, 2025.</div>
+</div>
 <div id="ref-mslearn2026agentic" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Microsoft, <span>“Agentic application patterns.”</span> <a href="https://learn.microsoft.com/en-us/azure/durable-task/sdks/durable-agents-patterns" class="uri">https://learn.microsoft.com/en-us/azure/durable-task/sdks/durable-agents-patterns</a>, 2026.</div>
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">Microsoft, <span>“Agentic application patterns.”</span> <a href="https://learn.microsoft.com/en-us/azure/durable-task/sdks/durable-agents-patterns" class="uri">https://learn.microsoft.com/en-us/azure/durable-task/sdks/durable-agents-patterns</a>, 2026.</div>
 </div>
 <div id="ref-anthropic2026evals" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[3] </div><div class="csl-right-inline">Anthropic, M. Grace, J. Hadfield, R. Olivares, and J. De Jonghe, <span>“Demystifying evals for AI agents.”</span> <a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents" class="uri">https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents</a>, Jan. 2026.</div>
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">Anthropic, M. Grace, J. Hadfield, R. Olivares, and J. De Jonghe, <span>“Demystifying evals for AI agents.”</span> <a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents" class="uri">https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents</a>, Jan. 2026.</div>
 </div>
 <div id="ref-langgraph2024" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[4] </div><div class="csl-right-inline">LangChain, <span>“LangGraph documentation.”</span> <a href="https://langchain-ai.github.io/langgraph/" class="uri">https://langchain-ai.github.io/langgraph/</a>, 2024.</div>
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">LangChain, <span>“LangGraph documentation.”</span> <a href="https://langchain-ai.github.io/langgraph/" class="uri">https://langchain-ai.github.io/langgraph/</a>, 2024.</div>
 </div>
 </div>
 </section>

@@ -618,6 +618,34 @@ Figure&nbsp;7.5: The tool-calling round trip as a concrete message list. Each tu
 </figcaption>
 </figure>
 </div>
+<p>To make the handshake fully concrete, here is what those three artefacts actually look like on the wire. First, the tool <em>definition</em> the runtime sends to the model up front, a small JSON Schema that names the function, describes when to use it, and types its arguments:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"function"</span><span class="fu">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"function"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"get_invoice"</span><span class="fu">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Look up an invoice by its ID and return status, amount, and due date."</span><span class="fu">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"parameters"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"object"</span><span class="fu">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"properties"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"invoice_id"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"string"</span><span class="fu">,</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"The invoice identifier, e.g. AC-1001."</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">},</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"required"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"invoice_id"</span><span class="ot">]</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Given that definition, an assistant turn that decides to call the tool comes back as one message with a <code>tool_calls</code> field, and the runtime replies with a matching <code>tool</code> message carrying the real answer:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"role"</span><span class="fu">:</span> <span class="st">"assistant"</span><span class="fu">,</span> <span class="dt">"tool_calls"</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"id"</span><span class="fu">:</span> <span class="st">"call_1"</span><span class="fu">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"function"</span><span class="fu">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"function"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"name"</span><span class="fu">:</span> <span class="st">"get_invoice"</span><span class="fu">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                 <span class="dt">"arguments"</span><span class="fu">:</span> <span class="st">"{</span><span class="ch">\"</span><span class="st">invoice_id</span><span class="ch">\"</span><span class="st">: </span><span class="ch">\"</span><span class="st">AC-1001</span><span class="ch">\"</span><span class="st">}"</span><span class="fu">}</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span><span class="ot">]</span><span class="fu">}</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"role"</span><span class="fu">:</span> <span class="st">"tool"</span><span class="fu">,</span> <span class="dt">"tool_call_id"</span><span class="fu">:</span> <span class="st">"call_1"</span><span class="fu">,</span> <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"get_invoice"</span><span class="fu">,</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a> <span class="dt">"content"</span><span class="fu">:</span> <span class="st">"{</span><span class="ch">\"</span><span class="st">status</span><span class="ch">\"</span><span class="st">: </span><span class="ch">\"</span><span class="st">unpaid</span><span class="ch">\"</span><span class="st">, </span><span class="ch">\"</span><span class="st">amount</span><span class="ch">\"</span><span class="st">: 420.00, </span><span class="ch">\"</span><span class="st">due</span><span class="ch">\"</span><span class="st">: </span><span class="ch">\"</span><span class="st">2025-04-15</span><span class="ch">\"</span><span class="st">}"</span><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>That is the whole shape. Every provider’s tool-calling API is a small variation on those three artefacts, and every richer pattern in this book, retries, parallel tool calls, sub-agent hand-offs, is built out of the same handshake.</p>
 <p>Notice what this quietly fixes. In Chapter 6 we saw that arithmetic and precise logic are exactly where the model is brittle, because it is pattern-matching plausible digits rather than truly calculating. A calculator tool sidesteps that failure entirely: the model no longer has to <em>be</em> good at multiplication, it only has to be good at <em>recognizing that this is a multiplication and delegating it</em>. That is a much easier and more reliable skill, and it generalizes. The same move, letting the model decide <em>what</em> to do and letting a dependable tool do the <em>doing</em>, is how we get current data from a frozen model, real actions from a text generator, and exact answers from a probabilistic one. Research showed models can even be taught to reach for tools on their own, deciding when an external call would serve them better than their own guess <span class="citation" data-cites="schick2023toolformer"><a href="../../references.html#ref-schick2023toolformer" role="doc-biblioref">[3]</a></span>, and function calling is now a first-class feature of the major model providers’ interfaces <span class="citation" data-cites="openai2025tools"><a href="../../references.html#ref-openai2025tools" role="doc-biblioref">[4]</a></span>.</p>
 <p>The catch, and it is the theme we will return to when we treat tools in depth in the <a href="../../chapters/part3-building/11-tools-and-mcp.html">tools and MCP chapter</a>, is that a tool is only as usable as its <em>description</em>. The model chooses and fills in a tool based entirely on the words you use to describe it, so a vague name or a fuzzy argument list will lead it to call the wrong thing or call the right thing wrongly. Designing this <strong>agent–computer interface</strong> well, with clear names, minimal and well-typed arguments, and honest descriptions of what each tool does and does not do, turns out to be as important as any prompt engineering, and for the same reason: it is how you communicate your intent to a model that will take you very literally.</p>
 <section id="sec-ch6-tool-decisions" class="level3" data-number="7.3.1">
@@ -742,22 +770,22 @@ Figure&nbsp;7.9: Two kinds of memory. Short-term memory is the fleeting content 
 <h2 data-number="7.6" class="anchored" data-anchor-id="sec-ch6-together"><span class="header-section-number">7.6</span> Putting it together</h2>
 <p>We have met the three augmentations one at a time, but the whole point of the augmented LLM is that they work <em>together</em>, orchestrated by the model on a single turn. Come back to <a href="#fig-augmented-llm" class="quarto-xref">Figure&nbsp;<span>7.2</span></a> and picture a concrete request to make it vivid: a support agent is asked, “Why was I charged twice last month, and can you fix it?” A bare model could only guess. The augmented one has moves. It can <strong>retrieve</strong> the customer’s billing record and the relevant refund policy so it is reasoning about real facts; it can <strong>call a tool</strong> to issue the actual refund rather than merely describing how one would; and it can <strong>write to memory</strong> that this customer had a double-charge, so a future conversation starts already knowing the history. One question, and all three channels light up in service of a single, grounded, effective answer.</p>
 <p>It is worth seeing, in the barest sketch, how little orchestration code this takes, precisely because the <em>ideas</em> have been doing all the heavy lifting. The following pseudocode is illustrative, not a library to copy (if you skipped it entirely the chapter would lose nothing), but it makes concrete the handshake we drew in <a href="#fig-tool-call" class="quarto-xref">Figure&nbsp;<span>7.4</span></a> and the fetch-move shared by retrieval and memory.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> augmented_turn(user_message, tools, knowledge_base, memory):</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 1. Pull in relevant context: trusted docs + the agent's own past notes.</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    passages <span class="op">=</span> knowledge_base.search(user_message)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    recalled <span class="op">=</span> memory.recall(user_message)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 2. Ask the model, giving it the context and the tools it may call.</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> model.respond(user_message, context<span class="op">=</span>[passages, recalled], tools<span class="op">=</span>tools)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 3. If the model asked for a tool, run it and let the model see the result.</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> response.tool_call:</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> tools.run(response.tool_call)        <span class="co"># the runtime executes, not the model</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        response <span class="op">=</span> model.respond(result, tools<span class="op">=</span>tools)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 4. Write anything worth remembering back to the notebook.</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    memory.save(user_message, response)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> response.text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> augmented_turn(user_message, tools, knowledge_base, memory):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 1. Pull in relevant context: trusted docs + the agent's own past notes.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    passages <span class="op">=</span> knowledge_base.search(user_message)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    recalled <span class="op">=</span> memory.recall(user_message)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 2. Ask the model, giving it the context and the tools it may call.</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> model.respond(user_message, context<span class="op">=</span>[passages, recalled], tools<span class="op">=</span>tools)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 3. If the model asked for a tool, run it and let the model see the result.</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> response.tool_call:</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> tools.run(response.tool_call)        <span class="co"># the runtime executes, not the model</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        response <span class="op">=</span> model.respond(result, tools<span class="op">=</span>tools)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 4. Write anything worth remembering back to the notebook.</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    memory.save(user_message, response)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> response.text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Read it as prose and the shape is exactly the augmented LLM: gather context by retrieving and recalling, let the model decide whether it needs to act, execute any tool it asks for and feed the result back, and finally record what matters. Notice that the model never runs a tool or searches a database itself; it only <em>decides</em>, and the surrounding runtime does the doing. That separation is the safety seam we will lean on throughout the book: the model’s judgment on one side, real-world effects on the other, with a boundary where you can validate, log, or require human approval.</p>
 <section id="sec-ch6-orchestration-decisions" class="level3" data-number="7.6.1">
 <h3 data-number="7.6.1" class="anchored" data-anchor-id="sec-ch6-orchestration-decisions"><span class="header-section-number">7.6.1</span> Orchestration is a sequence of decisions</h3>
@@ -999,15 +1027,15 @@ Figure&nbsp;7.10: One augmented turn at Ledgerly. A billing complaint flows thro
 </div>
 <div class="callout-body-container callout-body">
 <p>From the <code>code/</code> directory. This is an agentic stage, so it needs a model: copy <code>code/.env.example</code> to <code>code/.env</code> and add an OpenAI or Azure OpenAI key. Run all four steps at once, or one at a time with a flag:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch07                          <span class="co"># all four steps, in order</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch07 <span class="at">--bare</span>                   <span class="co"># step 0: the bare model</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch07 <span class="at">--tools</span>                  <span class="co"># step 1: + tools (hands)</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch07 <span class="at">--tools-retrieval</span>        <span class="co"># step 2: + retrieval (open book)</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch07 <span class="at">--tools-retrieval-memory</span> <span class="co"># step 3: + memory (notebook)</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch07.evaluate                 <span class="co"># does each augmentation fix its failure?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch07                          <span class="co"># all four steps, in order</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch07 <span class="at">--bare</span>                   <span class="co"># step 0: the bare model</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch07 <span class="at">--tools</span>                  <span class="co"># step 1: + tools (hands)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch07 <span class="at">--tools-retrieval</span>        <span class="co"># step 2: + retrieval (open book)</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch07 <span class="at">--tools-retrieval-memory</span> <span class="co"># step 3: + memory (notebook)</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch07.evaluate                 <span class="co"># does each augmentation fix its failure?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<p>We ask one question and watch the answer change as each augmentation clicks into place: <em>“Why was I charged twice on invoice #4471, and can you fix it?”</em> Throughout, a <strong>🤖 model output</strong> box holds what the model wrote, and a <strong>⌨️ code / tool output</strong> box holds what Ledgerly’s own code did (a tool call, a retrieval, a write to memory), so it is always clear which is which.</p>
+<p>We ask one question and watch the answer change as each augmentation clicks into place: <em>“Why was I charged twice on invoice #4471, and can you fix it?”</em> Throughout, a <strong>🤖 model output</strong> box holds what the model wrote, and a <strong>🗒️ trace</strong> box holds what Ledgerly’s own code did (a tool call, a retrieval, a write to memory), so it is always clear which is which. The trace boxes are transcripts, not runnable code; the actual code lives in <code>code/ledgerly/ch07/</code> for you to run alongside.</p>
 <p>Before the first step, it helps to see how the agent itself is defined, because this part does <em>not</em> change across the four steps. Every step below sends the model the <strong>same system prompt</strong>, the standing instructions that give it its Ledgerly persona and its rules of honesty:</p>
 <pre class="text"><code>You are a support agent for Ledgerly, a subscription billing service. You help
 customers understand and fix charges on their account. Always follow these rules:
@@ -1035,13 +1063,13 @@ customers understand and fix charges on their account. Always follow these rules
 <p>Every sentence is honest, and not one is grounded in Dana’s actual account. Note what it did <em>not</em> do: it did not invent a charge or a policy to sound helpful. That restraint comes straight from the shared honesty rules, not from a special “you can’t see it” instruction. This is the failure the rest of the steps fix.</p>
 <p>Everything from Step 1 onward earns a new name. The moment we wire in a tool call, a retrieval, or a memory write, the system stops being a bare LLM and becomes an <strong>augmented LLM application</strong>, a categorically different thing even though we have not adopted a framework and even though we still handle only one turn. The rest of this section adds the augmentations one at a time and watches the same customer request stop failing.</p>
 <p><strong>Step 1: add a tool (hands).</strong> We give the model a single tool, <code>get_invoice</code>, which reads the customer’s real charges from the billing system. Now, before it answers, the agent can actually <em>look</em>.</p>
-<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ Code / tool output">
+<div class="callout callout-style-simple callout-tip callout-titled" title="🗒️ Trace">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-⌨️ Code / tool output
+🗒️ Trace
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1065,13 +1093,13 @@ Returns:    2 charges -&gt; $80.00 on #4471 (2026-06-03); $80.00 on #4471 (2026-
 </div>
 <p>The tool fixed “I can’t see your account.” What it could not fix is “I don’t know the rule.”</p>
 <p><strong>Step 2: add retrieval (an open book).</strong> Rather than trust the model to recall Ledgerly’s refund rules from training, we retrieve the actual policy document and let the agent read it. The eligibility <em>decision</em> stays in code, where an enforceable rule belongs; the retrieved passage is what the agent grounds its explanation in.</p>
-<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ Code / tool output">
+<div class="callout callout-style-simple callout-tip callout-titled" title="🗒️ Trace">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-⌨️ Code / tool output
+🗒️ Trace
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1095,13 +1123,13 @@ Decision:   policy + evidence -&gt; eligible; issue_refund("AC-1001", "4471", $8
 </div>
 </div>
 <p><strong>Step 3: add memory (a notebook).</strong> The turn is resolved, but a good agent should not make the customer re-explain everything tomorrow. So we take the outcome we just produced and <em>write it back</em> as one short note to a memory store keyed to this customer. This is the <strong>write</strong> half of memory: the resolution from step 2 becomes a durable record.</p>
-<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ Code / tool output — writing to memory (this turn)">
+<div class="callout callout-style-simple callout-tip callout-titled" title="🗒️ Trace — writing to memory (this turn)">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-⌨️ Code / tool output — writing to memory (this turn)
+🗒️ Trace — writing to memory (this turn)
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1110,13 +1138,13 @@ remember("AC-1001", note) -&gt; memory updated (AC-1001 now has 1 stored note)</
 </div>
 </div>
 <p>The next day, when the same customer returns, the <strong>read</strong> half kicks in <em>before the agent even speaks</em>: the runtime recalls that note from the store and places it in the model’s context, so a cold reopening becomes a warm one. Nothing about the model changed between yesterday and today; the only difference is that a note we saved is now handed back to it.</p>
-<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ Code / tool output — reading from memory (next turn)">
+<div class="callout callout-style-simple callout-tip callout-titled" title="🗒️ Trace — reading from memory (next turn)">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-⌨️ Code / tool output — reading from memory (next turn)
+🗒️ Trace — reading from memory (next turn)
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1149,6 +1177,32 @@ remember("AC-1001", note) -&gt; memory updated (AC-1001 now has 1 stored note)</
 </div>
 <div class="callout-body-container callout-body">
 <p>Read the four steps again and notice <em>who</em> is driving. <strong>We</strong> decided to call the tool, then to retrieve the policy, then to write to memory; the sequence lives in ordinary Python <code>if</code> branches in <code>run_turn</code>. The model’s job was narrower and it never changed: read whatever evidence we handed it and write the reply. It was never asked <em>which</em> faculty to use or <em>when</em> to use it. That is what makes this an <strong>augmented LLM</strong> rather than an <strong>agent</strong>, and it is a different point from the one-turn-versus-loop distinction above. The loop is about <em>duration</em> (one request versus a goal pursued over many); this is about <em>control</em> (who picks the next step). An augmented LLM keeps control in the code along a fixed, human-authored path. An agent hands that control to the model, which chooses its own next action and loops on the result. Letting the model choose the steps is the leap we take in the <a href="../../chapters/part2-llm-agents/08-reasoning-and-planning.html">reasoning and planning chapter</a>, and it is also why the augmented LLM is distinct from an agentic <em>framework</em>: the framework exists precisely to manage the model-driven control flow that this stage deliberately does not yet have.</p>
+<p>A word about vocabulary, because the industry uses “augmented LLM” for both stages. Anthropic’s influential <em>Building Effective Agents</em> uses the phrase for a model that emits its own tool calls and retrieval queries and thereby drives the loop <span class="citation" data-cites="anthropic2024effective"><a href="../../references.html#ref-anthropic2024effective" role="doc-biblioref">[1]</a></span>. This chapter uses it one step earlier, for the building block those loops are made of, so that we can wire in tools, retrieval, and memory one at a time and see each augmentation <em>click into place</em> before the model is handed the steering wheel. Both usages point at the same three faculties; they differ only in who picks the next step. Chapter 9 makes the underlying design choice explicit as two knobs, <strong>orchestration autonomy</strong> (who picks the path) and <strong>effect authority</strong> (who is allowed to move money), and the honest description of what we have built here is <em>orchestration knob at zero, effect knob at zero</em>. That is a legitimate pedagogical starting point, and the very next chapters turn the orchestration knob up while keeping the effect knob right where it is.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="🎯 What it looks like when the model chooses">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🎯 What it looks like when the model chooses
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For contrast, here is the shape of the same turn when the model, not the code, decides which tool to call. This is the OpenAI-style function-calling loop that <a href="#sec-augmented-block" class="quarto-xref"><span>Section 7.2</span></a> sketched in principle and that the next chapter builds for real. Read it as a <em>silhouette</em>, not a recipe: notice that the sequence has moved from <code>if</code> branches into the <em>while</em> loop, and that the model can hit <code>stop</code> on any turn, choose zero, one, or several tool calls, and change its mind after seeing a result.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tools <span class="op">=</span> [get_invoice, read_subscription, search_policy]  <span class="co"># read-only. issue_refund is gated separately.</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [{<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: SYSTEM}, {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: ticket}]</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    reply <span class="op">=</span> model.chat(messages, tools<span class="op">=</span>tools)          <span class="co"># the model decides</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> reply.tool_calls:                               <span class="co"># ...to call one or more tools,</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> call <span class="kw">in</span> reply.tool_calls:</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>            result <span class="op">=</span> runtime.execute(call)             <span class="co"># the runtime executes them,</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>            messages.append({<span class="st">"role"</span>: <span class="st">"tool"</span>, <span class="st">"tool_call_id"</span>: call.<span class="bu">id</span>, <span class="st">"content"</span>: result})</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span>                                        <span class="co"># ...and the model gets to look and decide again.</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> reply.content                               <span class="co"># or to answer, and the loop ends.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Two things this sketch makes visible that the <code>if</code>-branch version hides. First, retrieval is a choice: on an easy <code>"what's your refund window?"</code> the model can answer without ever calling <code>search_policy</code>, and on a hard duplicate-charge ticket it can call <code>get_invoice</code> twice with different arguments before deciding. Second, <code>issue_refund</code> is deliberately <em>not</em> in the <code>tools</code> list; the moment the effect stops being read-only, it leaves this loop and passes through an approval gate that lives in ordinary code. That is the two-knob design of <a href="../part3-building/09-workflows-vs-agents.html#sec-ch8-two-knobs" class="quarto-xref"><span>Section 9.4.3</span></a> in five lines: high orchestration autonomy on the reading, zero effect authority on the money.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly so far">

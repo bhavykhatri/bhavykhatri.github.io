@@ -92,6 +92,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -466,7 +495,9 @@ Figure&nbsp;4.1: PEAS applied to a self-driving taxi: the four questions you ans
 <p><strong>Static ↔︎ dynamic.</strong> Does the world sit still while the agent thinks? A crossword puzzle waits patiently; a video game does not. In a dynamic world, thinking too long is itself a mistake — the situation has moved on by the time you decide.</p>
 <p><strong>Discrete ↔︎ continuous.</strong> Does the world come in clean steps, or a smooth flow? Board games have discrete turns and moves; steering a car through traffic is continuous in time, space, and speed.</p>
 <p><strong>Single-agent ↔︎ multi-agent.</strong> Are there other agents whose choices affect yours — and who react to <em>you</em>? Solitaire is single-agent; poker, negotiation, and driving are multi-agent, which adds the endless hall of mirrors of “what do they think I’ll do?”</p>
-<p><a href="#fig-env-axes" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> gathers the axes onto a single “difficulty dial.” The far-left end of every axis is the easy, tidy world; the far-right end is the messy, realistic one.</p>
+<p><strong>Episodic ↔︎ sequential.</strong> Does today’s decision have to live with tomorrow? A spam classifier scoring one email at a time is <em>episodic</em>: each verdict stands on its own. A support agent handling a multi-turn conversation, or a chess player choosing a move that shapes the next twenty, is <em>sequential</em>: today’s action changes what choices you even get tomorrow, so you have to plan ahead and remember what you did. This is the axis that memory (in <a href="../part3-building/12-memory-systems.html" class="quarto-xref"><span>Chapter 12</span></a>) exists for.</p>
+<p><strong>Known ↔︎ unknown.</strong> Do you already know the rules of the world you are acting in? In a <em>known</em> environment (chess, a well-documented API) the outcome of every action is specified up front; the hard part is only search and computation. In an <em>unknown</em> environment (a customer’s private billing system the agent has never seen, a new web app) the agent must first <em>discover</em> what actions exist and what they do, usually by trying them and reading the responses. Most useful agents live here, and it is what makes tool use (<a href="../part3-building/11-tools-and-mcp.html" class="quarto-xref"><span>Chapter 11</span></a>) a first-class capability rather than a convenience.</p>
+<p><a href="#fig-env-axes" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> gathers the axes onto a single “difficulty dial.” The far-left end of every axis is the easy, tidy world; the far-right end is the messy, realistic one. (The figure shows the first five axes; episodic/sequential and known/unknown are the two that were added when Russell and Norvig extended the set from five to seven axes in the third edition of AIMA.)</p>
 <div id="fig-env-axes" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-env-axes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -483,7 +514,7 @@ Figure&nbsp;4.2: Five axes that describe a task environment. Real-world tasks si
 <h2 data-number="4.4" class="anchored" data-anchor-id="sec-rationality"><span class="header-section-number">4.4</span> What “rational” really means</h2>
 <p>We can finally say what it means for an agent to act <em>well</em>. A <strong>rational agent</strong> is one that chooses the action expected to do best on its performance measure, given what it has perceived so far and what it knows <span class="citation" data-cites="russell2021aima"><a href="../../references.html#ref-russell2021aima" role="doc-biblioref">[1]</a></span>. Read that sentence slowly, because two phrases in it do all the work.</p>
 <p>“<strong>Given what it has perceived</strong>” is a reminder that rationality is judged against <em>available information</em>, not against the truth of the world. If a poker player pushes all-in with the best possible odds and still loses to a lucky river card, they played <em>rationally</em> and lost. Rationality is about the quality of the <em>decision</em>, not the luck of the <em>outcome</em>. This distinction will save you endless grief when evaluating agents: an agent that made the sensible call with the information it had is not broken just because the world threw it a bad card.</p>
-<p>“<strong>Expected to do best</strong>” points at the idea of <strong>utility</strong>. When outcomes are uncertain, a rational agent doesn’t chase the single best-case result; it weighs each possible outcome by how likely it is and how much it’s worth, and picks the action with the best average. <a href="#fig-rationality" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> captures the loop: perceive, weigh the options against the performance measure, act, and learn from what comes back.</p>
+<p>“<strong>Expected to do best</strong>” points at the idea of <strong>utility</strong>. When outcomes are uncertain, a rational agent doesn’t chase the single best-case result; it weighs each possible outcome by how likely it is and how much it’s worth, and picks the action with the best average. Written out, that rule is the <strong>principle of maximum expected utility (MEU)</strong>: choose the action <span class="math inline">\(a\)</span> that maximises <span class="math display">\[\mathbb{E}[U \mid a] = \sum_{s'} P(s' \mid a)\, U(s'),\]</span> where <span class="math inline">\(s'\)</span> ranges over possible outcomes, <span class="math inline">\(P(s' \mid a)\)</span> is how likely each outcome is after taking <span class="math inline">\(a\)</span>, and <span class="math inline">\(U(s')\)</span> is how good it is on the performance measure <span class="citation" data-cites="russell2021aima"><a href="../../references.html#ref-russell2021aima" role="doc-biblioref">[1]</a></span>. <a href="#fig-rationality" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> captures the loop: perceive, weigh the options against the performance measure, act, and learn from what comes back.</p>
 <div id="fig-rationality" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rationality-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -493,6 +524,19 @@ Figure&nbsp;4.2: Five axes that describe a task environment. Real-world tasks si
 Figure&nbsp;4.3: A rational agent chooses the action with the best expected value on its performance measure, given only what it currently knows.
 </figcaption>
 </figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="🧠 Deep dive: from MEU to MDPs and POMDPs">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🧠 Deep dive: from MEU to MDPs and POMDPs
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>MEU tells you what to pick <em>right now</em>, one action at a time. Once your task is sequential (see <a href="#sec-env-properties" class="quarto-xref"><span>Section 4.3</span></a>), you need a version that plans across time. That is what a <strong>Markov decision process (MDP)</strong> gives you: states, actions, transition probabilities <span class="math inline">\(P(s' \mid s, a)\)</span>, and rewards <span class="math inline">\(R(s, a)\)</span>; the optimal policy is the one that maximises expected cumulative reward, and it is what Q-learning from <a href="02-history-and-theory.html#sec-rl" class="quarto-xref"><span>Section 2.5</span></a> estimates. When the state itself is only partially observable — which is the world every serious LLM agent lives in — the model of choice is a <strong>partially observable MDP (POMDP)</strong>, where the agent must reason about a <em>belief</em> over states rather than the state itself <span class="citation" data-cites="russell2021aima"><a href="../../references.html#ref-russell2021aima" role="doc-biblioref">[1]</a></span>. You do not usually solve a POMDP directly when building an LLM agent, but the vocabulary is worth having: it is what “partially observable” formally <em>is</em>, and it explains why re-grounding through tools and memory is not optional.</p>
+</div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="🧠 Deep dive: rationality is relative to four things">
 <div class="callout-header d-flex align-content-center">

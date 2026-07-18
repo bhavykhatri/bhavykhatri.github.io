@@ -427,7 +427,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Python 3.11+</li>
 <li><a href="https://quarto.org/docs/get-started/">Quarto CLI</a> (to build the book)</li>
-<li>An OpenAI API key (for chapters that call the API)</li>
+<li>An <strong>OpenAI API key</strong> (for chapters that call the OpenAI API)</li>
+<li>An <strong>Anthropic API key</strong> (chapters on prompt caching in <a href="../part4-production/19-deployment-and-cost.html" class="quarto-xref"><span>Chapter 19</span></a> and computer use in <a href="../part5-frontiers/20-computer-use-and-embodiment.html" class="quarto-xref"><span>Chapter 20</span></a> use Claude)</li>
 </ul>
 </section>
 <section id="create-a-virtual-environment" class="level2" data-number="22.2">
@@ -443,12 +444,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="configure-secrets" class="level2" data-number="22.3">
 <h2 data-number="22.3" class="anchored" data-anchor-id="configure-secrets"><span class="header-section-number">22.3</span> Configure secrets</h2>
 <p>Create a <code>.env</code> file in the repo root (it is git-ignored):</p>
-<pre class="dotenv"><code>OPENAI_API_KEY=sk-...your key...</code></pre>
+<pre class="dotenv"><code>OPENAI_API_KEY=sk-...your key...
+ANTHROPIC_API_KEY=sk-ant-...your key...</code></pre>
 <p>Load it in code with <code>python-dotenv</code>:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>load_dotenv()</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>client_key <span class="op">=</span> os.environ[<span class="st">"OPENAI_API_KEY"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>openai_key    <span class="op">=</span> os.environ[<span class="st">"OPENAI_API_KEY"</span>]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>anthropic_key <span class="op">=</span> os.environ[<span class="st">"ANTHROPIC_API_KEY"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-warning callout-titled" title="Safety">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -470,7 +473,7 @@ Safety
 </section>
 <section id="package-notes" class="level2" data-number="22.5">
 <h2 data-number="22.5" class="anchored" data-anchor-id="package-notes"><span class="header-section-number">22.5</span> Package notes</h2>
-<p>Agent SDKs evolve quickly. If an import name in a chapter differs from the installed package, check the library’s current docs and update <code>requirements.txt</code>. Versions are pinned to keep examples reproducible.</p>
+<p>Agent SDKs evolve quickly. If an import name in a chapter differs from the installed package, check the library’s current docs and update <code>requirements.txt</code>. Versions are pinned there to keep examples reproducible; the full pinned list lives at <a href="../../requirements.txt">requirements.txt</a> in the repository root.</p>
 
 
 </section>
