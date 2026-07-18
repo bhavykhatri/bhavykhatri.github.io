@@ -399,7 +399,10 @@ div.csl-indent {
   </ul></li>
   <li><a href="#sec-ch16-debugging" id="toc-sec-ch16-debugging" class="nav-link" data-scroll-target="#sec-ch16-debugging"><span class="header-section-number">17.5</span> Debugging with the recordings</a></li>
   <li><a href="#sec-ch16-privacy" id="toc-sec-ch16-privacy" class="nav-link" data-scroll-target="#sec-ch16-privacy"><span class="header-section-number">17.6</span> Safeguarding the recording</a></li>
-  <li><a href="#sec-ch16-case" id="toc-sec-ch16-case" class="nav-link" data-scroll-target="#sec-ch16-case"><span class="header-section-number">17.7</span> Case study: the Ledgerly support agent</a></li>
+  <li><a href="#sec-ch16-case" id="toc-sec-ch16-case" class="nav-link" data-scroll-target="#sec-ch16-case"><span class="header-section-number">17.7</span> Case study: the Ledgerly support agent</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch16-case-run" id="toc-sec-ch16-case-run" class="nav-link" data-scroll-target="#sec-ch16-case-run"><span class="header-section-number">17.7.1</span> Watch the recorder run</a></li>
+  </ul></li>
   <li><a href="#sec-ch16-summary" id="toc-sec-ch16-summary" class="nav-link" data-scroll-target="#sec-ch16-summary"><span class="header-section-number">17.8</span> Summary</a></li>
   <li><a href="#sec-ch16-exercises" id="toc-sec-ch16-exercises" class="nav-link" data-scroll-target="#sec-ch16-exercises"><span class="header-section-number">17.9</span> Exercises</a></li>
   </ul>
@@ -684,6 +687,114 @@ Figure&nbsp;17.9: The same Ledgerly blueprint with its observability and evaluat
 </ol>
 </div>
 </div>
+<section id="sec-ch16-case-run" class="level3" data-number="17.7.1">
+<h3 data-number="17.7.1" class="anchored" data-anchor-id="sec-ch16-case-run"><span class="header-section-number">17.7.1</span> Watch the recorder run</h3>
+<p>The trace anatomy from <a href="#sec-ch16-span-anatomy" class="quarto-xref"><span>Section 17.2.1</span></a> is not just a picture; the companion code under <code>code/ledgerly/ch17/</code> builds a small recorder and runs a real ticket through it. Each step of the agent executes inside a <code>with tracer.span(...)</code> block, so resolving one double-charge ticket leaves behind exactly the tree the chapter described, printed here top to bottom:</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ `python -m ledgerly.ch17` (one ticket, one trace)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ <code>python -m ledgerly.ch17</code> (one ticket, one trace)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>agent     ticket:T-901      4159.6ms
+  llm       triage               0.0ms  out={'lane': 'billing'}
+  retrieval retrieve             0.0ms  out={'account': {... 'email': '***REDACTED***', 'card_number': '***REDACTED***' ...}}
+  tool      get_invoice          0.0ms  out={'total': 160.0, ...}
+  llm       diagnose          4159.5ms  out={'duplicate': True, 'charge_id': 'CH-8802'}
+  tool      issue_refund         0.0ms  out={'ok': True, 'charge_id': 'CH-8802', 'amount': 80.0}</code></pre>
+</div>
+</div>
+<p>Two lessons the chapter argued for are already visible in that output. The <strong>durations are measured, not guessed</strong>, so the slow step announces itself: <code>diagnose</code>, the model call, owns four seconds while every tool returns instantly, the timing story from <a href="#sec-ch16-tracing" class="quarto-xref"><span>Section 17.2</span></a>. And the customer’s card and email arrive at the recorder already masked, because the tracer <strong>redacts at capture</strong> (<a href="#sec-ch16-privacy" class="quarto-xref"><span>Section 17.6</span></a>), never writing a secret in the clear even into its own logs.</p>
+<p>A single trace, though, can never catch the most expensive bug in this system. The agent here has no memory across runs, so when the same customer writes back the next day, it happily diagnoses the same duplicate and pays out again. Each run’s trace looks perfect in isolation. Only the <strong>session</strong> view, stitching runs together by <code>session.id</code> (<a href="#sec-ch16-granularity" class="quarto-xref"><span>Section 17.2.3</span></a>), reveals the double payout:</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ `python -m ledgerly.ch17 --session`">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ <code>python -m ledgerly.ch17 --session</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>    paid $80.00 on CH-8802 in run R-1
+    paid $80.00 on CH-8802 in run R-2
+
+  find_double_refunds over session S-42:
+    ⚠ CH-8802 was refunded in runs ['R-1', 'R-2']  &lt;-- double payout</code></pre>
+</div>
+</div>
+<p>Above the individual runs sits the dashboard from <a href="#sec-ch16-logs-metrics" class="quarto-xref"><span>Section 17.3</span></a>. Rolling a batch of runs up gives the top-line rates and a p95 that tracks the slow tail, and the same pass decides <strong>sampling</strong> (<a href="#sec-ch16-sampling" class="quarto-xref"><span>Section 17.3.1</span></a>): every errored or slow run is kept in full while the clean ones are thinned, so the recording stays affordable without losing the runs that matter.</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ `python -m ledgerly.ch17 --metrics`">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ <code>python -m ledgerly.ch17 --metrics</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>  Dashboard over 4 runs:
+    resolution rate : 50%    refund rate : 25%    p95 latency : 980 ms
+
+  Sampling at keep_rate=0.0:
+    run 1 (clean) -&gt; dropped     run 3 (slow ) -&gt; KEPT
+    run 2 (clean) -&gt; dropped     run 4 (error) -&gt; KEPT</code></pre>
+</div>
+</div>
+<p>The recorder is itself software, so the stage ships a model-free suite that pins down its behavior: that redaction removes a card number wherever it hides, that a run is a well-formed tree with measured durations, that <code>find_double_refunds</code> catches the cross-run payout, and that sampling keeps the interesting runs. It runs deterministically and is the safety net under everything above.</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ `python -m ledgerly.ch17.evaluate`">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ <code>python -m ledgerly.ch17.evaluate</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>  [PASS] redact masks a sensitive key and a card number inside a string
+  [PASS] a run is a tree: children carry the parent's id and the run id
+  [PASS] every closed span has a measured, non-negative duration
+  [PASS] the refund span's inputs were redacted at capture (no raw card anywhere)
+  [PASS] find_double_refunds flags a charge paid out across two runs
+  [PASS] summarize computes resolution/refund rates and a p95 that tracks the tail
+  [PASS] sampling keeps errored and slow runs, drops clean ones at keep_rate 0
+
+  7/7 checks passed.</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="🔩 In practice: you won't emit spans by hand">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🔩 In practice: you won’t emit spans by hand
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>with tracer.span(...)</code> blocks here are hand-written so the tree stays visible, but production teams instrument with <strong>OpenTelemetry</strong> and ship traces to a backend like <strong>LangSmith</strong>, <strong>Langfuse</strong>, <strong>Arize Phoenix</strong>, or <strong>Braintrust</strong>, which supply the waterfall UI, session stitching, sampling, and alerting for free. What you are responsible for is the same either way: name your spans well, attach the inputs and outputs worth keeping, and redact secrets <em>before</em> they leave the process.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="🛠️ Run it yourself">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🛠️ Run it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>From <code>code/</code>, run <code>python -m ledgerly.ch17 --session</code> and watch one forgetful agent pay the same refund twice, then open <code>find_double_refunds</code> in <code>observability/metrics.py</code> to see how the session view catches it. Try adding a new sensitive field to a span’s inputs, the <code>evaluate.py</code> redaction check should immediately hold you to masking it.</p>
+</div>
+</div>
+</section>
 </section>
 <section id="sec-ch16-summary" class="level2" data-number="17.8">
 <h2 data-number="17.8" class="anchored" data-anchor-id="sec-ch16-summary"><span class="header-section-number">17.8</span> Summary</h2>

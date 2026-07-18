@@ -438,7 +438,10 @@ div.csl-indent {
   <li><a href="#sec-ch10-mcp-trust" id="toc-sec-ch10-mcp-trust" class="nav-link" data-scroll-target="#sec-ch10-mcp-trust"><span class="header-section-number">11.8.1</span> Every MCP server is a trust decision</a></li>
   <li><a href="#sec-ch10-tool-poisoning" id="toc-sec-ch10-tool-poisoning" class="nav-link" data-scroll-target="#sec-ch10-tool-poisoning"><span class="header-section-number">11.8.2</span> Tool metadata is an attack surface</a></li>
   </ul></li>
-  <li><a href="#sec-ch10-case" id="toc-sec-ch10-case" class="nav-link" data-scroll-target="#sec-ch10-case"><span class="header-section-number">11.9</span> Case study: the Ledgerly support agent</a></li>
+  <li><a href="#sec-ch10-case" id="toc-sec-ch10-case" class="nav-link" data-scroll-target="#sec-ch10-case"><span class="header-section-number">11.9</span> Case study: the Ledgerly support agent</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch10-case-run" id="toc-sec-ch10-case-run" class="nav-link" data-scroll-target="#sec-ch10-case-run"><span class="header-section-number">11.9.1</span> Watch the tools run over MCP</a></li>
+  </ul></li>
   <li><a href="#sec-ch10-summary" id="toc-sec-ch10-summary" class="nav-link" data-scroll-target="#sec-ch10-summary"><span class="header-section-number">11.10</span> Summary</a></li>
   <li><a href="#sec-ch10-exercises" id="toc-sec-ch10-exercises" class="nav-link" data-scroll-target="#sec-ch10-exercises"><span class="header-section-number">11.11</span> Exercises</a></li>
   </ul>
@@ -934,6 +937,131 @@ Figure&nbsp;11.8: Ledgerly’s tool surface, grouped by human-in-the-loop tier a
 </ol>
 </div>
 </div>
+<section id="sec-ch10-case-run" class="level3" data-number="11.9.1">
+<h3 data-number="11.9.1" class="anchored" data-anchor-id="sec-ch10-case-run"><span class="header-section-number">11.9.1</span> Watch the tools run over MCP</h3>
+<p>The design choices are easiest to trust once you watch the tools cross the wire, so this stage runs Ledgerly’s billing tools as a real MCP server and lets an agent use them. The four tools are published once with FastMCP; a host connects over the protocol, discovers them at run time, and calls them one at a time to resolve a ticket. What makes the run worth watching is the division of labor: the model picks the tools and the words, but the tool’s guardrails and its human-in-the-loop tier live in code, so the model cannot spend money the code did not allow.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="🔩 Still a bare LLM, still no framework">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🔩 Still a bare LLM, still no framework
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The host is a plain loop calling the model directly; no agent framework schedules it. The one new dependency is the MCP SDK itself, and it earns its place: the tools are discovered over the protocol rather than hard-coded, which is exactly what lets the same server serve many hosts. The orchestration framework that would manage this loop for you arrives in <a href="13-orchestration-langgraph.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="🛠️ Run it yourself">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🛠️ Run it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>From the <code>code/</code> directory, with a model configured in <code>code/.env</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch11             <span class="co"># both tickets, refunds auto-approved</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch11 <span class="at">--read</span>      <span class="co"># just the read-only invoice question</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch11 <span class="at">--refund</span>    <span class="co"># the refund ticket (needs approval)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch11 <span class="at">--decline</span>   <span class="co"># the refund ticket, approval declined</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch11.evaluate    <span class="co"># the reproducible scorecard</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>The first ticket is a read-only question, so the agent reaches for the read-tier tool, which runs the instant it is asked. It looks at the invoice and reports what it finds without touching anything.</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ Code / tool output — a read-tier call runs freely">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ Code / tool output — a read-tier call runs freely
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>=== T-701 (AC-1001) ===
+  Customer: What is the charge on invoice #4471? I think I see it twice.
+  [MCP CALL] get_invoice (read) -&gt; ok</code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="🤖 Model output — the reply that shipped">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🤖 Model output — the reply that shipped
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<blockquote class="blockquote">
+<p>Here’s what I see on invoice #4471: the Pro monthly plan appears twice. If you only expected to be billed once for the Pro plan for that period, please reply and let us know, and we’ll review whether one of those charges was applied in error and should be refunded.</p>
+</blockquote>
+</div>
+</div>
+<p>The second ticket asks for a refund, and here the tier does its work. The agent chooses <code>issue_refund</code>, but that tool sits in the approve tier, so the host pauses for a human before the call ever reaches the server. Notice the model also filled in a <code>reason</code>, which the tool’s schema requires, and an amount the server will cap at the charge total. The guardrail is not a hope pinned on the prompt; it is code the model cannot route around.</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ Code / tool output — an approve-tier call waits for a person">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ Code / tool output — an approve-tier call waits for a person
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>=== T-702 (AC-1001) ===
+  Customer: I was billed twice for $80 on invoice #4471 (CH-8801 and CH-8802). Refund the duplicate.
+    [HUMAN] approval for issue_refund({'charge_id': 'CH-8802', 'amount': 80,
+            'reason': 'Duplicate billing on invoice #4471...'}): approved
+  [MCP CALL] issue_refund (approve) -&gt; ok</code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="🤖 Model output — the reply that shipped">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🤖 Model output — the reply that shipped
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<blockquote class="blockquote">
+<p>I’ve refunded the duplicate $80 charge (CH-8802) on invoice #4471. The refund has been processed in full with the reason noted as duplicate billing for the same $80 line item. Depending on your payment method, it may take a few business days to appear on your statement.</p>
+</blockquote>
+</div>
+</div>
+<p>Run the same ticket with <code>--decline</code> and the tier is the whole story: the human says no, the call is blocked before it reaches the server, no money moves, and the agent reports the refusal honestly instead of pretending the refund went through.</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ Code / tool output — a declined approval blocks the call">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ Code / tool output — a declined approval blocks the call
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>    [HUMAN] approval for issue_refund(...): declined
+  [MCP CALL] issue_refund (approve) -&gt; blocked (no approval)</code></pre>
+</div>
+</div>
+<p>The evaluation checks the parts a reader should be able to trust without watching the model think. It confirms the server exposes exactly the four tools over the protocol, that a read returns the right invoice, that the <em>poka-yoke</em> trips (a refund above the charge is rejected, a refund with no reason is rejected), and that a declined approval blocks the payout:</p>
+<pre class="text"><code>[PASS] server exposes the four named tools
+[PASS] get_invoice returns #4471 with a $160 total
+[PASS] refund above the charge total is rejected
+[PASS] refund with no reason is rejected
+[PASS] valid refund within the cap succeeds
+[PASS] declined approval blocks the refund
+[PASS] read tools are read tier, money tools are approve tier
+
+Score: 7/7 checks passed</code></pre>
+<p>Read the run and the design back to back and the chapter’s argument is concrete. The tool descriptions the model reads and the code that runs are the same FastMCP functions, so they cannot drift. The tiers, not the model, decide what runs freely and what waits for a person. And the guardrails sit in the tool, not the prompt, which is why a well-built tool surface <em>is</em> the control policy.</p>
+</section>
 </section>
 <section id="sec-ch10-summary" class="level2" data-number="11.10">
 <h2 data-number="11.10" class="anchored" data-anchor-id="sec-ch10-summary"><span class="header-section-number">11.10</span> Summary</h2>

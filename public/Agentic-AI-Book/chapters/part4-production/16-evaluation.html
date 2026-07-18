@@ -465,7 +465,10 @@ window.Quarto = {
   </ul></li>
   <li><a href="#sec-ch15-benchmarks" id="toc-sec-ch15-benchmarks" class="nav-link" data-scroll-target="#sec-ch15-benchmarks"><span class="header-section-number">16.6</span> Shared benchmarks and their limits</a></li>
   <li><a href="#sec-ch15-worked" id="toc-sec-ch15-worked" class="nav-link" data-scroll-target="#sec-ch15-worked"><span class="header-section-number">16.7</span> A worked example: a minimal eval harness</a></li>
-  <li><a href="#sec-ch15-case" id="toc-sec-ch15-case" class="nav-link" data-scroll-target="#sec-ch15-case"><span class="header-section-number">16.8</span> Case study: the Ledgerly support agent</a></li>
+  <li><a href="#sec-ch15-case" id="toc-sec-ch15-case" class="nav-link" data-scroll-target="#sec-ch15-case"><span class="header-section-number">16.8</span> Case study: the Ledgerly support agent</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch15-case-run" id="toc-sec-ch15-case-run" class="nav-link" data-scroll-target="#sec-ch15-case-run"><span class="header-section-number">16.8.1</span> Watch the scoreboard run</a></li>
+  </ul></li>
   <li><a href="#sec-ch15-summary" id="toc-sec-ch15-summary" class="nav-link" data-scroll-target="#sec-ch15-summary"><span class="header-section-number">16.9</span> Summary</a></li>
   <li><a href="#sec-ch15-exercises" id="toc-sec-ch15-exercises" class="nav-link" data-scroll-target="#sec-ch15-exercises"><span class="header-section-number">16.10</span> Exercises</a></li>
   </ul>
@@ -826,6 +829,84 @@ Figure&nbsp;16.8: Ledgerly’s evaluation suite has three axes, task categories 
 </ol>
 </div>
 </div>
+<section id="sec-ch15-case-run" class="level3" data-number="16.8.1">
+<h3 data-number="16.8.1" class="anchored" data-anchor-id="sec-ch15-case-run"><span class="header-section-number">16.8.1</span> Watch the scoreboard run</h3>
+<p>The anatomy in <a href="#fig-ledgerly-eval-anatomy" class="quarto-xref">Figure&nbsp;<span>16.8</span></a> is not just a diagram; the companion code builds it as a small, runnable harness under <code>code/ledgerly/ch16/</code>. A compact copy of the agent from earlier chapters becomes the <strong>system under test</strong>: <code>handle(ticket)</code> routes, looks things up, diagnoses, and returns a <em>record</em>, the lane it chose, the tools it called, what it refunded, and the order of its steps. The harness then grades that record with the grader each case names, and does it several times per case, because <a href="#sec-ch15-trials" class="quarto-xref"><span>Section 16.2.3</span></a> warned that one good run proves nothing.</p>
+<p>The <strong>graders live in code</strong>, one per style of question. A billing lookup is a cheap rule (“was <code>get_invoice</code> called?”); an over-refund is an outcome check against the world (never more than the charge); a double-charge is a <strong>trajectory</strong> check (diagnose <em>before</em> refunding); and the policy summary hands the reply to a model judge, along with the source policy so accurate detail is not mistaken for an invented rule. Running the whole set prints the scoreboard leadership actually watches:</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ `python -m ledgerly.ch16` (grading gpt-5.1)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ <code>python -m ledgerly.ch16</code> (grading gpt-5.1)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>  Case    Category        Must  Rate   Result
+  ----------------------------------------------
+  E-01    billing_lookup     100%   PASS
+  E-02    policy             100%   PASS
+  E-03    refund          ★  100%   PASS
+  E-04    refund             100%   PASS
+  E-05    ambiguous       ★  100%   PASS
+  E-06    tool_error      ★  100%   PASS
+  ----------------------------------------------
+  Overall score: 100%
+
+  RELEASE GATE: GREEN</code></pre>
+</div>
+</div>
+<p>The three starred rows are the <strong>must-pass</strong> cases from the anatomy: over-refunding is capped, a valid proration is withheld, and a request with no charge id gets a question instead of a payout. The gate is deliberately unforgiving. If the safety case ever regressed, say a prompt change let the agent refund the whole $500, that one red cell would flip the release to <code>RED</code> even while the average stayed high, which is exactly the “average hides a disaster” failure from <a href="#sec-ch15-hard" class="quarto-xref"><span>Section 16.5</span></a>.</p>
+<p>There is a subtle trap here: the harness <em>is itself software</em>, and a broken grader can wave a broken agent through. So the stage ships a second, model-free suite that checks the harness’s own logic, that the majority rule fails a case winning only one of three trials, that the cap grader rejects an over-refund, that a single must-pass failure turns the board red. It is the guardrail on the guardrail, and it runs deterministically every time:</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ `python -m ledgerly.ch16.evaluate`">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ <code>python -m ledgerly.ch16.evaluate</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>  [PASS] tool_called passes when the expected tool was called
+  [PASS] refund_cap fails an over-refund, passes at or below the charge
+  [PASS] trajectory grader needs diagnose before refund
+  [PASS] refund_withheld passes only when nothing was refunded
+  [PASS] a case passing 1 of 3 trials is FAIL (majority rule)
+  [PASS] a case passing 2 of 3 trials is PASS (majority rule)
+  [PASS] release is RED when a must-pass case fails, even at 75% overall
+
+  7/7 checks passed.</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="🔩 In practice: you won't hand-roll the harness">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🔩 In practice: you won’t hand-roll the harness
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The six-case harness here is written from scratch so the moving parts stay visible, but production teams reach for an eval framework, <strong>OpenAI Evals</strong>, <strong>LangSmith</strong>, <strong>Braintrust</strong>, or <strong>Inspect</strong>, that supplies the dataset store, the grader library (including LLM judges), trial batching, and the dashboards that track scores across versions. The vocabulary carries straight over: you still curate a golden set, choose a grader per case, run repeated trials, and gate on must-pass cases. Knowing what those tools do <em>for</em> you is why we built one by hand first.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="🛠️ Run it yourself">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🛠️ Run it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>From <code>code/</code>, run <code>python -m ledgerly.ch16</code> for the full scoreboard, or <code>--case E-03 --trials 5</code> to hammer the over-refund safety case and watch the code cap hold. Try weakening a grader in <code>graders.py</code> and rerun <code>python -m ledgerly.ch16.evaluate</code>, the harness’s own suite should catch you.</p>
+</div>
+</div>
+</section>
 </section>
 <section id="sec-ch15-summary" class="level2" data-number="16.9">
 <h2 data-number="16.9" class="anchored" data-anchor-id="sec-ch15-summary"><span class="header-section-number">16.9</span> Summary</h2>

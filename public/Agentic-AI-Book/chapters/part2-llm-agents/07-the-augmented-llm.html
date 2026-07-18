@@ -438,6 +438,7 @@ div.csl-indent {
   <li><a href="#sec-ch06-case" id="toc-sec-ch06-case" class="nav-link" data-scroll-target="#sec-ch06-case"><span class="header-section-number">7.7</span> Case study: the Ledgerly support agent</a>
   <ul class="collapse">
   <li><a href="#sec-ch6-case-walkthrough" id="toc-sec-ch6-case-walkthrough" class="nav-link" data-scroll-target="#sec-ch6-case-walkthrough"><span class="header-section-number">7.7.1</span> A single turn, step by step</a></li>
+  <li><a href="#sec-ch6-case-run" id="toc-sec-ch6-case-run" class="nav-link" data-scroll-target="#sec-ch6-case-run"><span class="header-section-number">7.7.2</span> Building the atom, one faculty at a time</a></li>
   </ul></li>
   <li><a href="#sec-ch6-summary" id="toc-sec-ch6-summary" class="nav-link" data-scroll-target="#sec-ch6-summary"><span class="header-section-number">7.8</span> Summary</a></li>
   <li><a href="#sec-ch6-exercises" id="toc-sec-ch6-exercises" class="nav-link" data-scroll-target="#sec-ch6-exercises"><span class="header-section-number">7.9</span> Exercises</a></li>
@@ -928,6 +929,185 @@ Figure&nbsp;7.10: One augmented turn at Ledgerly. A billing complaint flows thro
 </figure>
 </div>
 <p>Put the three together on one turn, orchestrated by the model as <a href="#sec-ch6-together" class="quarto-xref"><span>Section 7.6</span></a> describes, and Ledgerly has its atom: a support agent that looks up the facts, decides what to do, acts, and remembers. What it cannot yet do is tell which requests deserve this full treatment and which should stay a simple script. <a href="../part3-building/09-workflows-vs-agents.html#sec-ch08-case" class="quarto-xref"><span>Section 9.9</span></a> draws that line.</p>
+</section>
+<section id="sec-ch6-case-run" class="level3" data-number="7.7.2">
+<h3 data-number="7.7.2" class="anchored" data-anchor-id="sec-ch6-case-run"><span class="header-section-number">7.7.2</span> Building the atom, one faculty at a time</h3>
+<p>Reading that a model gains hands, a book, and a notebook is easy to nod along to and easy to overrate. So instead of describing it, let us <em>build</em> it, adding one faculty at a time to the <strong>same</strong> model and asking it the <strong>same</strong> question at each step. The reference implementation in <code>code/ledgerly/ch07/</code> does exactly this, and you can run it yourself.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="🔩 Built from a bare LLM, no framework yet">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🔩 Built from a bare LLM, no framework yet
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Everything in this stage is a plain model call wrapped in ordinary Python: the tools, the retrieval, and the memory are just functions, and the control flow is a normal sequence of steps. We are deliberately <em>not</em> reaching for an agentic framework (LangGraph, an SDK) here, because a single augmented turn does not need one. Following the book’s own rule, we adopt a framework only when the work earns it, and we bring in LangGraph in <a href="../../chapters/part3-building/13-orchestration-langgraph.html">the orchestration chapter</a>, where the agent becomes a durable, branching, human-gated graph.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="🛠️ Run it yourself">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🛠️ Run it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>From the <code>code/</code> directory. This is an agentic stage, so it needs a model: copy <code>code/.env.example</code> to <code>code/.env</code> and add an OpenAI or Azure OpenAI key. Run all four steps at once, or one at a time with a flag:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch07                          <span class="co"># all four steps, in order</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch07 <span class="at">--bare</span>                   <span class="co"># step 0: the bare model</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch07 <span class="at">--tools</span>                  <span class="co"># step 1: + tools (hands)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch07 <span class="at">--tools-retrieval</span>        <span class="co"># step 2: + retrieval (open book)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch07 <span class="at">--tools-retrieval-memory</span> <span class="co"># step 3: + memory (notebook)</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch07.evaluate                 <span class="co"># does each augmentation fix its failure?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>We ask one question and watch the answer change as each augmentation clicks into place: <em>“Why was I charged twice on invoice #4471, and can you fix it?”</em> Throughout, a <strong>🤖 model output</strong> box holds what the model wrote, and a <strong>⌨️ code / tool output</strong> box holds what Ledgerly’s own code did (a tool call, a retrieval, a write to memory), so it is always clear which is which.</p>
+<p>Before the first step, it helps to see how the agent itself is defined, because this part does <em>not</em> change across the four steps. Every step below sends the model the <strong>same system prompt</strong>, the standing instructions that give it its Ledgerly persona and its rules of honesty:</p>
+<pre class="text"><code>You are a support agent for Ledgerly, a subscription billing service. You help
+customers understand and fix charges on their account. Always follow these rules:
+(1) use only the facts given to you in this turn; never invent a charge, an amount,
+    a date, or a policy;
+(2) if you lack the evidence to answer, say plainly what you would need to check
+    rather than guessing;
+(3) never promise or confirm a refund unless a refund policy provided in this turn
+    supports it.</code></pre>
+<p>Only one thing changes from step to step: the <em>evidence</em> we place in front of this same persona. Notice what the prompt deliberately leaves out, namely the refund policy itself, since supplying that is retrieval’s whole job in step 2. Keeping the persona fixed is what makes the before/after honest: we never quietly hand the bare model a worse prompt to make it fail. It hedges, when it hedges, because it has no evidence, not because we told it to.</p>
+<p><strong>Step 0: the bare model, on its own.</strong> Before any augmentation, the model has broad general knowledge but no connection to Ledgerly’s systems. It cannot open the account, does not know the current refund policy, and remembers nothing about this customer. So it does the only thing it can, which is guess at general causes and hand the work back.</p>
+<div class="callout callout-style-simple callout-note callout-titled" title="🤖 Model output — bare model">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🤖 Model output — bare model
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>I don’t have access to invoice #4471 or your account details in this chat, so I can’t see whether it’s actually a duplicate. To investigate, we’d need to review the invoice in Ledgerly along with your payment history… please contact support so an agent who can access your account can confirm and apply whatever correction the billing policy allows.</p>
+</div>
+</div>
+<p>Every sentence is honest, and not one is grounded in Dana’s actual account. Note what it did <em>not</em> do: it did not invent a charge or a policy to sound helpful. That restraint comes straight from the shared honesty rules, not from a special “you can’t see it” instruction. This is the failure the rest of the steps fix.</p>
+<p><strong>Step 1: add a tool (hands).</strong> We give the model a single tool, <code>get_invoice</code>, which reads the customer’s real charges from the billing system. Now, before it answers, the agent can actually <em>look</em>.</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ Code / tool output">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ Code / tool output
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>Tool call:  get_invoice("AC-1001")
+Returns:    2 charges -&gt; $80.00 on #4471 (2026-06-03); $80.00 on #4471 (2026-06-03)</code></pre>
+</div>
+</div>
+<p>With the two charges in front of it, the model stops guessing and describes what is really there. But notice what it does <em>not</em> do: it has the charges, yet no policy to judge them against, so it holds back from promising a refund. That hesitation is exactly right.</p>
+<div class="callout callout-style-simple callout-note callout-titled" title="🤖 Model output — tool-augmented model">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🤖 Model output — tool-augmented model
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>On invoice #4471 there are indeed two identical charges: $80.00 twice for “Pro plan, monthly” on 2026-06-03, which explains why it looks like you were charged twice. I don’t have access to Ledgerly’s refund policy in this chat, so to fix it I’d need to check whether duplicate charges on the same invoice are eligible for reversal.</p>
+</div>
+</div>
+<p>The tool fixed “I can’t see your account.” What it could not fix is “I don’t know the rule.”</p>
+<p><strong>Step 2: add retrieval (an open book).</strong> Rather than trust the model to recall Ledgerly’s refund rules from training, we retrieve the actual policy document and let the agent read it. The eligibility <em>decision</em> stays in code, where an enforceable rule belongs; the retrieved passage is what the agent grounds its explanation in.</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ Code / tool output">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ Code / tool output
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>Retrieved:  refund policy -&gt; "Duplicate charges are refunded in full. A charge is a
+            duplicate when two charges share the same invoice, date, and amount..."
+Decision:   policy + evidence -&gt; eligible; issue_refund("AC-1001", "4471", $80.00)</code></pre>
+</div>
+</div>
+<p>Now the hedge from step 1 becomes a decision. The agent confirms the duplicate against the real rule, issues the refund through the tool (the model <em>requests</em> it, and the runtime executes it across the safety seam), and explains the outcome in grounded terms.</p>
+<div class="callout callout-style-simple callout-note callout-titled" title="🤖 Model output — tools + retrieval">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🤖 Model output — tools + retrieval
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You were charged twice because there are two identical Pro plan charges on invoice #4471 for $80.00 on 2026-06-03, which meets our definition of a duplicate charge. Per our refund policy, duplicate charges are refunded in full, and an $80.00 refund has already been issued to your original payment method; it should appear within 5 business days.</p>
+</div>
+</div>
+<p><strong>Step 3: add memory (a notebook).</strong> The turn is resolved, but a good agent should not make the customer re-explain everything tomorrow. So we take the outcome we just produced and <em>write it back</em> as one short note to a memory store keyed to this customer. This is the <strong>write</strong> half of memory: the resolution from step 2 becomes a durable record.</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ Code / tool output — writing to memory (this turn)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ Code / tool output — writing to memory (this turn)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>Resolution to remember:  "resolved a duplicate on #4471 for $80.00"
+remember("AC-1001", note) -&gt; memory updated (AC-1001 now has 1 stored note)</code></pre>
+</div>
+</div>
+<p>The next day, when the same customer returns, the <strong>read</strong> half kicks in <em>before the agent even speaks</em>: the runtime recalls that note from the store and places it in the model’s context, so a cold reopening becomes a warm one. Nothing about the model changed between yesterday and today; the only difference is that a note we saved is now handed back to it.</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ Code / tool output — reading from memory (next turn)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ Code / tool output — reading from memory (next turn)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>recall("AC-1001") -&gt; ["resolved a duplicate on #4471 for $80.00"]
+(retrieved and placed in context before the agent replies)</code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="🤖 Model output — with memory (next day)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🤖 Model output — with memory (next day)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Welcome back! I’m glad we were able to resolve that $80.00 duplicate on transaction #4471, and I’m here to help with anything else you need today.</p>
+</div>
+</div>
+<p>Line the four steps up and you can see precisely what each faculty bought. <strong>Tools</strong> turned “I can’t see your account” into “I see two $80 charges.” <strong>Retrieval</strong> turned “let me check the policy” into a grounded refund. <strong>Memory</strong> turned a stranger’s cold question into a returning customer’s warm welcome. None of this is the model becoming more eloquent, since every reply is fluent. It is about <strong>grounding</strong>: the augmented agent acts only on evidence it can actually see. That build-up, look up the facts, decide, act, and remember, is the augmented atom the rest of the book builds on. The wording in the model boxes is one run of a real model, so with a key set in <code>code/.env</code> the exact phrasing varies while the shape stays the same.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="🎛️ Who chose the steps? The code did, not the model">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🎛️ Who chose the steps? The code did, not the model
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Read the four steps again and notice <em>who</em> is driving. <strong>We</strong> decided to call the tool, then to retrieve the policy, then to write to memory; the sequence lives in ordinary Python <code>if</code> branches in <code>run_turn</code>. The model’s job was narrower and it never changed: read whatever evidence we handed it and write the reply. It was never asked <em>which</em> faculty to use or <em>when</em> to use it. That is what makes this an <strong>augmented LLM</strong> rather than an <strong>agent</strong>, and it is a different point from the one-turn-versus-loop distinction above. The loop is about <em>duration</em> (one request versus a goal pursued over many); this is about <em>control</em> (who picks the next step). An augmented LLM keeps control in the code along a fixed, human-authored path. An agent hands that control to the model, which chooses its own next action and loops on the result. Letting the model choose the steps is the leap we take in the <a href="../../chapters/part2-llm-agents/08-reasoning-and-planning.html">reasoning and planning chapter</a>, and it is also why the augmented LLM is distinct from an agentic <em>framework</em>: the framework exists precisely to manage the model-driven control flow that this stage deliberately does not yet have.</p>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly so far">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
