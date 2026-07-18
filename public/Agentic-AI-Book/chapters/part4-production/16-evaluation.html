@@ -760,6 +760,21 @@ Figure&nbsp;16.7: The evaluation loop as a habit: run the agent over a curated d
 </section>
 <section id="sec-ch15-case" class="level2" data-number="16.8">
 <h2 data-number="16.8" class="anchored" data-anchor-id="sec-ch15-case"><span class="header-section-number">16.8</span> Case study: the Ledgerly support agent</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="🎯 The release question Ledgerly must answer">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🎯 The release question Ledgerly must answer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Question.</strong> Can Ledgerly ship a new prompt, model, tool, or policy version without regressing on any of the behaviours we already care about?</p>
+<p><strong>What the eval set covers.</strong> Routine lookups (email me invoice #4471), policy questions (summarise the refund window), duplicate-charge workflows, ambiguous plan-change investigations, safety cases (an over-refund attempt), and stale-policy risk.</p>
+<p><strong>Desired outcome.</strong> Every change is graded on both <strong>outcome</strong> and <strong>trajectory</strong> across repeated trials; <strong>must-pass</strong> safety cases block the release even at a good overall score; and the same rubric runs every time so results are comparable across versions.</p>
+</div>
+</div>
 <p>Where we left off, <a href="../part3-building/13-orchestration-langgraph.html#sec-ch12-case" class="quarto-xref"><span>Section 13.7</span></a> asked the question that gates every launch: does Ledgerly <em>work</em>? This chapter’s answer is to build a scoreboard, so let us assemble Ledgerly’s golden dataset, the curated cases from <a href="#sec-ch15-what" class="quarto-xref"><span>Section 16.3</span></a> that cover the behaviors we actually care about.</p>
 <p>A good eval set mixes the easy, checkable tickets with the ones that need judgment, and it deliberately includes the cases that could go wrong:</p>
 <table class="caption-top table">
@@ -904,6 +919,23 @@ Figure&nbsp;16.8: Ledgerly’s evaluation suite has three axes, task categories 
 </div>
 <div class="callout-body-container callout-body">
 <p>From <code>code/</code>, run <code>python -m ledgerly.ch16</code> for the full scoreboard, or <code>--case E-03 --trials 5</code> to hammer the over-refund safety case and watch the code cap hold. Try weakening a grader in <code>graders.py</code> and rerun <code>python -m ledgerly.ch16.evaluate</code>, the harness’s own suite should catch you.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly after Chapter 16">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🧾 Ledgerly after Chapter 16
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Before this chapter.</strong> Ledgerly could run, but nobody could answer the release question with anything better than a hunch.</p>
+<p><strong>New in this chapter.</strong> Ledgerly has a <strong>release gate</strong>. A golden set covers routine lookups, refund workflows, ambiguous investigations, safety cases (an over-refund attempt), and stale-policy risk; each case is graded on both <strong>outcome</strong> and <strong>trajectory</strong> across repeated trials.</p>
+<p><strong>What changed architecturally.</strong> Grading is a first-class artefact: outcome graders, path graders, and must-pass cases each live in code, so a change to a prompt, model, tool, or policy is tested against the same rubric every release.</p>
+<p><strong>What the customer experience improves.</strong> A regression that used to slip through until a customer complained (a refund path that skips the policy check, an over-refund that used to pass) now blocks the release before it ships.</p>
+<p><strong>What remains incomplete.</strong> The gate answers “does it work under change?” It does not yet answer “why did <em>this</em> real run fail?” That is the flight-recorder work of <a href="17-observability.html" class="quarto-xref"><span>Chapter 17</span></a>.</p>
 </div>
 </div>
 </section>

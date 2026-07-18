@@ -706,6 +706,21 @@ Figure&nbsp;13.4: Human-in-the-loop via an interrupt. The graph runs up to a che
 </section>
 <section id="sec-ch12-case" class="level2" data-number="13.7">
 <h2 data-number="13.7" class="anchored" data-anchor-id="sec-ch12-case"><span class="header-section-number">13.7</span> Case study: the Ledgerly support agent</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="🎯 What Ledgerly is trying to do">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🎯 What Ledgerly is trying to do
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Customer request.</strong> <em>“I changed my plan last month and now invoice #4471 shows two charges. Why was I charged twice, and can you refund the duplicate?”</em></p>
+<p><strong>What the graph must own.</strong> State, checkpoints between every node, an approval interrupt right before the irreversible refund action, and an idempotency key on the refund tool so a resumed or retried run never pays twice.</p>
+<p><strong>Desired outcome.</strong> The run pauses at the approval node with the diagnosis and the exact refund amount still attached to the same evidence, resumes cleanly whether the human replies in five minutes or five hours, and never issues the same refund more than once even after a worker restart mid-run.</p>
+</div>
+</div>
 <p>Where we left off, <a href="12-memory-systems.html#sec-ch11-case" class="quarto-xref"><span>Section 12.9</span></a> gave Ledgerly memory but left its agentic lane as a loop improvised turn by turn. This chapter’s graph model gives that loop a durable skeleton. The complex lane from <a href="10-agentic-patterns.html#sec-ch09-case" class="quarto-xref"><span>Section 10.10</span></a> is precisely the reason–act loop we just built in <a href="#sec-ch12-worked" class="quarto-xref"><span>Section 13.5</span></a>: a <code>call_model</code> node that decides, a <code>run_tools</code> node that runs the billing tools from <a href="11-tools-and-mcp.html#sec-ch10-case" class="quarto-xref"><span>Section 11.9</span></a>, and the cycle between them. Ledgerly’s whole agentic lane <em>is</em> that graph.</p>
 <p>Two of this chapter’s features matter most for a system that touches money. <strong>Checkpointing</strong> makes the conversation durable and gives it memory across sessions for free (<a href="#sec-ch12-persistence" class="quarto-xref"><span>Section 13.3</span></a>), so a customer who replies a day later resumes exactly where they left off instead of starting over. And <strong>human-in-the-loop</strong> is the safeguard the refund example in <a href="#sec-ch12-hitl" class="quarto-xref"><span>Section 13.4</span></a> was written for: we drop an interrupt immediately before the <code>issue_refund</code> node, so the graph runs right up to the point of paying out and then pauses, surfacing “About to refund $80 to invoice #4471. Approve?” to a human. If they approve, the graph resumes and the refund fires; if not, it takes a different branch. Oversight becomes a switch in the graph rather than a rewrite.</p>
 <p>Spelled out as an explicit graph, the refund flow is this whole chapter on a single page. <a href="#fig-ledgerly-graph" class="quarto-xref">Figure&nbsp;<span>13.5</span></a> draws it. Control enters at <code>classify_request</code> and <code>load_account</code>, fans out to three parallel fetches, <code>fetch_charges</code>, <code>retrieve_policy</code>, and <code>fetch_plan_history</code>, that join at <code>diagnose_billing_issue</code>, and arrives at <code>validate_refund</code>, the conditional edge that decides everything downstream. Every node reads and writes the state schema from <a href="#tbl-agent-state" class="quarto-xref">Table&nbsp;<span>13.1</span></a>, so no node has to re-infer context from raw messages; the diagnosis node writes a <code>diagnosis</code>, the validator reads it, and the approval node writes an <code>approval</code>.</p>
@@ -779,21 +794,21 @@ Figure&nbsp;13.5: Ledgerly’s refund graph, the whole chapter on one page. Para
   Score: 3/3 routed correctly, 4/4 safety checks passed</code></pre>
 <p>The safety block is the one worth pausing on, because it is a runnable proof of this chapter’s central promise. An over-threshold refund cannot slip past the human gate, and a resumed run cannot pay twice, and those are properties you can check rather than merely assert. We build the full evaluation discipline in <a href="../part4-production/16-evaluation.html" class="quarto-xref"><span>Chapter 16</span></a>; here it is enough to see that the graph we drew is a graph that works.</p>
 <p>The same agent can be expressed in a lighter-weight framework, too. The next chapter’s triage-and-handoff example (<a href="14-openai-agents-sdk.html#sec-ch13-worked" class="quarto-xref"><span>Section 14.5</span></a>) is Ledgerly again: a triage agent that hands billing questions to a specialist, the very routing from <a href="10-agentic-patterns.html#sec-ch09-case" class="quarto-xref"><span>Section 10.10</span></a> wearing the OpenAI Agents SDK’s clothes. Either way, before Ledgerly ships we have to answer a harder question than “does it run?”, namely “does it <em>work</em>?”. <a href="../part4-production/16-evaluation.html#sec-ch15-case" class="quarto-xref"><span>Section 16.8</span></a> builds the evaluation set that decides.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly so far">
+<div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly after Chapter 13">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-🧾 Ledgerly so far
+🧾 Ledgerly after Chapter 13
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The improvised loop gets a durable skeleton:</p>
-<ol type="1">
-<li>Router to three lanes; MCP tools; episodic/semantic/procedural memory; evaluator gate.</li>
-<li><strong>New this chapter:</strong> the complex lane is now a durable <strong>graph</strong> (reason–act with checkpoints), and a <strong>human-approval</strong> step fences every refund before it pays out.</li>
-</ol>
+<p><strong>Before this chapter.</strong> The complex lane’s loop was ordinary Python: fine to read, fatal under a real crash or a reviewer who approves hours after the diagnosis ran.</p>
+<p><strong>New in this chapter.</strong> Ledgerly’s complex lane is now a <strong>durable graph</strong>. State, transitions, and checkpoints are managed by LangGraph, and a <strong>human-approval interrupt</strong> sits inside the graph, right before the irreversible refund action.</p>
+<p><strong>What changed architecturally.</strong> The graph owns transitions and persists state at every step, so a run can pause for a human, survive a worker restart, and resume with the same evidence it started with. An <strong>idempotency key</strong> on the refund tool means a retried or resumed run never pays twice.</p>
+<p><strong>What the customer experience improves.</strong> A refund that pauses for approval keeps its evidence attached to the pause; a resumed run finishes on the same facts that opened it; and no customer receives a duplicate payout because a worker crashed mid-run.</p>
+<p><strong>What remains incomplete.</strong> The graph runs, but we have not yet asked whether it <em>works</em> under change: a new model, a new prompt, a new policy. The release gate is built in <a href="../part4-production/16-evaluation.html#sec-ch15-case" class="quarto-xref"><span>Section 16.8</span></a>; observability, safety, and deployment follow.</p>
 </div>
 </div>
 </section>

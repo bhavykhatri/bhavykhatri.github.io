@@ -861,45 +861,75 @@ Table&nbsp;9.4: Two architectures, two ways to grade them. A workflow can be che
 </section>
 <section id="sec-ch08-case" class="level2" data-number="9.9">
 <h2 data-number="9.9" class="anchored" data-anchor-id="sec-ch08-case"><span class="header-section-number">9.9</span> Case study: the Ledgerly support agent</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="🎯 What Ledgerly is trying to do">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🎯 What Ledgerly is trying to do
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Customer requests.</strong> Three tickets land in the same hour: a simple invoice-copy request, a duplicate-charge complaint with a clear refund path, and an ambiguous plan-change-plus-double-charge investigation. The full text of each appears in the lane table below.</p>
+<p><strong>What Ledgerly can look at.</strong> Customer accounts, invoices, plan-change history, the current refund policy, and past support notes.</p>
+<p><strong>Desired outcome.</strong> Each ticket resolves through the least autonomy that reliably works, and no ticket touches a money-moving action without a rule or a human standing between the model and the ledger.</p>
+</div>
+</div>
 <p>Where we left off, <a href="../part2-llm-agents/07-the-augmented-llm.html#sec-ch06-case" class="quarto-xref"><span>Section 7.7</span></a> gave the Ledgerly agent hands, an open book, and a notebook. Now we decide <em>when</em> to let it use that freedom, because the customer-support system described just above is Ledgerly’s, and the hybrid shape from <a href="#sec-ch8-hybrids" class="quarto-xref"><span>Section 9.6</span></a> is exactly the architecture we first sketched in <a href="../part1-foundations/01-what-is-an-agent.html#sec-ch01-case" class="quarto-xref"><span>Section 1.8</span></a>. The judgment this chapter asks for, namely “for each request, do I own the control flow or does the model?”, is what turns that sketch into a concrete design.</p>
 <p>Run Ledgerly’s real traffic down the decision guide from <a href="#sec-ch8-decision" class="quarto-xref"><span>Section 9.7</span></a> and it sorts itself into three lanes. Most tickets are a <strong>single well-crafted call</strong>: “email me invoice #4471” or “what plan am I on?” need one lookup and one reply, so reaching for anything heavier would only add latency. A smaller set are <strong>known multi-step workflows</strong>: a refund has a fixed procedure every time (look up the charge, check it against the policy, issue the refund if it qualifies, then reply), so we script that path in code and let the model do the work at each station. And a stubborn minority are <strong>genuinely open-ended</strong>: the multi-part complaint that tangles a double charge, a failed plan change, and a warranty question at once, where no fixed path fits. Only that last lane hands the model the wheel.</p>
 <p>Drawing the line this way keeps Ledgerly honest about the trade from this chapter. The predictable majority stays on rails, cheap and auditable, and the expensive freedom of an agent, along with its compounding-error risk, is spent only on the fraction that truly needs it. Notice that the refund lane stays a workflow <em>even though it moves money</em>, because its steps never change. What makes a request agentic is unpredictability, not importance.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 32%">
-<col style="width: 55%">
-<col style="width: 12%">
+<col style="width: 44%">
+<col style="width: 10%">
+<col style="width: 45%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Example ticket</th>
-<th>Who owns the control flow</th>
+<th>Example customer message</th>
 <th>Lane</th>
+<th>Who owns the control flow</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>“Email me invoice #4471.”</td>
-<td>you: one fixed step</td>
-<td>FAQ, a single call</td>
+<td>“Please email me a copy of invoice #4471.”</td>
+<td>FAQ, a single augmented call</td>
+<td>code: one fixed step (retrieve + send)</td>
 </tr>
 <tr class="even">
-<td>“Refund my duplicate charge.”</td>
-<td>you: a fixed procedure</td>
-<td>Refund, a workflow</td>
+<td>“Invoice #4471 shows the same $80 charge twice. Please check whether it is a duplicate and refund the extra charge if it qualifies under your policy.”</td>
+<td>Refund, a fixed workflow</td>
+<td>code: a fixed procedure at each station</td>
 </tr>
 <tr class="odd">
-<td>“Two wrong charges and a failed plan change at once.”</td>
-<td>the model: no fixed path</td>
-<td>Complex, an agent</td>
+<td>“I changed from the Basic plan to the Pro plan last month. Invoice #4471 now shows an $80 charge and a second $50 charge, and I cannot tell whether the second one is a duplicate or a plan adjustment. Please explain what happened and refund anything charged incorrectly.”</td>
+<td>Complex, one agentic step in a workflow</td>
+<td>the model: no fixed path for the diagnosis</td>
 </tr>
 </tbody>
 </table>
+<div class="callout callout-style-default callout-tip callout-titled" title="One call is not a bare call">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+One call is not a bare call
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>“Single well-crafted call” here does <em>not</em> mean a bare LLM. Ledgerly’s FAQ lane still looks up the invoice and hands it off to a bounded delivery action; the model’s reply is one call, but the surrounding system is an <strong>augmented LLM application</strong>. The lane is simple because it has one predetermined unit of work, not because it is disconnected from the world. The axis this chapter cares about is who owns the control flow, and on that axis a single augmented call and a bare model call sit in the same place: the code, not the model.</p>
+</div>
+</div>
 <section id="sec-ch8-case-hybrid" class="level3" data-number="9.9.1">
 <h3 data-number="9.9.1" class="anchored" data-anchor-id="sec-ch8-case-hybrid"><span class="header-section-number">9.9.1</span> Workflow, agent, or hybrid for one hard ticket</h3>
 <p>The three lanes are tidy in a table, but the real lesson of this chapter only lands when you watch a genuinely hard ticket move through the system. Take the kind of message that lands in Ledgerly’s complex lane: <em>“I changed my plan last month and now I see two charges. Why did this happen, and can you refund one of them?”</em> It is ambiguous (the second charge might be a duplicate or a legitimate proration), it touches money, and its resolution depends on facts nobody has looked up yet. It is exactly the sort of ticket that tempts an engineer to reach for a full agent.</p>
-<p>That temptation is the wrong move, and it is worth being precise about why. The <strong>bad design</strong> hands the whole ticket to an autonomous agent and lets it decide everything: what data to fetch, what the policy means, whether a refund is owed, how much, then executes the refund and closes the ticket. Every one of those is a place where the model’s judgment is now load-bearing for an <em>irreversible, money-moving</em> action, and the compounding-error risk we keep returning to now has real dollars attached. Handing that much control to a model is not sophistication; it is spending your entire autonomy budget on a step that never asked for it.</p>
-<p>The <strong>better design</strong> is the hybrid this chapter has been building toward: a deterministic workflow that wraps a single agentic detour, with the money and the rules kept firmly in code. <a href="#fig-ledgerly-hybrid" class="quarto-xref">Figure&nbsp;<span>9.10</span></a> traces the eight stages.</p>
+<p>Before we do, walk the same ticket through three architectures and notice which failure each one owns.</p>
+<p><strong>Design A. An entirely deterministic workflow.</strong> Every branch is scripted: if there are two identical charges, refund the second; if there was a plan change last cycle, treat the second charge as proration and do not refund. This design breaks on the messy real world, where charges are not perfectly identical, plan changes overlap with billing anomalies, and unseen combinations keep turning up. The code cannot anticipate every mixture of proration, duplicate, and conflicting history, so tickets that do not fit any branch fail silently or fall out to a human queue. Design A owns the failure of being <strong>too rigid</strong>.</p>
+<p><strong>Design B. A fully autonomous agent.</strong> The whole ticket goes to the model: fetch the data, interpret the policy, decide the refund amount, execute it, close the ticket. It handles the messiness Design A could not, but every step is now load-bearing for an <em>irreversible, money-moving</em> action. Compounding errors, hallucinated policy, and the occasional misread of the evidence all become financial mistakes. Handing that much control to a model is not sophistication; it is spending your entire autonomy budget on steps that never asked for it. Design B owns the failure of being <strong>too autonomous</strong>.</p>
+<p><strong>Design C. A hybrid.</strong> The workflow owns identity, retrieval, refund rules, approval, and ticket updates, exactly the places where the correct behaviour is stable and the cost of a wrong answer is high. The model owns <em>only</em> the ambiguous diagnosis, where no fixed path fits and interpreting evidence is genuinely the job. Autonomy is spent on the one step that earned it. This is the design this chapter has been building toward. <a href="#fig-ledgerly-hybrid" class="quarto-xref">Figure&nbsp;<span>9.10</span></a> traces the eight stages.</p>
 <div id="fig-ledgerly-hybrid" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ledgerly-hybrid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -911,7 +941,24 @@ Figure&nbsp;9.10: One hard ticket through Ledgerly’s hybrid. The workflow (rai
 </figure>
 </div>
 <p>Walk the stages and notice how little the model actually gets to decide. The workflow <strong>verifies identity</strong> and <strong>retrieves the account and billing period</strong>, because those steps are the same every time. Only then does control pass to the <strong>agentic diagnosis step</strong>, whose job is the one genuinely open question: given these charges and this plan change, what actually happened? It investigates and returns a structured verdict, and there it stops. The workflow takes over again to <strong>run the deterministic refund-eligibility checks</strong> and to <strong>gate the refund by amount and approval policy</strong>, so no refund above the threshold slips through without a human. The model is invited back to <strong>draft the customer explanation</strong> in warm, clear prose, a job it is genuinely good at, but a <strong>human approves</strong> the actual refund before it happens, and the workflow <strong>updates the ticket and logs the outcome</strong> for the audit trail. The agent touched exactly one stage: the one where the path was unclear.</p>
-<p>That is the whole chapter compressed into a single pipeline. <strong>Use the agent where the path is unclear; use the workflow where the rule is known.</strong> One agentic step, wrapped in deterministic rails, gives you the flexibility to handle a messy complaint without giving up the predictability, auditability, and control that a money-moving process demands.</p>
+<p>The ownership boundary between the agentic step and the workflow becomes concrete in the diagnosis step’s <em>contract</em>. The model does not return prose or a refund decision; it returns a structured verdict the workflow can inspect:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"classification"</span><span class="fu">:</span> <span class="st">"duplicate_charge"</span><span class="fu">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"supporting_charge_ids"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"CH-8801"</span><span class="ot">,</span> <span class="st">"CH-8802"</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"confidence"</span><span class="fu">:</span> <span class="dv">0</span><span class="er">.</span><span class="dv">91</span><span class="fu">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"evidence_used"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"invoice_4471"</span><span class="ot">,</span> <span class="st">"plan_change_2026_06"</span><span class="ot">,</span> <span class="st">"refund_policy_v3"</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"recommended_action"</span><span class="fu">:</span> <span class="st">"evaluate_refund"</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And the surrounding workflow, still ordinary code, decides what happens next:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> diagnosis[<span class="st">"classification"</span>] <span class="op">==</span> <span class="st">"duplicate_charge"</span>:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    eligibility <span class="op">=</span> check_refund_eligibility(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        charge_ids<span class="op">=</span>diagnosis[<span class="st">"supporting_charge_ids"</span>],</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        policy<span class="op">=</span>current_policy,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> eligibility.ok <span class="kw">and</span> eligibility.amount <span class="op">&lt;=</span> AUTO_APPROVE_LIMIT:</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> issue_refund(charge_ids<span class="op">=</span>diagnosis[<span class="st">"supporting_charge_ids"</span>])</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> route_to_human_approval(diagnosis, eligibility)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The model interpreted ambiguous evidence; the workflow decided refund eligibility, sized the amount, and either moved the money or paused for a human. That is the whole chapter compressed into a single pipeline. <strong>Use the agent where the path is unclear; use the workflow where the rule is known.</strong> One agentic step, wrapped in deterministic rails, handles a messy complaint without giving up the predictability, auditability, and control that a money-moving process demands.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="🛠️ In practice">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -929,17 +976,17 @@ Figure&nbsp;9.10: One hard ticket through Ledgerly’s hybrid. The workflow (rai
 <section id="sec-ch8-case-run" class="level3" data-number="9.9.2">
 <h3 data-number="9.9.2" class="anchored" data-anchor-id="sec-ch8-case-run"><span class="header-section-number">9.9.2</span> Watch the hybrid run</h3>
 <p>The eight stages are easy to nod along to, so let us actually run them. The reference implementation in <code>code/ledgerly/ch09/</code> builds this exact pipeline and sends <strong>two surface-identical tickets</strong> through it. Both say “I changed my plan and now I see two charges”; only the agentic diagnosis step tells them apart, and only the rails move the money.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="🔩 Still a bare LLM, still no framework">
+<div class="callout callout-style-default callout-note callout-titled" title="🔩 Framework-free hybrid, one agentic step inside a workflow">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-🔩 Still a bare LLM, still no framework
+🔩 Framework-free hybrid, one agentic step inside a workflow
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The whole pipeline is ordinary Python: the stages are function calls, the control flow is a sequence of <code>if</code> branches, and the one agentic step is a single model call that returns a structured verdict. There is no agentic framework here on purpose, because a fixed eight-stage path does not need one. The pause-for-approval that the note above calls for is faked with a simple callback; when we want it to be <em>durable</em> (survive a reviewer who approves hours later), the work finally earns a framework, and we bring in LangGraph in <a href="../../chapters/part3-building/13-orchestration-langgraph.html">the orchestration chapter</a>.</p>
+<p>The whole pipeline is ordinary Python: the stages are function calls, the control flow is a sequence of <code>if</code> branches, and the one agentic step is a single augmented model call that returns a structured verdict. This is not a bare LLM (the diagnosis step still uses tools and retrieval) and it is not a full agent loop (the model does not choose the next stage); it is a framework-free hybrid where deterministic rails wrap exactly one agentic decision. The pause-for-approval that the note above calls for is faked with a simple callback; when we want it to be <em>durable</em> (survive a reviewer who approves hours later), the work finally earns a framework, and we bring in LangGraph in <a href="../../chapters/part3-building/13-orchestration-langgraph.html">the orchestration chapter</a>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="🛠️ Run it yourself">
@@ -953,11 +1000,11 @@ Figure&nbsp;9.10: One hard ticket through Ledgerly’s hybrid. The workflow (rai
 </div>
 <div class="callout-body-container callout-body">
 <p>From the <code>code/</code> directory. This is an agentic stage, so it needs a model: copy <code>code/.env.example</code> to <code>code/.env</code> and add an OpenAI or Azure OpenAI key.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch09              <span class="co"># both tickets through the hybrid</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch09 <span class="at">--duplicate</span>  <span class="co"># just the genuine-duplicate ticket</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch09 <span class="at">--proration</span>  <span class="co"># just the legitimate-proration ticket</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch09 <span class="at">--decline</span>    <span class="co"># the duplicate ticket, but the human declines</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch09.evaluate     <span class="co"># does control sit in the right place?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch09              <span class="co"># both tickets through the hybrid</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch09 <span class="at">--duplicate</span>  <span class="co"># just the genuine-duplicate ticket</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch09 <span class="at">--proration</span>  <span class="co"># just the legitimate-proration ticket</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch09 <span class="at">--decline</span>    <span class="co"># the duplicate ticket, but the human declines</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch09.evaluate     <span class="co"># does control sit in the right place?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>Each stage below is tagged with <em>who owns it</em>: <strong>RAILS</strong> for the deterministic code, <strong>MODEL</strong> for the one agentic step (and the drafted reply), and <strong>HUMAN</strong> for the approval gate. Watch the first ticket, Dana’s genuine duplicate.</p>
@@ -1040,24 +1087,21 @@ RAILS   ticket T-502 closed and logged</code></pre>
   Score: 6/6 checks passed</code></pre>
 <p>The last two checks are the point of the whole chapter in miniature: decline the human approval and no money moves, and force the model’s verdict to be wrong and the code still protects the ledger. Autonomy was spent on exactly one stage, and the expensive parts stayed on rails.</p>
 <p>We now have three lanes but no machinery to run them. <a href="10-agentic-patterns.html#sec-ch09-case" class="quarto-xref"><span>Section 10.10</span></a> assembles Ledgerly’s support desk from the handful of recurring patterns this next chapter introduces.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly so far">
+<div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly after Chapter 9">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-🧾 Ledgerly so far
+🧾 Ledgerly after Chapter 9
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The atom from <a href="../part2-llm-agents/07-the-augmented-llm.html#sec-ch06-case" class="quarto-xref"><span>Section 7.7</span></a> now has a shape:</p>
-<ol type="1">
-<li>A <strong>router</strong> reads each ticket and picks a lane by <em>who owns the control flow</em>.</li>
-<li><strong>FAQ lane:</strong> a single well-crafted call.</li>
-<li><strong>Refund lane:</strong> a fixed workflow (look up, check policy, refund, reply).</li>
-<li><strong>Complex lane:</strong> an agent, reserved for open-ended tickets.</li>
-<li>Every lane draws on the Ch6 faculties: bounded tools, grounded retrieval, memory.</li>
-</ol>
+<p><strong>Before this chapter.</strong> Ledgerly could use tools, retrieval, and memory inside a single augmented turn, but every ticket looked the same to it.</p>
+<p><strong>New in this chapter.</strong> Ledgerly now separates traffic into three lanes by who owns the control flow: a <strong>single augmented call</strong> for simple lookups, a <strong>fixed workflow</strong> for known multi-step procedures like refunds, and a <strong>hybrid</strong> where the workflow owns the money-moving rails and a single agentic step owns the ambiguous diagnosis.</p>
+<p><strong>What changed architecturally.</strong> The system no longer treats every ticket as one kind of agent problem. It chooses the least autonomy that reliably solves the request, and a human approval gate protects irreversible actions.</p>
+<p><strong>What the customer experience improves.</strong> Simple requests stay fast and cheap, refund workflows stay auditable, and ambiguous billing issues can still be investigated flexibly without letting the model touch policy or money.</p>
+<p><strong>What remains incomplete.</strong> The three lanes still run as ordinary Python. Durable orchestration, a real tool surface, richer memory, evaluation, observability, and deployment controls arrive in the chapters ahead.</p>
 </div>
 </div>
 </section>

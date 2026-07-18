@@ -867,6 +867,21 @@ Safety: content is not a command
 </section>
 <section id="sec-ch10-case" class="level2" data-number="11.9">
 <h2 data-number="11.9" class="anchored" data-anchor-id="sec-ch10-case"><span class="header-section-number">11.9</span> Case study: the Ledgerly support agent</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="🎯 What Ledgerly is trying to do">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🎯 What Ledgerly is trying to do
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Customer request.</strong> <em>“Please check invoice #4471. I think I was charged twice and want the duplicate refunded.”</em></p>
+<p><strong>What the tools can do.</strong> <em>Read tier:</em> <code>get_invoice</code>, <code>read_subscription</code>. <em>Policy-bounded write tier:</em> <code>issue_refund</code> with an <code>amount</code> capped by schema to the charge total and a required <code>reason</code>. <em>Human approval tier:</em> the refund payout itself waits for a person before money moves.</p>
+<p><strong>Desired outcome.</strong> The model retrieves the invoice and the policy, drafts a refund request no larger than the actual charge, and the payout only fires after a human sign-off. The tool surface, not the prompt, is what makes an over-refund impossible to even express.</p>
+</div>
+</div>
 <p>Where we left off, <a href="10-agentic-patterns.html#sec-ch09-case" class="quarto-xref"><span>Section 10.10</span></a> gave Ledgerly a floor plan whose refund and complex lanes both need to <em>act</em>: look up a charge, issue a refund. This chapter argues that the quality of those tools decides the agent’s fate, so let us design Ledgerly’s toolset with the ACI care from <a href="#sec-ch10-aci" class="quarto-xref"><span>Section 11.3</span></a>, then expose it the way <a href="#sec-ch10-mcp" class="quarto-xref"><span>Section 11.6</span></a> recommends.</p>
 <p>Four tools cover the actuators from Ledgerly’s PEAS (<a href="../part1-foundations/04-environments-and-rationality.html#sec-ch04-case" class="quarto-xref"><span>Section 4.6</span></a>), and each is written like a docstring for a bright new colleague:</p>
 <table class="caption-top table">
@@ -940,17 +955,17 @@ Figure&nbsp;11.8: Ledgerly’s tool surface, grouped by human-in-the-loop tier a
 <section id="sec-ch10-case-run" class="level3" data-number="11.9.1">
 <h3 data-number="11.9.1" class="anchored" data-anchor-id="sec-ch10-case-run"><span class="header-section-number">11.9.1</span> Watch the tools run over MCP</h3>
 <p>The design choices are easiest to trust once you watch the tools cross the wire, so this stage runs Ledgerly’s billing tools as a real MCP server and lets an agent use them. The four tools are published once with FastMCP; a host connects over the protocol, discovers them at run time, and calls them one at a time to resolve a ticket. What makes the run worth watching is the division of labor: the model picks the tools and the words, but the tool’s guardrails and its human-in-the-loop tier live in code, so the model cannot spend money the code did not allow.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="🔩 Still a bare LLM, still no framework">
+<div class="callout callout-style-default callout-note callout-titled" title="🔩 Framework-free host, augmented LLM inside">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-🔩 Still a bare LLM, still no framework
+🔩 Framework-free host, augmented LLM inside
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The host is a plain loop calling the model directly; no agent framework schedules it. The one new dependency is the MCP SDK itself, and it earns its place: the tools are discovered over the protocol rather than hard-coded, which is exactly what lets the same server serve many hosts. The orchestration framework that would manage this loop for you arrives in <a href="13-orchestration-langgraph.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
+<p>The host is a plain loop calling an augmented LLM directly; no agent framework schedules it. The one new dependency is the MCP SDK itself, and it earns its place: the tools are discovered over the protocol rather than hard-coded, which is exactly what lets the same server serve many hosts. The orchestration framework that would manage this loop for you arrives in <a href="13-orchestration-langgraph.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="🛠️ Run it yourself">
@@ -1061,6 +1076,23 @@ Figure&nbsp;11.8: Ledgerly’s tool surface, grouped by human-in-the-loop tier a
 
 Score: 7/7 checks passed</code></pre>
 <p>Read the run and the design back to back and the chapter’s argument is concrete. The tool descriptions the model reads and the code that runs are the same FastMCP functions, so they cannot drift. The tiers, not the model, decide what runs freely and what waits for a person. And the guardrails sit in the tool, not the prompt, which is why a well-built tool surface <em>is</em> the control policy.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly after Chapter 11">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🧾 Ledgerly after Chapter 11
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Before this chapter.</strong> Tools were ordinary Python functions the desk called directly, with their descriptions written twice (once for the model, once for the code).</p>
+<p><strong>New in this chapter.</strong> Ledgerly’s tool surface is now a first-party <strong>MCP server</strong> with a single source of truth per tool and an explicit <strong>three-tier policy</strong>: read tools run freely, policy-bounded write tools validate every argument, and money-moving tools sit behind human approval.</p>
+<p><strong>What changed architecturally.</strong> The host is still framework-free, but tools are <em>discovered</em> over the protocol rather than hard-coded, which is what lets the same server serve many hosts. Safety lives in the tool signatures and tier gates, not in the prompt.</p>
+<p><strong>What the customer experience improves.</strong> Bounded writes cannot silently drift out of policy (nonsensical amounts, missing reasons), and no refund above the auto-approve threshold reaches the customer without a human sign-off.</p>
+<p><strong>What remains incomplete.</strong> MCP standardises tool discovery and calling; it does not by itself make the run <strong>durable</strong>. The interrupt for the human is still a plain callback. Durable pauses, checkpoints, and resume arrive in <a href="13-orchestration-langgraph.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
+</div>
+</div>
 </section>
 </section>
 <section id="sec-ch10-summary" class="level2" data-number="11.10">

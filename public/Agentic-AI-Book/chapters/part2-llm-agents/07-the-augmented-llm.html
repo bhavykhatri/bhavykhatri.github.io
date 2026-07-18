@@ -491,6 +491,28 @@ Figure&nbsp;7.1: A bare LLM is a brain in a jar: brilliant but sealed off, unabl
 </figure>
 </div>
 <p>That is the whole idea of this chapter. Before we assemble loops, plans, and multi-agent systems in the parts to come, we need to be crystal clear about the single unit those systems are made of. Get this building block right and everything later composes cleanly; get it wrong and no amount of orchestration on top will save you.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="📖 The words this book uses">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+📖 The words this book uses
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Because “agent” and “LLM app” get bent into many shapes, this book pins six terms and uses them the same way from here to the end.</p>
+<ul>
+<li><strong>Bare LLM.</strong> The model answers from its trained weights and the current message alone. No tools, no retrieval, no memory, no loop, no environment access.</li>
+<li><strong>Augmented LLM.</strong> A bare LLM given some combination of tools, retrieval, or memory. This is the atom of the rest of the book. <strong>The moment any of these three is wired in, the system is augmented, whether or not you are using a framework.</strong></li>
+<li><strong>Workflow containing LLM calls.</strong> Application code owns the sequence of steps; one or more steps happen to be (augmented) LLM calls.</li>
+<li><strong>Agentic step.</strong> A point in the sequence where <em>the model</em>, not the surrounding code, chooses what to investigate or which action to take next.</li>
+<li><strong>Framework-free agent loop.</strong> A loop of augmented LLM calls plus tool execution, written in ordinary Python rather than through an orchestration library.</li>
+<li><strong>Framework-orchestrated agent.</strong> An agent whose state, transitions, checkpointing, and human-in-the-loop pauses are managed by a framework such as LangGraph or the OpenAI Agents SDK.</li>
+</ul>
+<p>The absence of a framework never makes a system a bare LLM; it only makes it framework-free. Complexity of orchestration and degree of augmentation are two different axes, and this book keeps them apart on purpose.</p>
+</div>
+</div>
 </section>
 <section id="sec-augmented-block" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="sec-augmented-block"><span class="header-section-number">7.2</span> The augmented LLM: one building block</h2>
@@ -785,6 +807,26 @@ Table&nbsp;7.2: The augmented LLM answers a turn; an agent loop pursues a goal a
 </section>
 <section id="sec-ch06-case" class="level2" data-number="7.7">
 <h2 data-number="7.7" class="anchored" data-anchor-id="sec-ch06-case"><span class="header-section-number">7.7</span> Case study: the Ledgerly support agent</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="🎯 What Ledgerly is trying to do">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🎯 What Ledgerly is trying to do
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Customer request</strong></p>
+<blockquote class="blockquote">
+<p>“I changed my plan last month, and invoice #4471 now contains two charges. Why was I charged twice, and if one of them is incorrect, can you refund it?”</p>
+</blockquote>
+<p><strong>What Ledgerly can look at</strong></p>
+<p>The customer’s account (AC-1001), invoice #4471, the plan-change history, the current refund policy, and any earlier support notes for this customer.</p>
+<p><strong>Desired outcome</strong></p>
+<p>Decide whether the second charge is a duplicate or a legitimate proration, explain the finding, refund only if evidence and policy allow it, and record the resolution so a later conversation starts already informed.</p>
+</div>
+</div>
 <p>Where we left off, <a href="../part1-foundations/04-environments-and-rationality.html#sec-ch04-case" class="quarto-xref"><span>Section 4.6</span></a> gave the Ledgerly agent a PEAS spec: resolve billing issues correctly, in few replies, without inventing policy. But a bare LLM can do none of that, because as <a href="#sec-augmented-block" class="quarto-xref"><span>Section 7.2</span></a> argued it has knowledge yet no hands, no current facts, and no memory. This chapter’s three augmentations are exactly what turn that spec into something that can act, and the “why was I charged twice?” request above is really the Ledgerly agent’s first working turn.</p>
 <p>Watch a bare model take that turn first, so the fix has something to fix. Asked <em>why was I charged twice?</em>, an unaugmented LLM has only its training to draw on. It recites a refund rule that sounds right but may be months out of date, or quietly invented. It cannot open the account, so it never sees that there really were two charges on the same day. And when the same customer writes back tomorrow, it starts from zero and asks them to explain the whole thing again. Three fluent sentences, and every one of them a failure the customer feels. Each augmentation in this chapter removes exactly one of them:</p>
 <table class="caption-top table">
@@ -933,17 +975,17 @@ Figure&nbsp;7.10: One augmented turn at Ledgerly. A billing complaint flows thro
 <section id="sec-ch6-case-run" class="level3" data-number="7.7.2">
 <h3 data-number="7.7.2" class="anchored" data-anchor-id="sec-ch6-case-run"><span class="header-section-number">7.7.2</span> Building the atom, one faculty at a time</h3>
 <p>Reading that a model gains hands, a book, and a notebook is easy to nod along to and easy to overrate. So instead of describing it, let us <em>build</em> it, adding one faculty at a time to the <strong>same</strong> model and asking it the <strong>same</strong> question at each step. The reference implementation in <code>code/ledgerly/ch07/</code> does exactly this, and you can run it yourself.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="🔩 Built from a bare LLM, no framework yet">
+<div class="callout callout-style-default callout-note callout-titled" title="🔩 Framework-free, one augmentation at a time">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-🔩 Built from a bare LLM, no framework yet
+🔩 Framework-free, one augmentation at a time
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Everything in this stage is a plain model call wrapped in ordinary Python: the tools, the retrieval, and the memory are just functions, and the control flow is a normal sequence of steps. We are deliberately <em>not</em> reaching for an agentic framework (LangGraph, an SDK) here, because a single augmented turn does not need one. Following the book’s own rule, we adopt a framework only when the work earns it, and we bring in LangGraph in <a href="../../chapters/part3-building/13-orchestration-langgraph.html">the orchestration chapter</a>, where the agent becomes a durable, branching, human-gated graph.</p>
+<p>The starting point is a bare LLM call, and each subsequent step wraps it in ordinary Python: tools, retrieval, and memory are just functions, and the control flow is a normal sequence of steps. By Step 3 the system is squarely an <strong>augmented LLM application</strong>, not a bare model. What is deliberately missing here is an agentic <em>framework</em> (LangGraph, an SDK). A single augmented turn does not need one; the book’s rule is to adopt a framework only when the work earns it, and we bring in LangGraph in <a href="../../chapters/part3-building/13-orchestration-langgraph.html">the orchestration chapter</a>, where the agent becomes a durable, branching, human-gated graph.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="🛠️ Run it yourself">
@@ -991,6 +1033,7 @@ customers understand and fix charges on their account. Always follow these rules
 </div>
 </div>
 <p>Every sentence is honest, and not one is grounded in Dana’s actual account. Note what it did <em>not</em> do: it did not invent a charge or a policy to sound helpful. That restraint comes straight from the shared honesty rules, not from a special “you can’t see it” instruction. This is the failure the rest of the steps fix.</p>
+<p>Everything from Step 1 onward earns a new name. The moment we wire in a tool call, a retrieval, or a memory write, the system stops being a bare LLM and becomes an <strong>augmented LLM application</strong>, a categorically different thing even though we have not adopted a framework and even though we still handle only one turn. The rest of this section adds the augmentations one at a time and watches the same customer request stop failing.</p>
 <p><strong>Step 1: add a tool (hands).</strong> We give the model a single tool, <code>get_invoice</code>, which reads the customer’s real charges from the billing system. Now, before it answers, the agent can actually <em>look</em>.</p>
 <div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ Code / tool output">
 <div class="callout-header d-flex align-content-center">
@@ -1125,6 +1168,19 @@ remember("AC-1001", note) -&gt; memory updated (AC-1001 now has 1 stored note)</
 <li><strong>Retrieval (open book):</strong> answers grounded in the real policy and billing record.</li>
 <li><strong>Memory (notebook):</strong> notes prior cases so repeat customers are not re-asked.</li>
 </ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="🚧 What Ledgerly still cannot safely do">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🚧 What Ledgerly still cannot safely do
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This chapter shows tools, retrieval, and memory <em>composing</em> in a single turn. It is not yet the shape a production refund needs. The model still touches the refund path, the eligibility judgment lives partly in wording, there is no human sign-off before money moves, the run is not durable across a crash, and there is no eval gate to catch a regression. The rest of the book fills these gaps: <a href="../part3-building/09-workflows-vs-agents.html" class="quarto-xref"><span>Chapter 9</span></a> draws the line between where the model may decide and where deterministic code owns the answer; <a href="../part3-building/13-orchestration-langgraph.html" class="quarto-xref"><span>Chapter 13</span></a> makes the run durable and adds a pause for the human; and the production chapters add evaluation, observability, guardrails, and cost discipline. Chapter 7 gives Ledgerly its atom, not its finished shape.</p>
 </div>
 </div>
 <p>The atom is complete, but notice its shape: it handles one request and then stops. <a href="#fig-turn-to-loop" class="quarto-xref">Figure&nbsp;<span>7.11</span></a> sets that single augmented turn beside the <strong>agent loop</strong> the next chapters build, where the same augmented model keeps acting, observing, and deciding until a goal is met rather than answering only once.</p>

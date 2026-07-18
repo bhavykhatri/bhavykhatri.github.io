@@ -600,6 +600,21 @@ Figure&nbsp;17.8: The debugging loop: metrics or evaluation flag a failure, you 
 </section>
 <section id="sec-ch16-case" class="level2" data-number="17.7">
 <h2 data-number="17.7" class="anchored" data-anchor-id="sec-ch16-case"><span class="header-section-number">17.7</span> Case study: the Ledgerly support agent</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="🎯 The incident Ledgerly must explain">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🎯 The incident Ledgerly must explain
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Incident report.</strong> A customer received two refunds for the same charge after contacting support on Monday and again on Tuesday. Each individual run looked clean when replayed. The eval suite from <a href="16-evaluation.html#sec-ch15-case" class="quarto-xref"><span>Section 16.8</span></a> still passes.</p>
+<p><strong>What the flight recorder holds.</strong> A <strong>trace</strong> per run, spans for triage, retrieve, get_invoice, diagnose, and issue_refund (with amount, approval token, and gateway reply), grouped into <strong>sessions</strong> so bugs that only appear across two related runs become visible in one view.</p>
+<p><strong>Desired outcome.</strong> Find where the double payout happened, without exposing secrets in the trace store, and feed the reproducing case back into the golden set so the release gate stops it next time.</p>
+</div>
+</div>
 <p>Where we left off, <a href="16-evaluation.html#sec-ch15-case" class="quarto-xref"><span>Section 16.8</span></a> gave Ledgerly a scoreboard that flags <em>that</em> a ticket was handled badly. This chapter hands us the flight recorder that shows <em>why</em>. When Ledgerly resolves a double-charge ticket, its trace is a tree of spans (<a href="#sec-ch16-tracing" class="quarto-xref"><span>Section 17.2</span></a>), one per step of the graph from <a href="../part3-building/13-orchestration-langgraph.html#sec-ch12-case" class="quarto-xref"><span>Section 13.7</span></a>:</p>
 <ul>
 <li>a <strong>triage</strong> span that routes the ticket into the billing lane;</li>
@@ -792,6 +807,23 @@ Figure&nbsp;17.9: The same Ledgerly blueprint with its observability and evaluat
 </div>
 <div class="callout-body-container callout-body">
 <p>From <code>code/</code>, run <code>python -m ledgerly.ch17 --session</code> and watch one forgetful agent pay the same refund twice, then open <code>find_double_refunds</code> in <code>observability/metrics.py</code> to see how the session view catches it. Try adding a new sensitive field to a span’s inputs, the <code>evaluate.py</code> redaction check should immediately hold you to masking it.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly after Chapter 17">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🧾 Ledgerly after Chapter 17
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Before this chapter.</strong> The release gate could say <em>that</em> something regressed; nobody could say <em>where</em> in a real run it happened.</p>
+<p><strong>New in this chapter.</strong> Ledgerly has a <strong>flight recorder</strong>. Every run is a <strong>trace</strong> of named spans (triage, retrieve, get_invoice, diagnose, issue_refund, draft, close), grouped into <strong>sessions</strong> so a bug that spans two related runs (a customer contacting support twice) becomes visible in one view.</p>
+<p><strong>What changed architecturally.</strong> Spans carry inputs, outputs, tool results, approval tokens, and error status; <strong>redaction runs at capture</strong>, so secrets never enter the trace store. <strong>Sampling</strong> keeps errored and slow runs while dropping clean ones, and metrics (resolution rate, refund rate, p95 latency) sit on top of the same spans.</p>
+<p><strong>What the customer experience improves.</strong> A double-refund incident that used to be found by a support-team complaint is now caught by <code>find_double_refunds</code> walking the session graph, and the fix flows back into the golden set from <a href="16-evaluation.html#sec-ch15-case" class="quarto-xref"><span>Section 16.8</span></a>.</p>
+<p><strong>What remains incomplete.</strong> Observability shows what happened; it does not yet stop the <em>next</em> bad thing from happening. Untrusted inputs, prompt-injected retrieved documents, and unauthorised requests need the safety boundary of <a href="18-safety-and-guardrails.html" class="quarto-xref"><span>Chapter 18</span></a>.</p>
 </div>
 </div>
 </section>

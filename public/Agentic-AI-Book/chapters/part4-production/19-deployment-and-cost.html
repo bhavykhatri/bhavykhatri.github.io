@@ -573,6 +573,21 @@ Figure&nbsp;19.4: Scaling agents horizontally: a load balancer spreads requests 
 </section>
 <section id="sec-ch18-case" class="level2" data-number="19.5">
 <h2 data-number="19.5" class="anchored" data-anchor-id="sec-ch18-case"><span class="header-section-number">19.5</span> Case study: the Ledgerly support agent</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="🎯 The production scenario Ledgerly must run">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🎯 The production scenario Ledgerly must run
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Production scenario.</strong> After an invoicing issue, thousands of Ledgerly customers open billing tickets inside an hour. The wave contains routine questions, duplicate-charge refund workflows, and ambiguous plan-change investigations, all at the same time.</p>
+<p><strong>What the deployment must control.</strong> <em>Cost:</em> model routing, caching, batching, turn caps. <em>Reliability:</em> timeouts, bounded retries with backoff, an idempotency key on the refund tool. <em>Scale:</em> shared session, checkpoint, and memory state so any worker can resume any conversation.</p>
+<p><strong>Desired outcome.</strong> Routine questions stay fast and cheap, refund workflows stay auditable, ambiguous investigations still get the big model where they need it, and no customer receives a duplicate refund because a worker restarted mid-run.</p>
+</div>
+</div>
 <p>Where we left off, <a href="../part1-foundations/01-what-is-an-agent.html#sec-ch01-case" class="quarto-xref"><span>Section 1.8</span></a> sketched Ledgerly as an idea. Eleven installments later it can reason, use tools, remember its customers, orchestrate itself as a graph, and defend against attack. This chapter ships it, and the four cost levers from <a href="#sec-ch18-levers" class="quarto-xref"><span>Section 19.2</span></a> map straight onto the lanes we drew back in <a href="../part3-building/09-workflows-vs-agents.html#sec-ch08-case" class="quarto-xref"><span>Section 9.9</span></a>:</p>
 <ul>
 <li><strong>Model routing.</strong> The easy FAQ lane and the triage step run on a small, cheap model; only the open-ended double-charge investigations escalate to a large one. Most tickets are easy, so most tickets are cheap.</li>
@@ -764,6 +779,23 @@ In practice: a deployment readiness checklist
 <li><strong>Governed.</strong> Risky actions route through human approval, model and prompt versions are tracked, and there is a rollback path and an incident plan.</li>
 </ul>
 <p>The point is not the specific list but the habit: production readiness is these disciplines wired together, not any single one of them.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly after Chapter 19">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🧾 Ledgerly after Chapter 19
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Before this chapter.</strong> Ledgerly was safe on a single machine; it had never been asked to handle a real spike of traffic, control its bill, or survive a worker restart mid-run.</p>
+<p><strong>New in this chapter.</strong> Ledgerly is operated as <strong>production software</strong>. A <strong>router</strong> sends each ticket to a small model, a mid-tier model, or the large complex-lane model by the difficulty and safety of the work. <strong>Caching</strong> collapses repeated FAQ lookups; <strong>batching</strong> consolidates asynchronous work; <strong>turn and token caps</strong> stop a runaway agent; <strong>timeouts, bounded retries, and idempotency keys</strong> on the refund tool keep a retried payout from ever paying twice; and shared <strong>session, checkpoint, and memory state</strong> lets any worker resume any conversation.</p>
+<p><strong>What changed architecturally.</strong> The disciplines from earlier chapters are wired into a single deployment: eval as a release gate, observability as a flight recorder, safety as defence in depth, and cost and reliability as first-class levers rather than afterthoughts.</p>
+<p><strong>What the customer experience improves.</strong> Under a billing-incident spike, routine questions stay fast and cheap, refund workflows stay auditable, ambiguous investigations still get the big model, and no customer receives a duplicate refund because a worker restarted mid-run.</p>
+<p><strong>What remains incomplete.</strong> Ledgerly is deployable. It is not <em>finished</em>: the frontiers of computer use and embodiment (<a href="../part5-frontiers/20-computer-use-and-embodiment.html" class="quarto-xref"><span>Chapter 20</span></a>) and the open problems of the field (<a href="../part5-frontiers/21-frontiers-and-open-problems.html" class="quarto-xref"><span>Chapter 21</span></a>) start where this book ends.</p>
 </div>
 </div>
 </section>

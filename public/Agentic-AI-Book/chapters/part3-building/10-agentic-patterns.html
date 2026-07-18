@@ -804,6 +804,25 @@ Figure&nbsp;10.9: A support desk assembled from four patterns. Routing sorts the
 </section>
 <section id="sec-ch09-case" class="level2" data-number="10.10">
 <h2 data-number="10.10" class="anchored" data-anchor-id="sec-ch09-case"><span class="header-section-number">10.10</span> Case study: the Ledgerly support agent</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="🎯 What Ledgerly is trying to do">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🎯 What Ledgerly is trying to do
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Three ticket shapes hit the same routed desk this morning:</p>
+<ul>
+<li><strong>FAQ.</strong> <em>“Please email me a copy of invoice #4471.”</em></li>
+<li><strong>Refund workflow.</strong> <em>“I was charged twice for invoice #4471. Please refund the duplicate.”</em></li>
+<li><strong>Complex investigation.</strong> <em>“I changed plans last month, invoice #4471 now shows two different charges, and one previous ticket says this was already fixed. Please investigate.”</em></li>
+</ul>
+<p><strong>Desired outcome.</strong> Each ticket routes to the simplest pattern that fits, and every reply passes through the same evaluator gate before it reaches the customer.</p>
+</div>
+</div>
 <p>Where we left off, <a href="09-workflows-vs-agents.html#sec-ch08-case" class="quarto-xref"><span>Section 9.9</span></a> sorted Ledgerly’s traffic into three lanes but left us without the machinery to run them. The worked example you just read, the assembled support desk in <a href="#sec-ch9-worked" class="quarto-xref"><span>Section 10.9</span></a>, <em>is</em> that machinery: it is the Ledgerly support desk, built from this chapter’s patterns. It is worth naming which pattern fills each lane, because that mapping is the whole design.</p>
 <p>The three lanes from <a href="09-workflows-vs-agents.html#sec-ch08-case" class="quarto-xref"><span>Section 9.9</span></a> land on the three shapes in <a href="#fig-support-compose" class="quarto-xref">Figure&nbsp;<span>10.9</span></a>. <strong>Routing</strong> at the door sorts a ticket into FAQ, refund, or complex, the classification we described by hand last chapter now done by a real classifier. The <strong>FAQ lane</strong> is the single well-crafted call, the simplest thing that works. The <strong>refund lane</strong> is the prompt chain, a fixed and auditable procedure, which is exactly right because <a href="09-workflows-vs-agents.html#sec-ch08-case" class="quarto-xref"><span>Section 9.9</span></a> argued a refund’s steps never change even though it moves money. The <strong>complex lane</strong> hands off to orchestrator–workers, the one place Ledgerly spends real autonomy. And a single shared <strong>evaluator–optimizer</strong> gate reviews every draft before it is sent, so tone and correctness are checked no matter which lane produced the reply.</p>
 <p>Stated as decisions, the whole design is five deliberate choices, one per Ledgerly need:</p>
@@ -890,17 +909,17 @@ Figure&nbsp;10.10: The Ledgerly blueprint: one coherent system, completed over t
 <section id="sec-ch9-case-run" class="level3" data-number="10.10.2">
 <h3 data-number="10.10.2" class="anchored" data-anchor-id="sec-ch9-case-run"><span class="header-section-number">10.10.2</span> Watch the desk run</h3>
 <p>The blueprint is easier to trust once you watch a ticket travel through it, so this stage wires the whole desk and feeds it three tickets, one aimed at each lane. Every ticket takes the same spine: the router picks a lane, the lane does its work with the simplest pattern that fits, and the shared evaluator gate reads the draft before a word reaches the customer. Nothing here is a framework yet; it is plain Python calling a model at each decision, which is exactly the point. You can see every pattern acting on its own.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="🔩 Still a bare LLM, still no framework">
+<div class="callout callout-style-default callout-note callout-titled" title="🔩 Framework-free, but far from bare">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-🔩 Still a bare LLM, still no framework
+🔩 Framework-free, but far from bare
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The router, the lanes, and the gate are ordinary functions calling the model directly. No graph engine schedules them and no library owns the control flow; the desk’s spine is a handful of <code>if</code> branches you could read in a minute. That is deliberate. The patterns are worth seeing naked before an orchestration framework hides them, which is the job of <a href="13-orchestration-langgraph.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
+<p>The router, the lanes, and the gate are ordinary functions calling an <strong>augmented</strong> LLM (tools, retrieval, and memory are all wired in). No graph engine schedules them and no library owns the control flow; the desk’s spine is a handful of <code>if</code> branches you could read in a minute. That is deliberate. The patterns are worth seeing naked before an orchestration framework hides them, which is the job of <a href="13-orchestration-langgraph.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="🛠️ Run it yourself">
@@ -1029,6 +1048,23 @@ Figure&nbsp;10.10: The Ledgerly blueprint: one coherent system, completed over t
 
 Score: 6/6 checks passed</code></pre>
 <p>Read the three traces together and the chapter’s whole argument is visible in one run. The same desk gave one ticket a single call, another a fixed chain, and the third a run-time decomposition, and it spent that escalating machinery only where the ticket demanded it. The model chose the lane, the diagnosis, the workers, and the words; the code owned the lane set, the money, the worker budget, and the loop bound. That division, model proposes and code disposes, is what keeps a system this composable from also becoming uncontrollable.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly after Chapter 10">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🧾 Ledgerly after Chapter 10
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Before this chapter.</strong> Ledgerly had three lanes but only a hand-wavy explanation of what happened inside each one.</p>
+<p><strong>New in this chapter.</strong> Ledgerly is now a routed support desk. Requests enter through a <strong>router</strong>, flow into the simplest pattern that fits (single call, prompt chain, orchestrator-workers), and pass through a shared <strong>evaluator gate</strong> before a word reaches the customer.</p>
+<p><strong>What changed architecturally.</strong> The lanes are made of named, reusable patterns; the gate is a single reviewer with a bounded revise loop, so quality checks cannot spin forever.</p>
+<p><strong>What the customer experience improves.</strong> Every reply, no matter which lane produced it, is filtered through the same tone-and-safety check before it leaves the desk.</p>
+<p><strong>What remains incomplete.</strong> The evaluator gate is a lightweight in-loop check, not the release-time evaluation of <a href="../part4-production/16-evaluation.html" class="quarto-xref"><span>Chapter 16</span></a>; the tools are still ordinary Python calls, not the first-party MCP surface <a href="11-tools-and-mcp.html" class="quarto-xref"><span>Chapter 11</span></a> introduces.</p>
+</div>
+</div>
 </section>
 </section>
 <section id="sec-ch9-summary" class="level2" data-number="10.11">

@@ -719,6 +719,21 @@ Figure&nbsp;12.5: Memory as a lifecycle loop. Raw observations are written, cons
 </section>
 <section id="sec-ch11-case" class="level2" data-number="12.9">
 <h2 data-number="12.9" class="anchored" data-anchor-id="sec-ch11-case"><span class="header-section-number">12.9</span> Case study: the Ledgerly support agent</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="🎯 What Ledgerly is trying to do">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🎯 What Ledgerly is trying to do
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Customer request (returning customer, AC-1001).</strong> <em>“I contacted you last month about invoice #4471. I think the same billing issue happened again after another plan change.”</em></p>
+<p><strong>What memory can surface.</strong> <em>Episodic:</em> this customer had a duplicate refunded in June. <em>Semantic:</em> on the Pro plan, prefers email over chat. <em>Procedural:</em> the duplicate-after-migration playbook. <em>Reflective:</em> check migration logs before deciding refund eligibility.</p>
+<p><strong>Desired outcome.</strong> The desk recognises the returning customer, uses their history without making them re-explain, treats every retrieved note as context to validate rather than a fact to trust, and writes a new note only if it will be worth remembering next time.</p>
+</div>
+</div>
 <p>Where we left off, <a href="../part2-llm-agents/07-the-augmented-llm.html#sec-ch06-case" class="quarto-xref"><span>Section 7.7</span></a> promised the Ledgerly agent a notebook, and the write beat that stored “this customer hit a billing bug” was its first note. This chapter’s taxonomy tells us that note was <em>episodic</em>, and Ledgerly benefits from every kind of memory from <a href="#sec-ch11-types" class="quarto-xref"><span>Section 12.2</span></a> working together, matured through the lifecycle of <a href="#sec-ch11-lifecycle" class="quarto-xref"><span>Section 12.7</span></a>.</p>
 <p><strong>Episodic</strong> memory is the log of past tickets: <em>this customer reported a double charge in March, and we refunded it.</em> When they write in again, the read beat surfaces that history so the agent never makes them re-explain, exactly the “feels known” effect from the worked example in <a href="#sec-ch11-worked" class="quarto-xref"><span>Section 12.6</span></a>. <strong>Semantic</strong> memory holds durable facts distilled from those episodes: <em>this customer is on the Pro plan, prefers email over chat, and has been with Ledgerly for two years.</em> <strong>Procedural</strong> memory holds the reliable runbooks the agent has learned for recurring jobs, in the sense of <a href="#sec-ch11-procedural" class="quarto-xref"><span>Section 12.2.3</span></a>: <em>how to investigate a duplicate charge after a plan migration</em>, <em>how to validate refund eligibility</em>, and <em>how to escalate a policy exception</em>, each a reusable sequence rather than a fact or an event.</p>
 <p><strong>Reflective</strong> memory is the newest and, for a support agent, the most valuable, because it is how Ledgerly stops repeating expensive mistakes. Suppose the agent once issued a refund <em>before</em> checking the migration logs and later discovered the charge had been legitimate. The lesson from that failure, in the sense of <a href="#sec-ch11-reflective" class="quarto-xref"><span>Section 12.2.4</span></a>, is not another fact about the customer; it is a note to itself: <em>for plan-migration complaints, check the migration logs before deciding refund eligibility.</em> Stored as a reflective memory and retrieved the next time a migration complaint arrives, that single sentence steers the agent away from the mistake it made before, with no retraining required.</p>
@@ -797,17 +812,17 @@ Figure&nbsp;12.6: The same Ledgerly blueprint with its memory store lit: an exte
 <section id="sec-ch11-case-run" class="level3" data-number="12.9.1">
 <h3 data-number="12.9.1" class="anchored" data-anchor-id="sec-ch11-case-run"><span class="header-section-number">12.9.1</span> Watch memory work</h3>
 <p>The lifecycle is easiest to believe once you watch a lesson change what the agent does, so this stage wires the read-act-write loop over a small memory store and walks Dana through three tickets. The store holds the four kinds of memory, ranks them by a blend of similarity, recency, and importance, and lets transient notes decay. The reasoning stays with the model (what to say, what to remember, how to phrase a lesson); the store owns the policy for what surfaces and what fades.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="🔩 Still a bare LLM, still no framework">
+<div class="callout callout-style-default callout-note callout-titled" title="🔩 Framework-free memory, augmented LLM inside">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-🔩 Still a bare LLM, still no framework
+🔩 Framework-free memory, augmented LLM inside
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The loop is three plain function calls, retrieve, draft, write, with no framework managing them. The embedding is a deterministic local stand-in so the stage runs offline and its scores reproduce; a production system swaps in a real embedding model and a vector store, but the architecture around it, blended retrieval with decay and update, is exactly what this store does. The durable graph that would checkpoint this loop arrives in <a href="13-orchestration-langgraph.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
+<p>The loop is three plain function calls, retrieve, draft, write, with no framework managing them. The model itself is augmented (this is where memory joins tools and retrieval as a first-class faculty), but the orchestration around it is still ordinary Python. The embedding is a deterministic local stand-in so the stage runs offline and its scores reproduce; a production system swaps in a real embedding model and a vector store, but the architecture around it, blended retrieval with decay and update, is exactly what this store does. The durable graph that would checkpoint this loop arrives in <a href="13-orchestration-langgraph.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="🛠️ Run it yourself">
@@ -895,6 +910,23 @@ Score: 6/6 checks passed</code></pre>
 <p>Start with what a memory test should actually probe, because “does it remember?” is too blunt. A thorough evaluation checks recall accuracy (does the right fact come back?), retrieval precision (does <em>only</em> the right fact come back, or a pile of noise with it?), latency and token cost (can you afford the memory on every turn?), update correctness (when a fact changes, does the new one win?), forgetting correctness (does stale or deleted information actually disappear?), conflict handling (when two memories disagree, does the agent resolve it?), privacy and permission enforcement (are scoped memories kept scoped?), robustness to false memories (does a planted or hallucinated “fact” get trusted?), and the ability to <strong>abstain</strong> (when the answer was never stored, does the agent say so instead of inventing one?). That last one matters more than it sounds: an agent that confidently fabricates a memory is worse than one that admits it does not know.</p>
 <p>Three recent benchmarks turn that wish list into concrete tests, and reading them together is the fastest way to calibrate your expectations. <strong>LongMemEval</strong> evaluates chat assistants on five core long-term abilities, information extraction, multi-session reasoning, temporal reasoning, knowledge updates, and abstention, and it frames memory design as three stages worth measuring separately: indexing, retrieval, and reading <span class="citation" data-cites="longmemeval2024"><a href="../../references.html#ref-longmemeval2024" role="doc-biblioref">[9]</a></span>. Its headline finding is a warning for anyone who trusts raw context length: commercial assistants and long-context models showed a sharp accuracy drop when they had to hold information across sustained, multi-session interactions <span class="citation" data-cites="longmemeval2024"><a href="../../references.html#ref-longmemeval2024" role="doc-biblioref">[9]</a></span>. <strong>LoCoMo</strong> pushes on sheer length, with conversations averaging around 300 turns across up to 35 sessions, and finds that both long-context models and retrieval-augmented approaches help but still lag well behind humans on long-range temporal and causal reasoning <span class="citation" data-cites="maharana2024locomo"><a href="../../references.html#ref-maharana2024locomo" role="doc-biblioref">[10]</a></span>. The lesson from both is the one to tattoo on the wall: <em>long context is not the same as good memory.</em> <strong>MemBench</strong> rounds out the picture by evaluating memory along multiple aspects, effectiveness, efficiency, and capacity, and by distinguishing <strong>factual</strong> memory from <strong>reflective</strong> memory as different levels to test, which is exactly the episodic-versus-reflective distinction we drew earlier <span class="citation" data-cites="membench2025"><a href="../../references.html#ref-membench2025" role="doc-biblioref">[11]</a></span>.</p>
 <p>For Ledgerly, this is the difference between a demo and a service you can trust with refunds. A memory that recalls a customer’s history but cannot abstain when it has none will invent a phantom prior ticket; a memory that cannot handle updates will keep refunding against a policy that changed last month; a memory that cannot enforce scope will leak one customer’s data into another’s conversation. Measuring those failure modes, rather than assuming a big context window rules them out, is the whole job, and it is the bridge into the evaluation chapter, where we make this discipline systematic in <a href="../part4-production/16-evaluation.html" class="quarto-xref"><span>Chapter 16</span></a>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly after Chapter 12">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🧾 Ledgerly after Chapter 12
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Before this chapter.</strong> Memory was a single notebook: a flat list of prior notes to skim for context.</p>
+<p><strong>New in this chapter.</strong> Ledgerly now has structured external memory across four working kinds: <strong>episodic</strong> (what happened before), <strong>semantic</strong> (durable facts and preferences), <strong>procedural</strong> (playbooks that worked), and <strong>reflective</strong> (lessons from failure). A transient tier decays notes that were only ever meant for one conversation.</p>
+<p><strong>What changed architecturally.</strong> Reads blend similarity, recency, and importance; writes score whether a fact deserves a permanent slot; and a returning customer’s context is retrieved on read, not carried across turns in a giant prompt.</p>
+<p><strong>What the customer experience improves.</strong> A returning customer is not re-asked what already got resolved last month, and the desk can carry lessons from one refund into the next similar case.</p>
+<p><strong>What remains incomplete.</strong> Memory can still be wrong, stale, or unauthorised; the desk must validate retrieved notes against current records rather than trust them. And the in-loop store here is a deterministic local stand-in; a production system swaps in a real embedding model and a vector store, plus scope controls that keep one customer’s history out of another’s conversation.</p>
+</div>
+</div>
 </section>
 <section id="sec-ch11-frontier" class="level2" data-number="12.11">
 <h2 data-number="12.11" class="anchored" data-anchor-id="sec-ch11-frontier"><span class="header-section-number">12.11</span> Where memory research is going</h2>
