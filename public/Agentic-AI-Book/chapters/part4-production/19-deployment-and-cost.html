@@ -401,7 +401,10 @@ div.csl-indent {
   <li><a href="#sec-ch18-ratelimits" id="toc-sec-ch18-ratelimits" class="nav-link" data-scroll-target="#sec-ch18-ratelimits"><span class="header-section-number">19.4.2</span> Rate limits: living within the provider’s ceiling</a></li>
   <li><a href="#sec-ch18-state" id="toc-sec-ch18-state" class="nav-link" data-scroll-target="#sec-ch18-state"><span class="header-section-number">19.4.3</span> State persistence: so any worker can resume any run</a></li>
   </ul></li>
-  <li><a href="#sec-ch18-case" id="toc-sec-ch18-case" class="nav-link" data-scroll-target="#sec-ch18-case"><span class="header-section-number">19.5</span> Case study: the Ledgerly support agent</a></li>
+  <li><a href="#sec-ch18-case" id="toc-sec-ch18-case" class="nav-link" data-scroll-target="#sec-ch18-case"><span class="header-section-number">19.5</span> Case study: the Ledgerly support agent</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch18-case-run" id="toc-sec-ch18-case-run" class="nav-link" data-scroll-target="#sec-ch18-case-run"><span class="header-section-number">19.5.1</span> Watch it ship</a></li>
+  </ul></li>
   <li><a href="#sec-ch18-summary" id="toc-sec-ch18-summary" class="nav-link" data-scroll-target="#sec-ch18-summary"><span class="header-section-number">19.6</span> Summary</a></li>
   <li><a href="#sec-ch18-exercises" id="toc-sec-ch18-exercises" class="nav-link" data-scroll-target="#sec-ch18-exercises"><span class="header-section-number">19.7</span> Exercises</a></li>
   </ul>
@@ -633,6 +636,114 @@ Figure&nbsp;19.4: Scaling agents horizontally: a load balancer spreads requests 
 </ol>
 </div>
 </div>
+<section id="sec-ch18-case-run" class="level3" data-number="19.5.1">
+<h3 data-number="19.5.1" class="anchored" data-anchor-id="sec-ch18-case-run"><span class="header-section-number">19.5.1</span> Watch it ship</h3>
+<p>The disciplines in this chapter are not slideware; they are a few dozen lines of ordinary code sitting between the agent and the outside world. The companion <code>ledgerly/ch19</code> stage wires them up so you can watch each lever move. A day’s tickets flow through a <strong>router</strong> that sends easy work to a small model and escalates only the open-ended case, a <strong>cache</strong> that serves a repeat question for free, a <strong>meter</strong> that prices every call, and a <strong>reliability</strong> layer that retries a flaky payment gateway behind an idempotency key. Run the batch and the bill prints itself:</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ From the workbench — routing pays for itself">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ From the workbench — routing pays for itself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>$ python -m ledgerly.ch19
+
+  Ticket   Lane      Model   Cost      Note
+  --------------------------------------------------
+  T-1101   faq       small   $0.0044
+  T-1102   faq       small   $0.0000  cache hit (free)
+  T-1103   faq       small   $0.0064
+  T-1104   refund    small   $0.0030  refund paid
+  T-1105   complex   large   $0.2600
+  --------------------------------------------------
+  Routed total : $0.2738   (small $0.0138 + large $0.2600)
+  All-large    : $0.4200
+  Saved        : $0.1462 by routing</code></pre>
+</div>
+</div>
+<p>Most tickets are easy, so most of the traffic never touches the expensive model, and the repeat FAQ costs nothing at all. The same batch on the big model everywhere would cost half again as much. That is the whole economic argument of the chapter, made concrete: <strong>spend the large model only where it earns its fare.</strong></p>
+<p>The riskier levers are the ones around money and failure, so the stage lets you poke them one at a time. A refund is the one irreversible action, and the gateway is flaky by design:</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ From the workbench — a retry must never pay twice">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ From the workbench — a retry must never pay twice
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>$ python -m ledgerly.ch19 --idempotency
+  first refund : paid $80.00 (replayed=False)
+  same key     : paid $80.00 (replayed=True)  &lt;- no double pay
+  new key      : paid $80.00 (replayed=False)
+  ledger holds 2 distinct payouts
+
+$ python -m ledgerly.ch19 --retry
+  gateway result 'ok' after 3 attempts (2 transient failures absorbed)
+
+$ python -m ledgerly.ch19 --cap
+  A confused agent keeps looping; the cap stops it:
+    turn 1: cost now $0.1000
+    turn 2: cost now $0.2000
+    turn 3: cost now $0.3000
+  STOPPED after 3 turns / $0.3000 (cap: 3 turns)</code></pre>
+</div>
+</div>
+<p>Read those three together and you have the reliability story. The <strong>idempotency key</strong> means a retried or duplicated refund request settles to one payout, so it is safe to retry. The <strong>bounded retry</strong> absorbs transient gateway failures without giving up, but only within a budget, so a truly broken dependency does not spin forever. And the <strong>cap</strong> is the seatbelt: a confused run that keeps paying for turns is stopped before it empties the account.</p>
+<p>Because these levers are just machinery, they can be checked without spending a cent. The stage ships a deterministic <code>evaluate.py</code> that asserts every one of them, and it runs with no model key:</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ From the workbench — the levers, verified offline">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ From the workbench — the levers, verified offline
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>$ python -m ledgerly.ch19.evaluate
+  [PASS] routing sends faq/refund to the small model and complex to the large one
+  [PASS] an identical request is a cache hit and is not recomputed
+  [PASS] the same idempotency key pays exactly once; a new key pays again
+  [PASS] a call that fails twice succeeds on the third bounded attempt
+  [PASS] retry is bounded: it gives up after the budget instead of looping forever
+  [PASS] the turn cap stops a runaway run
+  [PASS] the cost cap trips once spend crosses the ceiling
+
+  7/7 checks passed.</code></pre>
+</div>
+</div>
+<p>One honest caveat: there is a single real model behind the seam, so the small and large <strong>tiers are simulated pricing</strong> rather than two live endpoints. The routing, cache, meter, caps, retry, and idempotency ledger are all real; only the second price tag is stood in. The mechanisms are exactly what you would wire to two real providers.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="🔩 How the frameworks do this">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🔩 How the frameworks do this
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Every lever here has a production-grade home. <strong>Model routing</strong> by cost and capability is what gateways like <strong>LiteLLM</strong> and <strong>OpenRouter</strong> exist to do, and frameworks let you set the model per node or per agent. <strong>Idempotency keys</strong> are the standard for money movement: <strong>Stripe</strong> and most payment APIs accept an <code>Idempotency-Key</code> header so a retried charge settles once, exactly as <code>issue_refund</code> does here. <strong>Shared state</strong> for horizontal scaling is what <strong>LangGraph checkpointers</strong> (backed by Postgres or Redis) and the <strong>OpenAI Agents SDK</strong> sessions provide, so any worker can resume any conversation. And <strong>caps, timeouts, and bounded retries</strong> are wired through the same orchestration layer, with <strong>Ray</strong> or <strong>Kubernetes</strong> carrying the horizontal scale-out underneath. The point of the stage is to show the moving parts unobscured; in production you delegate each one to a component built and hardened for it.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="🛠️ Run it yourself">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🛠️ Run it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>From the <code>code/</code> directory: <code>python -m ledgerly.ch19</code> prints the routed batch bill against the all-large baseline. Then poke the risky levers one at a time with <code>--idempotency</code>, <code>--retry</code>, and <code>--cap</code>, and confirm every lever offline with <code>python -m ledgerly.ch19.evaluate</code>. Only the batch calls the model; the rest is pure machinery and runs with no key. See <code>code/ledgerly/ch19/README.md</code> for the full tour.</p>
+</div>
+</div>
 <div class="callout callout-style-default callout-tip callout-titled" title="In practice: a deployment readiness checklist">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -655,6 +766,7 @@ In practice: a deployment readiness checklist
 <p>The point is not the specific list but the habit: production readiness is these disciplines wired together, not any single one of them.</p>
 </div>
 </div>
+</section>
 </section>
 <section id="sec-ch18-summary" class="level2" data-number="19.6">
 <h2 data-number="19.6" class="anchored" data-anchor-id="sec-ch18-summary"><span class="header-section-number">19.6</span> Summary</h2>

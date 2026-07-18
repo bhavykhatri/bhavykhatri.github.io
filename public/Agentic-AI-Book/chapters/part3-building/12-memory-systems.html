@@ -443,7 +443,10 @@ div.csl-indent {
   <li><a href="#sec-ch11-what-not" id="toc-sec-ch11-what-not" class="nav-link" data-scroll-target="#sec-ch11-what-not"><span class="header-section-number">12.7.1</span> What not to remember</a></li>
   </ul></li>
   <li><a href="#sec-ch11-graph" id="toc-sec-ch11-graph" class="nav-link" data-scroll-target="#sec-ch11-graph"><span class="header-section-number">12.8</span> Memory as a graph, not just a list</a></li>
-  <li><a href="#sec-ch11-case" id="toc-sec-ch11-case" class="nav-link" data-scroll-target="#sec-ch11-case"><span class="header-section-number">12.9</span> Case study: the Ledgerly support agent</a></li>
+  <li><a href="#sec-ch11-case" id="toc-sec-ch11-case" class="nav-link" data-scroll-target="#sec-ch11-case"><span class="header-section-number">12.9</span> Case study: the Ledgerly support agent</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch11-case-run" id="toc-sec-ch11-case-run" class="nav-link" data-scroll-target="#sec-ch11-case-run"><span class="header-section-number">12.9.1</span> Watch memory work</a></li>
+  </ul></li>
   <li><a href="#sec-ch11-evaluation" id="toc-sec-ch11-evaluation" class="nav-link" data-scroll-target="#sec-ch11-evaluation"><span class="header-section-number">12.10</span> How do we know memory works?</a></li>
   <li><a href="#sec-ch11-frontier" id="toc-sec-ch11-frontier" class="nav-link" data-scroll-target="#sec-ch11-frontier"><span class="header-section-number">12.11</span> Where memory research is going</a></li>
   <li><a href="#sec-ch11-summary" id="toc-sec-ch11-summary" class="nav-link" data-scroll-target="#sec-ch11-summary"><span class="header-section-number">12.12</span> Summary</a></li>
@@ -791,6 +794,100 @@ Figure&nbsp;12.6: The same Ledgerly blueprint with its memory store lit: an exte
 </ol>
 </div>
 </div>
+<section id="sec-ch11-case-run" class="level3" data-number="12.9.1">
+<h3 data-number="12.9.1" class="anchored" data-anchor-id="sec-ch11-case-run"><span class="header-section-number">12.9.1</span> Watch memory work</h3>
+<p>The lifecycle is easiest to believe once you watch a lesson change what the agent does, so this stage wires the read-act-write loop over a small memory store and walks Dana through three tickets. The store holds the four kinds of memory, ranks them by a blend of similarity, recency, and importance, and lets transient notes decay. The reasoning stays with the model (what to say, what to remember, how to phrase a lesson); the store owns the policy for what surfaces and what fades.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="🔩 Still a bare LLM, still no framework">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🔩 Still a bare LLM, still no framework
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The loop is three plain function calls, retrieve, draft, write, with no framework managing them. The embedding is a deterministic local stand-in so the stage runs offline and its scores reproduce; a production system swaps in a real embedding model and a vector store, but the architecture around it, blended retrieval with decay and update, is exactly what this store does. The durable graph that would checkpoint this loop arrives in <a href="13-orchestration-langgraph.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="🛠️ Run it yourself">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🛠️ Run it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>From the <code>code/</code> directory, with a model configured in <code>code/.env</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch12             <span class="co"># the full narrative: remember, reflect, forget</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch12 <span class="at">--reflect</span>   <span class="co"># just the reflective before/after</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch12 <span class="at">--forget</span>    <span class="co"># just the transient-memory decay</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch12.evaluate    <span class="co"># the reproducible scorecard</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>The first ticket is a plan-change complaint. The read beat surfaces Dana’s history, her past duplicate, the runbook for investigating one, her plan and contact preference, and the agent answers as someone who already knows her. Suppose, though, that on an earlier day the agent had refunded a charge like this as a duplicate and later found it was a valid proration. That mistake becomes a <em>reflective</em> memory: not a fact about Dana, but a note to itself about how to act next time.</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ Code / tool output — a lesson is learned and stored">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ Code / tool output — a lesson is learned and stored
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>  [REFLECT] the earlier refund was wrong (the charge was a valid proration).
+  [REFLECT] lesson stored: For plan-migration charges, review the migration logs and
+            confirm they are valid prorated fees before processing any refund as a duplicate.</code></pre>
+</div>
+</div>
+<p>Now a fresh plan-migration ticket arrives. The read beat ranks the reflective lesson at the top, above even the older episodic memory, and the agent’s behavior visibly changes: it reaches for the logs <em>before</em> deciding, exactly the steer the lesson encodes.</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ Code / tool output — the lesson surfaces first">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ Code / tool output — the lesson surfaces first
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>=== T-803 (AC-1001) ===
+  [READ] retrieved memories:
+    (reflective, 0.558) For plan-migration charges, review the migration logs and confirm...
+    (episodic, 0.395)   March: Dana reported a duplicate charge on an invoice and we refunded it.
+    (procedural, 0.388) ...review account migration and billing logs before processing refunds...</code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="🤖 Model output — the reply that shipped">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🤖 Model output — the reply that shipped
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<blockquote class="blockquote">
+<p>I’ll first review your account’s migration and billing logs to see exactly what this new charge is tied to and whether it’s a valid prorated upgrade fee or an actual duplicate, following the same approach we used in March. Once I’ve confirmed the details, I’ll let you know whether it qualifies for a refund and process it if it’s truly a duplicate.</p>
+</blockquote>
+</div>
+</div>
+<p>Compare that reply to the reflexive “yes, I’ll refund the duplicate” the agent might have sent before the lesson existed, and you can see a single remembered sentence steering the agent away from the mistake it once made, with no retraining. The other half of the lifecycle is forgetting: run <code>--forget</code> and Dana’s “thanks!” is stored as a low-importance transient note that decays out of the store within a few turns, so it never crowds the durable memories.</p>
+<p>The evaluation checks the parts a reader should be able to trust without reading the model’s prose, since the store is deterministic: retrieval by meaning, scope isolation, the blend beating raw similarity, decay, update, and reflective recall.</p>
+<pre class="text"><code>[PASS] a related query retrieves the duplicate-charge memory
+[PASS] one customer's memory never surfaces for another
+[PASS] a recent, important memory outranks an old trivial one
+[PASS] a transient memory decays out of the store
+[PASS] a superseding fact replaces the old value
+[PASS] the reflective lesson is recalled for a migration query
+
+Score: 6/6 checks passed</code></pre>
+<p>Read the run and the taxonomy together and the chapter’s claim is concrete: memory is a lifecycle, not a database. The store remembers the durable and forgets the trivial, keeps one customer’s history away from another, and turns a past mistake into a lesson that changes the next decision. The model supplies the judgment; the store supplies the memory policy, and neither could give the agent continuity on its own.</p>
+</section>
 </section>
 <section id="sec-ch11-evaluation" class="level2" data-number="12.10">
 <h2 data-number="12.10" class="anchored" data-anchor-id="sec-ch11-evaluation"><span class="header-section-number">12.10</span> How do we know memory works?</h2>

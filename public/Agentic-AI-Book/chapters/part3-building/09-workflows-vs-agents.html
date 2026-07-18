@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -396,6 +430,7 @@ div.csl-indent {
   <li><a href="#sec-ch08-case" id="toc-sec-ch08-case" class="nav-link" data-scroll-target="#sec-ch08-case"><span class="header-section-number">9.9</span> Case study: the Ledgerly support agent</a>
   <ul class="collapse">
   <li><a href="#sec-ch8-case-hybrid" id="toc-sec-ch8-case-hybrid" class="nav-link" data-scroll-target="#sec-ch8-case-hybrid"><span class="header-section-number">9.9.1</span> Workflow, agent, or hybrid for one hard ticket</a></li>
+  <li><a href="#sec-ch8-case-run" id="toc-sec-ch8-case-run" class="nav-link" data-scroll-target="#sec-ch8-case-run"><span class="header-section-number">9.9.2</span> Watch the hybrid run</a></li>
   </ul></li>
   <li><a href="#sec-ch8-summary" id="toc-sec-ch8-summary" class="nav-link" data-scroll-target="#sec-ch8-summary"><span class="header-section-number">9.10</span> Summary</a></li>
   <li><a href="#sec-ch8-exercises" id="toc-sec-ch8-exercises" class="nav-link" data-scroll-target="#sec-ch8-exercises"><span class="header-section-number">9.11</span> Exercises</a></li>
@@ -890,6 +925,120 @@ Figure&nbsp;9.10: One hard ticket through Ledgerly’s hybrid. The workflow (rai
 <p>A hybrid that pauses for human approval, as this one does at stage seven, needs <strong>durable state</strong>. The reviewer might approve minutes or hours after the diagnosis ran, and they must be approving <em>this</em> refund, still attached to the exact evidence and account snapshot that justified it. If the intermediate state is lost when the process pauses, the approval floats free of the facts that created it, which is precisely the kind of gap an auditor will find. Durable execution, with automatic checkpointing between steps, is what keeps the human’s decision connected to the evidence <span class="citation" data-cites="mslearn2026agentic"><a href="../../references.html#ref-mslearn2026agentic" role="doc-biblioref">[2]</a></span>.</p>
 </div>
 </div>
+</section>
+<section id="sec-ch8-case-run" class="level3" data-number="9.9.2">
+<h3 data-number="9.9.2" class="anchored" data-anchor-id="sec-ch8-case-run"><span class="header-section-number">9.9.2</span> Watch the hybrid run</h3>
+<p>The eight stages are easy to nod along to, so let us actually run them. The reference implementation in <code>code/ledgerly/ch09/</code> builds this exact pipeline and sends <strong>two surface-identical tickets</strong> through it. Both say “I changed my plan and now I see two charges”; only the agentic diagnosis step tells them apart, and only the rails move the money.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="🔩 Still a bare LLM, still no framework">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🔩 Still a bare LLM, still no framework
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The whole pipeline is ordinary Python: the stages are function calls, the control flow is a sequence of <code>if</code> branches, and the one agentic step is a single model call that returns a structured verdict. There is no agentic framework here on purpose, because a fixed eight-stage path does not need one. The pause-for-approval that the note above calls for is faked with a simple callback; when we want it to be <em>durable</em> (survive a reviewer who approves hours later), the work finally earns a framework, and we bring in LangGraph in <a href="../../chapters/part3-building/13-orchestration-langgraph.html">the orchestration chapter</a>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="🛠️ Run it yourself">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🛠️ Run it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>From the <code>code/</code> directory. This is an agentic stage, so it needs a model: copy <code>code/.env.example</code> to <code>code/.env</code> and add an OpenAI or Azure OpenAI key.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch09              <span class="co"># both tickets through the hybrid</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch09 <span class="at">--duplicate</span>  <span class="co"># just the genuine-duplicate ticket</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch09 <span class="at">--proration</span>  <span class="co"># just the legitimate-proration ticket</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch09 <span class="at">--decline</span>    <span class="co"># the duplicate ticket, but the human declines</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch09.evaluate     <span class="co"># does control sit in the right place?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Each stage below is tagged with <em>who owns it</em>: <strong>RAILS</strong> for the deterministic code, <strong>MODEL</strong> for the one agentic step (and the drafted reply), and <strong>HUMAN</strong> for the approval gate. Watch the first ticket, Dana’s genuine duplicate.</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ Code / tool output — ticket T-501 (the rails)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ Code / tool output — ticket T-501 (the rails)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>RAILS   verified identity for AC-1001
+RAILS   retrieved 2 charges and 1 plan changes
+MODEL   diagnosed: duplicate_charge (two charges share the same invoice, date, and amount)
+RAILS   eligibility: eligible (code duplicate check: found)
+HUMAN   approval for $80.00 refund: approved
+RAILS   issued $80.00 refund across the runtime seam
+MODEL   drafted the customer explanation
+RAILS   ticket T-501 closed and logged</code></pre>
+</div>
+</div>
+<p>The model touched exactly one decision, the diagnosis. The code, not the model, confirmed the duplicate, computed the $80.00, and required a human before any money moved. Only then is the model invited back to write the reply:</p>
+<div class="callout callout-style-simple callout-note callout-titled" title="🤖 Model output — the reply Dana receives">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🤖 Model output — the reply Dana receives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Hi Dana, thanks for reaching out about the duplicate charge. You were indeed billed twice for the same invoice, and a refund of $80.00 has been approved and issued back to your original payment method. You should see this reflected on your account shortly.</p>
+</div>
+</div>
+<p>Now the second ticket, Sam’s, is worded almost the same, but the evidence is different: a mid-cycle plan change, and two charges that are <em>not</em> identical. The same rails run, and the one agentic step reaches a different verdict.</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ Code / tool output — ticket T-502 (the rails)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ Code / tool output — ticket T-502 (the rails)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>RAILS   verified identity for AC-2002
+RAILS   retrieved 2 charges and 1 plan changes
+MODEL   diagnosed: valid_proration (the second charge matches the documented mid-cycle upgrade)
+RAILS   eligibility: not eligible (code duplicate check: none)
+MODEL   drafted the customer explanation
+RAILS   ticket T-502 closed and logged</code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="🤖 Model output — the reply Sam receives">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🤖 Model output — the reply Sam receives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Hi Sam, I’ve double-checked your account, and the second charge is a valid prorated amount for your documented mid-cycle plan upgrade rather than a duplicate. When you changed plans partway through the period, we billed only for the remaining days on the new tier, which is what this proration reflects.</p>
+</div>
+</div>
+<p>Two near-identical complaints, one shared set of rails, two correct and different outcomes. The safety comes from <em>where the control lives</em>: even if the model had misread the proration as a duplicate, the deterministic duplicate check in code would still refuse the refund, because no two charges match. The model proposes the diagnosis; the rails dispose of the money. An evaluation makes that division of labour concrete:</p>
+<pre class="text"><code>Ledgerly Chapter 9 evaluation
+
+    PASS  genuine duplicate is found eligible
+    PASS  a duplicate over the limit needs human approval
+    PASS  approved refund is issued across the seam
+    PASS  legitimate proration is not refunded
+    PASS  declined approval blocks the refund
+    PASS  code duplicate-check guards the money (no duplicate -&gt; no refund)
+
+  Score: 6/6 checks passed</code></pre>
+<p>The last two checks are the point of the whole chapter in miniature: decline the human approval and no money moves, and force the model’s verdict to be wrong and the code still protects the ledger. Autonomy was spent on exactly one stage, and the expensive parts stayed on rails.</p>
 <p>We now have three lanes but no machinery to run them. <a href="10-agentic-patterns.html#sec-ch09-case" class="quarto-xref"><span>Section 10.10</span></a> assembles Ledgerly’s support desk from the handful of recurring patterns this next chapter introduces.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly so far">
 <div class="callout-header d-flex align-content-center">

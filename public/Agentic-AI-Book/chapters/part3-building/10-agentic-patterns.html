@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -397,6 +431,7 @@ div.csl-indent {
   <li><a href="#sec-ch09-case" id="toc-sec-ch09-case" class="nav-link" data-scroll-target="#sec-ch09-case"><span class="header-section-number">10.10</span> Case study: the Ledgerly support agent</a>
   <ul class="collapse">
   <li><a href="#sec-ch9-complex-lane" id="toc-sec-ch9-complex-lane" class="nav-link" data-scroll-target="#sec-ch9-complex-lane"><span class="header-section-number">10.10.1</span> Inside the complex lane</a></li>
+  <li><a href="#sec-ch9-case-run" id="toc-sec-ch9-case-run" class="nav-link" data-scroll-target="#sec-ch9-case-run"><span class="header-section-number">10.10.2</span> Watch the desk run</a></li>
   </ul></li>
   <li><a href="#sec-ch9-summary" id="toc-sec-ch9-summary" class="nav-link" data-scroll-target="#sec-ch9-summary"><span class="header-section-number">10.11</span> Summary</a></li>
   <li><a href="#sec-ch9-exercises" id="toc-sec-ch9-exercises" class="nav-link" data-scroll-target="#sec-ch9-exercises"><span class="header-section-number">10.12</span> Exercises</a></li>
@@ -851,6 +886,149 @@ Figure&nbsp;10.10: The Ledgerly blueprint: one coherent system, completed over t
 </ol>
 </div>
 </div>
+</section>
+<section id="sec-ch9-case-run" class="level3" data-number="10.10.2">
+<h3 data-number="10.10.2" class="anchored" data-anchor-id="sec-ch9-case-run"><span class="header-section-number">10.10.2</span> Watch the desk run</h3>
+<p>The blueprint is easier to trust once you watch a ticket travel through it, so this stage wires the whole desk and feeds it three tickets, one aimed at each lane. Every ticket takes the same spine: the router picks a lane, the lane does its work with the simplest pattern that fits, and the shared evaluator gate reads the draft before a word reaches the customer. Nothing here is a framework yet; it is plain Python calling a model at each decision, which is exactly the point. You can see every pattern acting on its own.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="🔩 Still a bare LLM, still no framework">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🔩 Still a bare LLM, still no framework
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The router, the lanes, and the gate are ordinary functions calling the model directly. No graph engine schedules them and no library owns the control flow; the desk’s spine is a handful of <code>if</code> branches you could read in a minute. That is deliberate. The patterns are worth seeing naked before an orchestration framework hides them, which is the job of <a href="13-orchestration-langgraph.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="🛠️ Run it yourself">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🛠️ Run it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>From the <code>code/</code> directory, with a model configured in <code>code/.env</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch10             <span class="co"># all three tickets, one per lane</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch10 <span class="at">--faq</span>       <span class="co"># just the FAQ lane (single call)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch10 <span class="at">--refund</span>    <span class="co"># just the refund lane (prompt chain)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch10 <span class="at">--complex</span>   <span class="co"># just the complex lane (parallel + orchestrator)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch10.evaluate    <span class="co"># the reproducible scorecard</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>The first ticket is a plain how-to question, and the router sends it to the lane with the least machinery. The FAQ lane fetches one help article and answers from it, no chain, no tools, no agent, because the job does not need them.</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ Code / tool output — the FAQ lane">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ Code / tool output — the FAQ lane
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>=== T-601 (AC-1001) ===
+  [ROUTER] lane -&gt; faq
+  [FAQ]    grounded in help article: change_plan
+  [EVALUATOR] gate: passed after 0 revision(s)</code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="🤖 Model output — the reply that shipped">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🤖 Model output — the reply that shipped
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<blockquote class="blockquote">
+<p>To change your plan, go to Settings &gt; Billing &gt; Plan, select the new plan you want, and confirm the change. If you upgrade, the new plan will take effect immediately and the cost will be prorated for your current billing cycle.</p>
+</blockquote>
+</div>
+</div>
+<p>The second ticket asks for a refund, and the router routes it to the prompt chain. The chain is a fixed line of steps: look up the charges, let the model diagnose what happened, then gate the outcome in code. The model may call it a duplicate, but the eligibility test and the <code>$80.00</code> amount come from Python, and because the payout is above the auto-approval limit the chain marks it as pending a human, the approval gate a later chapter wires up.</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ Code / tool output — the refund lane (a chain)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ Code / tool output — the refund lane (a chain)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>=== T-602 (AC-1001) ===
+  [ROUTER] lane -&gt; refund
+  [CHAIN]  diagnosis=duplicate_charge eligible=True amount=$80.00 needs_approval=True
+  [EVALUATOR] gate: passed after 0 revision(s)</code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="🤖 Model output — the reply that shipped">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🤖 Model output — the reply that shipped
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<blockquote class="blockquote">
+<p>We’ve reviewed your request and the duplicate charge of $80.00 on invoice #4471 has been approved for refund. It’s now pending a final human approval before the payout is issued. You’ll receive the funds once that review is complete.</p>
+</blockquote>
+</div>
+</div>
+<p>The third ticket is the tangle: a possible double charge, a failed upgrade, and an add-on question, all at once. The router sends it to the complex lane, which first fetches all four pieces of evidence in parallel, then lets an orchestrator pick, at run time and under a three-worker budget, exactly which role-scoped workers the case needs. Here it chose a billing analyst, a policy worker, and a history worker, and their notes were synthesized into one reply that answers every part.</p>
+<div class="callout callout-style-simple callout-tip callout-titled" title="⌨️ Code / tool output — the complex lane (parallel + orchestrator)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⌨️ Code / tool output — the complex lane (parallel + orchestrator)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>=== T-603 (AC-3003) ===
+  [ROUTER] lane -&gt; complex
+  [PARALLEL] fetched charges, plan history, prior tickets, policy at once
+  [ORCHESTRATOR] workers -&gt; billing_analyst, policy_worker, history_worker
+  [EVALUATOR] gate: still flagged after 2 revision(s)</code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="🤖 Model output — the reply that shipped">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🤖 Model output — the reply that shipped
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<blockquote class="blockquote">
+<p>You’re right that invoice #6600 shows two identical Pro plan charges of $80.00. I’ve flagged this as a likely duplicate and escalated it to our billing team for review. […] Your upgrade to the Team plan didn’t go through because the payment was declined, so your account is still on the Pro plan. The $30.00 “analytics” add-on on invoice #6621 is a separate, valid charge; it’s not included with the Pro plan. […] If you’d like, I can help you update your payment method and retry the Team upgrade once the billing review is complete.</p>
+</blockquote>
+</div>
+</div>
+<p>Notice the last line of that trace: the gate came back <em>still flagged after 2 revisions</em>. That is the evaluator-optimizer loop hitting its bound and stopping anyway, exactly as it should. A quality gate that could loop forever is a worse bug than a draft that is merely good enough, so the number of rewrites is capped in code, not left to the critic’s patience. The desk ships the best draft it has and moves on.</p>
+<p>The evaluation checks the parts a reader should be able to trust without reading the model’s prose. It asserts that each ticket lands in the right lane, that the refund chain finds the duplicate and computes the <code>$80</code> in code, that the orchestrator never exceeds its worker budget, and that the gate always terminates:</p>
+<pre class="text"><code>[PASS] FAQ ticket routes to the faq lane
+[PASS] refund ticket routes to the refund lane
+[PASS] refund lane computes the $80 duplicate amount in code
+[PASS] complex ticket routes to the complex lane
+[PASS] complex lane respects the worker budget
+[PASS] evaluator gate terminates and returns a reply for every ticket
+
+Score: 6/6 checks passed</code></pre>
+<p>Read the three traces together and the chapter’s whole argument is visible in one run. The same desk gave one ticket a single call, another a fixed chain, and the third a run-time decomposition, and it spent that escalating machinery only where the ticket demanded it. The model chose the lane, the diagnosis, the workers, and the words; the code owned the lane set, the money, the worker budget, and the loop bound. That division, model proposes and code disposes, is what keeps a system this composable from also becoming uncontrollable.</p>
 </section>
 </section>
 <section id="sec-ch9-summary" class="level2" data-number="10.11">

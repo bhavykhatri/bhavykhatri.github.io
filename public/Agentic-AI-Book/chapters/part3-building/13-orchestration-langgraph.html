@@ -436,7 +436,10 @@ div.csl-indent {
   <li><a href="#sec-ch12-idempotency" id="toc-sec-ch12-idempotency" class="nav-link" data-scroll-target="#sec-ch12-idempotency"><span class="header-section-number">13.6.3</span> Idempotency for resumed actions</a></li>
   <li><a href="#sec-ch12-overkill" id="toc-sec-ch12-overkill" class="nav-link" data-scroll-target="#sec-ch12-overkill"><span class="header-section-number">13.6.4</span> When LangGraph is overkill</a></li>
   </ul></li>
-  <li><a href="#sec-ch12-case" id="toc-sec-ch12-case" class="nav-link" data-scroll-target="#sec-ch12-case"><span class="header-section-number">13.7</span> Case study: the Ledgerly support agent</a></li>
+  <li><a href="#sec-ch12-case" id="toc-sec-ch12-case" class="nav-link" data-scroll-target="#sec-ch12-case"><span class="header-section-number">13.7</span> Case study: the Ledgerly support agent</a>
+  <ul class="collapse">
+  <li><a href="#sec-ch12-run" id="toc-sec-ch12-run" class="nav-link" data-scroll-target="#sec-ch12-run"><span class="header-section-number">13.7.1</span> From diagram to program</a></li>
+  </ul></li>
   <li><a href="#sec-ch12-summary" id="toc-sec-ch12-summary" class="nav-link" data-scroll-target="#sec-ch12-summary"><span class="header-section-number">13.8</span> Summary</a></li>
   <li><a href="#sec-ch12-exercises" id="toc-sec-ch12-exercises" class="nav-link" data-scroll-target="#sec-ch12-exercises"><span class="header-section-number">13.9</span> Exercises</a></li>
   </ul>
@@ -718,6 +721,63 @@ Figure&nbsp;13.5: Ledgerly’s refund graph, the whole chapter on one page. Para
 </div>
 <p>The edges are where the policy lives. If the refund is eligible, <code>validate_refund</code> routes to <code>human_review</code>, the interrupt placed <em>before</em> the payout; if it is ineligible, it routes to <code>explain_no_refund</code>; if the records conflict, it escalates. Only a human approval passes control on to <code>issue_refund</code>, the single side-effecting node, which carries an idempotency key so a resumed run can never pay twice. Both branches then converge on <code>draft_response</code> and <code>close_ticket</code>. Meanwhile the <code>approval</code> field lives in checkpointed graph state, because it is about <em>this</em> run, while a durable pattern such as a customer’s history of duplicate charges belongs in long-term memory that informs <em>future</em> tickets, exactly the split we drew in <a href="#sec-ch12-checkpoint-vs-memory" class="quarto-xref"><span>Section 13.3.1</span></a>.</p>
 <p>This is the “expensive freedom” from <a href="../part1-foundations/01-what-is-an-agent.html#sec-ch01-case" class="quarto-xref"><span>Section 1.8</span></a> spent carefully: the agent plans and acts on its own, but the single irreversible action is fenced behind a checkpoint and a person. We build that fence out fully when we reach guardrails in <a href="../part4-production/18-safety-and-guardrails.html#sec-ch17-case" class="quarto-xref"><span>Section 18.6</span></a>.</p>
+<section id="sec-ch12-run" class="level3" data-number="13.7.1">
+<h3 data-number="13.7.1" class="anchored" data-anchor-id="sec-ch12-run"><span class="header-section-number">13.7.1</span> From diagram to program</h3>
+<p>The graph in <a href="#fig-ledgerly-graph" class="quarto-xref">Figure&nbsp;<span>13.5</span></a> is not a sketch of something you would still have to build. It is a program you can run. A small reference implementation lives in <code>code/ledgerly/ch13/</code>, and it wires exactly these nodes and edges with LangGraph. The claim this chapter keeps making, that policy belongs on the edges and not inside a prompt, is literally true there: the <code>validate_refund</code> edge and the approval threshold are ordinary Python, while the one ambiguous step, the diagnosis, is the single pluggable seam where a real model would go. The heart of it is that policy edge and the interrupt, a handful of lines that decide everything downstream.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> validate_refund(state) <span class="op">-&gt;</span> <span class="bu">str</span>:          <span class="co"># this edge IS the refund policy</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> state[<span class="st">"diagnosis"</span>]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> d[<span class="st">"label"</span>] <span class="op">==</span> <span class="st">"duplicate_charge"</span>:</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"human_review"</span> <span class="cf">if</span> d[<span class="st">"refund_amount"</span>] <span class="op">&gt;=</span> APPROVAL_THRESHOLD <span class="cf">else</span> <span class="st">"issue_refund"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> d[<span class="st">"label"</span>] <span class="op">==</span> <span class="st">"valid_proration"</span>:</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"explain_no_refund"</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"escalate"</span>                        <span class="co"># records conflict: hand to a specialist</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> human_review(state):                     <span class="co"># pause before any money moves</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    decision <span class="op">=</span> interrupt({<span class="st">"question"</span>: <span class="st">"Approve this refund?"</span>, ...})</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">"approval"</span>: {<span class="st">"status"</span>: decision[<span class="st">"action"</span>]}}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-tip callout-titled" title="🛠️ Run it yourself">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🛠️ Run it yourself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>From the <code>code/</code> directory. This is an agentic stage, so it needs a model: copy <code>code/.env.example</code> to <code>code/.env</code> and add an OpenAI or Azure OpenAI key.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch13            <span class="co"># one ticket, end to end, with a human approval</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ledgerly.ch13.evaluate   <span class="co"># the golden set: routing and safety checks</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Run the first command and the abstract picture becomes a concrete, recorded run. Here is the invoice #4471 duplicate moving through the graph, pausing for a human, and resuming.</p>
+<pre class="text"><code>Ticket T-001: I changed my plan last month and now I see two charges on invoice #4471...
+  - classify_request
+  - load_account: loaded AC-1001
+  - fetch_charges: fetched charges
+  - fetch_plan_history: fetched plan_history
+  - retrieve_policy: fetched refund_policy
+  - diagnose_billing_issue: duplicate_charge (refund $80.00)
+  ! PAUSED for human review: About to refund $80.00 to invoice #4471. Approve?
+  &gt; human decision: approve
+  - human_review: human approve ($80.00)
+  - issue_refund: refunded $80.00 to #4471
+  - draft_response: drafted reply
+  - close_ticket
+  = outcome: refunded</code></pre>
+<p>That trace is the whole chapter in miniature: parallel fetches join at a diagnosis, the policy edge routes to human review, the interrupt fences the payout, and the refund fires only after a person approves. It answers a question a diagram cannot, namely whether the system really behaves this way. And behaving is not the same as behaving <em>correctly</em>, so the reference agent ships with a small evaluation that checks the routing and the safety properties this chapter cares about.</p>
+<pre class="text"><code>Ledgerly evaluation
+  Routing (outcome correctness):
+    PASS  T-001: refunded   (got refunded)
+    PASS  T-002: no_refund  (got no_refund)
+    PASS  T-003: refunded   (got refunded)
+  Safety:
+    PASS  over-threshold refund requires human review
+    PASS  over-threshold refund blocked when human rejects
+    PASS  under-threshold refund auto-approved (no human)
+    PASS  refund is idempotent (no double-pay on resume)
+  Score: 3/3 routed correctly, 4/4 safety checks passed</code></pre>
+<p>The safety block is the one worth pausing on, because it is a runnable proof of this chapter’s central promise. An over-threshold refund cannot slip past the human gate, and a resumed run cannot pay twice, and those are properties you can check rather than merely assert. We build the full evaluation discipline in <a href="../part4-production/16-evaluation.html" class="quarto-xref"><span>Chapter 16</span></a>; here it is enough to see that the graph we drew is a graph that works.</p>
 <p>The same agent can be expressed in a lighter-weight framework, too. The next chapter’s triage-and-handoff example (<a href="14-openai-agents-sdk.html#sec-ch13-worked" class="quarto-xref"><span>Section 14.5</span></a>) is Ledgerly again: a triage agent that hands billing questions to a specialist, the very routing from <a href="10-agentic-patterns.html#sec-ch09-case" class="quarto-xref"><span>Section 10.10</span></a> wearing the OpenAI Agents SDK’s clothes. Either way, before Ledgerly ships we have to answer a harder question than “does it run?”, namely “does it <em>work</em>?”. <a href="../part4-production/16-evaluation.html#sec-ch15-case" class="quarto-xref"><span>Section 16.8</span></a> builds the evaluation set that decides.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="🧾 Ledgerly so far">
 <div class="callout-header d-flex align-content-center">
@@ -736,6 +796,7 @@ Figure&nbsp;13.5: Ledgerly’s refund graph, the whole chapter on one page. Para
 </ol>
 </div>
 </div>
+</section>
 </section>
 <section id="sec-ch12-summary" class="level2" data-number="13.8">
 <h2 data-number="13.8" class="anchored" data-anchor-id="sec-ch12-summary"><span class="header-section-number">13.8</span> Summary</h2>
