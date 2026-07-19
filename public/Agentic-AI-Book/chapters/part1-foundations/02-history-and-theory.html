@@ -651,7 +651,7 @@ Figure&nbsp;2.2: The reinforcement-learning loop: the agent acts, the environmen
 <section id="sec-ch2-code" class="level2" data-number="2.7">
 <h2 data-number="2.7" class="anchored" data-anchor-id="sec-ch2-code"><span class="header-section-number">2.7</span> A tiny illustration: reflex vs.&nbsp;goal-based</h2>
 <p>The reactive/deliberative contrast is easiest to <em>feel</em> with a concrete toy. The snippet below is entirely optional — the idea stands on its own — but some readers like to see it. Two agents solve the same task (reach a target number by stepping): the reflex agent reacts to the current gap; the goal-based agent plans the full sequence before acting.</p>
-<div id="bbea75e7" class="cell" data-execution_count="1">
+<div id="a052b0df" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reflex agent: pure condition -&gt; action, no look-ahead.</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> reflex_agent(state, target):</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    step <span class="op">=</span> <span class="dv">1</span> <span class="cf">if</span> state <span class="op">&lt;</span> target <span class="cf">else</span> <span class="op">-</span><span class="dv">1</span>     <span class="co"># react to the sign of the gap</span></span>
